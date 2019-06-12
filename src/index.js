@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const config = require('./config')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -10,25 +11,9 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 let mainWindow;
 
 const createWindow = () => {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-
-  // and load the index.html of the app.
+  mainWindow = new BrowserWindow(config.window);
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
-  });
+  mainWindow.on('closed', () => { mainWindow = null; });
 };
 
 // This method will be called when Electron has finished
