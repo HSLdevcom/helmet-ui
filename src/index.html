@@ -1,17 +1,47 @@
 <html>
 <head>
     <title>Helmet UI</title>
+    <style>
+        body {
+            padding: 5px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        div {
+            margin: 0 0 20px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Helmet UI</h1>
 
-    <p>
-    <button id="button">Run/Stop</button>
+    <div id="selections">
+        <div>
+            <label for="emme">EMME-kansio</label>
+            <input id="emme" type="file" webkitdirectory directory />
+        </div>
+        <div>
+            <label for="data">Data-kansio</label>
+            <input id="data" type="file" webkitdirectory directory />
+        </div>
+        <div>
+            <label for="iterations">Iteraatiot</label>
+            <input id="iterations" type="number" min="1" max="30" step="1" value ="5" />
+        </div>
+    </div>
 
-    <p>
+    <div id="controls">
+        <div>
+            <button id="button">Run/Stop</button>
+        </div>
+    </div>
+
+    <hr>
+    
+    <div>
         <span id="status"></span>
-    </p>
+    </div>
 
     <script type="text/javascript" src="renderer.js"></script>
+
 </body>
 </html>

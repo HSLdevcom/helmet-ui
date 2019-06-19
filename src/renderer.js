@@ -3,7 +3,7 @@ const ps = require('python-shell')
 let worker
 const script = `${__dirname}/worker.py`
 const opts = { mode: 'json', pythonOptions: ['-u'] }
-const command = { task: "hardwork", count: 5 };
+const command = { iterations: 5 };
 
 const setStatus = (text) => {
     window.document
@@ -22,18 +22,45 @@ const end = (err, code, signal) => {
     setStatus(`Python exited with code ${code}, signal ${signal}.`)
 }
 
+const iterationsChange = (e) => {
+    const i = window.document.getElementById("iterations").value
+    command.iterations = parseInt(i)
+}
+
+const emmeChange = (e) => {
+    const file = window.document.getElementById("emme").files[0].path
+    command.emme = file;
+}
+
+const dataChange = (e) => {
+    const file = window.document.getElementById("data").files[0].path
+    command.data = file;  
+}
+
 const runStop = (e) => {
+    console.log(command)
     if (worker) {
         worker.terminate(1)
         worker = null
     } else {
-        setStatus("Running Python script..")        
         worker = new ps.PythonShell(script, opts)
         worker.on('message', onMessage)
         worker.send(command)
         worker.end(end)
     }
 }
+
+window.document
+    .getElementById("emme")
+    .addEventListener('change', emmeChange)
+
+window.document
+    .getElementById("data")
+    .addEventListener('change', dataChange)
+
+window.document
+    .getElementById("iterations")
+    .addEventListener('change', iterationsChange);
 
 window.document
     .querySelector("button")

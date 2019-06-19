@@ -8,12 +8,12 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let window;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow(config.window);
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-  mainWindow.on('closed', () => { mainWindow = null; });
+  window = new BrowserWindow(config.window);
+  window.loadURL(`file://${__dirname}/index.html`);
+  window.on('closed', () => { window = null; });
 };
 
 // This method will be called when Electron has finished
@@ -33,7 +33,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (window === null) {
     createWindow();
   }
 });

@@ -3,15 +3,22 @@ import json
 import time
 
 line = json.loads(sys.stdin.readline())
-task = line["task"]
-count = line["count"]
+emme = line['emme']
+data = line['data']
+iterations = line['iterations']
 
-print('{"msg": "Running task: ' + task + '" }')
-time.sleep(4)
+print('{"msg": "EMME-kansio: ' + emme + '"}')
+time.sleep(3)
 
-for i in range(1, count):
-    print('{"msg":"Working ' + str(i) + '/' + str(count-1) + '.."}')
-    time.sleep(i)
+print('{"msg": "Data-kansio: ' + data + '"}')
+time.sleep(3)
 
-print('{"msg":"Done."}')
+print('{"msg": "Suoritetaan ' + str(iterations) + ' iteraatiota.." }')
+time.sleep(3)
+
+for i in range(iterations):
+    print('{"msg":"Iteraatio ' + str(i + 1) + '/' + str(iterations) + '.."}')
+    time.sleep(1)
+
+print('{"msg":"Valmis!"}')
 time.sleep(4)
