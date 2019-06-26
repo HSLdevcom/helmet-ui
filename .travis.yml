@@ -14,5 +14,5 @@ install:
   - sudo apt install -y --install-recommends fakeroot winehq-stable mono-devel
   - npm install
 script:
-  - npm electron-forge make
+  - npx electron-forge make
   - npx electron-forge make --platform=win32
