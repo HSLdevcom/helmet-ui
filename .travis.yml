@@ -11,7 +11,8 @@ before_install:
   - echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
   - sudo apt update -y
 install:
-  - sudo apt-get install -y --install-recommends winehq-stable
+  - sudo apt install fakeroot
+  - sudo apt install -y --install-recommends winehq-stable
   - sudo apt install mono-devel -y
   - npm install
 script:
