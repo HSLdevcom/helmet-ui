@@ -7,10 +7,10 @@ install:
 script:
   - npm run make
 deploy:
-  skip_cleanup: true
   provider: script
+  skip_cleanup: true
   script:
     - npm run publish
   on:
-    tags: true
     branch: travis-test
+

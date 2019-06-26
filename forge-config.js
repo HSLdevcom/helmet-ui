@@ -23,6 +23,7 @@ module.exports = {
                     owner: 'HSLdevcom',
                     name: 'helmet-ui'
                 },
+                draft: true,
                 prerelease: true,
                 authToken: process.env.GITHUB_TOKEN
             }
