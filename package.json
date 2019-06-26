@@ -15,27 +15,7 @@
   "author": "HSL",
   "license": "",
   "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "helmet_ui"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        }
-      ]
-    }
+    "forge": "./forge-config.js"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
