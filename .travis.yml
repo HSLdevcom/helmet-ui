@@ -12,5 +12,4 @@ deploy:
   script:
     - npm run publish
   on:
-    branch: travis-test
-
+    branch: release
