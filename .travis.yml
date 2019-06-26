@@ -11,8 +11,8 @@ before_install:
   - echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
   - sudo apt update -y
 install:
-  - sudo apt install -y --install-recommends fakeroot rpm winehq-stable mono-devel
+  - sudo apt install -y --install-recommends fakeroot winehq-stable mono-devel
   - npm install
 script:
-  - npm run make
+  - npm electron-forge make
   - npx electron-forge make --platform=win32
