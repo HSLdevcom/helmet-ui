@@ -9,6 +9,7 @@ script:
 deploy:
   provider: script
   script:
+    - npm install
     - npm run publish
   on:
     tags: true
