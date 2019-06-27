@@ -4,6 +4,7 @@
     <style>
         body {
             padding: 5px;
+            background: #fafafa;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
         div {
@@ -13,14 +14,32 @@
 </head>
 <body>
     <h1>Helmet UI</h1>
+    
+    <dialog id="settings">
+        <h2>Asetukset</h2>
+        <div>
+            <label for="python">Python 2.7:</label>
+            <input id="python" type="file" />
+        </div>
+        <div>
+            <label for="scripts">Python Scripts:</label>
+            <input id="scripts" type="file" />
+        </div>
+        <div id="controls">
+            <div>
+                <button id="dialogCancelButton">Peruuta</button>
+                <button id="dialogOkButton">OK</button>
+            </div>
+        </div>
+    </dialog>
 
     <div id="selections">
         <div>
-            <label for="emme">EMME-kansio</label>
+            <label for="emme">Valitse Emme-kansio..</label>
             <input id="emme" type="file" webkitdirectory directory />
         </div>
         <div>
-            <label for="data">Data-kansio</label>
+            <label for="data">Valitse data-kansio..</label>
             <input id="data" type="file" webkitdirectory directory />
         </div>
         <div>
@@ -31,7 +50,8 @@
 
     <div id="controls">
         <div>
-            <button id="button">Run/Stop</button>
+            <button id="settingsButton">Asetukset</button>
+            <button id="runStopButton">Run/Stop</button>
         </div>
     </div>
 
