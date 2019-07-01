@@ -16,12 +16,20 @@ const setStatus = (text) => {
 }
 
 const onMessage = (json) => {
-    console.debug('Message from Python:', JSON.stringify(json))
-    if (json.msg) setStatus(json.msg)
+    if (json.level === 'DEBUG') console.debug(json)
+    if (json.level === 'INFO') setStatus(json.msg)
+}
+
+const onStdErr = (err) => {
+    console.log(err)
+    setStatus(`Error: ${err.message}`)
 }
 
 const onEnd = (err, code, signal) => {
-    if (err) throw err
+    if (err) {
+        console.error(err)
+        throw err
+    }
     worker = null
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
@@ -32,7 +40,7 @@ const settingsChange = (e) => {
     const data = window.document.getElementById('data').files[0]
     const iterations = window.document.getElementById('iterations').value
     const python = window.document.getElementById('python').files[0]
-    const remote = window.document.getElementById('scripts').files[0]
+    const scripts = window.document.getElementById('scripts').files[0]
 
     if (emme) {
         store.set(props.EmmePath, emme.path)
@@ -43,8 +51,8 @@ const settingsChange = (e) => {
     if (python) {
         store.set(props.PythonPath, python.path)
     }
-    if (remote) {
-        store.set(props.HelmetRemote, remote.path)
+    if (scripts) {
+        store.set(props.HelmetPath, scripts.path)
     }
     if (iterations) {
         store.set(props.Iterations, parseInt(iterations))
@@ -59,9 +67,10 @@ const runStop = (e) => {
     } else {
         
         const pythonPath = store.get(props.PythonPath)
-        const remoteScript = store.get(props.HelmetRemote);
+        const helmetPath = store.get(props.HelmetPath)
+        const helmetScript = `${helmetPath}/helmet_remote.py`
 
-        console.debug(pythonPath, remoteScript)
+        console.debug(pythonPath, helmetScript)
 
         const opts = {
             mode: 'json',
@@ -70,14 +79,16 @@ const runStop = (e) => {
         }
 
         const command = {
-            emme: store.get(props.EmmePath),
-            data: store.get(props.DataPath),
-            iterations: store.get(props.Iterations)
+            emme_path: store.get(props.EmmePath),
+            data_path: store.get(props.DataPath),
+            iterations: store.get(props.Iterations),
+            log_level: 'DEBUG' // TODO make configurable
         }
-        console.log(command);
 
-        worker = new ps.PythonShell(remoteScript, opts)
+        worker = new ps.PythonShell(helmetScript, opts)
         worker.on('message', onMessage)
+        worker.on('stderr', onStdErr);
+        worker.on('error', (e) => console.error(e.message))
         worker.send(command)
         worker.end(onEnd)
     }
@@ -116,11 +127,7 @@ window.document
     .addEventListener('click', settingsClick)
 
 window.document
-    .getElementById('dialogOkButton')
-    .addEventListener('click', closeDialog)
-
-window.document
-    .getElementById('dialogCancelButton')
+    .getElementById('closeDialogButton')
     .addEventListener('click', closeDialog)
 
 window.document

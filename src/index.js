@@ -1,10 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow } = require('electron')
 const config = require('./config')
+const Store = require('electron-store')
+const store = new Store(config.store.schema)
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+const pythonPath = process.env.PYTHONPATH || '.';
+const helmetPath = store.get(config.store.properties.HelmetPath)
+process.env.PYTHONPATH = `${pythonPath}:${helmetPath}/pythonlibs`
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

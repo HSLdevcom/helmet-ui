@@ -14,7 +14,7 @@ module.exports = {
             EmmePath: 'emme.path',
             DataPath: 'data.path',
             PythonPath: 'python.path',
-            HelmetRemote: 'helmet.remote.path',
+            HelmetPath: 'helmet.remote.path',
             Iterations: 'helmet.run.iterations'
         },
         schema: {
