@@ -8,5 +8,34 @@ module.exports = {
         webPreferences: {
             nodeIntegration: true
         }
+    },
+    store: {
+        properties: {
+            EmmePath: 'emme.path',
+            DataPath: 'data.path',
+            PythonPath: 'python.path',
+            HelmetRemote: 'helmet.remote.path',
+            Iterations: 'helmet.run.iterations'
+        },
+        schema: {
+            'emme.path': {
+                type: 'string'
+            },
+            'data.path': {
+                type: 'string'
+            },
+            'python.path': {
+                type: 'string'
+            },
+            'helmet.remote.path': {
+                type: 'string'
+            },
+            'helmet.run.iterations': {
+                type: 'number',
+                minimum: 1,
+                maximum: 100,
+                default: 10
+            }
+        }
     }
 }

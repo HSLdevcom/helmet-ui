@@ -1,33 +1,17 @@
 const ps = require('python-shell')
 const Store = require('electron-store')
+const config = require('./config');
 
 let worker
+const props = config.store.properties;
+const store = new Store(config.store.schema);
 
-const schema = {
-	'emme.path': {
-		type: 'string',
-    },
-    'data.path': {
-        type: 'string',
-    },
-    'python.path': {
-        type: 'string',
-    },
-    'helmet.remote.path': {
-        type: 'string',
-    },
-	'helmet.run.iterations': {
-        type: 'number',
-        minimum: 1,
-        maximum: 100,
-        default: 5
-	}
-};
-const store = new Store(schema)
+// TODO set others too
+window.document.getElementById('iterations').value = store.get(props.Iterations)
 
 const setStatus = (text) => {
     window.document
-        .getElementById("status")
+        .getElementById('status')
         .textContent = text
 }
 
@@ -44,27 +28,27 @@ const onEnd = (err, code, signal) => {
 
 const settingsChange = (e) => {
 
-    const emme = window.document.getElementById("emme").files[0]
-    const data = window.document.getElementById("data").files[0]
-    const iterations = window.document.getElementById("iterations").value
-    const python = window.document.getElementById("python").files[0]
-    const remote = window.document.getElementById("scripts").files[0]
+    const emme = window.document.getElementById('emme').files[0]
+    const data = window.document.getElementById('data').files[0]
+    const iterations = window.document.getElementById('iterations').value
+    const python = window.document.getElementById('python').files[0]
+    const remote = window.document.getElementById('scripts').files[0]
 
     if (emme) {
-        store.set('emme.path', emme.path)
+        store.set(props.EmmePath, emme.path)
     }
     if (data) {
-        store.set('data.path', data.path)
+        store.set(props.DataPath, data.path)
     }
     if (python) {
-        store.set('python.path', python.path)
+        store.set(props.PythonPath, python.path)
     }
     if (remote) {
-        store.set('helmet.remote.path', remote.path)
+        store.set(props.HelmetRemote, remote.path)
     }
     if (iterations) {
-        store.set('helmet.run.iterations', parseInt(iterations))
-    }    
+        store.set(props.Iterations, parseInt(iterations))
+    }
 }
 
 const runStop = (e) => {
@@ -74,8 +58,8 @@ const runStop = (e) => {
         worker = null
     } else {
         
-        const pythonPath = store.get('python.path')
-        const remoteScript = store.get('helmet.remote.path');
+        const pythonPath = store.get(props.PythonPath)
+        const remoteScript = store.get(props.HelmetRemote);
 
         console.debug(pythonPath, remoteScript)
 
@@ -86,9 +70,9 @@ const runStop = (e) => {
         }
 
         const command = {
-            emme: store.get('emme.path'),
-            data: store.get('data.path'),
-            iterations: store.get('helmet.run.iterations')
+            emme: store.get(props.EmmePath),
+            data: store.get(props.DataPath),
+            iterations: store.get(props.Iterations)
         }
         console.log(command);
 
@@ -100,46 +84,45 @@ const runStop = (e) => {
 }
 
 const closeDialog = (e) => {
-    // TODO persist settings
-    document.getElementById("settings").close()
+    document.getElementById('settings').close()
 }
 
 const settingsClick = (e) => {
-    document.getElementById("settings").show()
+    document.getElementById('settings').show()
 }
 
 window.document
-    .getElementById("emme")
+    .getElementById('emme')
     .addEventListener('change', settingsChange)
 
 window.document
-    .getElementById("data")
+    .getElementById('data')
     .addEventListener('change', settingsChange)
 
 window.document
-    .getElementById("iterations")
+    .getElementById('iterations')
     .addEventListener('change', settingsChange)
 
 window.document
-    .getElementById("python")
+    .getElementById('python')
     .addEventListener('change', settingsChange)
 
 window.document
-    .getElementById("scripts")
+    .getElementById('scripts')
     .addEventListener('change', settingsChange)
 
 window.document
-    .getElementById("settingsButton")
+    .getElementById('settingsButton')
     .addEventListener('click', settingsClick)
 
 window.document
-    .getElementById("dialogOkButton")
+    .getElementById('dialogOkButton')
     .addEventListener('click', closeDialog)
 
 window.document
-    .getElementById("dialogCancelButton")
+    .getElementById('dialogCancelButton')
     .addEventListener('click', closeDialog)
 
 window.document
-    .getElementById("runStopButton")
+    .getElementById('runStopButton')
     .addEventListener('click', runStop)

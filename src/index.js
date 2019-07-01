@@ -14,8 +14,6 @@ const createWindow = () => {
   window = new BrowserWindow(config.window);
   window.loadURL(`file://${__dirname}/index.html`);
   window.on('closed', () => { window = null; });
-
-  console.log(app.getPath('userData'));
 };
 
 // This method will be called when Electron has finished
