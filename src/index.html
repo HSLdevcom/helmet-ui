@@ -10,6 +10,19 @@
         div {
             margin: 0 0 20px 0;
         }
+        input[type=file] {
+            display: none;
+        }
+        label.file-select {
+            padding: 0.33em;
+            border: 2px solid #c0c0c0;
+            background: #f0f0f0;
+            cursor: pointer;
+        }
+        dialog {
+            width: 50%;
+            padding: 1em;
+        }
     </style>
 </head>
 <body>
@@ -18,13 +31,16 @@
     <dialog id="settings">
         <h2>Asetukset</h2>
         <div>
-            <label for="python">Python 2.7:</label>
-            <input id="python" type="file" />
+            Python 2.7
+            <label class="file-select" id="python-label" for="python">Valitse..</label>
+            <input class="file-select" id="python" type="file" />
         </div>
         <div>
-            <label for="scripts">Helmet Scripts:</label>
-            <input id="scripts" type="file" webkitdirectory directory />
+            Helmet scripts
+            <label class="file-select" id="scripts-label" for="scripts">Valitse..</label>
+            <input class="file-select" id="scripts" type="file" webkitdirectory directory />
         </div>
+        <br/>
         <div id="controls">
             <div>
                 <button id="closeDialogButton">Sulje</button>
@@ -34,12 +50,14 @@
 
     <div id="selections">
         <div>
-            <label for="emme">Valitse Emme-kansio..</label>
-            <input id="emme" type="file" webkitdirectory directory />
+            Emme-kansio 
+            <label class="file-select" id="emme-label" for="emme">Valitse..</label>
+            <input class="file-select" id="emme" type="file" webkitdirectory directory />
         </div>
         <div>
-            <label for="data">Valitse data-kansio..</label>
-            <input id="data" type="file" webkitdirectory directory />
+            Data-kansio 
+            <label class="file-select" id="data-label" for="data">Valitse..</label>
+            <input class="file-select" id="data" type="file" webkitdirectory directory />
         </div>
         <div>
             <label for="iterations">Iteraatiot</label>
