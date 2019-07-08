@@ -7,8 +7,6 @@ let worker
 const props = config.store.properties;
 const store = new Store(config.store.schema);
 
-// TODO set others too
-
 const setLabel = (id, txt, title) => {
     const label = window.document.getElementById(id)
     if (label) {
@@ -44,28 +42,33 @@ const initSettings = () => {
 
 initSettings();
 
-const setStatus = (text) => {
-    window.document
-        .getElementById('status')
-        .textContent = text
+const setStatus = (text, isError) => {
+    const status = window.document.getElementById('status')
+    status.textContent = text
+    status.setAttribute('class', isError ? 'error' : '')
 }
 
 const onMessage = (json) => {
     if (json.level === 'DEBUG') console.debug(json)
-    if (json.level === 'INFO') setStatus(json.msg)
+    if (json.level === 'INFO' || json.level === 'ERROR') setStatus(json.msg, json.level === 'ERROR')
 }
 
 const onStdErr = (err) => {
-    console.log(err)
-    setStatus(`Error: ${err.message}`)
+    console.error('[stderr]', err)
+    setStatus(err.message, true)
+}
+
+const onError = (err) => {
+    console.error('[error]', err)
+    setStatus(err.message, true)
 }
 
 const onEnd = (err, code, signal) => {
-    if (err) {
-        console.error(err)
-        throw err
-    }
     worker = null
+    if (err) {
+        console.error('[end]', err)
+        setStatus(err.message, true);
+    }
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
 
@@ -99,7 +102,7 @@ const settingsChange = (e) => {
 }
 
 const runStop = (e) => {
-
+    setStatus("")
     if (worker) {
         worker.terminate(1)
         worker = null
@@ -127,7 +130,7 @@ const runStop = (e) => {
         worker = new ps.PythonShell(helmetScript, opts)
         worker.on('message', onMessage)
         worker.on('stderr', onStdErr);
-        worker.on('error', (e) => console.error(e.message))
+        worker.on('error', onError);
         worker.send(command)
         worker.end(onEnd)
     }
@@ -172,3 +175,7 @@ window.document
 window.document
     .getElementById('runStopButton')
     .addEventListener('click', runStop)
+
+process.on('uncaughtException', (err) => {
+    if (err) console.error(err);
+});
