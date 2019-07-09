@@ -1,7 +1,7 @@
-const path = require('path');
+const path = require('path')
 const ps = require('python-shell')
 const Store = require('electron-store')
-const config = require('./config');
+const config = require('./config')
 
 let worker
 const props = config.store.properties;
@@ -48,14 +48,20 @@ const setStatus = (text, isError) => {
     status.setAttribute('class', isError ? 'error' : '')
 }
 
-const onMessage = (json) => {
-    if (json.level === 'DEBUG') console.debug(json)
-    if (json.level === 'INFO' || json.level === 'ERROR') setStatus(json.msg, json.level === 'ERROR')
+const handleMsg = (json) => {
+    if (json.level !== 'DEBUG') {
+        setStatus(json.msg, json.level === 'ERROR')
+    }
 }
 
-const onStdErr = (err) => {
-    console.error('[stderr]', err)
-    setStatus(err.message, true)
+const onMessage = (json) => {
+    console.debug('[message]', json)
+    handleMsg(json)
+}
+
+const onStdErr = (json) => {
+    console.debug('[stderr]', json)
+    handleMsg(json)
 }
 
 const onError = (err) => {
