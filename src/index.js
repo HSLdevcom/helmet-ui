@@ -8,10 +8,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-const pythonPath = process.env.PYTHONPATH || '.';
-const helmetPath = store.get(config.store.properties.HelmetPath)
-process.env.PYTHONPATH = `${pythonPath}:${helmetPath}/pythonlibs`
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let window;
