@@ -42,15 +42,25 @@ const initSettings = () => {
 
 initSettings();
 
-const setStatus = (text, isError) => {
-    const status = window.document.getElementById('status')
-    status.textContent = text
-    status.setAttribute('class', isError ? 'error' : '')
+const setMessage = (text, isError) => {
+    const message = window.document.getElementById('message')
+    message.textContent = text
+    message.setAttribute('class', isError ? 'error' : '')
+}
+
+const setStatus = (status) => {
+    if (status) {
+        const message = window.document.getElementById('status')
+        message.textContent = `Simulation ${status.state}. ${status.completed} / ${status.total} iteration(s) completed, ${status.failed} failed.`
+    }
 }
 
 const handleMsg = (json) => {
-    if (json.level !== 'DEBUG') {
-        setStatus(json.msg, json.level === 'ERROR')
+    if (json.levelname !== 'DEBUG') {
+        setMessage(json.message, json.levelname === 'ERROR')
+    }
+    if (json.state) {
+        setStatus(json.state)
     }
 }
 
@@ -66,14 +76,14 @@ const onStdErr = (json) => {
 
 const onError = (err) => {
     console.error('[error]', err)
-    setStatus(err.message, true)
+    setMessage(err.message, true)
 }
 
 const onEnd = (err, code, signal) => {
     worker = null
     if (err) {
         console.error('[end]', err)
-        setStatus(err.message, true);
+        setMessage(err.message, true);
     }
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
@@ -108,7 +118,7 @@ const settingsChange = (e) => {
 }
 
 const runStop = (e) => {
-    setStatus("")
+    setMessage("")
     if (worker) {
         worker.terminate(1)
         worker = null
