@@ -30,6 +30,10 @@
             width: 50%;
             float: right;
         }
+        #status-view p {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -38,14 +42,14 @@
     <dialog id="settings">
         <h2>Asetukset</h2>
         <div>
-            Python 2.7
+            Emme Python 2.7
             <label class="file-select" id="python-label" for="python">Valitse..</label>
             <input class="file-select" id="python" type="file" accept=".exe" />
         </div>
         <div>
-            Helmet scripts
+            Helmet Remote Script
             <label class="file-select" id="scripts-label" for="scripts">Valitse..</label>
-            <input class="file-select" id="scripts" type="file" webkitdirectory directory />
+            <input class="file-select" id="scripts" type="file" accept=".py" />
         </div>
         <br/>
         <div id="controls">
@@ -56,7 +60,8 @@
     </dialog>
 
     <div id="status-view">
-        <span id="status"></span>
+        <p id="state">
+        </p>
     </div>
 
     <div id="selections">

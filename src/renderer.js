@@ -50,17 +50,17 @@ const setMessage = (text, isError) => {
 
 const setStatus = (status) => {
     if (status) {
-        const message = window.document.getElementById('status')
-        message.textContent = `Simulation ${status.state}. ${status.completed} / ${status.total} iteration(s) completed, ${status.failed} failed.`
+        const message = window.document.getElementById('state')
+        message.innerHTML = `Iteration ${status.current}, simulation ${status.state}.<br/>${status.completed} / ${status.total} iteration(s) completed, ${status.failed} failed.`
     }
 }
 
 const handleMsg = (json) => {
-    if (json.levelname !== 'DEBUG') {
-        setMessage(json.message, json.levelname === 'ERROR')
+    if (json.level !== 'DEBUG') {
+        setMessage(json.message, json.level === 'ERROR')
     }
-    if (json.state) {
-        setStatus(json.state)
+    if (json.status) {
+        setStatus(json.status)
     }
 }
 
@@ -126,9 +126,9 @@ const runStop = (e) => {
 
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        const helmetScript = `${helmetPath}/helmet_remote.py`
+        //const helmetScript = `${helmetPath}/helmet_remote.py`
 
-        console.debug(pythonPath, helmetScript)
+        console.debug(pythonPath, helmetPath)
 
         const opts = {
             mode: 'json',
@@ -143,7 +143,7 @@ const runStop = (e) => {
             log_level: 'DEBUG' // TODO make configurable
         }
 
-        worker = new ps.PythonShell(helmetScript, opts)
+        worker = new ps.PythonShell(helmetPath, opts)
         worker.on('message', onMessage)
         worker.on('stderr', onStdErr);
         worker.on('error', onError);
