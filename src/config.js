@@ -3,9 +3,13 @@ module.exports = {
     window: {
         width: 800,
         height: 600,
-        autoHideMenuBar: true,
+        resizable: false,
+        maximizable: false,
+        fullscreen: false,
         fullscreenable: false,
+        autoHideMenuBar: true,
         webPreferences: {
+            devTools: true,
             nodeIntegration: true
         }
     },

@@ -3,26 +3,43 @@
     <title>Helmet UI</title>
     <style>
         body {
-            padding: 5px;
+            padding: 1em;
             background: #fafafa;
+            font-size: 0.8em;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
+        #header, #controls {
+            margin-bottom: 2em;
+            border-bottom: 1px solid silver;
+        }
+        h1 {
+            margin: 0;
+            padding-bottom: 5px;
+            font-weight: normal;
+        }
         div {
-            margin: 0 0 20px 0;
+            margin: 0 0 1.25em 0;
         }
         input[type=file] {
             display: none;
         }
         label.file-select {
-            padding: 0.33em;
-            border: 2px solid #c0c0c0;
+            padding: 0.25em;
+            border: 1px solid #c0c0c0;
             background: #f0f0f0;
             cursor: pointer;
+            display: inline-block;
+            min-width: 10em;
+            text-align: center;
         }
         dialog {
             width: 50%;
             padding: 1em;
             z-index: 1000;
+        }
+        .label {
+            min-width: 10em;
+            display: inline-block;
         }
         .error {
             color: red;
@@ -56,11 +73,16 @@
             width: 0;
             max-width: 100%;
         }
+        #version {
+            font-size: 0.7em;
+            position: relative;
+            bottom: 2px;
+            right: 1px;
+        }
     </style>
 </head>
 <body>
-    <h1>Helmet UI</h1>
-    
+
     <dialog id="settings">
         <h2>Asetukset</h2>
         <div>
@@ -81,40 +103,45 @@
         </div>
     </dialog>
 
-    <div id="status-view">
-        <p id="status-state"></p>
-        <p id="status-progress"></p>
-        <div id="progressbar">
-            <div class="done"></div>
-        </div>
-        <p id="status-current"></p>
+
+    <div id="header">
+        <div id="version">v0.0.0</div>
+        <h1>Helmet UI</h1>
     </div>
 
     <div id="selections">
+
+        <div id="status-view">
+            <p id="status-state"></p>
+            <p id="status-progress"></p>
+            <div id="progressbar">
+                <div class="done"></div>
+            </div>
+            <p id="status-current"></p>
+        </div>
+        
         <div>
-            Emme-kansio 
+            <span class="label">Emme-kansio</span> 
             <label class="file-select" id="emme-label" for="emme">Valitse..</label>
             <input class="file-select" id="emme" type="file" accept=".emp" />
         </div>
         <div>
-            Data-kansio 
+            <span class="label">Data-kansio</span> 
             <label class="file-select" id="data-label" for="data">Valitse..</label>
             <input class="file-select" id="data" type="file" webkitdirectory directory />
         </div>
         <div>
-            <label for="iterations">Iteraatiot</label>
+            <label for="iterations" class="label">Iteraatiot</label>
             <input id="iterations" type="number" min="1" max="30" step="1" value="5" />
         </div>
-    </div>
 
-    <div id="controls">
-        <div>
-            <button id="settingsButton">Asetukset</button>
-            <button id="runStopButton">Run/Stop</button>
+        <div id="controls">
+            <div>
+                <button id="settingsButton">Asetukset</button>
+                <button id="runStopButton">Run/Stop</button>
+            </div>
         </div>
     </div>
-
-    <hr>
     
     <div>
         <span id="message"></span>

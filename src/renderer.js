@@ -2,11 +2,17 @@ const path = require('path')
 const ps = require('python-shell')
 const Store = require('electron-store')
 const config = require('./config')
+const { version } = require('../package.json')
 
 let worker
 const props = config.store.properties
 const store = new Store(config.store.schema)
 
+window.document.getElementById('version').innerText = `v${version}`
+
+/**
+ * Set button labels for selecting Emme project and data folder.
+ */
 function setLabel(id, txt, title) {
     const label = window.document.getElementById(id)
     if (label) {
@@ -15,6 +21,9 @@ function setLabel(id, txt, title) {
     }
 }
 
+/**
+ * Display all current settings in Store.
+ */
 function initSettings() {
 
     const emme = store.get(props.EmmePath)
@@ -40,6 +49,9 @@ function initSettings() {
     window.document.getElementById('iterations').value = store.get(props.Iterations)
 }
 
+/**
+ * Set status bar message.
+ */
 function setMessage(text, isError) {
     const message = window.document.getElementById('message')
     message.textContent = text
@@ -53,23 +65,23 @@ function setState(state) {
 
 function setCurrentIteration(current) {
     const e = window.document.getElementById('status-current')
-    e.innerHTML = (current || 0) ? `Iteration ${current} in progress..` : ' '
+    e.innerHTML = current ? `Iteration ${current} in progress..` : ''
 }
 
 function setProgress(completed, failed, total) {
     
     const txt = window.document.getElementById('status-progress')
     const bar = document.querySelector("#progressbar .done")
-    const progress = Math.round(completed / total * 100)
+    const progress = Math.min(100, Math.round(completed / total * 100))
     const color = failed > 0 ? 'red' : 'gray'
 
     txt.innerHTML = `${completed} of ${total} iterations completed, ${failed} failed.`
-    bar.setAttribute("style", `width:${progress}%background-color:${color}`)
+    bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
 }
 
 function resetStatus() {
     setState(null)
-    setCurrentIteration(0)
+    setCurrentIteration(null)
     setProgress(0, 0, store.get(props.Iterations))
 }
 
@@ -79,9 +91,12 @@ function handleMsg(json) {
     }
     if (json.status) {
         setState(json.status.state)
-        setCurrentIteration(json.status.current)
         setProgress(json.status.completed, json.status.failed, json.status.total)
-
+        if (json.status.state !== 'finished') {
+            setCurrentIteration(json.status.current)
+        } else {
+            setCurrentIteration(null)
+        }
     }
 }
 

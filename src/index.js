@@ -14,6 +14,7 @@ let window;
 
 const createWindow = () => {
   window = new BrowserWindow(config.window);
+  window.setProgressBar(0.5)
   window.loadURL(`file://${__dirname}/index.html`);
   window.on('closed', () => { window = null; });
 };
