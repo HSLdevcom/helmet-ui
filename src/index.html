@@ -8,7 +8,7 @@
             padding: 0;
             position: relative;
             background: #fafafa;
-            font-size: 0.8em;
+            font-size: 0.85em;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
         #header, #controls {
@@ -97,8 +97,7 @@
         }
         #main-view {
             margin: 0;
-            padding: 1em;
-            border-bottom: 1px solid silver;
+            padding: 1.5em;
         }
         #shader {
             display: none;
@@ -115,6 +114,10 @@
             z-index: 900;
             background-color: black;
             opacity: 0.25;
+        }
+        #results {
+            margin: 0;
+            border-top: 2px solid silver;
         }
     </style>
 </head>
@@ -175,8 +178,8 @@
             <input id="iterations" type="number" min="1" max="99" step="1" value="10" />
         </div>
         <div>
-            <label for="name" class="label">Tunniste</label>
-            <input id="name" type="text" value="20190715_101221" />
+            <label for="scenario" class="label">Skenaario</label>
+            <input id="scenario" type="text" value="helmet" />
         </div>
 
         <div id="controls">
@@ -184,6 +187,13 @@
                 <span class="label">&nbsp;</span>
                 <button id="runStopButton">Aloita</button>
             </div>
+        </div>
+
+        <div id="results">
+            <h4>Tulokset</h4>
+            <ul>
+                <li><a id="log" href="" target="_blank">Tapahtumaloki</a></li>
+            </ul>
         </div>
     </div>
 

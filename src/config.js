@@ -19,7 +19,8 @@ module.exports = {
             DataPath: 'data.path',
             PythonPath: 'python.path',
             HelmetPath: 'helmet.remote.path',
-            Iterations: 'helmet.run.iterations'
+            Iterations: 'helmet.run.iterations',
+            Scenario: 'helmet.run.scenario'
         },
         schema: {
             'emme.path': {
@@ -39,6 +40,10 @@ module.exports = {
                 minimum: 1,
                 maximum: 99,
                 default: 10
+            },
+            'helmet.run.scenario': {
+                type: 'string',
+                default: 'helmet'
             }
         }
     }

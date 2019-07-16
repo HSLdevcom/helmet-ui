@@ -3,18 +3,11 @@ const ps = require('python-shell')
 const Store = require('electron-store')
 const config = require('./config')
 const { version } = require('../package.json')
+const { ipcRenderer } = require('electron')
 
 let worker
 const props = config.store.properties
 const store = new Store(config.store.schema)
-
-const STATE_LABEL = {
-    starting: 'Simulaatio käynnistymässä',
-    preparing: 'Simulaatiota valmistellaan',
-    running: 'Simulaatio käynnissä',
-    failed: 'Simulaatio epäonnistui'
-}
-
 
 /**
  * Set button labels for selecting the Emme project (.emp) and data folder.
@@ -26,7 +19,6 @@ function setLabel(id, txt, title) {
         label.setAttribute('title', title)
     }
 }
-
 
 /**
  * Display all current settings in Store.
@@ -58,11 +50,11 @@ function initSettings() {
         window.document.getElementById('iterations').value = iterations
     }
 
-    const now = new Date()
-    const name = `${now.toISOString()}`.split('.')[0].replace(/[-_:TZ+.]/g, '')
-    document.getElementById('name').value = name
+    const scenario = store.get(props.Scenario)
+    if (scenario) {
+        document.getElementById('scenario').value = scenario
+    }
 }
-
 
 /**
  * Set status bar message.
@@ -73,18 +65,25 @@ function setMessage(text, isError) {
     message.setAttribute('class', isError ? 'error' : '')
 }
 
-
 /**
  * Set simulation state text.
  */
 function setState(state) {
+
+    const LABELS = {
+        starting: 'Simulaatio käynnistymässä..',
+        preparing: 'Simulaatiota valmistellaan..',
+        running: 'Simulaatio käynnissä.',
+        failed: 'Simulaatio epäonnistui.',
+        aborted: 'Simulaatio epäonnistui.'
+    }
+
     const e = window.document.getElementById('status-state')
-    e.innerHTML = state ? `${STATE_LABEL[state]}.` : ''
+    e.innerHTML = state ? `${LABELS[state]}` : ''
 }
 
-
 /**
- * Set current iteration message.
+ * Set current iteration status.
  */
 function setCurrentIteration(status) {
 
@@ -94,13 +93,29 @@ function setCurrentIteration(status) {
     const LABELS = {
         running: `Iteraatio ${i} käynnissä..`,
         failed: `Iteraatio ${i} epäonnistui.`,
+        aborted: 'Simuloinnin alustus epäonnistui.',
         finished: ''
     }
 
     const e = window.document.getElementById('status-current')
     e.innerHTML = LABELS[state] || ''
+
+    if (status && state !== 'running') {
+        const a = document.getElementById('log')
+        a.setAttribute('href', `file:///${status.log}`)
+        a.addEventListener('click', openLog)
+    }
 }
 
+/**
+ * Request main process to launch the log file.
+ */
+function openLog(e) {
+    e.preventDefault();
+    const url = e.target.getAttribute("href")
+    console.debug('launching', url)
+    ipcRenderer.send('launch-url', url)
+}
 
 /**
  * Set progress indicators and update progress bar.
@@ -162,7 +177,8 @@ function onEnd(err, code, signal) {
     worker = null
     if (err) {
         console.error('[end]', err)
-        setMessage(err.message, true)
+        // setMessage(err.message, true)
+        alert(err.message)
     }
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
@@ -177,6 +193,7 @@ function settingsChange(e) {
     const iterations = window.document.getElementById('iterations').value
     const python = window.document.getElementById('python').files[0]
     const scripts = window.document.getElementById('scripts').files[0]
+    const scenario = window.document.getElementById('scenario').value
 
     if (emme) {
         store.set(props.EmmePath, emme.path)        
@@ -197,6 +214,9 @@ function settingsChange(e) {
     if (iterations) {
         store.set(props.Iterations, parseInt(iterations))
     }
+    if(scenario) {
+        store.set(props.Scenario, scenario)
+    }
 }
 
 /**
@@ -212,6 +232,7 @@ function runStop(e) {
         worker = null
     } else {
 
+        const scenario = store.get(props.Scenario)
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
         const helmet = `${helmetPath}/dummy_remote.py`
@@ -225,6 +246,7 @@ function runStop(e) {
         }
 
         const command = {
+            scenario: scenario,
             emme_path: store.get(props.EmmePath),
             data_path: store.get(props.DataPath),
             iterations: store.get(props.Iterations),
@@ -275,6 +297,10 @@ window.document
     .addEventListener('change', settingsChange)
 
 window.document
+    .getElementById('scenario')
+    .addEventListener('change', settingsChange)
+
+window.document
     .getElementById('settingsButton')
     .addEventListener('click', settingsClick)
 
@@ -287,7 +313,10 @@ window.document
     .addEventListener('click', runStop)
 
 process.on('uncaughtException', (err) => {
-    if (err) console.error(err)
+    if (err) {
+        console.error(err)
+        alert(err)
+    }
 })
 
 initSettings()

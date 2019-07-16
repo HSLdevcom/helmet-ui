@@ -1,7 +1,6 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const config = require('./config')
-const Store = require('electron-store')
-const store = new Store(config.store.schema)
+const child_process = require('child_process')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -14,7 +13,6 @@ let window;
 
 const createWindow = () => {
   window = new BrowserWindow(config.window);
-  window.setProgressBar(0.5)
   window.loadURL(`file://${__dirname}/index.html`);
   window.on('closed', () => { window = null; });
 };
@@ -46,3 +44,8 @@ app.on('activate', () => {
 process.on('uncaughtException', (err) => {
   console.error(err);
 });
+
+ipcMain.on('launch-url', (event, arg) => {
+  const COMMANDS = { 'darwin': 'open', 'win32': 'start', 'linux': 'xdg-open' }
+  child_process.exec(`${COMMANDS[process.platform]} ${arg}`, console.error);
+})
