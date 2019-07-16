@@ -8,10 +8,16 @@ let worker
 const props = config.store.properties
 const store = new Store(config.store.schema)
 
-window.document.getElementById('version').innerText = `v${version}`
+const STATE_LABEL = {
+    starting: 'Simulaatio käynnistymässä',
+    preparing: 'Simulaatiota valmistellaan',
+    running: 'Simulaatio käynnissä',
+    failed: 'Simulaatio epäonnistui'
+}
+
 
 /**
- * Set button labels for selecting Emme project and data folder.
+ * Set button labels for selecting the Emme project (.emp) and data folder.
  */
 function setLabel(id, txt, title) {
     const label = window.document.getElementById(id)
@@ -20,6 +26,7 @@ function setLabel(id, txt, title) {
         label.setAttribute('title', title)
     }
 }
+
 
 /**
  * Display all current settings in Store.
@@ -46,8 +53,16 @@ function initSettings() {
         setLabel('scripts-label', path.basename(store.get(props.HelmetPath)), store.get(props.HelmetPath))    
     }
 
-    window.document.getElementById('iterations').value = store.get(props.Iterations)
+    const iterations = store.get(props.Iterations)
+    if (iterations) {
+        window.document.getElementById('iterations').value = iterations
+    }
+
+    const now = new Date()
+    const name = `${now.toISOString()}`.split('.')[0].replace(/[-_:TZ+.]/g, '')
+    document.getElementById('name').value = name
 }
+
 
 /**
  * Set status bar message.
@@ -58,45 +73,73 @@ function setMessage(text, isError) {
     message.setAttribute('class', isError ? 'error' : '')
 }
 
+
+/**
+ * Set simulation state text.
+ */
 function setState(state) {
     const e = window.document.getElementById('status-state')
-    e.innerHTML = state ? `Simulation ${state}.` : 'Ready.'
+    e.innerHTML = state ? `${STATE_LABEL[state]}.` : ''
 }
 
-function setCurrentIteration(current) {
+
+/**
+ * Set current iteration message.
+ */
+function setCurrentIteration(status) {
+
+    const i = status ? status.current : 0
+    const state = status ? status.state : null 
+
+    const LABELS = {
+        running: `Iteraatio ${i} käynnissä..`,
+        failed: `Iteraatio ${i} epäonnistui.`,
+        finished: ''
+    }
+
     const e = window.document.getElementById('status-current')
-    e.innerHTML = current ? `Iteration ${current} in progress..` : ''
+    e.innerHTML = LABELS[state] || ''
 }
 
+
+/**
+ * Set progress indicators and update progress bar.
+ */
 function setProgress(completed, failed, total) {
     
     const txt = window.document.getElementById('status-progress')
     const bar = document.querySelector("#progressbar .done")
     const progress = Math.min(100, Math.round(completed / total * 100))
-    const color = failed > 0 ? 'red' : 'gray'
+    const color = failed > 0 ? 'red' : 'navy'
 
-    txt.innerHTML = `${completed} of ${total} iterations completed, ${failed} failed.`
+    txt.innerHTML = `${completed} / ${total} iteraatiota suoritettu, ${failed} virhettä.`
     bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
 }
 
+
+/**
+ * Reset and hide simulation status view.
+ */
 function resetStatus() {
     setState(null)
     setCurrentIteration(null)
     setProgress(0, 0, store.get(props.Iterations))
+    document.getElementById('status-view').setAttribute('style', 'display:none;')
 }
 
+
+/**
+ * Handle incoming message from helmet-model-system.
+ */
 function handleMsg(json) {
     if (json.level !== 'DEBUG') {
         setMessage(json.message, json.level === 'ERROR')
     }
     if (json.status) {
+        document.getElementById('status-view').setAttribute('style', 'display:block;')
         setState(json.status.state)
         setProgress(json.status.completed, json.status.failed, json.status.total)
-        if (json.status.state !== 'finished') {
-            setCurrentIteration(json.status.current)
-        } else {
-            setCurrentIteration(null)
-        }
+        setCurrentIteration(json.status)
     }
 }
 
@@ -124,6 +167,9 @@ function onEnd(err, code, signal) {
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
 
+/**
+ * Persist settings immediately when changed.
+ */
 function settingsChange(e) {
 
     const emme = window.document.getElementById('emme').files[0]
@@ -153,9 +199,14 @@ function settingsChange(e) {
     }
 }
 
+/**
+ * Start or stop helmet-model-system.
+ */
 function runStop(e) {
-    setMessage("")
+    
     resetStatus()
+    setMessage("")
+
     if (worker) {
         worker.terminate(1)
         worker = null
@@ -163,7 +214,7 @@ function runStop(e) {
 
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        const helmet = `${helmetPath}/helmet_remote.py`
+        const helmet = `${helmetPath}/dummy_remote.py`
 
         console.debug(pythonPath, helmetPath)
 
@@ -191,11 +242,17 @@ function runStop(e) {
 
 function closeDialog(e) {
     document.getElementById('settings').close()
+    document.getElementById('shader').setAttribute('style', 'display: none;');
 }
 
 function settingsClick(e) {
+    document.getElementById('shader').setAttribute('style', 'display: block;');
     document.getElementById('settings').show()
 }
+
+window.document
+    .getElementById('version')
+    .innerText = `UI v${version}`
 
 window.document
     .getElementById('emme')

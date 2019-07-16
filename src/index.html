@@ -1,22 +1,31 @@
-<html>
+<html >
 <head>
-    <title>Helmet UI</title>
+    <title>Helmet 4.0</title>
+    <meta charset="UTF-8">
     <style>
         body {
-            padding: 1em;
+            margin: 0;
+            padding: 0;
+            position: relative;
             background: #fafafa;
             font-size: 0.8em;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
         #header, #controls {
             position: relative;
-            margin-bottom: 2em;
-            border-bottom: 1px solid silver;
         }
-        h1 {
+        #header-button {
+            position: absolute;
+            bottom: 8px;
+            right: 2px;
             margin: 0;
-            padding-bottom: 5px;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            margin: 0 0 1em 0;
+            padding: 0 0 5px 0;
             font-weight: normal;
+            border-bottom: 1px solid silver;
         }
         div {
             margin: 0 0 1.25em 0;
@@ -34,9 +43,17 @@
             text-align: center;
         }
         dialog {
-            width: 50%;
-            padding: 1em;
+            width: 66%;
+            padding: 1.5em;
             z-index: 1000;
+            margin-top: 5%;
+            background-color: inherit;
+            border: 2px solid silver;
+        }
+        #dialog-controls {
+            float: right;
+            margin: 0;
+            padding: 0;
         }
         .label {
             min-width: 10em;
@@ -49,6 +66,7 @@
             width: 50%;
             float: right;
             padding-right: 10px;
+            display: none;
         }
         #status-view p {
             margin: 0;
@@ -69,50 +87,67 @@
             padding: 0;
             border: 0;
             display: inline-block;
-            background-color: gray;
+            background-color: lightseagreen;
             height: 10px;
             width: 0;
             max-width: 100%;
         }
         #version {
+            font-size: 40%;
+        }
+        #main-view {
+            margin: 0;
+            padding: 1em;
+            border-bottom: 1px solid silver;
+        }
+        #shader {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             margin: 0;
             padding: 0;
-            font-size: 0.75em;
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
+            border: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 900;
+            background-color: black;
+            opacity: 0.25;
         }
     </style>
 </head>
 <body>
 
+    <div id="shader"></div>
+
     <dialog id="settings">
         <h2>Asetukset</h2>
         <div>
-            Emme Python 2.7
+            <span class="label">Emme Python</span>
             <label class="file-select" id="python-label" for="python">Valitse..</label>
             <input class="file-select" id="python" type="file" accept=".exe" />
         </div>
         <div>
-            Helmet Remote Script
+            <span class="label">Helmet Scripts</span>
             <label class="file-select" id="scripts-label" for="scripts">Valitse..</label>
             <input class="file-select" id="scripts" type="file" webkitdirectory directory />
         </div>
         <br/>
-        <div id="controls">
-            <div>
-                <button id="closeDialogButton">Sulje</button>
-            </div>
+        <div id="dialog-controls">
+            <button id="closeDialogButton">Sulje</button>
         </div>
     </dialog>
 
+    <div id="main-view">
 
-    <div id="header">
-        <div id="version">v0.0.0</div>
-        <h1>Helmet UI</h1>
-    </div>
-
-    <div id="selections">
+        <div id="header">
+            <h1>Helmet 4.0 <span id="version">v0.0.0</h1>
+            <div id="header-button">
+                <button id="settingsButton">Asetukset</button>
+            </div>
+        </div>
 
         <div id="status-view">
             <p id="status-state"></p>
@@ -121,10 +156,12 @@
                 <div class="done"></div>
             </div>
             <p id="status-current"></p>
+            <br/>
+            <p id="message"></p>
         </div>
         
         <div>
-            <span class="label">Emme-kansio</span> 
+            <span class="label">Emme-projekti</span> 
             <label class="file-select" id="emme-label" for="emme">Valitse..</label>
             <input class="file-select" id="emme" type="file" accept=".emp" />
         </div>
@@ -135,19 +172,19 @@
         </div>
         <div>
             <label for="iterations" class="label">Iteraatiot</label>
-            <input id="iterations" type="number" min="1" max="30" step="1" value="5" />
+            <input id="iterations" type="number" min="1" max="99" step="1" value="10" />
+        </div>
+        <div>
+            <label for="name" class="label">Tunniste</label>
+            <input id="name" type="text" value="20190715_101221" />
         </div>
 
         <div id="controls">
             <div>
-                <button id="settingsButton">Asetukset</button>
-                <button id="runStopButton">Run/Stop</button>
+                <span class="label">&nbsp;</span>
+                <button id="runStopButton">Aloita</button>
             </div>
         </div>
-    </div>
-    
-    <div>
-        <span id="message"></span>
     </div>
 
     <script type="text/javascript" src="renderer.js"></script>

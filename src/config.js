@@ -37,7 +37,7 @@ module.exports = {
             'helmet.run.iterations': {
                 type: 'number',
                 minimum: 1,
-                maximum: 100,
+                maximum: 99,
                 default: 10
             }
         }
