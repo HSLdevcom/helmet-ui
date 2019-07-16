@@ -4,91 +4,112 @@ const Store = require('electron-store')
 const config = require('./config')
 
 let worker
-const props = config.store.properties;
-const store = new Store(config.store.schema);
+const props = config.store.properties
+const store = new Store(config.store.schema)
 
-const setLabel = (id, txt, title) => {
+function setLabel(id, txt, title) {
     const label = window.document.getElementById(id)
     if (label) {
         label.innerHTML = txt
-        label.setAttribute('title', title);
+        label.setAttribute('title', title)
     }
 }
 
-const initSettings = () => {
+function initSettings() {
 
     const emme = store.get(props.EmmePath)
     if (emme) {
-        setLabel('emme-label', path.basename(store.get(props.EmmePath)), store.get(props.EmmePath));
+        setLabel('emme-label', path.basename(store.get(props.EmmePath)), store.get(props.EmmePath))
     }
 
     const data = store.get(props.DataPath)
     if (data) {
-        setLabel('data-label', path.basename(store.get(props.DataPath)), store.get(props.DataPath));
+        setLabel('data-label', path.basename(store.get(props.DataPath)), store.get(props.DataPath))
     }    
 
     const python = store.get(props.PythonPath)
     if (python) {
-        setLabel('python-label', path.basename(store.get(props.PythonPath)), store.get(props.PythonPath));
+        setLabel('python-label', path.basename(store.get(props.PythonPath)), store.get(props.PythonPath))
     }
 
     const helmet = store.get(props.HelmetPath)
     if (helmet) {
-        setLabel('scripts-label', path.basename(store.get(props.HelmetPath)), store.get(props.HelmetPath));    
+        setLabel('scripts-label', path.basename(store.get(props.HelmetPath)), store.get(props.HelmetPath))    
     }
 
     window.document.getElementById('iterations').value = store.get(props.Iterations)
 }
 
-initSettings();
-
-const setMessage = (text, isError) => {
+function setMessage(text, isError) {
     const message = window.document.getElementById('message')
     message.textContent = text
     message.setAttribute('class', isError ? 'error' : '')
 }
 
-const setStatus = (status) => {
-    if (status) {
-        const message = window.document.getElementById('state')
-        message.innerHTML = `Iteration ${status.current}, simulation ${status.state}.<br/>${status.completed} / ${status.total} iteration(s) completed, ${status.failed} failed.`
-    }
+function setState(state) {
+    const e = window.document.getElementById('status-state')
+    e.innerHTML = state ? `Simulation ${state}.` : 'Ready.'
 }
 
-const handleMsg = (json) => {
+function setCurrentIteration(current) {
+    const e = window.document.getElementById('status-current')
+    e.innerHTML = (current || 0) ? `Iteration ${current} in progress..` : ' '
+}
+
+function setProgress(completed, failed, total) {
+    
+    const txt = window.document.getElementById('status-progress')
+    const bar = document.querySelector("#progressbar .done")
+    const progress = Math.round(completed / total * 100)
+    const color = failed > 0 ? 'red' : 'gray'
+
+    txt.innerHTML = `${completed} of ${total} iterations completed, ${failed} failed.`
+    bar.setAttribute("style", `width:${progress}%background-color:${color}`)
+}
+
+function resetStatus() {
+    setState(null)
+    setCurrentIteration(0)
+    setProgress(0, 0, store.get(props.Iterations))
+}
+
+function handleMsg(json) {
     if (json.level !== 'DEBUG') {
         setMessage(json.message, json.level === 'ERROR')
     }
     if (json.status) {
-        setStatus(json.status)
+        setState(json.status.state)
+        setCurrentIteration(json.status.current)
+        setProgress(json.status.completed, json.status.failed, json.status.total)
+
     }
 }
 
-const onMessage = (json) => {
+function onMessage(json) {
     console.debug('[message]', json)
     handleMsg(json)
 }
 
-const onStdErr = (json) => {
+function onStdErr(json) {
     console.debug('[stderr]', json)
     handleMsg(json)
 }
 
-const onError = (err) => {
+function onError(err) {
     console.error('[error]', err)
     setMessage(err.message, true)
 }
 
-const onEnd = (err, code, signal) => {
+function onEnd(err, code, signal) {
     worker = null
     if (err) {
         console.error('[end]', err)
-        setMessage(err.message, true);
+        setMessage(err.message, true)
     }
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
 
-const settingsChange = (e) => {
+function settingsChange(e) {
 
     const emme = window.document.getElementById('emme').files[0]
     const data = window.document.getElementById('data').files[0]
@@ -98,27 +119,28 @@ const settingsChange = (e) => {
 
     if (emme) {
         store.set(props.EmmePath, emme.path)        
-        setLabel('emme-label', path.basename(emme.path), emme.path);
+        setLabel('emme-label', path.basename(emme.path), emme.path)
     }
     if (data) {
         store.set(props.DataPath, data.path)
-        setLabel('data-label', path.basename(data.path), data.path);
+        setLabel('data-label', path.basename(data.path), data.path)
     }
     if (python) {
         store.set(props.PythonPath, python.path)
-        setLabel('python-label', path.basename(python.path), python.path);
+        setLabel('python-label', path.basename(python.path), python.path)
     }
     if (scripts) {
         store.set(props.HelmetPath, scripts.path)
-        setLabel('scripts-label', path.basename(scripts.path), scripts.path);
+        setLabel('scripts-label', path.basename(scripts.path), scripts.path)
     }
     if (iterations) {
         store.set(props.Iterations, parseInt(iterations))
     }
 }
 
-const runStop = (e) => {
+function runStop(e) {
     setMessage("")
+    resetStatus()
     if (worker) {
         worker.terminate(1)
         worker = null
@@ -126,7 +148,7 @@ const runStop = (e) => {
 
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        //const helmetScript = `${helmetPath}/helmet_remote.py`
+        const helmet = `${helmetPath}/helmet_remote.py`
 
         console.debug(pythonPath, helmetPath)
 
@@ -143,20 +165,20 @@ const runStop = (e) => {
             log_level: 'DEBUG' // TODO make configurable
         }
 
-        worker = new ps.PythonShell(helmetPath, opts)
+        worker = new ps.PythonShell(helmet, opts)
         worker.on('message', onMessage)
-        worker.on('stderr', onStdErr);
-        worker.on('error', onError);
+        worker.on('stderr', onStdErr)
+        worker.on('error', onError)
         worker.send(command)
         worker.end(onEnd)
     }
 }
 
-const closeDialog = (e) => {
+function closeDialog(e) {
     document.getElementById('settings').close()
 }
 
-const settingsClick = (e) => {
+function settingsClick(e) {
     document.getElementById('settings').show()
 }
 
@@ -193,5 +215,9 @@ window.document
     .addEventListener('click', runStop)
 
 process.on('uncaughtException', (err) => {
-    if (err) console.error(err);
-});
+    if (err) console.error(err)
+})
+
+initSettings()
+resetStatus()
+setMessage()
