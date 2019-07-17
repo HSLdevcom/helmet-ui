@@ -266,7 +266,7 @@ function runStop(e) {
         const scenario = store.get(props.Scenario)
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        const helmet = `${helmetPath}/dummy_remote.py`
+        const helmet = `${helmetPath}/helmet_remote.py`
 
         console.debug(pythonPath, helmetPath)
 
