@@ -9,6 +9,20 @@ let worker
 const props = config.store.properties
 const store = new Store(config.store.schema)
 
+// try to find Emme & Python if not set
+if (!store.get(config.store.properties.PythonPath)) {
+    ipcRenderer.send('check-emme')
+}
+ipcRenderer.on('emme-found', (event, path) => {
+    const ok = confirm(`Python 2.7 löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`)
+    if (ok) {
+        store.set(config.store.properties.PythonPath, path)
+    }
+})
+ipcRenderer.on('emme-not-found', () => {
+    alert("Python 2.7 ei löytynyt oletetusta sijainnista.\n\nMääritä sijainti Asetukset-dialogissa.")
+})
+
 /**
  * Set button labels for selecting the Emme project (.emp) and data folder.
  */

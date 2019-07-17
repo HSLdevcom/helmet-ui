@@ -1,3 +1,5 @@
+const fs = require('fs')
+const _ = require('lodash')
 const { app, BrowserWindow, ipcMain } = require('electron')
 const config = require('./config')
 const child_process = require('child_process')
@@ -49,3 +51,27 @@ ipcMain.on('launch-url', (event, arg) => {
   const COMMANDS = { 'darwin': 'open', 'win32': 'start', 'linux': 'xdg-open' }
   child_process.exec(`${COMMANDS[process.platform]} ${arg}`, console.error);
 })
+
+ipcMain.on('check-emme', checkPython)
+
+/**
+ * Check and try to set Python location on Windows
+ */
+function checkPython(event, args) {
+
+  const drives = ['C:', 'D:', 'E:', 'F:', 'G:', 'H:', 'I:', 'J:', '/']
+  const paths = [
+    '\\Program Files\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
+    '\\Program Files (x86)\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
+    '\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
+    'usr/bin/python2' // mainly for developers on Mac & Linux
+  ]
+
+  const all = _.flatMap(drives, (d) => _.flatMap(paths, (p) => `${d}${p}`))
+  const path = _.find(all, fs.existsSync)
+  if (path) {
+    event.reply('emme-found', path)
+  } else {
+    event.reply('emme-not-found')
+  }
+}
