@@ -11,7 +11,10 @@
             font-size: 0.85em;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
-        #header, #controls {
+        body.busy {
+            cursor: progress;
+        }
+        #main-view, #header {
             position: relative;
         }
         #header-button {
@@ -21,11 +24,13 @@
             margin: 0;
             padding: 0;
         }
-        h1, h2, h3 {
+        h1, h2 {
+            border-bottom: 1px solid silver;
+        }
+        h1, h2, h3, h4, h5 {
             margin: 0 0 1em 0;
             padding: 0 0 5px 0;
             font-weight: normal;
-            border-bottom: 1px solid silver;
         }
         div {
             margin: 0 0 1.25em 0;
@@ -62,27 +67,32 @@
         .error {
             color: red;
         }
-        #status-view {
-            width: 50%;
-            float: right;
-            padding-right: 10px;
-            display: none;
+        #dashboard {
+            border-bottom: 1px solid silver;
         }
-        #status-view p {
+        #control-panel, #status-panel {
+            width: 49.5%;
+            height: 37.5%;
             margin: 0;
             padding: 0;
+            border: 0;
+            display: inline-block;
+            vertical-align: top;
+        }
+        #status-panel {
+            visibility: hidden;
         }
         #progressbar {
-            width: 99%;
+            width: 100%;
             height: 10px;
             border: 0;
             padding: 0;
-            margin-top: 1em;
+            margin: 1em 0 1em 0;
             position: relative;
             border: 1px solid silver;
             background-color: white;
         }
-        #progressbar .done {
+        #progressbar .percentage {
             margin: 0;
             padding: 0;
             border: 0;
@@ -115,9 +125,15 @@
             background-color: black;
             opacity: 0.25;
         }
-        #results {
-            margin: 0;
-            border-top: 2px solid silver;
+        #message, #results-panel ul {
+            height: 4.8em;
+            padding: 0.2em;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid silver;
+        }
+        #results-panel li {
+            visibility: hidden;
         }
     </style>
 </head>
@@ -151,48 +167,47 @@
                 <button id="settingsButton">Asetukset</button>
             </div>
         </div>
-
-        <div id="status-view">
-            <p id="status-state"></p>
-            <p id="status-progress"></p>
-            <div id="progressbar">
-                <div class="done"></div>
-            </div>
-            <p id="status-current"></p>
-            <br/>
-            <p id="message"></p>
-        </div>
         
-        <div>
-            <span class="label">Emme-projekti</span> 
-            <label class="file-select" id="emme-label" for="emme">Valitse..</label>
-            <input class="file-select" id="emme" type="file" accept=".emp" />
-        </div>
-        <div>
-            <span class="label">Data-kansio</span> 
-            <label class="file-select" id="data-label" for="data">Valitse..</label>
-            <input class="file-select" id="data" type="file" webkitdirectory directory />
-        </div>
-        <div>
-            <label for="iterations" class="label">Iteraatiot</label>
-            <input id="iterations" type="number" min="1" max="99" step="1" value="10" />
-        </div>
-        <div>
-            <label for="scenario" class="label">Skenaario</label>
-            <input id="scenario" type="text" value="helmet" />
-        </div>
-
-        <div id="controls">
-            <div>
-                <span class="label">&nbsp;</span>
-                <button id="runStopButton">Aloita</button>
+        <div id="dashboard">
+            <div id="control-panel">
+                <div>
+                    <span class="label">Emme-projekti</span> 
+                    <label class="file-select" id="emme-label" for="emme">Valitse..</label>
+                    <input class="file-select" id="emme" type="file" accept=".emp" />
+                </div>
+                <div>
+                    <span class="label">Data-kansio</span> 
+                    <label class="file-select" id="data-label" for="data">Valitse..</label>
+                    <input class="file-select" id="data" type="file" webkitdirectory directory />
+                </div>
+                <div>
+                    <label for="iterations" class="label">Iteraatiot</label>
+                    <input id="iterations" type="number" min="1" max="99" step="1" value="10" />
+                </div>
+                <div>
+                    <label for="scenario" class="label">Skenaario</label>
+                    <input id="scenario" type="text" value="helmet" />
+                </div>
+                <div>
+                    <span class="label">&nbsp;</span>
+                    <button id="runStopButton">Aloita</button>
+                </div>
+            </div>
+            <div id="status-panel">
+                <div id="status-state"></div>
+                <div id="status-progress"></div>
+                <div id="progressbar">
+                    <div class="percentage"></div>
+                </div>
+                <div id="status-current"></div>
+                <div id="message"></div>
             </div>
         </div>
 
-        <div id="results">
-            <h4>Tulokset</h4>
+        <div id="results-panel">
+            <h3>Tulokset</h3>
             <ul>
-                <li><a id="log" href="" target="_blank">Tapahtumaloki</a></li>
+                <li><a id="log-link" href="" target="_blank">Tapahtumaloki</a></li>
             </ul>
         </div>
     </div>

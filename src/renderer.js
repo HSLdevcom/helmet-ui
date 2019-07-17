@@ -57,134 +57,7 @@ function initSettings() {
 }
 
 /**
- * Set status bar message.
- */
-function setMessage(text, isError) {
-    const message = window.document.getElementById('message')
-    message.textContent = text
-    message.setAttribute('class', isError ? 'error' : '')
-}
-
-/**
- * Set simulation state text.
- */
-function setState(state) {
-
-    const LABELS = {
-        starting: 'Simulaatio käynnistymässä..',
-        preparing: 'Simulaatiota valmistellaan..',
-        running: 'Simulaatio käynnissä.',
-        failed: 'Simulaatio epäonnistui.',
-        aborted: 'Simulaatio epäonnistui.'
-    }
-
-    const e = window.document.getElementById('status-state')
-    e.innerHTML = state ? `${LABELS[state]}` : ''
-}
-
-/**
- * Set current iteration status.
- */
-function setCurrentIteration(status) {
-
-    const i = status ? status.current : 0
-    const state = status ? status.state : null 
-
-    const LABELS = {
-        running: `Iteraatio ${i} käynnissä..`,
-        failed: `Iteraatio ${i} epäonnistui.`,
-        aborted: 'Simuloinnin alustus epäonnistui.',
-        finished: ''
-    }
-
-    const e = window.document.getElementById('status-current')
-    e.innerHTML = LABELS[state] || ''
-
-    if (status && state !== 'running') {
-        const a = document.getElementById('log')
-        a.setAttribute('href', `file:///${status.log}`)
-        a.addEventListener('click', openLog)
-    }
-}
-
-/**
- * Request main process to launch the log file.
- */
-function openLog(e) {
-    e.preventDefault();
-    const url = e.target.getAttribute("href")
-    console.debug('launching', url)
-    ipcRenderer.send('launch-url', url)
-}
-
-/**
- * Set progress indicators and update progress bar.
- */
-function setProgress(completed, failed, total) {
-    
-    const txt = window.document.getElementById('status-progress')
-    const bar = document.querySelector("#progressbar .done")
-    const progress = Math.min(100, Math.round(completed / total * 100))
-    const color = failed > 0 ? 'red' : 'navy'
-
-    txt.innerHTML = `${completed} / ${total} iteraatiota suoritettu, ${failed} virhettä.`
-    bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
-}
-
-
-/**
- * Reset and hide simulation status view.
- */
-function resetStatus() {
-    setState(null)
-    setCurrentIteration(null)
-    setProgress(0, 0, store.get(props.Iterations))
-    document.getElementById('status-view').setAttribute('style', 'display:none;')
-}
-
-
-/**
- * Handle incoming message from helmet-model-system.
- */
-function handleMsg(json) {
-    if (json.level !== 'DEBUG') {
-        setMessage(json.message, json.level === 'ERROR')
-    }
-    if (json.status) {
-        document.getElementById('status-view').setAttribute('style', 'display:block;')
-        setState(json.status.state)
-        setProgress(json.status.completed, json.status.failed, json.status.total)
-        setCurrentIteration(json.status)
-    }
-}
-
-function onMessage(json) {
-    console.debug('[message]', json)
-    handleMsg(json)
-}
-
-function onStdErr(json) {
-    console.debug('[stderr]', json)
-    handleMsg(json)
-}
-
-function onError(err) {
-    console.error('[error]', err)
-    setMessage(err.message, true)
-}
-
-function onEnd(err, code, signal) {
-    worker = null
-    if (err) {
-        console.error('[end]', err)
-        // setMessage(err.message, true)
-        alert(err.message)
-    }
-    console.debug(`Python exited with code ${code}, signal ${signal}.`)
-}
-
-/**
- * Persist settings immediately when changed.
+ * Settings change listener, persist immediately.
  */
 function settingsChange(e) {
 
@@ -212,11 +85,167 @@ function settingsChange(e) {
         setLabel('scripts-label', path.basename(scripts.path), scripts.path)
     }
     if (iterations) {
+        const prevIter = store.get(props.Iterations)
         store.set(props.Iterations, parseInt(iterations))
+        if (prevIter !== iterations) {
+            resetStatus()
+            setProgress(0, 0, iterations)
+        }
     }
     if(scenario) {
         store.set(props.Scenario, scenario)
     }
+}
+
+/**
+ * Set status message, for displaying log messages above DEBUG level.
+ */
+function setMessage(text, isError) {
+    const message = window.document.getElementById('message')
+    message.textContent = text
+    message.setAttribute('class', isError ? 'error' : '')
+}
+
+/**
+ * Set simulation state text.
+ */
+function setState(status) {
+
+
+    const END_STATES = [
+        'aborted', 'failed', 'finished'
+    ]
+    const STATE_LABELS = {
+        starting: 'Simulaatio käynnistymässä..',
+        preparing: 'Simulaatio käynnistymässä..',
+        running: 'Simulaatio käynnissä.',
+        failed: 'Simulaatio epäonnistui.',
+        aborted: 'Simulaatio epäonnistui.'
+    }
+
+    const { state, log } = status || {}
+    
+    window.document
+        .getElementById('status-state')
+        .innerHTML = STATE_LABELS[state] || ''
+
+    const logLink = document.getElementById('log-link')
+    if (status && END_STATES.includes(state)) {
+        const url = `file:///${log}`
+        logLink.setAttribute('href', url)
+        logLink.setAttribute('style', 'visibility:visible;')
+    } else {
+        logLink.setAttribute('style', 'visibility:hidden;')
+    }
+}
+
+/**
+ * Request main process to open given URL with associated app.
+ */
+function openLink(e) {
+    e.preventDefault();
+    const url = e.target.getAttribute('href')
+    ipcRenderer.send('launch-url', url)
+}
+
+/**
+ * Set current iteration status.
+ */
+function setCurrentIteration(status) {
+
+    const i = status ? status.current : 0
+    const state = status ? status.state : null 
+
+    const LABELS = {
+        starting: 'Valmistellaan mallia..',
+        preparing: 'Valmistellaan mallia..',
+        running: `Iteraatio ${i} käynnissä..`,
+        failed: `Iteraatio ${i} epäonnistui.`,
+        aborted: 'Simuloinnin alustus epäonnistui.',
+        finished: ' '
+    }
+
+    const e = window.document.getElementById('status-current')
+    e.innerHTML = LABELS[state] || ''
+}
+
+/**
+ * Set progress indicators and update progress bar.
+ */
+function setProgress(completed, failed, total) {
+    
+    const txt = window.document.getElementById('status-progress')
+    const bar = document.querySelector("#progressbar .percentage")
+    const progress = Math.min(100, Math.round((completed + failed) / total * 100))
+    const color = failed > 0 ? 'red' : 'navy'
+
+    txt.innerHTML = `${completed} / ${total} iteraatiota suoritettu, ${failed} virhettä.`
+    bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
+}
+
+
+/**
+ * Reset and hide simulation status panel and results.
+ */
+function resetStatus() {
+    setState(null)
+    setCurrentIteration(null)
+    setProgress(0, 0, store.get(props.Iterations))
+    document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;')
+}
+
+
+/**
+ * Handle incoming message from helmet-model-system.
+ */
+function handleMsg(json) {
+    if (json.level !== 'DEBUG') {
+        setMessage(json.message, json.level === 'ERROR')
+    }
+    if (json.status) {
+        document.getElementById('status-panel').setAttribute('style', 'visibility:visible;')
+        setState(json.status)
+        setProgress(json.status.completed, json.status.failed, json.status.total)
+        setCurrentIteration(json.status)
+    }
+}
+
+function onMessage(json) {
+    console.debug('[message]', json)
+    handleMsg(json)
+}
+
+function onStdErr(json) {
+    console.debug('[stderr]', json)
+    handleMsg(json)
+}
+
+function onError(err) {
+    console.error('[error]', err)
+    setMessage(err.message, true)
+}
+
+function onEnd(err, code, signal) {
+    worker = null
+    setControlsEnabled(true)
+    if (err) {
+        console.error('[end]', err)
+        // setMessage(err.message, true)
+        alert(err.message)
+    }
+    console.debug(`Python exited with code ${code}, signal ${signal}.`)
+}
+
+function setControlsEnabled(isEnabled) {
+    document.querySelectorAll('input').forEach((i) => {
+        if (isEnabled) {
+            document.body.classList.remove('busy')
+            i.removeAttribute('disabled')
+        } else {
+            document.body.classList.add('busy')
+            i.setAttribute('disabled', true)
+        }
+    })
 }
 
 /**
@@ -230,8 +259,10 @@ function runStop(e) {
     if (worker) {
         worker.terminate(1)
         worker = null
+        setControlsEnabled(true)
     } else {
 
+        setControlsEnabled(false)
         const scenario = store.get(props.Scenario)
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
@@ -311,6 +342,10 @@ window.document
 window.document
     .getElementById('runStopButton')
     .addEventListener('click', runStop)
+
+window.document
+    .getElementById('log-link')
+    .addEventListener('click', openLink)
 
 process.on('uncaughtException', (err) => {
     if (err) {
