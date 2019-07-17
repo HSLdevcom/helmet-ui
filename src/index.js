@@ -61,8 +61,8 @@ function checkPython(event, args) {
 
   const drives = ['C:', 'D:', 'E:', 'F:', 'G:', 'H:', 'I:', 'J:', '/']
   const paths = [
-    '\\Program Files\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
-    '\\Program Files (x86)\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
+    '\\Program Files\\INRO\\Emme\\Emme 4\\Emme-4.3.3\\Python27\\python.exe',
+    '\\Program Files (x86)\\INRO\\Emme\\Emme 4\\Emme-4.3.3\\Python27\\python.exe',
     '\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
     'usr/bin/python2' // mainly for developers on Mac & Linux
   ]

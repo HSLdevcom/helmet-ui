@@ -17,6 +17,7 @@ ipcRenderer.on('emme-found', (event, path) => {
     const ok = confirm(`Python 2.7 löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`)
     if (ok) {
         store.set(config.store.properties.PythonPath, path)
+        initSettings()
     }
 })
 ipcRenderer.on('emme-not-found', () => {
