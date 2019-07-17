@@ -116,11 +116,12 @@ function setState(status) {
         'aborted', 'failed', 'finished'
     ]
     const STATE_LABELS = {
-        starting: 'Simulaatio käynnistymässä..',
-        preparing: 'Simulaatio käynnistymässä..',
+        starting: 'Simulaatio aloitettu.',
+        preparing: 'Simulaatiota valmistellaan.',
         running: 'Simulaatio käynnissä.',
         failed: 'Simulaatio epäonnistui.',
-        aborted: 'Simulaatio epäonnistui.'
+        aborted: 'Simulaatio epäonnistui.',
+        finished: 'Simulaatio päättynyt.'
     }
 
     const { state, log } = status || {}
@@ -157,8 +158,8 @@ function setCurrentIteration(status) {
     const state = status ? status.state : null 
 
     const LABELS = {
-        starting: 'Valmistellaan mallia..',
-        preparing: 'Valmistellaan mallia..',
+        starting: 'Käynnistetään..',
+        preparing: 'Valmistellaan..',
         running: `Iteraatio ${i} käynnissä..`,
         failed: `Iteraatio ${i} epäonnistui.`,
         aborted: 'Simuloinnin alustus epäonnistui.',
