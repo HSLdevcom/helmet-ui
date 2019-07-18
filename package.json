@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "HSLdevcom",
-  "license": "",
+  "license": "EUPL-1.2",
   "config": {
     "forge": "./forge-config.js"
   },
