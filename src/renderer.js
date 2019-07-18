@@ -225,6 +225,7 @@ function resetStatus() {
     setState(null)
     setCurrentIteration(null)
     setProgress(0, 0, store.get(props.Iterations))
+    setMessage("")
     setResults(null)
     document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;')
 }
@@ -289,7 +290,10 @@ function setControlsEnabled(isEnabled) {
 function runStop(e) {
     
     resetStatus()
-    setMessage("")
+
+    if (!validateSettings()) {
+        return;
+    }
 
     if (worker) {
         worker.terminate(1)
@@ -326,6 +330,38 @@ function runStop(e) {
         worker.send(command)
         worker.end(onEnd)
     }
+}
+
+/**
+ * Check and notify on missing settings.
+ */
+function validateSettings() {
+
+    const emp = store.get(props.EmmePath)
+    if (!emp) {
+        alert("Emme-projektia ei ole valittu!")
+        return false
+    }
+
+    const data = store.get(props.DataPath)    
+    if (!data) {
+        alert("Data-kansiota ei ole valittu!")
+        return false
+    }
+    
+    const helmet = store.get(props.HelmetPath)
+    if (!helmet) {
+        alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.")
+        return false;
+    }
+    
+    const python = store.get(props.PythonPath)
+    if (!python) {
+        alert("Python -sijaintia ei ole asetettu!")
+        return false
+    }
+
+    return true
 }
 
 function closeDialog(e) {
@@ -391,4 +427,3 @@ process.on('uncaughtException', (err) => {
 
 initSettings()
 resetStatus()
-setMessage()
