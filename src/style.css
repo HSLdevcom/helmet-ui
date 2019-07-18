@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background: #fafafa;
+    font-size: 0.85em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body.busy {
+    cursor: progress;
+}
+
+#main-view, #header {
+    position: relative;
+}
+
+#header-button {
+    position: absolute;
+    bottom: 8px;
+    right: 2px;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    border-bottom: 1px solid silver;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0 0 1em 0;
+    padding: 0 0 5px 0;
+    font-weight: normal;
+}
+
+div {
+    margin: 0 0 1.25em 0;
+}
+
+input[type=file] {
+    display: none;
+}
+
+label.file-select {
+    padding: 0.25em;
+    border: 1px solid #c0c0c0;
+    background: #f0f0f0;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 10em;
+    text-align: center;
+}
+
+dialog {
+    width: 66%;
+    padding: 1.5em;
+    z-index: 1000;
+    margin-top: 5%;
+    background-color: inherit;
+    border: 2px solid silver;
+}
+
+#dialog-controls {
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.label {
+    min-width: 10em;
+    display: inline-block;
+}
+
+.error {
+    color: red;
+}
+
+#dashboard {
+    border-bottom: 1px solid silver;
+}
+
+#control-panel, #status-panel {
+    width: 49.5%;
+    height: 37.5%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#status-panel {
+    visibility: hidden;
+}
+
+#progressbar {
+    width: 100%;
+    height: 10px;
+    border: 0;
+    padding: 0;
+    margin: 1em 0 1em 0;
+    position: relative;
+    border: 1px solid silver;
+    background-color: white;
+}
+
+#progressbar .percentage {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: inline-block;
+    background-color: lightseagreen;
+    height: 10px;
+    width: 0;
+    max-width: 100%;
+}
+
+#version {
+    font-size: 40%;
+}
+
+#main-view {
+    margin: 0;
+    padding: 1.5em;
+}
+
+#shader {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    background-color: black;
+    opacity: 0.25;
+}
+
+#message, #results-panel ul {
+    height: 4.8em;
+    padding: 0.2em;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid silver;
+}
+
+#results-panel li {
+    visibility: hidden;
+}
