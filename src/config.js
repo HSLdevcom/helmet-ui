@@ -1,5 +1,9 @@
 
 module.exports = {
+    emme: {
+        version: '4.3.3',
+        pythonVersion: '2.7'
+    },
     window: {
         width: 800,
         height: 600,

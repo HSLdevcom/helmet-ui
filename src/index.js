@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const _ = require('lodash')
 const { app, BrowserWindow, ipcMain } = require('electron')
 const config = require('./config')
@@ -59,19 +60,46 @@ ipcMain.on('check-emme', checkPython)
  */
 function checkPython(event, args) {
 
+  const e = getVersion(config.emme.version)
+  const emmePath = `INRO\\Emme\\Emme ${e.major}\\Emme-${e.semver}`
+
+  const p = getVersion(config.emme.pythonVersion)
+  const pythonPath = `Python${p.major}${p.minor}\\python.exe`
+
+  const EMMEPATH = process.env.EMMEPATH || ''
+  const emmePythonPath = path.join(EMMEPATH, pythonPath)
+  if (fs.existsSync(emmePythonPath)) {
+    event.reply('emme-found', emmePythonPath)
+    return
+  }
+
+  // not found based on EMMEPATH, try guessing some common locations
   const drives = ['C:', 'D:', 'E:', 'F:', 'G:', 'H:', 'I:', 'J:', '/']
   const paths = [
-    '\\Program Files\\INRO\\Emme\\Emme 4\\Emme-4.3.3\\Python27\\python.exe',
-    '\\Program Files (x86)\\INRO\\Emme\\Emme 4\\Emme-4.3.3\\Python27\\python.exe',
-    '\\INRO\\Emme\\Emme4\\Emme-4.3.3\\Python27\\python.exe',
-    'usr/bin/python2' // mainly for developers on Mac & Linux
+    `\\Program Files\\${emmePath}\\${pythonPath}`,
+    `\\Program Files (x86)\\${emmePath}\\${pythonPath}`,
+    `\\${emmePath}\\${pythonPath}`,
+    `usr/bin/python2` // mainly for developers on Mac & Linux
   ]
 
   const all = _.flatMap(drives, (d) => _.flatMap(paths, (p) => `${d}${p}`))
-  const path = _.find(all, fs.existsSync)
-  if (path) {
-    event.reply('emme-found', path)
+  const first = _.find(all, fs.existsSync)
+  if (first) {
+    event.reply('emme-found', first)
   } else {
     event.reply('emme-not-found')
+  }
+}
+
+/**
+ * Dissect given semantic version number string
+ */
+function getVersion(semver) {
+  const tokens = semver ? semver.split('.', 3) : []
+  return {
+    semver,
+    major: tokens[0] || '',
+    minor: tokens[1] || '',
+    patch: tokens[2] || '',
   }
 }

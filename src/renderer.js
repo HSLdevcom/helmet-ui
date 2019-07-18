@@ -15,14 +15,17 @@ if (!store.get(config.store.properties.PythonPath)) {
     ipcRenderer.send('check-emme')
 }
 ipcRenderer.on('emme-found', (event, path) => {
-    const ok = confirm(`Python 2.7 löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`)
+    const v = config.emme.pythonVersion
+    const ok = confirm(`Python ${v} löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`)
     if (ok) {
         store.set(config.store.properties.PythonPath, path)
         initSettings()
     }
 })
 ipcRenderer.on('emme-not-found', () => {
-    alert("Python 2.7 ei löytynyt oletetusta sijainnista.\n\nMääritä sijainti Asetukset-dialogissa.")
+    const ev = config.emme.version
+    const pv = config.emme.pythonVersion
+    alert(`Emme ${ev} ja Python ${pv} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`)
 })
 
 /**

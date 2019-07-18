@@ -2,22 +2,20 @@
 
 [![Build Status](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.org/HSLdevcom/helmet-ui)
 
-This is the UI for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system).
+Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system).
 
 ## Development env
 
- This is an [Electron.js](https://electrojs.org) application written mostly in JavaScript, HTML and CSS.
+ This is an [Electron](https://electrojs.org) application written in JavaScript, HTML and CSS.
 
 ### Requirements
 
 - Git client
-- Node.js 10 LTS + NPM
+- Node.js 10 LTS & NPM
 - [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system)
 - Emme 4.3.3 (Windows-only)
 
-On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-project.com/) are required to make the Windows build of the app.
-
-See the [end-user requirements](#end-user-environment) that also apply to testing the UI integration with Emme.
+On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-project.com/) are also required to make the app for Windows.
 
 ### Setup
 
@@ -28,7 +26,7 @@ $ git clone <this repository>`
 $ npm install
 ```
 
-See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing the app.
+See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. Emme and Python versions can be set in [config.js](./src/config.js), affecting mainly the automatic resolving of Python binary.
 
 ### Running and building
 
@@ -79,10 +77,10 @@ Before using Helmet UI, the following requirements must be met:
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
   1. [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded at the workstation
 
-The application attempts to find Emme installation on the workstation, but may fail if it is installed in an unusual location. If this is the case, you must set the Python location manually. This is notified on first start and can be done in the application's setting dialog (_Asetukset_):
+The application attempts to find Emme installation on the workstation, but may fail if `EMMEPATH` environment variable is not set and the application is installed in an unusual location. If this is the case, you must set the location of Python binary manually. This is notified on first start and can be done later in the application's setting dialog (Asetukset):
 
 - Emme Python executable
-    - This **must** be the Python shipped with Emme to meet some special dependencies.
+    - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
     - e.g. `C:\Program Files\INRO\Emme-4.3.3\Python27\python.exe`
 - The `Scripts` folder of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)
     - e.g. `C:\Helmet\helmet-model-system\Scripts`
