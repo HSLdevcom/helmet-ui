@@ -1,5 +1,11 @@
 const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
 
+/**
+ * Electron Forge config.
+ *
+ * https://www.electronforge.io/config/makers/squirrel.windows
+ * https://www.electronforge.io/config/publishers/github
+ */
 module.exports = {
     buildIdentifier: process.env.TRAVIS_BRANCH === 'release' ? 'prod' : 'beta',
     packagerConfig: {
@@ -9,7 +15,16 @@ module.exports = {
         {
             name: "@electron-forge/maker-squirrel",
             config: {
-                name: "helmet_ui"
+                name: "helmet-ui"
+                
+                // TODO branding
+                // iconUrl: '',
+                // loadingGif: '',
+                // setupIcon: ''
+                
+                // TODO signing
+                // certificateFile: './cert.pfx',
+                // certificatePassword: 'secret'
             }
         },
         {
@@ -26,7 +41,7 @@ module.exports = {
                     name: 'helmet-ui'
                 },
                 draft: true,
-                prerelease: true,
+                prerelease: false,
                 authToken: process.env.GITHUB_TOKEN
             }
         }
