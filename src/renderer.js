@@ -130,10 +130,6 @@ function setMessage(text, isError) {
  */
 function setState(status) {
 
-
-    const END_STATES = [
-        'aborted', 'failed', 'finished'
-    ]
     const STATE_LABELS = {
         starting: 'Simulaatio aloitettu.',
         preparing: 'Simulaatiota valmistellaan.',
@@ -148,11 +144,19 @@ function setState(status) {
     window.document
         .getElementById('status-state')
         .innerHTML = STATE_LABELS[state] || ''
+}
 
+/**
+ * Update the results panel with given results.
+ */
+function setResults(status) {
+
+    const { log, results } = status || {}
     const logLink = document.getElementById('log-link')
+    const keyValues = document.getElementById("key-values")
+
     if (status && log) {
-        const url = `file:///${log}`
-        logLink.setAttribute('href', url)
+        logLink.setAttribute('href', `file:///${log}`)
         logLink.setAttribute('style', 'visibility:visible;')
     } else {
         logLink.setAttribute('style', 'visibility:hidden;')
@@ -164,9 +168,9 @@ function setState(status) {
             const values = _.map(res, (v, k) => `- ${k} = ${v}`);
             return _.concat(title, values).join('<br/>')
         })
-        document.getElementById("key-values").innerHTML = formatted.join('<br/><br/>')
+        keyValues.innerHTML = formatted.join('<br/><br/>')
     } else {
-        document.getElementById("key-values").innerHTML = ''
+        keyValues.innerHTML = ''
     }
 }
 
@@ -214,7 +218,6 @@ function setProgress(completed, failed, total) {
     bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
 }
 
-
 /**
  * Reset and hide simulation status panel and results.
  */
@@ -222,9 +225,9 @@ function resetStatus() {
     setState(null)
     setCurrentIteration(null)
     setProgress(0, 0, store.get(props.Iterations))
+    setResults(null)
     document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;')
 }
-
 
 /**
  * Handle incoming message from helmet-model-system.
@@ -238,6 +241,7 @@ function handleMsg(json) {
         setState(json.status)
         setProgress(json.status.completed, json.status.failed, json.status.total)
         setCurrentIteration(json.status)
+        setResults(json.status)
     }
 }
 
