@@ -1,4 +1,5 @@
 const path = require('path')
+const _ = require('lodash')
 const ps = require('python-shell')
 const Store = require('electron-store')
 const config = require('./config')
@@ -139,19 +140,30 @@ function setState(status) {
         finished: 'Simulaatio päättynyt.'
     }
 
-    const { state, log } = status || {}
+    const { state, log, results } = status || {}
     
     window.document
         .getElementById('status-state')
         .innerHTML = STATE_LABELS[state] || ''
 
     const logLink = document.getElementById('log-link')
-    if (status && END_STATES.includes(state)) {
+    if (status && log) {
         const url = `file:///${log}`
         logLink.setAttribute('href', url)
         logLink.setAttribute('style', 'visibility:visible;')
     } else {
         logLink.setAttribute('style', 'visibility:hidden;')
+    }
+
+    if (results && !_.isEmpty(results)) {
+        const formatted = _.flatMap(results, (res, i) => {
+            const title = `Iteraatio ${i+1}`
+            const values = _.map(res, (v, k) => `- ${k} = ${v}`);
+            return _.concat(title, values).join('<br/>')
+        })
+        document.getElementById("key-values").innerHTML = formatted.join('<br/><br/>')
+    } else {
+        document.getElementById("key-values").innerHTML = ''
     }
 }
 
@@ -282,7 +294,7 @@ function runStop(e) {
         const scenario = store.get(props.Scenario)
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        const helmet = `${helmetPath}/helmet_remote.py`
+        const helmet = `${helmetPath}/dummy_remote.py`
 
         console.debug(pythonPath, helmetPath)
 

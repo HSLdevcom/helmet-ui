@@ -11,18 +11,6 @@ body.busy {
     cursor: progress;
 }
 
-#main-view, #header {
-    position: relative;
-}
-
-#header-button {
-    position: absolute;
-    bottom: 8px;
-    right: 2px;
-    margin: 0;
-    padding: 0;
-}
-
 h1, h2 {
     border-bottom: 1px solid silver;
 }
@@ -60,28 +48,53 @@ dialog {
     border: 2px solid silver;
 }
 
+#header, #contents {
+    position: relative;
+}
+
+#contents {
+    margin: 0;
+    padding: 1.5em;
+}
+
+#header-button {
+    position: absolute;
+    bottom: 8px;
+    right: 2px;
+    margin: 0;
+    padding: 0;
+}
+
+#version {
+    font-size: 40%;
+}
+
+#shader {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    background-color: black;
+    opacity: 0.25;
+}
+
 #dialog-controls {
     float: right;
     margin: 0;
     padding: 0;
 }
 
-.label {
-    min-width: 10em;
-    display: inline-block;
-}
-
-.error {
-    color: red;
-}
-
-#dashboard {
-    border-bottom: 1px solid silver;
-}
-
 #control-panel, #status-panel {
     width: 49.5%;
-    height: 37.5%;
+    height: 33%;
     margin: 0;
     padding: 0;
     border: 0;
@@ -91,6 +104,15 @@ dialog {
 
 #status-panel {
     visibility: hidden;
+}
+
+.label {
+    min-width: 10em;
+    display: inline-block;
+}
+
+.error {
+    color: red;
 }
 
 #progressbar {
@@ -115,40 +137,27 @@ dialog {
     max-width: 100%;
 }
 
-#version {
-    font-size: 40%;
-}
-
-#main-view {
-    margin: 0;
-    padding: 1.5em;
-}
-
-#shader {
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+#results-panel {
     margin: 0;
     padding: 0;
-    border: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 900;
-    background-color: black;
-    opacity: 0.25;
 }
-
-#message, #results-panel ul {
-    height: 4.8em;
+#message, #results {
     padding: 0.2em;
     overflow-y: auto;
     background-color: white;
     border: 1px solid silver;
 }
 
-#results-panel li {
-    visibility: hidden;
+#message {
+    height: 4.8em;
+}
+
+#results {
+    padding: 0.5em;
+    height: 35%;
+    margin: 0;
+}
+
+#results p {
+    margin: 0 0 0.5em 0;
 }
