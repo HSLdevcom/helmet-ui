@@ -22,7 +22,7 @@ On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-pr
 Due to tight integration with Emme, the application is mainly targeted for Windows but can be developed on Mac and Linux as well. However, the final testing should always happen on Windows with Emme.
 
 ```
-$ git clone <this repository>`
+$ git clone <this repository>
 $ npm install
 ```
 
@@ -75,9 +75,13 @@ Before using Helmet UI, the following requirements must be met:
 
   1. [Emme 4.3.3](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
-  1. [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded at the workstation
+  1. [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up
 
-The application attempts to find Emme installation on the workstation, but may fail if `EMMEPATH` environment variable is not set and the application is installed in an unusual location. If this is the case, you must set the location of Python binary manually. This is notified on first start and can be done later in the application's setting dialog (Asetukset):
+The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release. The release packages are not signed at the moment so Windows will complaint about it and prevents the installer from running, but this can be overridden simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyways" ("Suorita joka tapauksessa").
+
+The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
+
+On first start, the application attempts to find Emme installation on the workstation, but this may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder:
 
 - Emme Python executable
     - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
@@ -93,3 +97,24 @@ Before running simulations, you must also specify the following:
     - e.g. `c:\Helmet\helmet-model-system\Zone_data\2030`
 1. Number of iterations to be executed (optional)
 1. Scenario/run name (optional)
+
+This is the download link that can be handed to users, along with an advice to download the latest version, i.e. the first one on the list.
+
+- https://github.com/HSLdevcom/helmet-ui/releases
+
+The package to be downloaded is named `Helmet.4.0.UI.Setup-x.y.z.exe`, where the `x.y.z` corresponds to application version.
+
+## TODO & Known Problems
+
+As of 2019-07-19:
+
+1. User cannot select the logging level of Helmet Model System
+    - Fix: add a dropdown select in settings dialog and set it in the Python shell command parameters.
+1. The application is not [signed](https://electronjs.org/docs/tutorial/code-signing), causing the anti-virus software and Windows to consider it suspicious.
+    - Fix: aqcuire a certificate and add it to the [build process](https://www.electronforge.io/config/makers/squirrel.windows) to enable signing
+1. The simulation can be stopped by pressing "Lopeta" button, but this in fact terminates only the Python child process, while the Emme process started by Python seems to remain running.
+    - Fix: perhaps the Python could be commanded to stop Emme process gracefully?
+1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
+
+---
+eof
