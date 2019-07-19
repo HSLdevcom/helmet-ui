@@ -372,6 +372,12 @@ function validateSettings() {
         return false
     }
 
+    const iter = store.get(props.Iterations)
+    if (iter < 1 || iter > 99) {
+        alert("Aseta iteraatiot väliltä 1 - 99.")
+        return false;
+    }
+
     return true
 }
 
