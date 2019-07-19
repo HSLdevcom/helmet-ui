@@ -29,6 +29,14 @@ input[type=file] {
     display: none;
 }
 
+label, .label {
+    min-width: 10em;
+    display: inline-block;
+    line-height: 1.75em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 input, .file-select, #runStopButton {
     margin: 0;
     width: 14em;
@@ -114,15 +122,6 @@ dialog {
     visibility: hidden;
 }
 
-.label {
-    min-width: 10em;
-    display: inline-block;
-}
-
-.error {
-    color: red;
-}
-
 #progressbar {
     width: 100%;
     height: 10px;
@@ -158,6 +157,10 @@ dialog {
 
 #message {
     height: 4.8em;
+}
+
+.error {
+    color: red;
 }
 
 #results {
