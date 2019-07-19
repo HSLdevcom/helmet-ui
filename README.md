@@ -65,6 +65,7 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
     1. Ensure the release name corresponds to version number
     1. Write a brief description (new features, changes, fixes etc)
     1. Check/uncheck the Pre-release checkbox as needed.
+    1. Select `release` branch as the target for tagging
     1. Press **Publish release** when all is good.
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
@@ -102,7 +103,7 @@ This is the download link that can be handed to users, along with an advice to d
 
 - https://github.com/HSLdevcom/helmet-ui/releases
 
-The package to be downloaded is named `Helmet.4.0.UI.Setup-x.y.z.exe`, where the `x.y.z` corresponds to application version.
+The package to be downloaded is named `Helmet.4.0.UI-x.y.z.Setup.exe`, where the `x.y.z` corresponds to the application version.
 
 ## TODO & Known Problems
 
@@ -115,6 +116,10 @@ As of 2019-07-19:
 1. The simulation can be stopped by pressing "Lopeta" button, but this in fact terminates only the Python child process, while the Emme process started by Python seems to remain running.
     - Fix: perhaps the Python could be commanded to stop Emme process gracefully?
 1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
+1. Uncaught exceptions in Python scripts might result in an inconsistent state of the UI. For example, leaving the UI in running state although the script has crashed.
+    - Fix: ensure the Exceptions are caught and update the `status` dictionary accordingly, and also remember to always pass it to the logger as the `extra` parameter
+        - e.g. `self.logger.error("something broke", extra=self.status)`
+    - Fix on UI: without knowing what happened, this might be a bit challenging, but one might try to cover up the situation where Python process ends unexpectely without reporting the status with state `failed`.
 
 ---
 eof
