@@ -28,6 +28,9 @@ div {
 input[type=file] {
     display: none;
 }
+input[type=number] {
+    padding: 0 0 0 0.25em;
+}
 
 label, .label {
     min-width: 10em;
@@ -37,22 +40,25 @@ label, .label {
     vertical-align: middle;
 }
 
-input, .file-select, #runStopButton {
+input, #runStopButton {
     margin: 0;
-    width: 14em;
+    width: 15em;
     line-height: 1.75em;
     padding: 0 0.25em 0 0.25em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 label.file-select {
     margin: 0;
+    width: 14em;
+    padding: 0 0.25em 0 0.25em;
+    line-height: 1.75em;
     cursor: pointer;
-    background: #f1f1f1;
+    background: #f5f5f5;
     display: inline-block;
     border: 1px solid #c0c0c0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 dialog {
