@@ -29,14 +29,20 @@ input[type=file] {
     display: none;
 }
 
+
+input, .file-select, #runStopButton {
+    margin: 0;
+    width: 12em;
+    line-height: 1.75em;
+    padding: 0 0 0 0.25em;
+}
+
 label.file-select {
-    padding: 0.25em;
-    border: 1px solid #c0c0c0;
-    background: #f0f0f0;
+    margin: 0;
     cursor: pointer;
+    background: #ffffff;
     display: inline-block;
-    min-width: 10em;
-    text-align: center;
+    border: 1px solid #c0c0c0;
 }
 
 dialog {

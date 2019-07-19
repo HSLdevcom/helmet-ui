@@ -4,7 +4,11 @@ const ps = require('python-shell')
 const Store = require('electron-store')
 const config = require('./config')
 const { version } = require('../package.json')
-const { ipcRenderer } = require('electron')
+const { webFrame, ipcRenderer } = require('electron')
+
+webFrame.setZoomLevel(1)
+webFrame.setVisualZoomLevelLimits(1, 1);
+webFrame.setLayoutZoomLevelLimits(0, 0);
 
 let worker
 const props = config.store.properties
@@ -267,16 +271,19 @@ function onError(err) {
 function onEnd(err, code, signal) {
     worker = null
     setControlsEnabled(true)
+    document.getElementById('runStopButton').innerHTML = 'Aloita'
     if (err) {
         console.error('[end]', err)
-        // setMessage(err.message, true)
         alert(err.message)
     }
     console.debug(`Python exited with code ${code}, signal ${signal}.`)
 }
 
+/**
+ * Enable/disable control panel inputs.
+ */
 function setControlsEnabled(isEnabled) {
-    document.querySelectorAll('input').forEach((i) => {
+    document.querySelectorAll('input, label').forEach((i) => {
         if (isEnabled) {
             document.body.classList.remove('busy')
             i.removeAttribute('disabled')
@@ -303,12 +310,13 @@ function runStop(e) {
         worker = null
         setControlsEnabled(true)
     } else {
-
         setControlsEnabled(false)
+        document.getElementById('runStopButton').innerHTML = 'Lopeta'
+
         const scenario = store.get(props.Scenario)
         const pythonPath = store.get(props.PythonPath)
         const helmetPath = store.get(props.HelmetPath)
-        const helmet = `${helmetPath}/helmet_remote.py`
+        const helmet = `${helmetPath}/dummy_remote.py`
 
         console.debug(pythonPath, helmetPath)
 
