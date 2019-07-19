@@ -54,7 +54,7 @@ The Electron Forge's [Github publisher](https://www.electronforge.io/config/publ
 The resulting draft must be reviewed, edited and approved in Github to make it publically available to everyone. This allows testing the package and making final fixes to it before making it public.
 
 1. Test and bring all the desired changes in the `master` branch.
-1. Increment the `version` number in [package.json](./package.json) and commit.
+1. Remove `SNAPSHOT` from the `version` field in [package.json](./package.json).
     - See also: [Semantic Versioning](https://semver.org/)
 1. Switch to `release` branch
 1. Merge `master` to `release` and push to remote
