@@ -1,7 +1,7 @@
 {
   "name": "helmet-ui",
   "productName": "Helmet 4.0 UI",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "Helmet 4.0 Model System UI",
   "main": "src/index.js",
   "scripts": {
