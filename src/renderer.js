@@ -169,6 +169,9 @@ function setResults(status) {
             return _.concat(title, values).join('<br/>')
         })
         keyValues.innerHTML = formatted.join('<br/><br/>')
+
+        const resultsDiv = document.getElementById("results")
+        resultsDiv.scrollTop += resultsDiv.offsetTop;
     } else {
         keyValues.innerHTML = ''
     }
