@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -53,4 +53,15 @@ app.on('activate', async () => {
 
 process.on('uncaughtException', (err) => {
   console.error(err);
+});
+
+/**
+ * Enable sending messages to development console for debug purposes.
+ * Clarification:
+ * - console.log here goes to main process' CLI (displayed when ran locally in development)
+ * - console.log in renderer process goes to Chrome console (available via <BrowserWindow>.openDevTools() method)
+ * Thus sending IPC call (named 'console-log') here, puts content of args to development console.
+ */
+ipcMain.on('console-log', (event, args) => {
+  console.log(args);
 });
