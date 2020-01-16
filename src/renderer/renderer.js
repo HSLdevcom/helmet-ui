@@ -2,8 +2,8 @@ const path = require('path')
 const _ = require('lodash')
 const ps = require('python-shell')
 const Store = require('electron-store')
-const config = require('./config')
-const { version } = require('../package.json')
+const config = require('../config')
+const { version } = require('../../package.json')
 const { webFrame, ipcRenderer } = require('electron')
 
 // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496

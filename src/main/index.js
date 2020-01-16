@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
 const { app, BrowserWindow, ipcMain } = require('electron')
-const config = require('./config')
+const config = require('../config')
 const child_process = require('child_process')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
