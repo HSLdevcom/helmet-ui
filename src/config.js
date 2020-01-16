@@ -21,6 +21,7 @@ module.exports = {
         properties: {
             EmmePath: 'emme.path',
             DataPath: 'data.path',
+            FixedTransitCost: 'transit.cost.fixed',
             PythonPath: 'python.path',
             HelmetPath: 'helmet.remote.path',
             Iterations: 'helmet.run.iterations',
@@ -32,6 +33,9 @@ module.exports = {
             },
             'data.path': {
                 type: 'string'
+            },
+            'transit.cost.fixed': {
+                type: 'boolean'
             },
             'python.path': {
                 type: 'string'
