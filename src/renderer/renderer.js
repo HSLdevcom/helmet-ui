@@ -256,32 +256,6 @@ function handleMsg(json) {
   }
 }
 
-function onMessage(json) {
-  console.debug('[message]', json);
-  handleMsg(json);
-}
-
-function onStdErr(json) {
-  console.debug('[stderr]', json);
-  handleMsg(json);
-}
-
-function onError(err) {
-  console.error('[error]', err);
-  setMessage(err.message, true);
-}
-
-function onEnd(err, code, signal) {
-  worker = null;
-  setControlsEnabled(true);
-  document.getElementById('runStopButton').innerHTML = 'Aloita';
-  if (err) {
-    console.error('[end]', err);
-    alert(err.message);
-  }
-  console.debug(`Python exited with code ${code}, signal ${signal}.`);
-}
-
 /**
  * Enable/disable control panel inputs.
  */
@@ -337,12 +311,32 @@ function runStop(e) {
       log_level: 'DEBUG', // TODO make configurable
     };
 
+    ipcRenderer.send('console.log', `running:  ${opts.pythonPath}  ${opts.pythonOptions}  ${helmet}\n`.split('  ').join('\n  '));
     worker = new ps.PythonShell(helmet, opts);
-    worker.on('message', onMessage);
-    worker.on('stderr', onStdErr);
-    worker.on('error', onError);
+    worker.on('message', (json) => {
+      console.debug('[message]', json);
+      handleMsg(json);
+    });
+    worker.on('stderr', (json) => {
+      console.debug('[stderr]', json);
+      handleMsg(json);
+    });
+    worker.on('error', (err) => {
+      console.error('[error]', err);
+      setMessage(err.message, true);
+    });
+    ipcRenderer.send('console.log', `writing the python process stdin: ${JSON.stringify(command, null, " ")}\n`);
     worker.send(command);
-    worker.end(onEnd);
+    worker.end((err, code, signal) => {
+      worker = null;
+      setControlsEnabled(true);
+      document.getElementById('runStopButton').innerHTML = 'Aloita';
+      if (err) {
+        console.error('[end]', err);
+        alert(err.message);
+      }
+      console.debug(`Python exited with code ${code}, signal ${signal}.`);
+    });
   }
 }
 
