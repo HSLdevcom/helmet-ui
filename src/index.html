@@ -1,7 +1,8 @@
-<html >
+<!DOCTYPE html>
+<html lang="fi">
 <head>
-    <title>Helmet 4.0</title>
     <meta charset="UTF-8">
+    <title>Helmet 4.0</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -46,6 +47,11 @@
                     <span class="label">Data-kansio</span> 
                     <label class="file-select" id="data-label" for="data">Valitse..</label>
                     <input class="file-select" id="data" type="file" webkitdirectory directory />
+                </div>
+                <div>
+                    <span class="label">K&auml;yt&auml; esilaskettuja matka-aikoja:</span>
+                    <label>Kyll&auml;<input type="radio" name="fixed-transit-cost" value="true"/></label>
+                    <label>Ei&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="fixed-transit-cost" value="false" checked/></label>
                 </div>
                 <div>
                     <label for="iterations" class="label">Iteraatiot</label>
