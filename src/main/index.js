@@ -62,6 +62,6 @@ process.on('uncaughtException', (err) => {
  * - console.log in renderer process goes to Chrome console (available via <BrowserWindow>.openDevTools() method)
  * Thus sending IPC call (named 'console-log') here, puts content of args to development console.
  */
-ipcMain.on('console-log', (event, args) => {
+ipcMain.on('console.log', (event, args) => {
   console.log(args);
 });
