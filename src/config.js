@@ -4,19 +4,6 @@ module.exports = {
         version: '4.3.3',
         pythonVersion: '2.7'
     },
-    window: {
-        width: 800,
-        height: 600,
-        resizable: false,
-        maximizable: false,
-        fullscreen: false,
-        fullscreenable: false,
-        autoHideMenuBar: true,
-        webPreferences: {
-            devTools: false,
-            nodeIntegration: true
-        }
-    },
     store: {
         properties: {
             EmmePath: 'emme.path',
