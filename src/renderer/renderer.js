@@ -432,12 +432,5 @@ window.document
   .getElementById('log-link')
   .addEventListener('click', openLink);
 
-process.on('uncaughtException', (err) => {
-  if (err) {
-    console.error(err);
-    alert(err);
-  }
-});
-
 initSettings();
 resetStatus();
