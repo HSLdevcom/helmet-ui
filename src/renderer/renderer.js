@@ -5,6 +5,7 @@ const Store = require('electron-store');
 const config = require('../config');
 const { version } = require('../../package.json');
 const { webFrame, ipcRenderer } = require('electron');
+const child_process = require('child_process');
 
 // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
 webFrame.setZoomLevel(1);
@@ -187,8 +188,9 @@ function setResults(status) {
  */
 function openLink(e) {
     e.preventDefault();
+    const COMMANDS = { 'darwin': 'open', 'win32': 'start', 'linux': 'xdg-open' };
     const url = e.target.getAttribute('href');
-    ipcRenderer.send('launch-url', url);
+    child_process.exec(`${COMMANDS[process.platform]} ${url}`, console.error);
 }
 
 /**

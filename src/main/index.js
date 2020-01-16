@@ -3,7 +3,6 @@ const path = require('path');
 const _ = require('lodash');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const config = require('../config');
-const child_process = require('child_process');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -46,11 +45,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 process.on('uncaughtException', (err) => {
   console.error(err);
-});
-
-ipcMain.on('launch-url', (event, arg) => {
-  const COMMANDS = { 'darwin': 'open', 'win32': 'start', 'linux': 'xdg-open' };
-  child_process.exec(`${COMMANDS[process.platform]} ${arg}`, console.error);
 });
 
 ipcMain.on('check-emme', checkPython);
