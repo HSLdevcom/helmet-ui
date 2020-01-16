@@ -6,6 +6,7 @@ const config = require('./config')
 const { version } = require('../package.json')
 const { webFrame, ipcRenderer } = require('electron')
 
+// Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
 webFrame.setZoomLevel(1)
 webFrame.setVisualZoomLevelLimits(1, 1);
 webFrame.setLayoutZoomLevelLimits(0, 0);
