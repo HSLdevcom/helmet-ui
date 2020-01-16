@@ -51,6 +51,7 @@ app.on('activate', async () => {
   }
 });
 
+// TBD clarifying why's this here, https://nodejs.org/api/process.html#process_warning_using_uncaughtexception_correctly
 process.on('uncaughtException', (err) => {
   console.error(err);
 });
