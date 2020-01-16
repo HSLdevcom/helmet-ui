@@ -16,8 +16,7 @@ let window;
 
 const createWindow = () => {
   window = new BrowserWindow(config.window);
-  window.setMenuBarVisibility(false)
-  window.loadURL(`file://${__dirname}/index.html`);
+  window.loadFile('src/index.html');
   window.on('closed', () => { window = null; });
 };
 

@@ -11,6 +11,7 @@ module.exports = {
         maximizable: false,
         fullscreen: false,
         fullscreenable: false,
+        autoHideMenuBar: true,
         webPreferences: {
             devTools: false,
             nodeIntegration: true
