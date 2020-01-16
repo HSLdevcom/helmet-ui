@@ -1,46 +1,46 @@
-const path = require('path')
-const _ = require('lodash')
-const ps = require('python-shell')
-const Store = require('electron-store')
-const config = require('../config')
-const { version } = require('../../package.json')
-const { webFrame, ipcRenderer } = require('electron')
+const path = require('path');
+const _ = require('lodash');
+const ps = require('python-shell');
+const Store = require('electron-store');
+const config = require('../config');
+const { version } = require('../../package.json');
+const { webFrame, ipcRenderer } = require('electron');
 
 // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
-webFrame.setZoomLevel(1)
+webFrame.setZoomLevel(1);
 webFrame.setVisualZoomLevelLimits(1, 1);
 webFrame.setLayoutZoomLevelLimits(0, 0);
 
-let worker
-const props = config.store.properties
-const store = new Store(config.store.schema)
+let worker;
+const props = config.store.properties;
+const store = new Store(config.store.schema);
 
 // try to find Emme & Python if not set
 if (!store.get(config.store.properties.PythonPath)) {
-    ipcRenderer.send('check-emme')
+    ipcRenderer.send('check-emme');
 }
 ipcRenderer.on('emme-found', (event, path) => {
-    const v = config.emme.pythonVersion
-    const ok = confirm(`Python ${v} löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`)
+    const v = config.emme.pythonVersion;
+    const ok = confirm(`Python ${v} löytyi sijainnista:\n\n${path}\n\nHaluatko käyttää tätä sijaintia?`);
     if (ok) {
-        store.set(config.store.properties.PythonPath, path)
-        initSettings()
+        store.set(config.store.properties.PythonPath, path);
+        initSettings();
     }
-})
+});
 ipcRenderer.on('emme-not-found', () => {
-    const ev = config.emme.version
-    const pv = config.emme.pythonVersion
-    alert(`Emme ${ev} ja Python ${pv} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`)
-})
+    const ev = config.emme.version;
+    const pv = config.emme.pythonVersion;
+    alert(`Emme ${ev} ja Python ${pv} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
+});
 
 /**
  * Set button labels for selecting the Emme project (.emp) and data folder.
  */
 function setLabel(id, txt, title) {
-    const label = window.document.getElementById(id)
+    const label = window.document.getElementById(id);
     if (label) {
-        label.innerHTML = txt
-        label.setAttribute('title', title)
+        label.innerHTML = txt;
+        label.setAttribute('title', title);
     }
 }
 
@@ -49,34 +49,34 @@ function setLabel(id, txt, title) {
  */
 function initSettings() {
 
-    const emme = store.get(props.EmmePath)
+    const emme = store.get(props.EmmePath);
     if (emme) {
-        setLabel('emme-label', path.basename(store.get(props.EmmePath)), store.get(props.EmmePath))
+        setLabel('emme-label', path.basename(store.get(props.EmmePath)), store.get(props.EmmePath));
     }
 
-    const data = store.get(props.DataPath)
+    const data = store.get(props.DataPath);
     if (data) {
-        setLabel('data-label', path.basename(store.get(props.DataPath)), store.get(props.DataPath))
+        setLabel('data-label', path.basename(store.get(props.DataPath)), store.get(props.DataPath));
     }    
 
-    const python = store.get(props.PythonPath)
+    const python = store.get(props.PythonPath);
     if (python) {
-        setLabel('python-label', path.basename(store.get(props.PythonPath)), store.get(props.PythonPath))
+        setLabel('python-label', path.basename(store.get(props.PythonPath)), store.get(props.PythonPath));
     }
 
-    const helmet = store.get(props.HelmetPath)
+    const helmet = store.get(props.HelmetPath);
     if (helmet) {
-        setLabel('scripts-label', path.basename(store.get(props.HelmetPath)), store.get(props.HelmetPath))    
+        setLabel('scripts-label', path.basename(store.get(props.HelmetPath)), store.get(props.HelmetPath));
     }
 
-    const iterations = store.get(props.Iterations)
+    const iterations = store.get(props.Iterations);
     if (iterations) {
-        window.document.getElementById('iterations').value = iterations
+        window.document.getElementById('iterations').value = iterations;
     }
 
-    const scenario = store.get(props.Scenario)
+    const scenario = store.get(props.Scenario);
     if (scenario) {
-        document.getElementById('scenario').value = scenario
+        document.getElementById('scenario').value = scenario;
     }
 }
 
@@ -85,39 +85,39 @@ function initSettings() {
  */
 function settingsChange(e) {
 
-    const emme = window.document.getElementById('emme').files[0]
-    const data = window.document.getElementById('data').files[0]
-    const iterations = window.document.getElementById('iterations').value
-    const python = window.document.getElementById('python').files[0]
-    const scripts = window.document.getElementById('scripts').files[0]
-    const scenario = window.document.getElementById('scenario').value
+    const emme = window.document.getElementById('emme').files[0];
+    const data = window.document.getElementById('data').files[0];
+    const iterations = window.document.getElementById('iterations').value;
+    const python = window.document.getElementById('python').files[0];
+    const scripts = window.document.getElementById('scripts').files[0];
+    const scenario = window.document.getElementById('scenario').value;
 
     if (emme) {
-        store.set(props.EmmePath, emme.path)        
-        setLabel('emme-label', path.basename(emme.path), emme.path)
+        store.set(props.EmmePath, emme.path);
+        setLabel('emme-label', path.basename(emme.path), emme.path);
     }
     if (data) {
-        store.set(props.DataPath, data.path)
-        setLabel('data-label', path.basename(data.path), data.path)
+        store.set(props.DataPath, data.path);
+        setLabel('data-label', path.basename(data.path), data.path);
     }
     if (python) {
-        store.set(props.PythonPath, python.path)
-        setLabel('python-label', path.basename(python.path), python.path)
+        store.set(props.PythonPath, python.path);
+        setLabel('python-label', path.basename(python.path), python.path);
     }
     if (scripts) {
-        store.set(props.HelmetPath, scripts.path)
-        setLabel('scripts-label', path.basename(scripts.path), scripts.path)
+        store.set(props.HelmetPath, scripts.path);
+        setLabel('scripts-label', path.basename(scripts.path), scripts.path);
     }
     if (iterations) {
-        const prevIter = store.get(props.Iterations)
-        store.set(props.Iterations, parseInt(iterations))
+        const prevIter = store.get(props.Iterations);
+        store.set(props.Iterations, parseInt(iterations));
         if (prevIter !== iterations) {
-            resetStatus()
-            setProgress(0, 0, iterations)
+            resetStatus();
+            setProgress(0, 0, iterations);
         }
     }
     if(scenario) {
-        store.set(props.Scenario, scenario)
+        store.set(props.Scenario, scenario);
     }
 }
 
@@ -125,9 +125,9 @@ function settingsChange(e) {
  * Set status message, for displaying log messages above DEBUG level.
  */
 function setMessage(text, isError) {
-    const message = window.document.getElementById('message')
-    message.textContent = text
-    message.setAttribute('class', isError ? 'error' : '')
+    const message = window.document.getElementById('message');
+    message.textContent = text;
+    message.setAttribute('class', isError ? 'error' : '');
 }
 
 /**
@@ -142,13 +142,13 @@ function setState(status) {
         failed: 'Simulaatio epäonnistui.',
         aborted: 'Simulaatio epäonnistui.',
         finished: 'Simulaatio päättynyt.'
-    }
+    };
 
-    const { state, log, results } = status || {}
+    const { state, log, results } = status || {};
     
     window.document
         .getElementById('status-state')
-        .innerHTML = STATE_LABELS[state] || ''
+        .innerHTML = STATE_LABELS[state] || '';
 }
 
 /**
@@ -156,29 +156,29 @@ function setState(status) {
  */
 function setResults(status) {
 
-    const { log, results } = status || {}
-    const logLink = document.getElementById('log-link')
-    const keyValues = document.getElementById("key-values")
+    const { log, results } = status || {};
+    const logLink = document.getElementById('log-link');
+    const keyValues = document.getElementById("key-values");
 
     if (status && log) {
-        logLink.setAttribute('href', `file:///${log}`)
-        logLink.setAttribute('style', 'visibility:visible;')
+        logLink.setAttribute('href', `file:///${log}`);
+        logLink.setAttribute('style', 'visibility:visible;');
     } else {
-        logLink.setAttribute('style', 'visibility:hidden;')
+        logLink.setAttribute('style', 'visibility:hidden;');
     }
 
     if (results && !_.isEmpty(results)) {
         const formatted = _.flatMap(results, (res, i) => {
-            const title = `Iteraatio ${i+1}`
+            const title = `Iteraatio ${i+1}`;
             const values = _.map(res, (v, k) => `- ${k} = ${v}`);
-            return _.concat(title, values).join('<br/>')
-        })
-        keyValues.innerHTML = formatted.join('<br/><br/>')
+            return _.concat(title, values).join('<br/>');
+        });
+        keyValues.innerHTML = formatted.join('<br/><br/>');
 
-        const resultsDiv = document.getElementById("results")
+        const resultsDiv = document.getElementById("results");
         resultsDiv.scrollTop += resultsDiv.offsetTop;
     } else {
-        keyValues.innerHTML = ''
+        keyValues.innerHTML = '';
     }
 }
 
@@ -187,8 +187,8 @@ function setResults(status) {
  */
 function openLink(e) {
     e.preventDefault();
-    const url = e.target.getAttribute('href')
-    ipcRenderer.send('launch-url', url)
+    const url = e.target.getAttribute('href');
+    ipcRenderer.send('launch-url', url);
 }
 
 /**
@@ -196,8 +196,8 @@ function openLink(e) {
  */
 function setCurrentIteration(status) {
 
-    const i = status ? status.current : 0
-    const state = status ? status.state : null 
+    const i = status ? status.current : 0;
+    const state = status ? status.state : null;
 
     const LABELS = {
         starting: 'Käynnistetään..',
@@ -205,11 +205,11 @@ function setCurrentIteration(status) {
         running: `Iteraatio ${i} käynnissä..`,
         failed: `Iteraatio ${i} epäonnistui.`,
         aborted: 'Simuloinnin alustus epäonnistui.',
-        finished: ' '
-    }
+        finished: ' ',
+    };
 
-    const e = window.document.getElementById('status-current')
-    e.innerHTML = LABELS[state] || ''
+    const e = window.document.getElementById('status-current');
+    e.innerHTML = LABELS[state] || '';
 }
 
 /**
@@ -217,25 +217,25 @@ function setCurrentIteration(status) {
  */
 function setProgress(completed, failed, total) {
     
-    const txt = window.document.getElementById('status-progress')
-    const bar = document.querySelector("#progressbar .percentage")
-    const progress = Math.min(100, Math.round((completed + failed) / total * 100))
-    const color = failed > 0 ? 'red' : 'navy'
+    const txt = window.document.getElementById('status-progress');
+    const bar = document.querySelector("#progressbar .percentage");
+    const progress = Math.min(100, Math.round((completed + failed) / total * 100));
+    const color = failed > 0 ? 'red' : 'navy';
 
-    txt.innerHTML = `${completed} / ${total} iteraatiota suoritettu, ${failed} virhettä.`
-    bar.setAttribute("style", `width:${progress}%; background-color:${color};`)
+    txt.innerHTML = `${completed} / ${total} iteraatiota suoritettu, ${failed} virhettä.`;
+    bar.setAttribute("style", `width:${progress}%; background-color:${color};`);
 }
 
 /**
  * Reset and hide simulation status panel and results.
  */
 function resetStatus() {
-    setState(null)
-    setCurrentIteration(null)
-    setProgress(0, 0, store.get(props.Iterations))
-    setMessage("")
-    setResults(null)
-    document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;')
+    setState(null);
+    setCurrentIteration(null);
+    setProgress(0, 0, store.get(props.Iterations));
+    setMessage("");
+    setResults(null);
+    document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;');
 }
 
 /**
@@ -243,41 +243,41 @@ function resetStatus() {
  */
 function handleMsg(json) {
     if (json.level !== 'DEBUG') {
-        setMessage(json.message, json.level === 'ERROR')
+        setMessage(json.message, json.level === 'ERROR');
     }
     if (json.status) {
-        document.getElementById('status-panel').setAttribute('style', 'visibility:visible;')
-        setState(json.status)
-        setProgress(json.status.completed, json.status.failed, json.status.total)
-        setCurrentIteration(json.status)
-        setResults(json.status)
+        document.getElementById('status-panel').setAttribute('style', 'visibility:visible;');
+        setState(json.status);
+        setProgress(json.status.completed, json.status.failed, json.status.total);
+        setCurrentIteration(json.status);
+        setResults(json.status);
     }
 }
 
 function onMessage(json) {
-    console.debug('[message]', json)
-    handleMsg(json)
+    console.debug('[message]', json);
+    handleMsg(json);
 }
 
 function onStdErr(json) {
-    console.debug('[stderr]', json)
-    handleMsg(json)
+    console.debug('[stderr]', json);
+    handleMsg(json);
 }
 
 function onError(err) {
-    console.error('[error]', err)
-    setMessage(err.message, true)
+    console.error('[error]', err);
+    setMessage(err.message, true);
 }
 
 function onEnd(err, code, signal) {
-    worker = null
-    setControlsEnabled(true)
-    document.getElementById('runStopButton').innerHTML = 'Aloita'
+    worker = null;
+    setControlsEnabled(true);
+    document.getElementById('runStopButton').innerHTML = 'Aloita';
     if (err) {
-        console.error('[end]', err)
-        alert(err.message)
+        console.error('[end]', err);
+        alert(err.message);
     }
-    console.debug(`Python exited with code ${code}, signal ${signal}.`)
+    console.debug(`Python exited with code ${code}, signal ${signal}.`);
 }
 
 /**
@@ -286,11 +286,11 @@ function onEnd(err, code, signal) {
 function setControlsEnabled(isEnabled) {
     document.querySelectorAll('input, label').forEach((i) => {
         if (isEnabled) {
-            document.body.classList.remove('busy')
-            i.removeAttribute('disabled')
+            document.body.classList.remove('busy');
+            i.removeAttribute('disabled');
         } else {
-            document.body.classList.add('busy')
-            i.setAttribute('disabled', true)
+            document.body.classList.add('busy');
+            i.setAttribute('disabled', 'true');
         }
     })
 }
@@ -300,47 +300,47 @@ function setControlsEnabled(isEnabled) {
  */
 function runStop(e) {
     
-    resetStatus()
+    resetStatus();
 
     if (!validateSettings()) {
         return;
     }
 
     if (worker) {
-        worker.terminate(1)
-        worker = null
-        setControlsEnabled(true)
+        worker.terminate(1);
+        worker = null;
+        setControlsEnabled(true);
     } else {
-        setControlsEnabled(false)
-        document.getElementById('runStopButton').innerHTML = 'Lopeta'
+        setControlsEnabled(false);
+        document.getElementById('runStopButton').innerHTML = 'Lopeta';
 
-        const scenario = store.get(props.Scenario)
-        const pythonPath = store.get(props.PythonPath)
-        const helmetPath = store.get(props.HelmetPath)
-        const helmet = `${helmetPath}/helmet_remote.py`
+        const scenario = store.get(props.Scenario);
+        const pythonPath = store.get(props.PythonPath);
+        const helmetPath = store.get(props.HelmetPath);
+        const helmet = `${helmetPath}/helmet_remote.py`;
 
-        console.debug(pythonPath, helmetPath)
+        console.debug(pythonPath, helmetPath);
 
         const opts = {
             mode: 'json',
             pythonOptions: ['-u'],
-            pythonPath: pythonPath
-        }
+            pythonPath: pythonPath,
+        };
 
         const command = {
             scenario: scenario,
             emme_path: store.get(props.EmmePath),
             data_path: store.get(props.DataPath),
             iterations: store.get(props.Iterations),
-            log_level: 'DEBUG' // TODO make configurable
-        }
+            log_level: 'DEBUG', // TODO make configurable
+        };
 
-        worker = new ps.PythonShell(helmet, opts)
-        worker.on('message', onMessage)
-        worker.on('stderr', onStdErr)
-        worker.on('error', onError)
-        worker.send(command)
-        worker.end(onEnd)
+        worker = new ps.PythonShell(helmet, opts);
+        worker.on('message', onMessage);
+        worker.on('stderr', onStdErr);
+        worker.on('error', onError);
+        worker.send(command);
+        worker.end(onEnd);
     }
 }
 
@@ -349,99 +349,99 @@ function runStop(e) {
  */
 function validateSettings() {
 
-    const emp = store.get(props.EmmePath)
+    const emp = store.get(props.EmmePath);
     if (!emp) {
-        alert("Emme-projektia ei ole valittu!")
-        return false
+        alert("Emme-projektia ei ole valittu!");
+        return false;
     }
 
-    const data = store.get(props.DataPath)    
+    const data = store.get(props.DataPath);
     if (!data) {
-        alert("Data-kansiota ei ole valittu!")
-        return false
+        alert("Data-kansiota ei ole valittu!");
+        return false;
     }
     
-    const helmet = store.get(props.HelmetPath)
+    const helmet = store.get(props.HelmetPath);
     if (!helmet) {
-        alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.")
+        alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
         return false;
     }
     
-    const python = store.get(props.PythonPath)
+    const python = store.get(props.PythonPath);
     if (!python) {
-        alert("Python -sijaintia ei ole asetettu!")
-        return false
-    }
-
-    const iter = store.get(props.Iterations)
-    if (iter < 1 || iter > 99) {
-        alert("Aseta iteraatiot väliltä 1 - 99.")
+        alert("Python -sijaintia ei ole asetettu!");
         return false;
     }
 
-    return true
+    const iter = store.get(props.Iterations);
+    if (iter < 1 || iter > 99) {
+        alert("Aseta iteraatiot väliltä 1 - 99.");
+        return false;
+    }
+
+    return true;
 }
 
 function closeDialog(e) {
-    document.getElementById('settings').close()
+    document.getElementById('settings').close();
     document.getElementById('shader').setAttribute('style', 'display: none;');
 }
 
 function settingsClick(e) {
     document.getElementById('shader').setAttribute('style', 'display: block;');
-    document.getElementById('settings').show()
+    document.getElementById('settings').show();
 }
 
 window.document
     .getElementById('version')
-    .innerText = `UI v${version}`
+    .innerText = `UI v${version}`;
 
 window.document
     .getElementById('emme')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('data')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('iterations')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('python')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('scripts')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('scenario')
-    .addEventListener('change', settingsChange)
+    .addEventListener('change', settingsChange);
 
 window.document
     .getElementById('settingsButton')
-    .addEventListener('click', settingsClick)
+    .addEventListener('click', settingsClick);
 
 window.document
     .getElementById('closeDialogButton')
-    .addEventListener('click', closeDialog)
+    .addEventListener('click', closeDialog);
 
 window.document
     .getElementById('runStopButton')
-    .addEventListener('click', runStop)
+    .addEventListener('click', runStop);
 
 window.document
     .getElementById('log-link')
-    .addEventListener('click', openLink)
+    .addEventListener('click', openLink);
 
 process.on('uncaughtException', (err) => {
     if (err) {
-        console.error(err)
-        alert(err)
+        console.error(err);
+        alert(err);
     }
-})
+});
 
-initSettings()
-resetStatus()
+initSettings();
+resetStatus();
