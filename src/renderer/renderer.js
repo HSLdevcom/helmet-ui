@@ -1,11 +1,11 @@
 const path = require('path');
+const {webFrame, ipcRenderer} = require('electron');
 const _ = require('lodash');
 const ps = require('python-shell');
 const Store = require('electron-store');
+const child_process = require('child_process');
 const config = require('../config');
 const {version} = require('../../package.json');
-const {webFrame} = require('electron');
-const child_process = require('child_process');
 const {searchEMMEPython} = require('./search_emme_pythonpath');
 
 // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
