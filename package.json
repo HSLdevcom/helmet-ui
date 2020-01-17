@@ -17,6 +17,7 @@
     "forge": "./forge-config.js"
   },
   "dependencies": {
+    "babel-standalone": "^6.26.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^4.0.0",
     "lodash": "^4.17.14",
