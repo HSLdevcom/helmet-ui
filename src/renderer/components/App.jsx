@@ -95,7 +95,6 @@ class App extends React.Component {
         >Asetukset</button>
       </div>
 
-      <!-- TODO -->
       <div id="dashboard">
         <Configurations/>
         <div id="status-panel">

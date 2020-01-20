@@ -1,0 +1,25 @@
+.RunConfiguration {
+    width: 24em;
+    padding-left: 0.75em;
+}
+
+.RunConfiguration__heading {
+    font-size: 1.5em;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+}
+
+.RunConfiguration__saved-scenarios {
+    display: table;
+}
+
+.RunConfiguration__scenario {
+    display: table-row;
+}
+
+.RunConfiguration__scenario-run-btn,
+.RunConfiguration__scenario-name-config-btn {
+    display: table-cell;
+    margin: 0.25em;
+    line-height: 1.75em;
+}
