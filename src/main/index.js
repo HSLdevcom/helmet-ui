@@ -19,7 +19,7 @@ const createWindow = async () => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      devTools: false,
+      devTools: true,
       nodeIntegration: true
     }
   });
