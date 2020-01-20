@@ -1,45 +1,9 @@
-
 module.exports = {
     emme: {
         version: '4.3.3',
         pythonVersion: '2.7'
     },
     store: {
-        properties: {
-            EmmePath: 'emme.path',
-            DataPath: 'data.path',
-            FixedTransitCost: 'transit.cost.fixed',
-            PythonPath: 'python.path',
-            HelmetPath: 'helmet.remote.path',
-            Iterations: 'helmet.run.iterations',
-            Scenario: 'helmet.run.scenario'
-        },
-        schema: {
-            'emme.path': {
-                type: 'string'
-            },
-            'data.path': {
-                type: 'string'
-            },
-            'transit.cost.fixed': {
-                type: 'boolean'
-            },
-            'python.path': {
-                type: 'string'
-            },
-            'helmet.remote.path': {
-                type: 'string'
-            },
-            'helmet.run.iterations': {
-                type: 'number',
-                minimum: 1,
-                maximum: 99,
-                default: 10
-            },
-            'helmet.run.scenario': {
-                type: 'string',
-                default: 'helmet'
-            }
-        }
+        saveDir: require('os').homedir(),
     }
-}
+};
