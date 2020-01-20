@@ -23,3 +23,7 @@
     margin: 0.25em;
     line-height: 1.75em;
 }
+
+.RunConfiguration__scenario-run-btn--active {
+    background: mediumseagreen;
+}
