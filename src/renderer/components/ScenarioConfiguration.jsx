@@ -60,7 +60,7 @@ class ScenarioConfiguration extends React.Component {
       <div className="ScenarioConfiguration__section">
         <span className="ScenarioConfiguration__pseudo-label">K&auml;yt&auml; esilaskettuja matka-aikoja:</span>
         <label className="ScenarioConfiguration__radio-input">
-          Kyll&auml;
+          Kyll&auml;&nbsp;
           <input type="radio"
                  name="fixed-transit-cost"
                  value="true"
@@ -71,7 +71,7 @@ class ScenarioConfiguration extends React.Component {
           />
         </label>
         <label className="ScenarioConfiguration__radio-input">
-          Ei
+          Ei&nbsp;
           <input type="radio"
                  name="fixed-transit-cost"
                  value="false"
@@ -84,7 +84,7 @@ class ScenarioConfiguration extends React.Component {
       </div>
 
       <div className="ScenarioConfiguration__section">
-        <label className="ScenarioConfiguration__pseudo-label ScenarioConfiguration__pseudo-label--inline" htmlFor="iterations">Iteraatiot</label>
+        <label className="ScenarioConfiguration__pseudo-label ScenarioConfiguration__pseudo-label--inline" htmlFor="iterations">Iteraatiot:</label>
         <input id="iterations"
                type="number"
                min="1"
