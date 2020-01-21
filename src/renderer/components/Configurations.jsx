@@ -1,29 +1,32 @@
 import React from 'react';
+import fs from 'fs';
+import path from 'path';
+import Store from 'electron-store';
 
 class Configurations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scenarios: [
-        {
-          id: 0,
-          name: '2016',
-          emme_project_file_path: undefined,
-          data_folder_path: undefined,
-          use_fixed_transit_cost: false,
-          iterations: 10
-        },
-        {
-          id: 1,
-          name: '2030',
-          emme_project_file_path: undefined,
-          data_folder_path: undefined,
-          use_fixed_transit_cost: true,
-          iterations: 10
-        },
-      ],
+      scenarios: [],
       open_scenario_id: null,
     };
+    this.configStores = {}; // Initialized in componentDidMount
+  }
+
+  componentDidMount() {
+    const configPath = this.props.helmet_ui_app_config.store.saveDir;
+    const files = fs.readdirSync(configPath);
+    const foundScenarios = [];
+    files.forEach((fileName) => {
+      if (fileName.endsWith(".json")) {
+        const obj = JSON.parse(fs.readFileSync(path.join(configPath, fileName), 'utf8'));
+        if ("id" in obj && "name" in obj && "emme_project_file_path" in obj && "data_folder_path" in obj && "use_fixed_transit_cost" in obj && "iterations" in obj) {
+          this.configStores[obj.id] = new Store({cwd: configPath, name: fileName.slice(0,-5)});
+          foundScenarios.push(obj);
+        }
+      }
+    });
+    this.setState({scenarios: foundScenarios});
   }
 
   render() {
@@ -35,18 +38,21 @@ class Configurations extends React.Component {
           this.setState({open_scenario_id: scenario_id});
         }}
         createNewScenario={(name) => {
-          const newId = Math.max.apply(null, this.state.scenarios.map((s) => s.id)) + 1;
+          const newId = this.state.scenarios.length ? (Math.max.apply(null, this.state.scenarios.map((s) => s.id)) + 1) : 0;
           // Create the new scenario in "scenarios" array first
+          const newScenario = {
+            id: newId,
+            name: name,
+            emme_project_file_path: null,
+            data_folder_path: null,
+            use_fixed_transit_cost: false,
+            iterations: 10,
+          };
           this.setState({
-            scenarios: this.state.scenarios.concat({
-              id: newId,
-              name: name,
-              emme_project_file_path: undefined,
-              data_folder_path: undefined,
-              use_fixed_transit_cost: false,
-              iterations: 10,
-            })
+            scenarios: this.state.scenarios.concat(newScenario)
           });
+          this.configStores[newId] = new Store({cwd: this.props.helmet_ui_app_config.store.saveDir, name: name});
+          this.configStores[newId].set(newScenario);
           // Then set open_scenario_id (having open_scenario as reference causes sub-elements to be bugged because of different object reference)
           this.setState({
             open_scenario_id: newId
@@ -61,7 +67,14 @@ class Configurations extends React.Component {
               scenarios: this.state.scenarios.map((s) => {
                 return s.id === newValues.id ? {...s, ...newValues} : s
               })
-            })
+            });
+            // If name changed, rename file and change reference
+            if (this.configStores[newValues.id].get('name') !== newValues.name) {
+              fs.renameSync(this.configStores[newValues.id].path, path.join(this.props.helmet_ui_app_config.store.saveDir, `${newValues.name}.json`));
+              this.configStores[newValues.id] = new Store({cwd: this.props.helmet_ui_app_config.store.saveDir, name: newValues.name});
+            }
+            // And persist changes
+            this.configStores[newValues.id].set(newValues);
           }}
           deleteScenario={(scenario) => {
             if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
@@ -69,6 +82,7 @@ class Configurations extends React.Component {
                 open_scenario_id: null,
                 scenarios: this.state.scenarios.filter((s) => s.id !== scenario.id)
               });
+              fs.unlinkSync(path.join(this.props.helmet_ui_app_config.store.saveDir, `${scenario.name}.json`));
               window.location.reload();  // Vex-js dialog input gets stuck otherwise
             }
           }}

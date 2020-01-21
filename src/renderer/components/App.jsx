@@ -96,7 +96,7 @@ class App extends React.Component {
       </div>
 
       <div id="dashboard">
-        <Configurations/>
+        <Configurations helmet_ui_app_config={this.props.config}/>
         <div id="status-panel">
           <div id="status-state"></div>
           <div id="status-progress"></div>

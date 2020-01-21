@@ -16,7 +16,7 @@ class RunConfiguration extends React.Component {
         {/* Create table of all scenarios [<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>] */}
         {this.props.scenarios.map((s) => {
           const isActive = this.state.scenarios_to_run.find((scenario) => scenario.id === s.id);
-          return <div className="RunConfiguration__scenario">
+          return <div className="RunConfiguration__scenario" key={s.id}>
             <button className={"RunConfiguration__scenario-run-btn" + (
                       isActive ? " RunConfiguration__scenario-run-btn--active" : ""
                     )}
