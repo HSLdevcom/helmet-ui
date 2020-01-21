@@ -27,3 +27,7 @@
 .RunConfiguration__scenario-run-btn--active {
     background: mediumseagreen;
 }
+
+.RunConfiguration__scenario-name-config-btn--active {
+    background: lightslategrey;
+}

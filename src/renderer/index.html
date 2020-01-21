@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <title>Helmet 4.0</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- HubSpot's vex-js for `prompt()` (not supported otherwise by Electron) -->
+    <script src="../../node_modules/vex-js/dist/js/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-os'</script>
+    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex.css" />
+    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex-theme-os.css" />
     <!-- Babel (standalone ver.) transpiler -->
     <script src="../../node_modules/babel-standalone/babel.min.js"></script>
     <!-- React components -->
     <script type="text/babel" src="components/App.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/App.css">
     <script type="text/babel" src="components/Configurations.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/Configurations.css">
     <script type="text/babel" src="components/RunConfiguration.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/RunConfiguration.css">
     <script type="text/babel" src="components/ScenarioConfiguration.jsx"></script>
