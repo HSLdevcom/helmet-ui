@@ -20,6 +20,13 @@
     <link rel="stylesheet" type="text/css" href="components/RunConfiguration.css">
     <script type="text/babel" src="components/ScenarioConfiguration.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/ScenarioConfiguration.css">
+    <script type="text/javascript">
+        const {webFrame} = require('electron');
+        // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
+        webFrame.setZoomLevel(1);
+        webFrame.setVisualZoomLevelLimits(1, 1);
+        webFrame.setLayoutZoomLevelLimits(0, 0);
+    </script>
 </head>
 <body>
 
@@ -42,6 +49,5 @@
   );
 </script>
 <script type="text/javascript" src="renderer.js"></script>
-
 </body>
 </html>
