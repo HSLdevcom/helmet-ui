@@ -1,5 +1,5 @@
 import React from 'react';
-import 'path';
+import path from 'path';
 import Store from 'electron-store';
 
 class App extends React.Component {

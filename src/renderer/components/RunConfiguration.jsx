@@ -5,7 +5,7 @@ class RunConfiguration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scenarios_to_run: [],
+      scenario_ids_to_run: [],
     };
   }
 
@@ -15,7 +15,7 @@ class RunConfiguration extends React.Component {
       <div className="RunConfiguration__saved-scenarios">
         {/* Create table of all scenarios [<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>] */}
         {this.props.scenarios.map((s) => {
-          const isActive = this.state.scenarios_to_run.find((scenario) => scenario.id === s.id);
+          const isActive = this.state.scenario_ids_to_run.includes(s.id);
           return <div className="RunConfiguration__scenario" key={s.id}>
             <button className={"RunConfiguration__scenario-run-btn" + (
                       isActive ? " RunConfiguration__scenario-run-btn--active" : ""
@@ -23,10 +23,10 @@ class RunConfiguration extends React.Component {
                     onClick={(e) => {
                       isActive ?
                         // If scenario exists in scenarios to run, remove it
-                        this.setState({scenarios_to_run: this.state.scenarios_to_run.filter((scenario) => scenario.id !== s.id)})
+                        this.setState({scenario_ids_to_run: this.state.scenario_ids_to_run.filter((scenario_id) => scenario_id !== s.id)})
                         :
                         // Else add it
-                        this.setState({scenarios_to_run: this.state.scenarios_to_run.concat(s)});
+                        this.setState({scenario_ids_to_run: this.state.scenario_ids_to_run.concat(s.id)});
                     }}
             >Ajettavaksi
             </button>
