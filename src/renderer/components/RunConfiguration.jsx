@@ -89,24 +89,33 @@ class RunConfiguration extends React.Component {
       <hr className="RunConfiguration__separator"/>
       <div className="RunConfiguration__start-stop-controls">
         <p className="RunConfiguration__start-stop-description">
-          {
-            this.state.scenario_ids_to_run.length ?
-              <span>
-                Ajettavana:
-                <span className="RunConfiguration__start-stop-scenarios">
-                  {this.props.scenarios.filter((s) => this.state.scenario_ids_to_run.includes(s.id)).map((s) => s.name).join(', ')}
-                </span>
+          {this.state.scenario_ids_to_run.length ?
+            <span>
+              Ajettavana:
+              <span className="RunConfiguration__start-stop-scenarios">
+                {this.props.scenarios.filter((s) => this.state.scenario_ids_to_run.includes(s.id)).map((s) => s.name).join(', ')}
               </span>
-              :
-              "Ei ajettavaksi valittuja skenaarioita"
+            </span>
+            :
+            "Ei ajettavaksi valittuja skenaarioita"
           }
         </p>
+        <div className="RunConfiguration__run-status">
+          {/* to implement */}
+        </div>
         <button className="RunConfiguration__start-stop-btn"
                 onClick={(e) => {
-                  this.props.runAllActiveScenarios(this.state.scenario_ids_to_run);
+                  this.props.running_scenario_id === null ?
+                    this.props.runAllActiveScenarios(this.state.scenario_ids_to_run)
+                    :
+                    this.props.cancelRunning()
                 }}
         >
-          K&auml;ynnist&auml; ({this.state.scenario_ids_to_run.length.toString()}) skenaariota
+          {this.props.running_scenario_id === null ?
+            `K\u00e4ynnist\u00e4 (${this.state.scenario_ids_to_run.length}) skenaariota`
+            :
+            `Keskeyt\u00e4 loput skenaariot`
+          }
         </button>
       </div>
     </div>;

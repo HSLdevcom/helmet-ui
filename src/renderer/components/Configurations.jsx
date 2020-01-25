@@ -82,6 +82,14 @@ class Configurations extends React.Component {
     console.log(`Running scenarios ${activeScenarioIDs.join(', ')}`);
   }
 
+  _cancelRunning() {
+    // add entry of cancelling in log
+    // empty queued ids
+    // terminate worker process
+    // set running_id null -> re-enables controls all over
+    console.log(`Cancelling remaining scenarios`);
+  }
+
   componentDidMount() {
     /**
      * Load all .json files from saveDir, and check if their keys match scenarios' keys.
@@ -117,6 +125,7 @@ class Configurations extends React.Component {
         setOpenScenarioId={(scenario_id) => this.setState({open_scenario_id: scenario_id})}
         createNewScenario={(name) => this._createNewScenario(name)}
         runAllActiveScenarios={(ids) => this._runAllActiveScenarios(ids)}
+        cancelRunning={() => {}}
       />
       {this.state.running_scenario_id || this.state.is_log_opened ?
         <RunLog
@@ -126,13 +135,13 @@ class Configurations extends React.Component {
         />
         :
         this.state.open_scenario_id !== null ?
-        <ScenarioConfiguration
-          scenario={this.state.scenarios.find((s) => s.id === this.state.open_scenario_id)}
-          updateScenario={(newValues) => this._updateScenario(newValues)}
-          deleteScenario={(scenario) => this._deleteScenario(scenario)}
-        />
-        :
-        ""
+          <ScenarioConfiguration
+            scenario={this.state.scenarios.find((s) => s.id === this.state.open_scenario_id)}
+            updateScenario={(newValues) => this._updateScenario(newValues)}
+            deleteScenario={(scenario) => this._deleteScenario(scenario)}
+          />
+          :
+          ""
       }
     </div>;
   }
