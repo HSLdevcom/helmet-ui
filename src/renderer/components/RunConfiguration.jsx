@@ -62,20 +62,27 @@ class RunConfiguration extends React.Component {
                         :
                         ""
                     )}
+                    disabled={this.props.running_scenario_id !== null}
                     onClick={(e) => this._handleClickScenarioToActive(s)}
-            >Ajettavaksi</button>
+            >
+              Ajettavaksi
+            </button>
             &nbsp;
             <button className={"RunConfiguration__scenario-name-config-btn" + (
                       this.props.open_scenario_id === s.id ? " RunConfiguration__scenario-name-config-btn--active" : ""
                     )}
+                    disabled={this.props.running_scenario_id !== null}
                     onClick={(e) => this.props.setOpenScenarioId(s.id)}
-            >{s.name}</button>
+            >
+              {s.name}
+            </button>
           </div>;
         })}
         <div className="RunConfiguration__saved-scenarios-footer">
           <button className="RunConfiguration__add-new-scenario-btn"
                   onClick={(e) => this._handleClickNewScenario()}
-          >Uusi skenaario
+          >
+            Uusi skenaario
           </button>
         </div>
       </div>
@@ -94,7 +101,11 @@ class RunConfiguration extends React.Component {
               "Ei ajettavaksi valittuja skenaarioita"
           }
         </p>
-        <button className="RunConfiguration__start-stop-btn">
+        <button className="RunConfiguration__start-stop-btn"
+                onClick={(e) => {
+                  this.props.runAllActiveScenarios(this.state.scenario_ids_to_run);
+                }}
+        >
           K&auml;ynnist&auml; ({this.state.scenario_ids_to_run.length.toString()}) skenaariota
         </button>
       </div>

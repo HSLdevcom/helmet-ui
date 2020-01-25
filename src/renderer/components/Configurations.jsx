@@ -73,6 +73,15 @@ class Configurations extends React.Component {
     }
   }
 
+  _runAllActiveScenarios(activeScenarioIDs) {
+    // null open_scenario_id
+    // empty log (set initial log entry as "Initializing run of {scenarios}")
+    // set is_log_opened
+    // set running_id
+    // set queued ids
+    console.log(`Running scenarios ${activeScenarioIDs.join(', ')}`);
+  }
+
   componentDidMount() {
     /**
      * Load all .json files from saveDir, and check if their keys match scenarios' keys.
@@ -103,8 +112,11 @@ class Configurations extends React.Component {
       <RunConfiguration
         scenarios={this.state.scenarios}
         open_scenario_id={this.state.open_scenario_id}
+        running_scenario_id={this.state.running_scenario_id}
+        running_scenario_ids_queued={this.state.running_scenario_ids_queued}
         setOpenScenarioId={(scenario_id) => this.setState({open_scenario_id: scenario_id})}
         createNewScenario={(name) => this._createNewScenario(name)}
+        runAllActiveScenarios={(ids) => this._runAllActiveScenarios(ids)}
       />
       {this.state.running_scenario_id || this.state.is_log_opened ?
         <RunLog
