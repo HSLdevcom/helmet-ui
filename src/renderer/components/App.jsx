@@ -97,14 +97,6 @@ class App extends React.Component {
 
       <Configurations helmet_ui_app_config={this.props.config}/>
 
-      <h3>Tulokset</h3>
-
-      <div id="results-panel">
-        <div id="results">
-          <p><a id="log-link" href="" target="_blank">Tapahtumaloki</a></p>
-          <p id="key-values"></p>
-        </div>
-      </div>
     </div>
   }
 }

@@ -9,6 +9,10 @@ class Configurations extends React.Component {
     this.state = {
       scenarios: [],
       open_scenario_id: null,
+      running_scenario_id: null,
+      running_scenario_ids_queued: [],
+      log_contents: [{level: "INFO", message: "test initial"}],
+      is_log_opened: false,
     };
     this.configStores = {}; // Initialized in componentDidMount
   }
@@ -102,7 +106,14 @@ class Configurations extends React.Component {
         setOpenScenarioId={(scenario_id) => this.setState({open_scenario_id: scenario_id})}
         createNewScenario={(name) => this._createNewScenario(name)}
       />
-      {this.state.open_scenario_id !== null ?
+      {this.state.running_scenario_id || this.state.is_log_opened ?
+        <RunLog
+          log_contents={this.state.log_contents}
+          is_scenario_running={this.state.running_scenario_id !== null}
+          closeRunLog={() => this.setState({is_log_opened: false})}
+        />
+        :
+        this.state.open_scenario_id !== null ?
         <ScenarioConfiguration
           scenario={this.state.scenarios.find((s) => s.id === this.state.open_scenario_id)}
           updateScenario={(newValues) => this._updateScenario(newValues)}
