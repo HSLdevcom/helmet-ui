@@ -74,20 +74,28 @@ class Configurations extends React.Component {
   }
 
   _runAllActiveScenarios(activeScenarioIDs) {
-    // null open_scenario_id
-    // empty log (set initial log entry as "Initializing run of {scenarios}")
-    // set is_log_opened
-    // set running_id
-    // set queued ids
-    console.log(`Running scenarios ${activeScenarioIDs.join(', ')}`);
+    const activeScenarioNames = this.state.scenarios
+      .filter((s) => activeScenarioIDs.includes(s.id))
+      .map((s) => s.name);
+    this.setState({
+      open_scenario_id: null, // Close any open scenario configuration
+      log_contents: [{level: "UI-event", message: `Initializing run of scenarios: ${activeScenarioNames.join(', ')}`}],
+      is_log_opened: true, // Keep log open even after run finishes (or is cancelled)
+      running_scenario_id: activeScenarioIDs[0],
+      running_scenario_ids_queued: activeScenarioIDs.slice(1)
+    });
+    // TODO impl second browser thread
   }
 
   _cancelRunning() {
-    // add entry of cancelling in log
-    // empty queued ids
-    // terminate worker process
-    // set running_id null -> re-enables controls all over
-    console.log(`Cancelling remaining scenarios`);
+    this.setState({
+      log_contents: this.state.log_contents.concat({level: "UI-event", message: "Cancelling remaining scenarios."}),
+      running_scenario_ids_queued: [] // Empty queue so worker process won't switch on to next
+    });
+    // TODO impl terminate worker process
+    this.setState({
+      running_scenario_id: null // Re-enable controls
+    });
   }
 
   componentDidMount() {
@@ -125,11 +133,11 @@ class Configurations extends React.Component {
         setOpenScenarioId={(scenario_id) => this.setState({open_scenario_id: scenario_id})}
         createNewScenario={(name) => this._createNewScenario(name)}
         runAllActiveScenarios={(ids) => this._runAllActiveScenarios(ids)}
-        cancelRunning={() => {}}
+        cancelRunning={() => this._cancelRunning()}
       />
       {this.state.running_scenario_id || this.state.is_log_opened ?
         <RunLog
-          log_contents={this.state.log_contents}
+          log_contents={this.state.log_contents.map((entry, i) => {return {...entry, id: i};})}
           is_scenario_running={this.state.running_scenario_id !== null}
           closeRunLog={() => this.setState({is_log_opened: false})}
         />

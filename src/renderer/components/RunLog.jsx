@@ -15,7 +15,7 @@ class RunLog extends React.Component {
         >Sulje</button>
       </div>
       {this.props.log_contents.map((entry) => {
-        return <div className="RunLog__entry">
+        return <div className="RunLog__entry" key={entry.id}>
           {`[${entry.level}] ${entry.message}`}
         </div>;
       })}
