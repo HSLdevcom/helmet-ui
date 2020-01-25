@@ -10,9 +10,7 @@ class ScenarioConfiguration extends React.Component {
     return <div className="ScenarioConfiguration">
 
       <button className="ScenarioConfiguration__delete-btn"
-              onClick={(e) => {
-                this.props.deleteScenario(this.props.scenario);
-              }}
+              onClick={(e) => this.props.deleteScenario(this.props.scenario)}
       >Poista</button>
 
       <div className="ScenarioConfiguration__section">
