@@ -74,6 +74,25 @@ class RunConfiguration extends React.Component {
           >Uusi skenaario</button>
         </div>
       </div>
+      <hr className="RunConfiguration__separator"/>
+      <div className="RunConfiguration__start-stop-controls">
+        <p className="RunConfiguration__start-stop-description">
+        {
+          this.state.scenario_ids_to_run.length ?
+            <span>
+              Ajettavana:
+              <span className="RunConfiguration__start-stop-scenarios">
+                {this.props.scenarios.filter((s) => this.state.scenario_ids_to_run.includes(s.id)).map((s) => s.name).join(', ')}
+              </span>
+            </span>
+            :
+            "Ei ajettavaksi valittuja skenaarioita"
+        }
+        </p>
+        <button className="RunConfiguration__start-stop-btn">
+          K&auml;ynnist&auml; ({this.state.scenario_ids_to_run.length.toString()}) skenaariota
+        </button>
+      </div>
     </div>;
   }
 }

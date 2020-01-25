@@ -1,39 +1,3 @@
-#status-panel {
-    width: 49.5%;
-    height: 33%;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: inline-block;
-    vertical-align: top;
-}
-
-#status-panel {
-    visibility: hidden;
-}
-
-#progressbar {
-    width: 100%;
-    height: 10px;
-    border: 0;
-    padding: 0;
-    margin: 1em 0 1em 0;
-    position: relative;
-    border: 1px solid silver;
-    background-color: white;
-}
-
-#progressbar .percentage {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: inline-block;
-    background-color: lightseagreen;
-    height: 10px;
-    width: 0;
-    max-width: 100%;
-}
-
 #results-panel {
     margin: 0;
     padding: 0;

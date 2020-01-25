@@ -95,18 +95,7 @@ class App extends React.Component {
         >Asetukset</button>
       </div>
 
-      <div id="dashboard">
-        <Configurations helmet_ui_app_config={this.props.config}/>
-        <div id="status-panel">
-          <div id="status-state"></div>
-          <div id="status-progress"></div>
-          <div id="progressbar">
-            <div className="percentage"></div>
-          </div>
-          <div id="status-current"></div>
-          <div id="message"></div>
-        </div>
-      </div>
+      <Configurations helmet_ui_app_config={this.props.config}/>
 
       <h3>Tulokset</h3>
 

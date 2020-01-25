@@ -20,7 +20,13 @@ class Configurations extends React.Component {
     files.forEach((fileName) => {
       if (fileName.endsWith(".json")) {
         const obj = JSON.parse(fs.readFileSync(path.join(configPath, fileName), 'utf8'));
-        if ("id" in obj && "name" in obj && "emme_project_file_path" in obj && "data_folder_path" in obj && "use_fixed_transit_cost" in obj && "iterations" in obj) {
+        if ("id" in obj
+          && "name" in obj
+          && "emme_project_file_path" in obj
+          && "data_folder_path" in obj
+          && "use_fixed_transit_cost" in obj
+          && "iterations" in obj
+        ) {
           this.configStores[obj.id] = new Store({cwd: configPath, name: fileName.slice(0,-5)});
           foundScenarios.push(obj);
         }

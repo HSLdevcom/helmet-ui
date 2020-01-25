@@ -31,3 +31,21 @@
 .RunConfiguration__scenario-name-config-btn--active {
     background: lightslategrey;
 }
+
+.RunConfiguration__separator {
+    margin: 1em 0 0 0;
+}
+
+.RunConfiguration__start-stop-controls {
+}
+
+.RunConfiguration__start-stop-description {
+}
+
+.RunConfiguration__start-stop-scenarios {
+    color: mediumseagreen;
+    font-weight: bold;
+}
+
+.RunConfiguration__start-stop-btn {
+}
