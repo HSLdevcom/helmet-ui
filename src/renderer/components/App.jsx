@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // Search for EMME's Python if not set
+    // Search for EMME's Python if not set in global store (default win path is %APPDATA%, should remain there [hidden from user])
     if (!this.globalSettingsStore.get('emme_python_path')) {
       const [found, pythonPath] = this.props.searchEMMEPython();
       if (found) {
@@ -26,7 +26,7 @@ class App extends React.Component {
         alert(`Emme ${this.props.config.emme.version} ja Python ${this.props.config.emme.pythonVersion} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
       }
     }
-    // Copy existing global settings to state
+    // Copy existing global store values to state
     this.setState({
       emmePythonPath: this.globalSettingsStore.get('emme_python_path'),
       helmetScriptsPath: this.globalSettingsStore.get('helmet_scripts_path')
