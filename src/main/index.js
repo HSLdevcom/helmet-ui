@@ -1,16 +1,13 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow} = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
+if (require('electron-squirrel-startup')) {app.quit();}
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let window;
+// Keep a global reference of certain objects, so they won't be garbage collected. (This is Electron-app best practise)
+let mainWindow;
 
 const createWindow = async () => {
-  window = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     resizable: false,
@@ -19,45 +16,30 @@ const createWindow = async () => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      devTools: true,
+      devTools: true, // There's no reason to disable these (CTRL+SHIFT+i) https://superuser.com/questions/367662/ctrlshifti-in-windows-7
       nodeIntegration: true
     }
   });
-  await window.loadFile('src/renderer/index.html');
-  window.on('closed', () => {
-    window = null;
+  await mainWindow.loadFile('src/renderer/index.html');
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// When Electron has initialized, and is ready to create windows. Some APIs can only be used from here on.
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
+  // ...as long as it isn't OS X (=darwin), where user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
+// On OS X re-create the main window, when dock icon is clicked and main window was closed.
 app.on('activate', async () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (window === null) {
+  if (mainWindow === null) {
     await createWindow();
   }
-});
-
-/**
- * Enable sending messages to development console for debug purposes.
- * Clarification:
- * - console.log here goes to main process' CLI (displayed when ran locally in development)
- * - console.log in renderer process goes to Chrome console (available via <BrowserWindow>.openDevTools() method)
- * Thus sending IPC call (named 'console-log') here, puts content of args to development console.
- */
-ipcMain.on('console.log', (event, args) => {
-  console.log(args);
 });
