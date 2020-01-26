@@ -87,6 +87,7 @@ class RunConfiguration extends React.Component {
         })}
         <div className="RunConfiguration__saved-scenarios-footer">
           <button className="RunConfiguration__add-new-scenario-btn"
+                  disabled={this.props.running_scenario_id !== null}
                   onClick={(e) => this._handleClickNewScenario()}
           >
             Uusi skenaario
