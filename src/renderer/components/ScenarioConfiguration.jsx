@@ -1,5 +1,5 @@
 import React from 'react';
-import 'path';
+import path from 'path';
 
 class ScenarioConfiguration extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class ScenarioConfiguration extends React.Component {
       <div className="ScenarioConfiguration__section">
         <span className="ScenarioConfiguration__pseudo-label">EMME projekti (.emp)</span>
         <label className="ScenarioConfiguration__pseudo-file-select" htmlFor="emme-project-file-select">
-          {this.props.scenario.emme_project_file_path ? path.basename(this.props.scenario.emme_project_file_path) : "Valitse.."}
+          {this.props.scenario.emme_project_file_path !== undefined ? path.basename(this.props.scenario.emme_project_file_path) : "Valitse.."}
         </label>
         <input className="ScenarioConfiguration__hidden-input"
                id="emme-project-file-select"
@@ -42,7 +42,7 @@ class ScenarioConfiguration extends React.Component {
       <div className="ScenarioConfiguration__section">
         <span className="ScenarioConfiguration__pseudo-label">Data-kansio (matriisit)</span>
         <label className="ScenarioConfiguration__pseudo-file-select" htmlFor="data-folder-select">
-          {this.props.scenario.data_folder_path ? path.basename(this.props.scenario.data_folder_path) : "Valitse.."}
+          {this.props.scenario.data_folder_path !== undefined ? path.basename(this.props.scenario.data_folder_path) : "Valitse.."}
         </label>
         <input className="ScenarioConfiguration__hidden-input"
                id="data-folder-select"

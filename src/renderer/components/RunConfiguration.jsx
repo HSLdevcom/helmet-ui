@@ -49,6 +49,13 @@ class RunConfiguration extends React.Component {
     promptCreation();
   }
 
+  _handleClickStartStop() {
+    this.props.running_scenario_id === null ?
+      this.props.runAllActiveScenarios(this.state.scenario_ids_to_run)
+      :
+      this.props.cancelRunning();
+  }
+
   render() {
     return <div className="RunConfiguration">
       <div className="RunConfiguration__heading">Lis&auml;&auml; skenaario(t) ajettavaksi, tai luo uusi skenaario</div>
@@ -104,12 +111,7 @@ class RunConfiguration extends React.Component {
           {/* to implement */}
         </div>
         <button className="RunConfiguration__start-stop-btn"
-                onClick={(e) => {
-                  this.props.running_scenario_id === null ?
-                    this.props.runAllActiveScenarios(this.state.scenario_ids_to_run)
-                    :
-                    this.props.cancelRunning()
-                }}
+                onClick={(e) => this._handleClickStartStop()}
         >
           {this.props.running_scenario_id === null ?
             `K\u00e4ynnist\u00e4 (${this.state.scenario_ids_to_run.length}) skenaariota`

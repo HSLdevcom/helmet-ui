@@ -3,45 +3,31 @@ const ps = require('python-shell');
 /**
  * Reset and hide simulation status panel and results.
  */
-function resetStatus() {
-  document.getElementById('status-state').innerHTML = '';
-  document.getElementById('status-current').innerHTML = '';
-  document.getElementById('status-progress').innerHTML = "0 / 0 iteraatiota suoritettu, 0 virhettä.";
-  document.querySelector("#progressbar .percentage").setAttribute("style", "width: 0%; background-color: 'navy'};");
-  document.getElementById('message').textContent = "";
-  document.getElementById('log-link').setAttribute('style', 'visibility:hidden;');
-  document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;');
-}
+// function resetStatus() {
+//   document.getElementById('status-state').innerHTML = '';
+//   document.getElementById('status-current').innerHTML = '';
+//   document.getElementById('status-progress').innerHTML = "0 / 0 iteraatiota suoritettu, 0 virhettä.";
+//   document.querySelector("#progressbar .percentage").setAttribute("style", "width: 0%; background-color: 'navy'};");
+//   document.getElementById('message').textContent = "";
+//   document.getElementById('log-link').setAttribute('style', 'visibility:hidden;');
+//   document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;');
+// }
 
 /**
  * Start or stop helmet-model-system.
  */
-function runStop(worker, store) {
-
-  resetStatus();
-
-  if (!validateSettings()) {
-    return;
-  }
+function runStop(worker, runParameters) {
 
   if (worker) {
     worker.terminate(1);
     worker = null;
-    /**
-     * Enable control panel inputs. And mark body.cursor = normal
-     */
   } else {
-    /**
-     * Disable control panel inputs. And mark body.cursor = busy
-     */
-    document.getElementById('runStopButton').innerHTML = 'Lopeta';
-
     worker = new ps.PythonShell(
-      `${store.get('helmet_scripts_path')}/helmet_remote.py`,
+      `${runParameters.helmet_scripts_path}/helmet_remote.py`,
       {
         mode: 'json',
         pythonOptions: ['-u'],
-        pythonPath: store.get('emme_python_path'),
+        pythonPath: runParameters.emme_python_path,
       });
     worker.on('message', (json) => {
       console.debug('[message]', json);
@@ -92,11 +78,11 @@ function runStop(worker, store) {
       message.setAttribute('class', 'error');
     });
     worker.send({
-      scenario: store.get('scenario_name'),
-      emme_path: store.get('emme_project_file_path'),
-      data_path: store.get('data_folder_path'),
-      iterations: store.get('iterations'),
-      log_level: 'DEBUG', // TODO make configurable
+      scenario: runParameters.name,
+      emme_path: runParameters.emme_project_file_path,
+      data_path: runParameters.data_folder_path,
+      iterations: runParameters.iterations,
+      log_level: runParameters.log_level
     });
     worker.end((err, code, signal) => {
       worker = null;
@@ -110,42 +96,4 @@ function runStop(worker, store) {
       console.debug(`Python exited with code ${code}, signal ${signal}.`);
     });
   }
-}
-
-/**
- * Check and notify on missing settings.
- */
-function validateSettings(store) {
-
-  const emp = store.get('emme_project_file_path');
-  if (!emp) {
-    alert("Emme-projektia ei ole valittu!");
-    return false;
-  }
-
-  const data = store.get('data_folder_path');
-  if (!data) {
-    alert("Data-kansiota ei ole valittu!");
-    return false;
-  }
-
-  const helmet = store.get('helmet_scripts_path');
-  if (!helmet) {
-    alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
-    return false;
-  }
-
-  const python = store.get('emme_python_path');
-  if (!python) {
-    alert("Python -sijaintia ei ole asetettu!");
-    return false;
-  }
-
-  const iter = store.get('iterations');
-  if (iter < 1 || iter > 99) {
-    alert("Aseta iteraatiot väliltä 1 - 99.");
-    return false;
-  }
-
-  return true;
 }

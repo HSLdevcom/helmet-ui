@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hidden process-running window</title>
+    <script type="text/javascript">
+      const {ipcRenderer} = require('electron');
+
+      ipcRenderer.on('run-scenarios', (event, args) => {
+        ipcRenderer.send('loggable-event-from-worker', args);
+      });
+
+      ipcRenderer.on('cancel-scenarios', (event, args) => {
+        ipcRenderer.send('loggable-event-from-worker', "Cancelling in hidden window");
+      });
+    </script>
+</head>
+<body>
+</body>
+</html>

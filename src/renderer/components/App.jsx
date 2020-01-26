@@ -6,9 +6,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSettingsOpen: false,
-      emmePythonPath: undefined,
-      helmetScriptsPath: undefined,
+      is_settings_open: false,
+      emme_python_path: undefined,
+      helmet_scripts_path: undefined,
+      is_running: false,
     };
     // Global settings store contains "emme_python_path" and "helmet_scripts_path", which are same in every scenario.
     this.globalSettingsStore = new Store();
@@ -28,21 +29,21 @@ class App extends React.Component {
     }
     // Copy existing global store values to state
     this.setState({
-      emmePythonPath: this.globalSettingsStore.get('emme_python_path'),
-      helmetScriptsPath: this.globalSettingsStore.get('helmet_scripts_path')
+      emme_python_path: this.globalSettingsStore.get('emme_python_path'),
+      helmet_scripts_path: this.globalSettingsStore.get('helmet_scripts_path')
     })
   }
 
   render() {
-    return <div className="App">
-      <div className="App__settings-overlay" style={{display: this.state.isSettingsOpen ? "block" : "none"}}/>
+    return <div className={"App" + (this.state.is_running ? " App--busy" : "")}>
+      <div className="App__settings-overlay" style={{display: this.state.is_settings_open ? "block" : "none"}}/>
 
-      <div className="App__settings-dialog" style={{display: this.state.isSettingsOpen ? "block" : "none"}}>
+      <div className="App__settings-dialog" style={{display: this.state.is_settings_open ? "block" : "none"}}>
         <div className="App__settings-dialog-heading">Asetukset</div>
         <div>
           <span className="App__settings-pseudo-label">Emme Python</span>
           <label className="App__settings-pseudo-file-select" id="python-label" htmlFor="python">
-            {this.state.emmePythonPath ? path.basename(this.state.emmePythonPath) : "Valitse.."}
+            {this.state.emme_python_path ? path.basename(this.state.emme_python_path) : "Valitse.."}
           </label>
           <input className="App__settings-hidden-input"
                  id="python"
@@ -50,7 +51,7 @@ class App extends React.Component {
                  accept=".exe"
                  onChange={(e) => {
                    const inputPath = e.target.files[0].path;
-                   this.setState({emmePythonPath: inputPath});
+                   this.setState({emme_python_path: inputPath});
                    this.globalSettingsStore.set('emme_python_path', inputPath);
                  }}
           />
@@ -58,7 +59,7 @@ class App extends React.Component {
         <div>
           <span className="App_settings-pseudo-label">Helmet Scripts</span>
           <label className="App__settings-pseudo-file-select" id="scripts-label" htmlFor="scripts">
-            {this.state.helmetScriptsPath ? path.basename(this.state.helmetScriptsPath) : "Valitse.."}
+            {this.state.helmet_scripts_path ? path.basename(this.state.helmet_scripts_path) : "Valitse.."}
           </label>
           <input className="App__settings-hidden-input"
                  id="scripts"
@@ -67,7 +68,7 @@ class App extends React.Component {
                  directory=""
                  onChange={(e) => {
                    const inputPath = e.target.files[0].path;
-                   this.setState({helmetScriptsPath: inputPath});
+                   this.setState({helmet_scripts_path: inputPath});
                    this.globalSettingsStore.set('helmet_scripts_path', inputPath);
                  }}
           />
@@ -76,7 +77,7 @@ class App extends React.Component {
         <div id="App__settings-dialog-controls">
           <button
             onClick={(e) => {
-              this.setState({isSettingsOpen: false});
+              this.setState({is_settings_open: false});
             }}
           >Sulje
           </button>
@@ -88,14 +89,27 @@ class App extends React.Component {
         &nbsp;
         <span className="App__header-version">{`UI v${this.props.helmetUIVersion}`}</span>
         <button className="App__open-settings-btn"
-                style={{display: !this.state.isSettingsOpen ? "block" : "none"}}
+                style={{display: !this.state.is_settings_open ? "block" : "none"}}
                 onClick={(e) => {
-                  this.setState({isSettingsOpen: true});
+                  this.setState({is_settings_open: true});
                 }}
+                disabled={this.state.is_running}
         >Asetukset</button>
       </div>
 
-      <Configurations helmet_ui_app_config={this.props.config}/>
+      <Configurations
+        helmet_ui_app_config={this.props.config}
+        emme_python_path={this.state.emme_python_path}
+        helmet_scripts_path={this.state.helmet_scripts_path}
+        runAll={(runParams) => {
+          this.props.runAll(runParams);
+          this.setState({is_running: true, is_settings_open: false});
+        }}
+        cancelAll={() => {
+          this.props.cancelAll();
+          this.setState({is_running: false});
+        }}
+      />
 
     </div>
   }

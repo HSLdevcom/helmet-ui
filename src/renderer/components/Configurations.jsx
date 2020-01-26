@@ -74,25 +74,74 @@ class Configurations extends React.Component {
   }
 
   _runAllActiveScenarios(activeScenarioIDs) {
-    const activeScenarioNames = this.state.scenarios
-      .filter((s) => activeScenarioIDs.includes(s.id))
-      .map((s) => s.name);
+    const scenariosToRun = this.state.scenarios.filter((s) => activeScenarioIDs.includes(s.id));
+
+    // Check required global parameters are set
+    if (!this.props.emme_python_path) {
+      alert("Python -sijaintia ei ole asetettu!");
+      return;
+    }
+    if (!this.props.helmet_scripts_path) {
+      alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
+      return;
+    }
+
+    // For each active scenario, check required scenario-specific parameters are set
+    for (let scenario of scenariosToRun) {
+      const store = this.configStores[scenario.id];
+      const iterations = store.get('iterations');
+      if (!store.get('emme_project_file_path')) {
+        alert(`Emme-projektia ei ole valittu skenaariossa "${scenario.name}"`);
+        return;
+      }
+      if (!store.get('data_folder_path')) {
+        alert(`Data-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
+        return;
+      }
+      if (iterations < 1 || iterations > 99) {
+        alert(`Aseta iteraatiot väliltä 1 - 99 skenaariossa "${scenario.name}"`);
+        return;
+      }
+    }
+
+    // Perform UI changes to indicate "initializing run of active scenarios"
     this.setState({
       open_scenario_id: null, // Close any open scenario configuration
-      log_contents: [{level: "UI-event", message: `Initializing run of scenarios: ${activeScenarioNames.join(', ')}`}],
+      log_contents: [
+        {
+          level: "UI-event",
+          message: `Initializing run of scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`
+        }
+      ],
       is_log_opened: true, // Keep log open even after run finishes (or is cancelled)
-      running_scenario_id: activeScenarioIDs[0],
+      running_scenario_id: activeScenarioIDs[0], // Disable controls
       running_scenario_ids_queued: activeScenarioIDs.slice(1)
     });
-    // TODO impl second browser thread
+    /**
+     * mark body.cursor = busy
+     */
+    this.props.runAll(
+      scenariosToRun.map((s) => {
+        // Run parameters per each run
+        return {
+          ...s,
+          emme_python_path: this.props.emme_python_path,
+          helmet_scripts_path: this.props.helmet_scripts_path,
+          log_level: 'DEBUG'
+        }
+      })
+    );
   }
 
   _cancelRunning() {
     this.setState({
       log_contents: this.state.log_contents.concat({level: "UI-event", message: "Cancelling remaining scenarios."}),
-      running_scenario_ids_queued: [] // Empty queue so worker process won't switch on to next
+      running_scenario_ids_queued: [] // Empty queue so background process won't switch on to next
     });
-    // TODO impl terminate worker process
+    this.props.cancelAll();
+    /**
+     * mark body.cursor = normal
+     */
     this.setState({
       running_scenario_id: null // Re-enable controls
     });

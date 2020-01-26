@@ -1,3 +1,4 @@
+/* Reset css */
 body {
     margin: 0;
     padding: 0;
@@ -7,11 +8,16 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-body.busy {
-    cursor: progress;
+.App {
+    width: 100vw;
+    height: 100vh;
 }
 
-.App {
+.App--busy {
+    cursor: progress;
+}
+.App--busy button {
+    cursor: progress;
 }
 
 .App__settings-overlay {
