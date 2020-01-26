@@ -41,13 +41,11 @@
   import {searchEMMEPython} from './search_emme_pythonpath';
   import config from '../config';
 
-  const {ipcRenderer} = require('electron');
   ReactDOM.render(
-    <App helmetUIVersion={version}
-         config={config}
-         searchEMMEPython={searchEMMEPython}
-         runAll={(runParametersArray) => ipcRenderer.send('message-from-ui-to-run-scenarios', runParametersArray)}
-         cancelAll={() => ipcRenderer.send('message-from-ui-to-cancel-scenarios')}
+    <App
+      helmetUIVersion={version}
+      config={config}
+      searchEMMEPython={searchEMMEPython}
     />,
     document.getElementById('root'),
   );

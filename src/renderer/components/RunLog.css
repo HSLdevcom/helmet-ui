@@ -1,2 +1,13 @@
 .RunLog {
 }
+
+.RunLog__entry {
+}
+
+.RunLog__entry--ui {
+    color: navy;
+}
+
+.RunLog__entry--error {
+    color: red;
+}

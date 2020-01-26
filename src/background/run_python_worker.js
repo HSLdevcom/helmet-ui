@@ -1,4 +1,5 @@
 const ps = require('python-shell');
+const {ipcRenderer} = require('electron');
 
 /**
  * Reset and hide simulation status panel and results.
@@ -13,15 +14,21 @@ const ps = require('python-shell');
 //   document.getElementById('status-panel').setAttribute('style', 'visibility:hidden;');
 // }
 
-/**
- * Start or stop helmet-model-system.
- */
-function runStop(worker, runParameters) {
+module.exports = {
 
-  if (worker) {
-    worker.terminate(1);
-    worker = null;
-  } else {
+  stopPythonShell: function (worker) {
+    if (worker) {
+      worker.terminate(1);
+    }
+  },
+
+  runPythonShell: function (worker, runParameters, onEndCallback) {
+    // Make sure worker isn't overridden (and if so, abort the run)
+    if (worker) {
+      alert("Worker already in progress."); // Should never occur
+      return;
+    }
+    // Start helmet-model-system's helmet_remote.py in shell with python interpreter
     worker = new ps.PythonShell(
       `${runParameters.helmet_scripts_path}/helmet_remote.py`,
       {
@@ -29,54 +36,11 @@ function runStop(worker, runParameters) {
         pythonOptions: ['-u'],
         pythonPath: runParameters.emme_python_path,
       });
-    worker.on('message', (json) => {
-      console.debug('[message]', json);
-      // json.level = 'DEBUG', 'INFO', 'WARN', 'ERROR'
-      // json.message = '...'
-      // {"status":
-      // Progress: About 30min per ajo, tarkoituksena löytää ekvivalenssi, viimeinen ajo saattaa kestää pidempään
-      //     {"name": "helmet",
-      //      "completed": 0,
-      //      "current": 0,
-      //      "failed": 0,  background-color: ${json.status.failed > 0 ? 'red' : 'navy'}
-      //      "state": "starting",
-      //              starting: 'Käynnistetään..',
-      //              preparing: 'Valmistellaan..',
-      //              running: `Iteraatio ${json.status.current} käynnissä..`,
-      //              failed: `Iteraatio ${json.status.current} epäonnistui.`,
-      //              aborted: 'Simuloinnin alustus epäonnistui.',
-      //              finished: ' ',
-      //      "total": 5,
-      //      "log": "C:\\Users\\mwah\\Documents\\Github\\helmet-model-system\\Scripts\\helmet.log"
-      // },
-      //  "message": "Initializing matrices and models..",
-      //  "level": "INFO"
-      //  }
-      // {"status":
-      //     {"name": "helmet",
-      //      "completed": 0,
-      //      "results": [],
-      //      "current": 0,
-      //      "failed": 0,
-      //      "state": "preparing",
-      //      "total": 5,
-      //      "log": "C:\\Users\\mwah\\Documents\\Github\\helmet-model-system\\Scripts\\helmet.log"
-      //  },
-      //   "message": "Starting simulation with 5 iterations..",
-      //   "level": "INFO"
-      //  }
-    });
-    worker.on('stderr', (json) => {
-      console.debug('[stderr]', json);
-      // json.level = 'DEBUG', 'INFO', 'ERROR'
-      // json.message = '...'
-    });
-    worker.on('error', (err) => {
-      console.error('[error]', err);
-      const message = document.getElementById('message');
-      message.textContent = err.message;
-      message.setAttribute('class', 'error');
-    });
+    // Attach runtime handlers (stdout/stderr, process errors)
+    worker.on('message', (event) => ipcRenderer.send('loggable-event-from-worker', event));
+    worker.on('stderr', (event) => ipcRenderer.send('loggable-event-from-worker', event));
+    worker.on('error', (error) => ipcRenderer.send('process-error-from-worker', error));
+    // Send run parameters via stdin
     worker.send({
       scenario: runParameters.name,
       emme_path: runParameters.emme_project_file_path,
@@ -84,16 +48,15 @@ function runStop(worker, runParameters) {
       iterations: runParameters.iterations,
       log_level: runParameters.log_level
     });
+    // Attach end handler
     worker.end((err, code, signal) => {
       worker = null;
-      /**
-       * Enable control panel inputs. And mark body.cursor = normal
-       */
       if (err) {
-        console.error('[end]', err);
-        alert(err.message);
+        ipcRenderer.send('process-error-from-worker', err.message);
       }
-      console.debug(`Python exited with code ${code}, signal ${signal}.`);
+      ipcRenderer.send('scenario-complete', runParameters.name);
+      onEndCallback();
     });
+    return worker;
   }
-}
+};

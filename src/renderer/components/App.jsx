@@ -2,6 +2,8 @@ import React from 'react';
 import path from 'path';
 import Store from 'electron-store';
 
+const {ipcRenderer} = require('electron');
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,9 @@ class App extends React.Component {
     };
     // Global settings store contains "emme_python_path" and "helmet_scripts_path", which are same in every scenario.
     this.globalSettingsStore = new Store();
+    ipcRenderer.on('all-scenarios-complete', (event, args) => {
+      this.setState({is_running: false});
+    });
   }
 
   componentDidMount() {
@@ -101,12 +106,12 @@ class App extends React.Component {
         helmet_ui_app_config={this.props.config}
         emme_python_path={this.state.emme_python_path}
         helmet_scripts_path={this.state.helmet_scripts_path}
-        runAll={(runParams) => {
-          this.props.runAll(runParams);
+        runAll={(runParametersArray) => {
+          ipcRenderer.send('message-from-ui-to-run-scenarios', runParametersArray);
           this.setState({is_running: true, is_settings_open: false});
         }}
         cancelAll={() => {
-          this.props.cancelAll();
+          ipcRenderer.send('message-from-ui-to-cancel-scenarios');
           this.setState({is_running: false});
         }}
       />

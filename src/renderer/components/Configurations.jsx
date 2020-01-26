@@ -3,6 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import Store from 'electron-store';
 
+const {ipcRenderer} = require('electron');
+
 class Configurations extends React.Component {
   constructor(props) {
     super(props);
@@ -11,10 +13,29 @@ class Configurations extends React.Component {
       open_scenario_id: null,
       running_scenario_id: null,
       running_scenario_ids_queued: [],
-      log_contents: [{level: "INFO", message: "test initial"}],
+      log_contents: [],
       is_log_opened: false,
     };
+
     this.configStores = {}; // Initialized in componentDidMount
+
+    // Electron IPC events (from worker window)
+    ipcRenderer.on('loggable-event', (event, args) => {
+      this.setState({log_contents: this.state.log_contents.concat(args)});
+    });
+    ipcRenderer.on('scenario-complete', (event, args) => {
+      this.setState({
+        running_scenario_id: args.next.id,
+        running_scenario_ids_queued: this.state.running_scenario_ids_queued.filter((id) => id !== args.completed.id),
+        log_contents: this.state.log_contents.concat({level: 'NEWLINE', message: ''})
+      });
+    });
+    ipcRenderer.on('all-scenarios-complete', (event, args) => {
+      this.setState({
+        running_scenario_id: null, // Re-enable controls
+        running_scenario_ids_queued: []
+      });
+    });
   }
 
   _createNewScenario(name) {
@@ -117,9 +138,6 @@ class Configurations extends React.Component {
       running_scenario_id: activeScenarioIDs[0], // Disable controls
       running_scenario_ids_queued: activeScenarioIDs.slice(1)
     });
-    /**
-     * mark body.cursor = busy
-     */
     this.props.runAll(
       scenariosToRun.map((s) => {
         // Run parameters per each run
@@ -136,12 +154,9 @@ class Configurations extends React.Component {
   _cancelRunning() {
     this.setState({
       log_contents: this.state.log_contents.concat({level: "UI-event", message: "Cancelling remaining scenarios."}),
-      running_scenario_ids_queued: [] // Empty queue so background process won't switch on to next
+      running_scenario_ids_queued: []
     });
     this.props.cancelAll();
-    /**
-     * mark body.cursor = normal
-     */
     this.setState({
       running_scenario_id: null // Re-enable controls
     });

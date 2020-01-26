@@ -5,13 +5,52 @@
     <title>Hidden process-running window</title>
     <script type="text/javascript">
       const {ipcRenderer} = require('electron');
+      const {runPythonShell, stopPythonShell} = require('./run_python_worker');
+
+      let queuedRunParams = [];
+      let worker = null;
+
+      const onScenarioComplete = (completedRunParameters) => {
+        // Notify UI a scenario finished
+        ipcRenderer.send('loggable-event-from-worker', {
+          level: "UI-event",
+          message: `Scenario "${completedRunParameters.name}" finished`
+        });
+
+        if (queuedRunParams.length) {
+          const scenarioRunParams = queuedRunParams[0];
+          // Notify UI of current scenario
+          ipcRenderer.send('message-from-worker-scenario-complete', {
+            completed: completedRunParameters,
+            next: scenarioRunParams
+          });
+          // Run next scenario in queue
+          queuedRunParams = queuedRunParams.slice(1);
+          ipcRenderer.send('loggable-event-from-worker', {
+            level: "UI-event",
+            message: `Running scenario "${scenarioRunParams.name}"`
+          });
+          worker = runPythonShell(worker, scenarioRunParams, () => onScenarioComplete(scenarioRunParams));
+        } else {
+          // Notify UI that all scenarios completed
+          ipcRenderer.send('message-from-worker-all-scenarios-complete');
+        }
+      };
 
       ipcRenderer.on('run-scenarios', (event, args) => {
-        ipcRenderer.send('loggable-event-from-worker', args);
+        const scenarioRunParams = args[0];
+        queuedRunParams = args.slice(1);
+        ipcRenderer.send('loggable-event-from-worker', {
+          level: "UI-event",
+          message: `Running scenario "${scenarioRunParams.name}"`
+        });
+        worker = runPythonShell(worker, scenarioRunParams, () => onScenarioComplete(scenarioRunParams));
       });
 
       ipcRenderer.on('cancel-scenarios', (event, args) => {
-        ipcRenderer.send('loggable-event-from-worker', "Cancelling in hidden window");
+        stopPythonShell(worker);
+        worker = null;
+        ipcRenderer.send('loggable-event-from-worker', {level: "UI-event", message: "Cancelled"});
       });
     </script>
 </head>

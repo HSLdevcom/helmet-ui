@@ -35,7 +35,7 @@ async function createUI() {
 
 async function createWorker() {
   // Create hidden window for background processes (Electron best practise, alternative is web workers with limited API)
-  workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: true});
   await workerWindow.loadFile('src/background/worker.html');
 }
 
@@ -52,17 +52,33 @@ app.on('activate', async () => {
   }
 });
 
-// Relay initial message to run scenarios; UI => main => worker
+// Relay message to run all scenarios; UI => main => worker
 ipcMain.on('message-from-ui-to-run-scenarios', (event, args) => {
   workerWindow.webContents.send('run-scenarios', args);
 });
 
-// Relay cancelling message (interruption) to terminate current scenario and cancel any queued scenarios
+// Relay message (interruption) to terminate current scenario and cancel any queued scenarios; UI => main => worker
 ipcMain.on('message-from-ui-to-cancel-scenarios', (event, args) => {
   workerWindow.webContents.send('cancel-scenarios');
+});
+
+// Relay message of scenarios complete when switching to next; worker => main => UI
+ipcMain.on('message-from-worker-scenario-complete', (event, args) => {
+  mainWindow.webContents.send('scenario-complete', args);
+});
+
+// Relay message of all scenarios complete; worker => main => UI
+ipcMain.on('message-from-worker-all-scenarios-complete', (event, args) => {
+  mainWindow.webContents.send('all-scenarios-complete');
 });
 
 // Relay a loggable event in worker; worker => main => UI
 ipcMain.on('loggable-event-from-worker', (event, args) => {
   console.log(args);
+  mainWindow.webContents.send('loggable-event', args);
+});
+
+// Log worker-errors (by PythonShell, not stderr) in main console
+ipcMain.on('process-error-from-worker', (event, args) => {
+  console.error(args);
 });
