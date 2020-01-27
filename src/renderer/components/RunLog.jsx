@@ -16,36 +16,32 @@ class RunLog extends React.Component {
           Sulje
         </button>
       </div>
-      {this.props.log_contents.map((entry) => {
-        switch (entry.level) {
-          case "UI-event":
-            return <div className={"RunLog__entry RunLog__entry--ui"}
-                        key={entry.id}
-            >
-              {`[${entry.level}] ${entry.message}`}
-            </div>;
+      <div>
+        {this.props.log_contents.map((entry) => {
+          switch (entry.level) {
+            case "UI-event":
+              return <div className={"RunLog__entry RunLog__entry--ui"} key={entry.id}>
+                {`[${entry.level}] ${entry.message}`}
+              </div>;
 
-          case "ERROR":
-            return <div className={"RunLog__entry RunLog__entry--error"}
-                        key={entry.id}
-            >
-              {`[${entry.level}] ${entry.message}`}
-            </div>;
+            case "ERROR":
+              return <div className={"RunLog__entry RunLog__entry--error"} key={entry.id}>
+                {`[${entry.level}] ${entry.message}`}
+              </div>;
 
-          case "NEWLINE":
-            return <br/>;
+            case "NEWLINE":
+              return <br/>;
 
-          case "DEBUG":
-            return "";
+            case "DEBUG":
+              return "";
 
-          default:
-            return <div className={"RunLog__entry"}
-                        key={entry.id}
-            >
-              {`[${entry.level}] ${entry.message}`}
-            </div>;
-        }
-      })}
+            default:
+              return <div className={"RunLog__entry"} key={entry.id}>
+                {`[${entry.level}] ${entry.message}`}
+              </div>;
+          }
+        })}
+      </div>
     </div>;
   }
 }
