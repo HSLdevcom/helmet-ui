@@ -19,23 +19,23 @@ class Configurations extends React.Component {
 
     this.configStores = {}; // Initialized in componentDidMount
 
-    // Electron IPC events (from worker window)
-    ipcRenderer.on('loggable-event', (event, args) => {
+    // Electron IPC event listeners
+    this.onLoggableEvent = (event, args) => {
       this.setState({log_contents: this.state.log_contents.concat(args)});
-    });
-    ipcRenderer.on('scenario-complete', (event, args) => {
+    };
+    this.onScenarioComplete = (event, args) => {
       this.setState({
         running_scenario_id: args.next.id,
         running_scenario_ids_queued: this.state.running_scenario_ids_queued.filter((id) => id !== args.completed.id),
         log_contents: this.state.log_contents.concat({level: 'NEWLINE', message: ''})
       });
-    });
-    ipcRenderer.on('all-scenarios-complete', (event, args) => {
+    };
+    this.onAllScenariosComplete = (event, args) => {
       this.setState({
         running_scenario_id: null, // Re-enable controls
         running_scenario_ids_queued: []
       });
-    });
+    };
   }
 
   _createNewScenario(name) {
@@ -163,6 +163,10 @@ class Configurations extends React.Component {
   }
 
   componentDidMount() {
+    // Attach Electron IPC event listeners (to worker => UI events)
+    ipcRenderer.on('loggable-event', this.onLoggableEvent);
+    ipcRenderer.on('scenario-complete', this.onScenarioComplete);
+    ipcRenderer.on('all-scenarios-complete', this.onAllScenariosComplete);
     /**
      * Load all .json files from saveDir, and check if their keys match scenarios' keys.
      * If keys match -> set file as a configStore, and add contents to this.state.scenarios
@@ -185,6 +189,13 @@ class Configurations extends React.Component {
       }
     });
     this.setState({scenarios: foundScenarios});
+  }
+
+  componentWillUnmount() {
+    // Detach Electron IPC event listeners
+    ipcRenderer.removeListener('loggable-event', this.onLoggableEvent);
+    ipcRenderer.removeListener('scenario-complete', this.onScenarioComplete);
+    ipcRenderer.removeListener('all-scenarios-complete', this.onAllScenariosComplete);
   }
 
   render() {
