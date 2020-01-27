@@ -63,7 +63,6 @@ ipcMain.on('message-from-worker-all-scenarios-complete', (event, args) => {
 
 // Relay a loggable event in worker; worker => main => UI
 ipcMain.on('loggable-event-from-worker', (event, args) => {
-  console.log(args);
   mainWindow.webContents.send('loggable-event', args);
 });
 
