@@ -48,35 +48,4 @@ class RunLog extends React.Component {
 
 // json.level = 'DEBUG', 'INFO', 'WARN', 'ERROR'
 // json.message = '...'
-// {"status":
-// Progress: About 30min per ajo, tarkoituksena löytää ekvivalenssi, viimeinen ajo saattaa kestää pidempään
-//     {"name": "helmet",
-//      "completed": 0,
-//      "current": 0,
-//      "failed": 0,  background-color: ${json.status.failed > 0 ? 'red' : 'navy'}
-//      "state": "starting",
-//              starting: 'Käynnistetään..',
-//              preparing: 'Valmistellaan..',
-//              running: `Iteraatio ${json.status.current} käynnissä..`,
-//              failed: `Iteraatio ${json.status.current} epäonnistui.`,
-//              aborted: 'Simuloinnin alustus epäonnistui.',
-//              finished: ' ',
-//      "total": 5,
-//      "log": "C:\\Users\\mwah\\Documents\\Github\\helmet-model-system\\Scripts\\helmet.log"
-// },
-//  "message": "Initializing matrices and models..",
-//  "level": "INFO"
-//  }
-// {"status":
-//     {"name": "helmet",
-//      "completed": 0,
-//      "results": [],
-//      "current": 0,
-//      "failed": 0,
-//      "state": "preparing",
-//      "total": 5,
-//      "log": "C:\\Users\\mwah\\Documents\\Github\\helmet-model-system\\Scripts\\helmet.log"
-//  },
-//   "message": "Starting simulation with 5 iterations..",
-//   "level": "INFO"
-//  }
+// json.**extras
