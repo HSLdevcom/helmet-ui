@@ -23,19 +23,15 @@ async function createUI() {
   });
   await mainWindow.loadFile('src/renderer/index.html');
 
-  // Quit when main window is closed...
+  // Quit when main window is closed
   mainWindow.on('closed', () => {
-    mainWindow = null;
-    // ...as long as it isn't OS X (=darwin), where user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
+    app.quit();
   });
 }
 
 async function createWorker() {
   // Create hidden window for background processes (Electron best practise, alternative is web workers with limited API)
-  workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: true});
+  workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
   await workerWindow.loadFile('src/background/worker.html');
 }
 
@@ -43,13 +39,6 @@ async function createWorker() {
 app.on('ready', async () => {
   await createUI();
   await createWorker();
-});
-
-// On OS X re-create the main window, when dock icon is clicked and main window was closed.
-app.on('activate', async () => {
-  if (mainWindow === null) {
-    await createUI();
-  }
 });
 
 // Relay message to run all scenarios; UI => main => worker
