@@ -42,6 +42,18 @@
 .RunConfiguration__start-stop-description {
 }
 
+.RunConfiguration__run-status-percentage-ready {
+    margin: 1em 0;
+    border: 1px solid silver;
+    padding: 4px;
+}
+
+.RunConfiguration__run-status-scenario-ready {
+}
+
+.RunConfiguration__run-status-logfile-link {
+}
+
 .RunConfiguration__start-stop-scenarios {
     color: mediumseagreen;
     font-weight: bold;

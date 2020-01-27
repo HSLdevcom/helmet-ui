@@ -1,5 +1,7 @@
 import React from 'react';
 
+const {ipcRenderer} = require('electron');
+
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
 class RunConfiguration extends React.Component {
@@ -7,6 +9,36 @@ class RunConfiguration extends React.Component {
     super(props);
     this.state = {
       scenario_ids_to_run: [],
+      status_iterations_total: null,
+      status_iterations_current: 0,
+      status_iterations_completed: 0,
+      status_iterations_failed: 0,
+      status_state: null,
+      status_logfile_path: null,
+      status_ready_scenarios_logfiles: [], // [{name: .., logfile: ..}]
+    };
+
+    // Electron IPC event listeners
+    this.onLoggableEvent = (event, args) => {
+      if (args.status) {
+        this.setState({
+          status_iterations_total: args.status['total'],
+          status_iterations_current: args.status['current'],
+          status_iterations_completed: args.status['completed'],
+          status_iterations_failed: args.status['failed'],
+          status_state: args.status['state'],
+          status_logfile_path: args.status['log'],
+        });
+        if (args.status.state === 'finished') {
+          // noinspection JSCheckFunctionSignatures
+          this.setState({
+            status_ready_scenarios_logfiles: this.state.status_ready_scenarios_logfiles.concat({
+              name: args.status.name,
+              logfile: args.status.log
+            })
+          })
+        }
+      }
     };
   }
 
@@ -54,6 +86,16 @@ class RunConfiguration extends React.Component {
       this.props.runAllActiveScenarios(this.state.scenario_ids_to_run)
       :
       this.props.cancelRunning();
+  }
+
+  componentDidMount() {
+    // Attach Electron IPC event listeners (to worker => UI events)
+    ipcRenderer.on('loggable-event', this.onLoggableEvent);
+  }
+
+  componentWillUnmount() {
+    // Detach Electron IPC event listeners
+    ipcRenderer.removeListener('loggable-event', this.onLoggableEvent);
   }
 
   render() {
@@ -108,9 +150,64 @@ class RunConfiguration extends React.Component {
             "Ei ajettavaksi valittuja skenaarioita"
           }
         </p>
-        <div className="RunConfiguration__run-status">
-          {/* to implement */}
-        </div>
+        {this.props.running_scenario_id !== null ?
+          <div className="RunConfiguration__run-status">
+            {this.state.status_iterations_total ?
+              <div>
+                <div className="RunConfiguration__run-status-percentage-ready"
+                     style={{
+                       background: (
+                         `linear-gradient(`
+                         + `to right, `
+                         + `aliceblue 0%, `
+                         + `aliceblue ${Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%, `
+                         + `transparent ${Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%, `
+                         + `transparent 100%)`
+                       )
+                     }}
+                >
+                  Valmiina
+                  &nbsp;
+                  <strong>{this.state.status_iterations_completed}</strong>
+                  &nbsp;
+                  /
+                  &nbsp;
+                  <strong>{this.state.status_iterations_total}</strong>
+                  &nbsp;
+                  (<strong>{Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%</strong>)
+                </div>
+              </div>
+              :
+              "Setting up python-shell . . ."
+            }
+            {this.state.status_ready_scenarios_logfiles.map((readyScenario) => {
+              return <p className="RunConfiguration__run-status-scenario-ready">
+                {readyScenario.name} valmis
+                &nbsp;
+                <a className="RunConfiguration__run-status-logfile-link"
+                   href={readyScenario.logfile}
+                >
+                  lokit
+                </a>
+              </p>
+            })}
+            {
+              //      "state": "starting",
+              //              starting: 'Käynnistetään..',
+              //              preparing: 'Valmistellaan..',
+              //              running: `Iteraatio ${json.status.current} käynnissä..`,
+              //              failed: `Iteraatio ${json.status.current} epäonnistui.`,
+              //              aborted: 'Simuloinnin alustus epäonnistui.',
+              //              finished: ' ',
+              //  "message": "Initializing matrices and models..",
+              //
+              //      "state": "preparing",
+              //   "message": "Starting simulation with 5 iterations..",
+            }
+          </div>
+          :
+          ""
+        }
         <button className="RunConfiguration__start-stop-btn"
                 onClick={(e) => this._handleClickStartStop()}
         >
