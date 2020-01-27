@@ -16,7 +16,7 @@ class RunLog extends React.Component {
           Sulje
         </button>
       </div>
-      <div>
+      <div className="RunLog__entries">
         {this.props.log_contents.map((entry) => {
           switch (entry.level) {
             case "UI-event":
