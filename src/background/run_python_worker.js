@@ -45,6 +45,7 @@ module.exports = {
       scenario: runParameters.name,
       emme_path: runParameters.emme_project_file_path,
       data_path: runParameters.data_folder_path,
+      use_fixed_transit_cost: runParameters.use_fixed_transit_cost,
       iterations: runParameters.iterations,
       log_level: runParameters.log_level
     });
