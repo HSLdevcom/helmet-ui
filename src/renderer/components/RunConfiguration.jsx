@@ -159,8 +159,8 @@ class RunConfiguration extends React.Component {
                        background: (
                          `linear-gradient(`
                          + `to right, `
-                         + `aliceblue 0%, `
-                         + `aliceblue ${Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%, `
+                         + `#99cfff 0%, `
+                         + `#99cfff ${Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%, `
                          + `transparent ${Math.round(this.state.status_iterations_completed / this.state.status_iterations_total * 100)}%, `
                          + `transparent 100%)`
                        )
