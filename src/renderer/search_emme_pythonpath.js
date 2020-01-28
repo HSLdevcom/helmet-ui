@@ -1,5 +1,4 @@
 const path = require('path');
-const _ = require('lodash');
 const fs = require('fs');
 const config = require('../config');
 
@@ -29,8 +28,12 @@ const searchEMMEPython = () => {
     `\\${commonEmmePath}\\${pythonPathPostfix}`,
     `usr/bin/python2` // mainly for developers on Mac & Linux
   ];
-  const all = _.flatMap(drives, (d) => _.flatMap(paths, (p) => `${d}${p}`));
-  const firstExisting = _.find(all, fs.existsSync);
+  const allPathCombinations = drives.reduce(
+    (accumulator, d) => {
+      // Combine each (d)rive to all (p)aths, and merge results via reduce
+      return accumulator.concat(paths.map((p) => `${d}${p}`));
+    }, []);
+  const firstExisting = allPathCombinations.find(fs.existsSync);
   if (firstExisting) {
     return [true, firstExisting];
   } else {
