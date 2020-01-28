@@ -2,6 +2,7 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import Store from 'electron-store';
+import uuidv4 from 'uuid/v4';
 
 const {ipcRenderer} = require('electron');
 
@@ -39,11 +40,8 @@ class Configurations extends React.Component {
   }
 
   _createNewScenario(name) {
-    // Get next available running ID
-    const newId = this.state.scenarios.length ?
-      Math.max.apply(null, this.state.scenarios.map((s) => s.id)) + 1
-      :
-      0;
+    // Generate new (unique) ID for new scenario
+    const newId = uuidv4();
     const newScenario = {
       id: newId,
       name: name,
