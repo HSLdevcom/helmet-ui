@@ -11,6 +11,8 @@
       let worker = null;
 
       const onScenarioComplete = (completedRunParameters) => {
+        worker = null; // Reset worker reference for new/next runs
+
         // Notify UI a scenario finished
         ipcRenderer.send('loggable-event-from-worker', {
           level: "UI-event",
