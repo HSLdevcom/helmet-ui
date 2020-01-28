@@ -30,7 +30,6 @@ class RunConfiguration extends React.Component {
           status_logfile_path: args.status['log'],
         });
         if (args.status.state === 'finished') {
-          // noinspection JSCheckFunctionSignatures
           this.setState({
             status_ready_scenarios_logfiles: this.state.status_ready_scenarios_logfiles.concat({
               name: args.status.name,
@@ -150,9 +149,9 @@ class RunConfiguration extends React.Component {
             "Ei ajettavaksi valittuja skenaarioita"
           }
         </p>
-        {this.props.running_scenario_id !== null ?
-          <div className="RunConfiguration__run-status">
-            {this.state.status_iterations_total ?
+        <div className="RunConfiguration__run-status">
+          {this.state.running_scenario_id ?
+            this.state.status_iterations_total ?
               <div>
                 <div className="RunConfiguration__run-status-percentage-ready"
                      style={{
@@ -179,35 +178,22 @@ class RunConfiguration extends React.Component {
               </div>
               :
               "Setting up python-shell . . ."
-            }
-            {this.state.status_ready_scenarios_logfiles.map((readyScenario) => {
-              return <p className="RunConfiguration__run-status-scenario-ready">
-                {readyScenario.name} valmis
-                &nbsp;
-                <a className="RunConfiguration__run-status-logfile-link"
-                   href={readyScenario.logfile}
-                >
-                  lokit
-                </a>
-              </p>
-            })}
-            {
-              //      "state": "starting",
-              //              starting: 'Käynnistetään..',
-              //              preparing: 'Valmistellaan..',
-              //              running: `Iteraatio ${json.status.current} käynnissä..`,
-              //              failed: `Iteraatio ${json.status.current} epäonnistui.`,
-              //              aborted: 'Simuloinnin alustus epäonnistui.',
-              //              finished: ' ',
-              //  "message": "Initializing matrices and models..",
-              //
-              //      "state": "preparing",
-              //   "message": "Starting simulation with 5 iterations..",
-            }
-          </div>
-          :
-          ""
-        }
+            :
+            ""
+          }
+          {this.state.status_ready_scenarios_logfiles.map((readyScenario) => {
+            return <p className="RunConfiguration__run-status-scenario-ready" key={readyScenario.name}>
+              {readyScenario.name} valmis
+              &nbsp;
+              <a className="RunConfiguration__run-status-logfile-link"
+                 href={readyScenario.logfile}
+                 target="_blank"
+              >
+                lokit
+              </a>
+            </p>
+          })}
+        </div>
         <button className="RunConfiguration__start-stop-btn"
                 onClick={(e) => this._handleClickStartStop()}
         >
