@@ -41,3 +41,8 @@ body {
 .App__header-version {
     font-size: 40%;
 }
+
+.App__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
