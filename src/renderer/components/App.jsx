@@ -1,5 +1,4 @@
 import React from 'react';
-import path from 'path';
 import Store from 'electron-store';
 
 const {ipcRenderer} = require('electron');
@@ -13,14 +12,30 @@ class App extends React.Component {
       helmet_scripts_path: undefined,
       is_running: false,
     };
+
     // Global settings store contains "emme_python_path" and "helmet_scripts_path", which are same in every scenario.
     this.globalSettingsStore = new Store();
-    ipcRenderer.on('all-scenarios-complete', (event, args) => {
+
+    // Electron IPC event listeners
+    this.onAllScenariosComplete = (event, args) => {
       this.setState({is_running: false});
-    });
+    };
   }
 
+  _setEMMEPythonPath = (newPath) => {
+    this.setState({emme_python_path: newPath});
+    this.globalSettingsStore.set('emme_python_path', newPath);
+  };
+
+  _setHelmetScriptsPath = (newPath) => {
+    this.setState({helmet_scripts_path: newPath});
+    this.globalSettingsStore.set('helmet_scripts_path', newPath);
+  };
+
   componentDidMount() {
+    // Attach Electron IPC event listeners (to worker => UI events)
+    ipcRenderer.on('all-scenarios-complete', this.onAllScenariosComplete);
+
     // Search for EMME's Python if not set in global store (default win path is %APPDATA%, should remain there [hidden from user])
     if (!this.globalSettingsStore.get('emme_python_path')) {
       const [found, pythonPath] = this.props.searchEMMEPython();
@@ -39,82 +54,54 @@ class App extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    // Detach Electron IPC event listeners
+    ipcRenderer.removeListener('all-scenarios-complete', this.onAllScenariosComplete);
+  }
+
   render() {
     return <div className={"App" + (this.state.is_running ? " App--busy" : "")}>
-      <div className="App__settings-overlay" style={{display: this.state.is_settings_open ? "block" : "none"}}/>
 
-      <div className="App__settings-dialog" style={{display: this.state.is_settings_open ? "block" : "none"}}>
-        <div className="App__settings-dialog-heading">Asetukset</div>
-        <div>
-          <span className="App__settings-pseudo-label">Emme Python</span>
-          <label className="App__settings-pseudo-file-select" id="python-label" htmlFor="python">
-            {this.state.emme_python_path ? path.basename(this.state.emme_python_path) : "Valitse.."}
-          </label>
-          <input className="App__settings-hidden-input"
-                 id="python"
-                 type="file"
-                 accept=".exe"
-                 onChange={(e) => {
-                   const inputPath = e.target.files[0].path;
-                   this.setState({emme_python_path: inputPath});
-                   this.globalSettingsStore.set('emme_python_path', inputPath);
-                 }}
-          />
-        </div>
-        <div>
-          <span className="App_settings-pseudo-label">Helmet Scripts</span>
-          <label className="App__settings-pseudo-file-select" id="scripts-label" htmlFor="scripts">
-            {this.state.helmet_scripts_path ? path.basename(this.state.helmet_scripts_path) : "Valitse.."}
-          </label>
-          <input className="App__settings-hidden-input"
-                 id="scripts"
-                 type="file"
-                 webkitdirectory=""
-                 directory=""
-                 onChange={(e) => {
-                   const inputPath = e.target.files[0].path;
-                   this.setState({helmet_scripts_path: inputPath});
-                   this.globalSettingsStore.set('helmet_scripts_path', inputPath);
-                 }}
-          />
-        </div>
-        <br/>
-        <div id="App__settings-dialog-controls">
-          <button
-            onClick={(e) => {
-              this.setState({is_settings_open: false});
-            }}
-          >Sulje
-          </button>
-        </div>
+      {/* Pop-up settings dialog with overlay behind it */}
+      <div className="App__settings" style={{display: this.state.is_settings_open ? "block" : "none"}}>
+        <Settings
+          emme_python_path={this.state.emme_python_path}
+          helmet_scripts_path={this.state.helmet_scripts_path}
+          closeSettings={() => this.setState({is_settings_open: false})}
+          setEMMEPythonPath={this._setEMMEPythonPath}
+          setHelmetScriptsPath={this._setHelmetScriptsPath}
+        />
       </div>
 
+      {/* UI title bar, app-version, etc. */}
       <div className="App__header">
         Helmet 4.0
         &nbsp;
         <span className="App__header-version">{`UI v${this.props.helmetUIVersion}`}</span>
         <button className="App__open-settings-btn"
-                style={{display: !this.state.is_settings_open ? "block" : "none"}}
-                onClick={(e) => {
-                  this.setState({is_settings_open: true});
-                }}
+                style={{display: this.state.is_settings_open ? "none" : "block"}}
+                onClick={(e) => this.setState({is_settings_open: true})}
                 disabled={this.state.is_running}
-        >Asetukset</button>
+        >
+          Asetukset
+        </button>
       </div>
 
-      <Configurations
-        helmet_ui_app_config={this.props.config}
-        emme_python_path={this.state.emme_python_path}
-        helmet_scripts_path={this.state.helmet_scripts_path}
-        runAll={(runParametersArray) => {
-          ipcRenderer.send('message-from-ui-to-run-scenarios', runParametersArray);
-          this.setState({is_running: true, is_settings_open: false});
-        }}
-        cancelAll={() => {
-          ipcRenderer.send('message-from-ui-to-cancel-scenarios');
-          this.setState({is_running: false});
-        }}
-      />
+      <div className="App__body">
+        <Configurations
+          helmet_ui_app_config={this.props.config}
+          emme_python_path={this.state.emme_python_path}
+          helmet_scripts_path={this.state.helmet_scripts_path}
+          runAll={(runParametersArray) => {
+            ipcRenderer.send('message-from-ui-to-run-scenarios', runParametersArray);
+            this.setState({is_running: true, is_settings_open: false});
+          }}
+          cancelAll={() => {
+            ipcRenderer.send('message-from-ui-to-cancel-scenarios');
+            this.setState({is_running: false});
+          }}
+        />
+      </div>
 
     </div>
   }
