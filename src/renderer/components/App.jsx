@@ -64,8 +64,7 @@ class App extends React.Component {
     this.globalSettingsStore.set('helmet_scripts_path', newPath);
   };
 
-  // pending if sent to subcomponents
-  _createNewScenario(name) {
+  _createNewScenario = (name) => {
     // Generate new (unique) ID for new scenario
     const newId = uuidv4();
     const newScenario = {
@@ -77,18 +76,14 @@ class App extends React.Component {
       iterations: 10,
     };
     // Create the new scenario in "scenarios" array first
-    this.setState({
-      scenarios: this.state.scenarios.concat(newScenario)
-    });
+    this.setState({scenarios: this.state.scenarios.concat(newScenario)});
     this.configStores[newId] = new Store({cwd: this.props.config.store.saveDir, name: name});
     this.configStores[newId].set(newScenario);
     // Then set scenario as open by id (Why id? Having open_scenario as reference causes sub-elements to be bugged because of different object reference)
-    this.setState({
-      open_scenario_id: newId
-    })
-  }
+    this.setState({open_scenario_id: newId});
+  };
 
-  _updateScenario(newValues) {
+  _updateScenario = (newValues) => {
     // Update newValues to matching .id in this.state.scenarios
     this.setState({
       scenarios: this.state.scenarios.map((s) => {
@@ -97,17 +92,22 @@ class App extends React.Component {
     });
     // If name changed, rename file and change reference
     if (this.configStores[newValues.id].get('name') !== newValues.name) {
-      fs.renameSync(this.configStores[newValues.id].path, path.join(this.props.config.store.saveDir, `${newValues.name}.json`));
+      // If name was set empty - use ID instead
+      const newName = newValues.name ? newValues.name : newValues.id;
+      fs.renameSync(
+        this.configStores[newValues.id].path,
+        path.join(this.props.config.store.saveDir, `${newName}.json`)
+      );
       this.configStores[newValues.id] = new Store({
         cwd: this.props.config.store.saveDir,
-        name: newValues.name
+        name: newName
       });
     }
-    // And persist changes in file
+    // And persist all changes in file
     this.configStores[newValues.id].set(newValues);
-  }
+  };
 
-  _deleteScenario(scenario) {
+  _deleteScenario = (scenario) => {
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       this.setState({
         open_scenario_id: null,
@@ -116,9 +116,9 @@ class App extends React.Component {
       fs.unlinkSync(path.join(this.props.config.store.saveDir, `${scenario.name}.json`));
       window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
-  }
+  };
 
-  _runAllActiveScenarios(activeScenarioIDs) {
+  _runAllActiveScenarios = (activeScenarioIDs) => {
     const scenariosToRun = this.state.scenarios.filter((s) => activeScenarioIDs.includes(s.id));
 
     // Check required global parameters are set
@@ -175,9 +175,9 @@ class App extends React.Component {
       })
     );
     this.setState({is_running: true, is_settings_open: false});
-  }
+  };
 
-  _cancelRunning() {
+  _cancelRunning = () => {
     this.setState({
       log_contents: this.state.log_contents.concat({level: "UI-event", message: "Cancelling remaining scenarios."}),
       running_scenario_ids_queued: []
@@ -187,13 +187,11 @@ class App extends React.Component {
       is_running: false,
       running_scenario_id: null // Re-enable controls
     });
-  }
+  };
 
   componentDidMount() {
     // Attach Electron IPC event listeners (to worker => UI events)
     ipcRenderer.on('all-scenarios-complete', this.onAllScenariosComplete);
-
-    // pending if sent to subcomponents
     ipcRenderer.on('loggable-event', this.onLoggableEvent);
     ipcRenderer.on('scenario-complete', this.onScenarioComplete);
     ipcRenderer.on('all-scenarios-complete', this.onAllScenariosComplete);
@@ -215,7 +213,6 @@ class App extends React.Component {
       helmet_scripts_path: this.globalSettingsStore.get('helmet_scripts_path')
     });
 
-    // pending if sent to subcomponents
     // Load all .json files from saveDir, and check if their keys match scenarios' keys.
     // If keys match -> set file as a configStore, and add contents to this.state.scenarios
     const configPath = this.props.config.store.saveDir;
@@ -281,15 +278,15 @@ class App extends React.Component {
 
           {/* Panel for primary view and controls */}
           <div className="App__main">
-            <RunConfiguration
+            <HelmetProject
               scenarios={this.state.scenarios}
               open_scenario_id={this.state.open_scenario_id}
               running_scenario_id={this.state.running_scenario_id}
               running_scenario_ids_queued={this.state.running_scenario_ids_queued}
-              setOpenScenarioId={(scenario_id) => this.setState({open_scenario_id: scenario_id})}
-              createNewScenario={(name) => this._createNewScenario(name)}
-              runAllActiveScenarios={(ids) => this._runAllActiveScenarios(ids)}
-              cancelRunning={() => this._cancelRunning()}
+              setOpenScenarioId={(id) => this.setState({open_scenario_id: id})}
+              createNewScenario={this._createNewScenario}
+              runAllActiveScenarios={this._runAllActiveScenarios}
+              cancelRunning={this._cancelRunning}
             />
           </div>
 
@@ -303,10 +300,10 @@ class App extends React.Component {
               />
               :
               this.state.open_scenario_id !== null ?
-                <ScenarioConfiguration
+                <HelmetScenario
                   scenario={this.state.scenarios.find((s) => s.id === this.state.open_scenario_id)}
-                  updateScenario={(newValues) => this._updateScenario(newValues)}
-                  deleteScenario={(scenario) => this._deleteScenario(scenario)}
+                  updateScenario={this._updateScenario}
+                  deleteScenario={this._deleteScenario}
                 />
                 :
                 ""

@@ -1,33 +1,32 @@
-/* General sections */
-.ScenarioConfiguration {
+.Scenario {
     padding: 1em 0.75em 0 0.75em;
     background: lightslategrey;
 }
 
-.ScenarioConfiguration__section {
+.Scenario__section {
     padding-bottom: 1.25em;
 }
 
-.ScenarioConfiguration__delete-btn {
+.Scenario__delete-btn {
     float: right;
     line-height: 1.25em;
     background: #ffb397;
 }
 
 /* Labels */
-.ScenarioConfiguration__pseudo-label {
+.Scenario__pseudo-label {
     display: block;
     line-height: 1.75em;
     vertical-align: middle;
 }
-.ScenarioConfiguration__pseudo-label--inline {
+.Scenario__pseudo-label--inline {
     display: inline-block;
     vertical-align: initial;
     padding-right: 0.75em;
 }
 
 /* Inputs */
-.ScenarioConfiguration__name {
+.Scenario__name {
     border-top: none;
     border-left: none;
     border-right: none;
@@ -36,7 +35,7 @@
     line-height: 1.75em;
 }
 
-.ScenarioConfiguration__pseudo-file-select {
+.Scenario__pseudo-file-select {
     display: block;
     width: 14em;
     line-height: 1.75em;
@@ -50,10 +49,10 @@
     text-overflow: ellipsis;
 }
 
-.ScenarioConfiguration__hidden-input {
+.Scenario__hidden-input {
     display: none;
 }
 
-.ScenarioConfiguration__radio-input {
+.Scenario__radio-input {
     margin-right: 2em;
 }

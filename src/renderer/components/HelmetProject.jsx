@@ -4,7 +4,7 @@ const {ipcRenderer} = require('electron');
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
-class RunConfiguration extends React.Component {
+class HelmetProject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,15 +98,15 @@ class RunConfiguration extends React.Component {
   }
 
   render() {
-    return <div className="RunConfiguration">
-      <div className="RunConfiguration__heading">Lis&auml;&auml; skenaario(t) ajettavaksi, tai luo uusi skenaario</div>
-      <div className="RunConfiguration__saved-scenarios">
+    return <div className="Project">
+      <div className="Project__heading">Lis&auml;&auml; skenaario(t) ajettavaksi, tai luo uusi skenaario</div>
+      <div className="Project__saved-scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {this.props.scenarios.map((s) => {
-          return <div className="RunConfiguration__scenario" key={s.id}>
-            <button className={"RunConfiguration__scenario-run-btn" + (
+          return <div className="Project__scenario" key={s.id}>
+            <button className={"Project__scenario-run-btn" + (
                       this.state.scenario_ids_to_run.includes(s.id) ?
-                        " RunConfiguration__scenario-run-btn--active"
+                        " Project__scenario-run-btn--active"
                         :
                         ""
                     )}
@@ -116,8 +116,8 @@ class RunConfiguration extends React.Component {
               Ajettavaksi
             </button>
             &nbsp;
-            <button className={"RunConfiguration__scenario-name-config-btn" + (
-                      this.props.open_scenario_id === s.id ? " RunConfiguration__scenario-name-config-btn--active" : ""
+            <button className={"Project__scenario-name-config-btn" + (
+                      this.props.open_scenario_id === s.id ? " Project__scenario-name-config-btn--active" : ""
                     )}
                     disabled={this.props.running_scenario_id !== null}
                     onClick={(e) => this.props.setOpenScenarioId(s.id)}
@@ -126,8 +126,8 @@ class RunConfiguration extends React.Component {
             </button>
           </div>;
         })}
-        <div className="RunConfiguration__saved-scenarios-footer">
-          <button className="RunConfiguration__add-new-scenario-btn"
+        <div className="Project__saved-scenarios-footer">
+          <button className="Project__add-new-scenario-btn"
                   disabled={this.props.running_scenario_id !== null}
                   onClick={(e) => this._handleClickNewScenario()}
           >
@@ -135,13 +135,13 @@ class RunConfiguration extends React.Component {
           </button>
         </div>
       </div>
-      <hr className="RunConfiguration__separator"/>
-      <div className="RunConfiguration__start-stop-controls">
-        <p className="RunConfiguration__start-stop-description">
+      <hr className="Project__separator"/>
+      <div className="Project__start-stop-controls">
+        <p className="Project__start-stop-description">
           {this.state.scenario_ids_to_run.length ?
             <span>
               Ajettavana:
-              <span className="RunConfiguration__start-stop-scenarios">
+              <span className="Project__start-stop-scenarios">
                 {this.props.scenarios.filter((s) => this.state.scenario_ids_to_run.includes(s.id)).map((s) => s.name).join(', ')}
               </span>
             </span>
@@ -149,11 +149,11 @@ class RunConfiguration extends React.Component {
             "Ei ajettavaksi valittuja skenaarioita"
           }
         </p>
-        <div className="RunConfiguration__run-status">
+        <div className="Project__run-status">
           {this.state.running_scenario_id ?
             this.state.status_iterations_total ?
               <div>
-                <div className="RunConfiguration__run-status-percentage-ready"
+                <div className="Project__run-status-percentage-ready"
                      style={{
                        background: (
                          `linear-gradient(`
@@ -182,10 +182,10 @@ class RunConfiguration extends React.Component {
             ""
           }
           {this.state.status_ready_scenarios_logfiles.map((readyScenario) => {
-            return <p className="RunConfiguration__run-status-scenario-ready" key={readyScenario.name}>
+            return <p className="Project__run-status-scenario-ready" key={readyScenario.name}>
               {readyScenario.name} valmis
               &nbsp;
-              <a className="RunConfiguration__run-status-logfile-link"
+              <a className="Project__run-status-logfile-link"
                  href={readyScenario.logfile}
                  target="_blank"
               >
@@ -194,7 +194,7 @@ class RunConfiguration extends React.Component {
             </p>
           })}
         </div>
-        <button className="RunConfiguration__start-stop-btn"
+        <button className="Project__start-stop-btn"
                 onClick={(e) => this._handleClickStartStop()}
         >
           {this.props.running_scenario_id === null ?
