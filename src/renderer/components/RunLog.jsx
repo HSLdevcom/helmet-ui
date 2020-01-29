@@ -3,25 +3,25 @@ import React from 'react';
 const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
 
   return (
-    <div className="RunLog">
-      <div className="RunLog__header">
-        <button className="RunLog__close-btn"
+    <div className="Log">
+      <div className="Log__header">
+        <button className="Log__close-btn"
                 disabled={isScenarioRunning}
                 onClick={(e) => closeRunLog()}
         >
           Sulje
         </button>
       </div>
-      <div className="RunLog__entries">
+      <div className="Log__entries">
         {logContents.map((entry) => {
           switch (entry.level) {
             case "UI-event":
-              return <div className={"RunLog__entry RunLog__entry--ui"} key={entry.id}>
+              return <div className={"Log__entry Log__entry--ui"} key={entry.id}>
                 {`[${entry.level}] ${entry.message}`}
               </div>;
 
             case "ERROR":
-              return <div className={"RunLog__entry RunLog__entry--error"} key={entry.id}>
+              return <div className={"Log__entry Log__entry--error"} key={entry.id}>
                 {`[${entry.level}] ${entry.message}`}
               </div>;
 
@@ -32,7 +32,7 @@ const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
               return "";
 
             default:
-              return <div className={"RunLog__entry"} key={entry.id}>
+              return <div className={"Log__entry"} key={entry.id}>
                 {`[${entry.level}] ${entry.message}`}
               </div>;
           }
