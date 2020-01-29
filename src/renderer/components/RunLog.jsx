@@ -1,23 +1,19 @@
 import React from 'react';
 
-class RunLog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
 
-  render() {
-    return <div className="RunLog">
+  return (
+    <div className="RunLog">
       <div className="RunLog__header">
         <button className="RunLog__close-btn"
-                disabled={this.props.is_scenario_running}
-                onClick={(e) => this.props.closeRunLog()}
+                disabled={isScenarioRunning}
+                onClick={(e) => closeRunLog()}
         >
           Sulje
         </button>
       </div>
       <div className="RunLog__entries">
-        {this.props.log_contents.map((entry) => {
+        {logContents.map((entry) => {
           switch (entry.level) {
             case "UI-event":
               return <div className={"RunLog__entry RunLog__entry--ui"} key={entry.id}>
@@ -42,9 +38,9 @@ class RunLog extends React.Component {
           }
         })}
       </div>
-    </div>;
-  }
-}
+    </div>
+  )
+};
 
 // json.level = 'DEBUG', 'INFO', 'WARN', 'ERROR'
 // json.message = '...'

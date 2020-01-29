@@ -1,7 +1,7 @@
 import React from 'react';
 import path from "path";
 
-const Settings = () => {
+const Settings = ({emmePythonPath, setEMMEPythonPath, helmetScriptsPath, setHelmetScriptsPath, closeSettings}) => {
   return (
     <div className="Settings">
 
@@ -12,30 +12,30 @@ const Settings = () => {
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Emme Python</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path">
-            {this.props.emme_python_path ? path.basename(this.props.emme_python_path) : "Valitse.."}
+            {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-emme-python-path"
                  type="file"
                  accept=".exe"
-                 onChange={(e) => this.props.setEMMEPythonPath(e.target.files[0].path)}
+                 onChange={(e) => setEMMEPythonPath(e.target.files[0].path)}
           />
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet Scripts</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path">
-            {this.props.helmet_scripts_path ? path.basename(this.props.helmet_scripts_path) : "Valitse.."}
+            {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-helmet-scripts-path"
                  type="file"
                  webkitdirectory=""
                  directory=""
-                 onChange={(e) => this.props.setHelmetScriptsPath(e.target.files[0].path)}
+                 onChange={(e) => setHelmetScriptsPath(e.target.files[0].path)}
           />
         </div>
         <div className="Settings__dialog-controls">
-          <button onClick={(e) => this.props.closeSettings()}>
+          <button onClick={(e) => closeSettings()}>
             Sulje
           </button>
         </div>
