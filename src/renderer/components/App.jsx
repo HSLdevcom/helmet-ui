@@ -10,32 +10,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      is_settings_open: false,
-      emme_python_path: undefined,
-      helmet_scripts_path: undefined,
-      is_running: false,
+      // Global settings
+      is_settings_open: false, // whether Settings -dialog is open
+      emme_python_path: undefined, // file path to EMME python executable
+      helmet_scripts_path: undefined, // folder path to HELMET model system scripts
 
-      // pending if sent to subcomponents
-      scenarios: [],
-      open_scenario_id: null,
-      running_scenario_id: null,
-      running_scenario_ids_queued: [],
-      log_contents: [],
-      is_log_opened: false,
+      // HELMET Project -specific settings
+      scenarios: [], // HELMET Scenarios under currently selected HELMET Project
+      open_scenario_id: null, // currently open HELMET Scenario configuration
+
+      // Runtime
+      running_scenario_id: null, // currently running HELMET Scenario, indicates if running
+      running_scenario_ids_queued: [], // queued ("remaining") HELMET Scenarios
+      log_contents: [], // project runtime log-contents
+      is_log_opened: false, // whether runtime log is open
     };
 
     // Global settings store contains "emme_python_path" and "helmet_scripts_path", which are same in every scenario.
     this.globalSettingsStore = new Store();
 
-    // Initialized in componentDidMount
+    // Scenario-specific settings under currently selected HELMET Project
     this.configStores = {};
 
     // Electron IPC event listeners
-    this.onAllScenariosComplete = (event, args) => {
-      this.setState({is_running: false});
-    };
-
-    // pending if sent to subcomponents
     this.onLoggableEvent = (event, args) => {
       this.setState({log_contents: this.state.log_contents.concat(args)});
     };
@@ -174,7 +171,6 @@ class App extends React.Component {
         }
       })
     );
-    this.setState({is_running: true, is_settings_open: false});
   };
 
   _cancelRunning = () => {
@@ -184,7 +180,6 @@ class App extends React.Component {
     });
     ipcRenderer.send('message-from-ui-to-cancel-scenarios');
     this.setState({
-      is_running: false,
       running_scenario_id: null // Re-enable controls
     });
   };
@@ -238,8 +233,6 @@ class App extends React.Component {
   componentWillUnmount() {
     // Detach Electron IPC event listeners
     ipcRenderer.removeListener('all-scenarios-complete', this.onAllScenariosComplete);
-
-    // pending if sent to subcomponents
     ipcRenderer.removeListener('loggable-event', this.onLoggableEvent);
     ipcRenderer.removeListener('scenario-complete', this.onScenarioComplete);
     ipcRenderer.removeListener('all-scenarios-complete', this.onAllScenariosComplete);
@@ -247,7 +240,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={"App" + (this.state.is_running ? " App--busy" : "")}>
+      <div className={"App" + (this.state.running_scenario_id !== null ? " App--busy" : "")}>
 
         {/* Pop-up settings dialog with overlay behind it */}
         <div className="App__settings" style={{display: this.state.is_settings_open ? "block" : "none"}}>
@@ -267,7 +260,7 @@ class App extends React.Component {
           <button className="App__open-settings-btn"
                   style={{display: this.state.is_settings_open ? "none" : "block"}}
                   onClick={(e) => this.setState({is_settings_open: true})}
-                  disabled={this.state.is_running}
+                  disabled={this.state.running_scenario_id !== null}
           >
             Asetukset
           </button>
