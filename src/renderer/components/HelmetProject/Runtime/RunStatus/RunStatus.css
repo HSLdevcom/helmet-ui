@@ -1,0 +1,14 @@
+.Status {
+}
+
+.Status__readiness {
+    margin: 1em 0;
+    border: 1px solid silver;
+    padding: 4px;
+}
+
+.Status__finished-scenario {
+}
+
+.Status__finished-scenario-logfile-link {
+}
