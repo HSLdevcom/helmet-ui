@@ -50,9 +50,11 @@
       });
 
       ipcRenderer.on('cancel-scenarios', (event, args) => {
-        stopPythonShell(worker);
-        worker = null;
-        ipcRenderer.send('loggable-event-from-worker', {level: "UI-event", message: "Cancelled"});
+        ipcRenderer.send(
+          'loggable-event-from-worker',
+          {level: "UI-event", message: `Cancelling remaining scenarios (${queuedRunParams.map((s) => s.name).join(', ')})`}
+        );
+        queuedRunParams = [];
       });
     </script>
 </head>

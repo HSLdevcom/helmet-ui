@@ -1,5 +1,5 @@
 const ps = require('python-shell');
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, remote} = require('electron');
 
 /**
  * Reset and hide simulation status panel and results.
@@ -15,12 +15,6 @@ const {ipcRenderer} = require('electron');
 // }
 
 module.exports = {
-
-  stopPythonShell: function (worker) {
-    if (worker) {
-      worker.terminate(1);
-    }
-  },
 
   runPythonShell: function (worker, runParameters, onEndCallback) {
     // Make sure worker isn't overridden (and if so, abort the run)
@@ -44,10 +38,12 @@ module.exports = {
     worker.send({
       scenario: runParameters.name,
       emme_path: runParameters.emme_project_file_path,
+      first_scenario_id: runParameters.first_scenario_id,
       data_path: runParameters.data_folder_path,
       use_fixed_transit_cost: runParameters.use_fixed_transit_cost,
       iterations: runParameters.iterations,
-      log_level: runParameters.log_level
+      log_level: runParameters.log_level,
+      use_emme: !runParameters.DO_NOT_USE_EMME
     });
     // Attach end handler
     worker.end((err, code, signal) => {

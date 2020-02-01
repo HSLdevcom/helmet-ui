@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
+const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
   return (
     <div className="Log">
@@ -13,7 +13,7 @@ const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
         </button>
       </div>
       <div className="Log__entries">
-        {logContents.map((entry) => {
+        {entries.map((entry) => {
           switch (entry.level) {
             case "UI-event":
               return <div className={"Log__entry Log__entry--ui"} key={entry.id}>
@@ -26,7 +26,7 @@ const RunLog = ({isScenarioRunning, logContents, closeRunLog}) => {
               </div>;
 
             case "NEWLINE":
-              return <br/>;
+              return <br key={entry.id} />;
 
             case "DEBUG":
               return "";

@@ -4,7 +4,7 @@ import path from 'path';
 const HelmetScenario = ({scenario, deleteScenario, updateScenario}) => {
 
   return (
-    <div className="Scenario">
+    <div className="Scenario" key={scenario.id}>
 
       {/* Un-links the configuration from file system */}
       <button className="Scenario__delete-btn"
@@ -37,6 +37,20 @@ const HelmetScenario = ({scenario, deleteScenario, updateScenario}) => {
                accept=".emp"
                onChange={(e) => {
                  updateScenario({...scenario, emme_project_file_path: e.target.files[0].path});
+               }}
+        />
+      </div>
+
+      {/* Number of first EMME-scenario ID (of 4) - NOTE: EMME-scenario is different from HELMET-scenario (ie. this config) */}
+      <div className="Scenario__section">
+        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+               htmlFor="first-scenario-id">Ensimm&auml;isen skenaarion numero:</label>
+        <input id="first-scenario-id"
+               type="number"
+               step="1"
+               value={scenario.first_scenario_id}
+               onChange={(e) => {
+                 updateScenario({...scenario, first_scenario_id: e.target.value});
                }}
         />
       </div>

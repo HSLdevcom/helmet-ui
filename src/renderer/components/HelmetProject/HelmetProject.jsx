@@ -37,7 +37,7 @@ const HelmetProject = ({
 
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
-    setLogContents(logContents.concat(args));
+    setLogContents(previousLog => [...previousLog, args]);
     if (args.status) {
       setStatusIterationsTotal(args.status['total']);
       setStatusIterationsCurrent(args.status['current']);
@@ -57,7 +57,7 @@ const HelmetProject = ({
   const onScenarioComplete = (event, args) => {
     setRunningScenarioID(args.next.id);
     setRunningScenarioIDsQueued(runningScenarioIDsQueued.filter((id) => id !== args.completed.id));
-    setLogContents(logContents.concat({level: 'NEWLINE', message: ''}));
+    setLogContents(previousLog => [...previousLog, {level: 'NEWLINE', message: ''}]);
   };
   const onAllScenariosComplete = (event, args) => {
     setRunningScenarioID(null); // Re-enable controls
@@ -147,6 +147,7 @@ const HelmetProject = ({
       id: newId,
       name: newScenarioName,
       emme_project_file_path: null,
+      first_scenario_id: 19,
       data_folder_path: null,
       use_fixed_transit_cost: false,
       iterations: 10,
@@ -239,17 +240,17 @@ const HelmetProject = ({
           ...s,
           emme_python_path: emmePythonPath,
           helmet_scripts_path: helmetScriptsPath,
-          log_level: 'DEBUG'
+          log_level: 'DEBUG',
+          DO_NOT_USE_EMME: window.DO_NOT_USE_EMME, // A dry-run enabling parameter passable from chrome console
         }
       })
     );
   };
 
   const _cancelRunning = () => {
-    setLogContents(logContents.concat({level: "UI-event", message: "Cancelling remaining scenarios."}));
+    setLogContents(previousLog => [...previousLog, {level: "UI-event", message: "Cancelling remaining scenarios."}]);
     setRunningScenarioIDsQueued([]);
     ipcRenderer.send('message-from-ui-to-cancel-scenarios');
-    setRunningScenarioID(null); // Re-enable controls
   };
 
   useEffect(() => {
@@ -295,7 +296,7 @@ const HelmetProject = ({
         {/* show log if, either scenario is running, or log is manually opened (outside running) */
           (runningScenarioID || isLogOpened) ?
             <RunLog
-              logContents={logContents.map((entry, i) => {return {...entry, id: i};})}
+              entries={logContents.map((entry, i) => {return {...entry, id: i};})}
               isScenarioRunning={runningScenarioID}
               closeRunLog={() => setLogOpened(false)}
             />
