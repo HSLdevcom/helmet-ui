@@ -26,7 +26,7 @@ $ git clone <this repository>
 $ npm install
 ```
 
-See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. Emme and Python versions can be set in [config.js](./src/config.js), affecting mainly the automatic resolving of Python binary.
+See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. Emme and Python versions can be set in [versions.js](src/versions.js), affecting mainly the automatic resolving of Python binary.
 
 ### Running and building
 

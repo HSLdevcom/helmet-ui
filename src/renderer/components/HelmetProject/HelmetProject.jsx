@@ -9,8 +9,7 @@ const {ipcRenderer} = require('electron');
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
 const HelmetProject = ({
-  config,
-  emmePythonPath, helmetScriptsPath,
+  emmePythonPath, helmetScriptsPath, projectPath,
   signalProjectRunning,
 }) => {
   // HELMET Project -specific settings
@@ -132,6 +131,13 @@ const HelmetProject = ({
       }
     });
     setScenarios(foundScenarios);
+    // Reset state of project related properties
+    setOpenScenarioID(null);
+    setScenarioIDsToRun([]);
+    setRunningScenarioID(null);
+    setRunningScenarioIDsQueued([]);
+    setLogContents([]);
+    setLogOpened(false);
   };
 
   const _createScenario = (newScenarioName) => {
@@ -147,7 +153,7 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
-    configStores.current[newId] = new Store({cwd: config.store.saveDir, name: newScenarioName});
+    configStores.current[newId] = new Store({cwd: projectPath, name: newScenarioName});
     configStores.current[newId].set(newScenario);
     // Then set scenario as open by id (Why id? Having open_scenario as reference causes sub-elements to be bugged because of different object reference)
     setOpenScenarioID(newId);
@@ -162,10 +168,10 @@ const HelmetProject = ({
       const newName = newValues.name ? newValues.name : newValues.id;
       fs.renameSync(
         configStores.current[newValues.id].path,
-        path.join(config.store.saveDir, `${newName}.json`)
+        path.join(projectPath, `${newName}.json`)
       );
       configStores.current[newValues.id] = new Store({
-        cwd: config.store.saveDir,
+        cwd: projectPath,
         name: newName
       });
     }
@@ -177,7 +183,7 @@ const HelmetProject = ({
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
-      fs.unlinkSync(path.join(config.store.saveDir, `${scenario.name}.json`));
+      fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
       window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
   };
@@ -252,7 +258,7 @@ const HelmetProject = ({
     ipcRenderer.on('scenario-complete', onScenarioComplete);
     ipcRenderer.on('all-scenarios-complete', onAllScenariosComplete);
 
-    _loadProjectScenarios(config.store.saveDir);
+    _loadProjectScenarios(projectPath);
 
     return () => {
       // Detach Electron IPC event listeners
@@ -260,7 +266,7 @@ const HelmetProject = ({
       ipcRenderer.removeListener('scenario-complete', onScenarioComplete);
       ipcRenderer.removeListener('all-scenarios-complete', onAllScenariosComplete);
     }
-  }, []);
+  }, [projectPath]);
 
   return (
     <div className="Project">
@@ -268,6 +274,8 @@ const HelmetProject = ({
       {/* Panel for primary view and controls */}
       <div className="Project__runtime">
         <Runtime
+          projectPath={projectPath}
+          reloadScenarios={() => _loadProjectScenarios(projectPath)}
           scenarios={scenarios}
           scenarioIDsToRun={scenarioIDsToRun}
           runningScenarioID={runningScenarioID}

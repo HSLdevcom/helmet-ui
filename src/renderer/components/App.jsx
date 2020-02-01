@@ -1,15 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Store from 'electron-store';
 
-const App = ({helmetUIVersion, config, searchEMMEPython}) => {
+const defaultProjectPath = require('os').homedir();
+
+const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
   // Global settings
   const [isSettingsOpen, setSettingsOpen] = useState(false); // whether Settings -dialog is open
   const [isProjectRunning, setProjectRunning] = useState(false); // whether currently selected Project is running
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
+  const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
 
-  // Global settings store contains "emme_python_path" and "helmet_scripts_path", which are same in every scenario.
+  // Global settings store contains "emme_python_path", "helmet_scripts_path", and "project_path".
   const globalSettingsStore = useRef(new Store());
 
   const _setEMMEPythonPath = (newPath) => {
@@ -22,21 +25,27 @@ const App = ({helmetUIVersion, config, searchEMMEPython}) => {
     globalSettingsStore.current.set('helmet_scripts_path', newPath);
   };
 
+  const _setProjectPath = (newPath) => {
+    setProjectPath(newPath);
+    globalSettingsStore.current.set('project_path', newPath);
+  };
+
   useEffect(() => {
     // Search for EMME's Python if not set in global store (default win path is %APPDATA%, should remain there [hidden from user])
     if (!globalSettingsStore.current.get('emme_python_path')) {
       const [found, pythonPath] = searchEMMEPython();
       if (found) {
-        if (confirm(`Python ${config.emme.pythonVersion} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
+        if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
         }
       } else {
-        alert(`Emme ${config.emme.version} ja Python ${config.emme.pythonVersion} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
+        alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
       }
     }
     // Copy existing global store values to state
     setEmmePythonPath(globalSettingsStore.current.get('emme_python_path'));
     setHelmetScriptsPath(globalSettingsStore.current.get('helmet_scripts_path'));
+    setProjectPath(globalSettingsStore.current.get('project_path'));
   }, []);
 
   return (
@@ -47,9 +56,11 @@ const App = ({helmetUIVersion, config, searchEMMEPython}) => {
         <Settings
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
+          projectPath={projectPath}
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
           setHelmetScriptsPath={_setHelmetScriptsPath}
+          setProjectPath={_setProjectPath}
         />
       </div>
 
@@ -70,9 +81,9 @@ const App = ({helmetUIVersion, config, searchEMMEPython}) => {
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}
       <div className="App__body">
         <HelmetProject
-          config={config}
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
+          projectPath={projectPath ? projectPath : defaultProjectPath}
           signalProjectRunning={setProjectRunning}
         />
       </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Runtime = ({
-  scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID,
+  projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID,
   setOpenScenarioID,
+  reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
   statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles,
   handleClickStartStop,
@@ -10,6 +11,15 @@ const Runtime = ({
   return (
     <div className="Runtime">
       <div className="Runtime__heading">Lis&auml;&auml; skenaario(t) ajettavaksi, tai luo uusi skenaario</div>
+      <p className="Runtime__project-path">
+        Skenaarioiden tallennuspolku: {projectPath}
+        <button className="Runtime__reload-scenarios-btn"
+                onClick={(e) => reloadScenarios()}
+                disabled={runningScenarioID}
+        >
+          Uudelleenlataa skenaariot
+        </button>
+      </p>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s) => {
@@ -70,7 +80,7 @@ const Runtime = ({
         <button className="Runtime__start-stop-btn"
                 onClick={(e) => handleClickStartStop()}
         >
-          {runningScenarioID ? `K\u00e4ynnist\u00e4 (${scenarioIDsToRun.length}) skenaariota` : `Keskeyt\u00e4 loput skenaariot`}
+          {!runningScenarioID ? `K\u00e4ynnist\u00e4 (${scenarioIDsToRun.length}) skenaariota` : `Keskeyt\u00e4 loput skenaariot`}
         </button>
       </div>
     </div>

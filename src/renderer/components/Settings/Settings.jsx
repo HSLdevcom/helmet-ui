@@ -1,7 +1,12 @@
 import React from 'react';
 import path from "path";
 
-const Settings = ({emmePythonPath, setEMMEPythonPath, helmetScriptsPath, setHelmetScriptsPath, closeSettings}) => {
+const Settings = ({
+  emmePythonPath, setEMMEPythonPath,
+  helmetScriptsPath, setHelmetScriptsPath,
+  projectPath, setProjectPath,
+  closeSettings,
+}) => {
   return (
     <div className="Settings">
 
@@ -32,6 +37,19 @@ const Settings = ({emmePythonPath, setEMMEPythonPath, helmetScriptsPath, setHelm
                  webkitdirectory=""
                  directory=""
                  onChange={(e) => setHelmetScriptsPath(e.target.files[0].path)}
+          />
+        </div>
+        <div className="Settings__dialog-input-group">
+          <span className="Settings__pseudo-label">Projektin kansiopolku (oletusarvoisesti kotihakemistosi)</span>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-project-path">
+            {projectPath ? path.basename(projectPath) : "Valitse.."}
+          </label>
+          <input className="Settings__hidden-input"
+                 id="hidden-input-project-path"
+                 type="file"
+                 webkitdirectory=""
+                 directory=""
+                 onChange={(e) => setProjectPath(e.target.files[0].path)}
           />
         </div>
         <div className="Settings__dialog-controls">

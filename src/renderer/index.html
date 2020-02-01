@@ -41,14 +41,14 @@
 <script type="text/babel">
   import React from 'react';
   import ReactDOM from 'react-dom';
-  import {version} from '../../package';
   import {searchEMMEPython} from './search_emme_pythonpath';
-  import config from '../config';
+  import {version} from '../../package';
+  import versions from '../versions';
 
   ReactDOM.render(
     <App
       helmetUIVersion={version}
-      config={config}
+      versions={versions} // 3rd party dependencies' versions (EMME & EMME's custom python interpreter)
       searchEMMEPython={searchEMMEPython}
     />,
     document.getElementById('root'),
