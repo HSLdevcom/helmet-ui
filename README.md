@@ -67,7 +67,7 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
     1. Check/uncheck the pre-release checkbox as needed.
     1. Select `release` branch as the target for tagging
     1. Press **Publish release** when all is good.
-    1. Switch back to `master` branch and update the version number again, this time to indicate a [snapshot](http://codethataint.com/blog/what-are-maven-snapshots/) of the next release. For example, `1.1.0-SNAPSHOT` after releasing `1.0.0`.
+    1. Switch back to `master` branch and update the version number matching the release. This can be updated to indicate a [snapshot](http://codethataint.com/blog/what-are-maven-snapshots/) before next release (e.g. `1.3.0-SNAPSHOT`) while said release (`1.3.0`) is in development, if necessary.
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
 
