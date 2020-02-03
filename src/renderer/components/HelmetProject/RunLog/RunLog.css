@@ -1,0 +1,20 @@
+.Log {
+}
+
+.Log__entries {
+    max-height: 34em;
+    overflow-y: scroll;
+    white-space: pre;
+    overflow-x: scroll;
+}
+
+.Log__entry {
+}
+
+.Log__entry--ui {
+    color: navy;
+}
+
+.Log__entry--error {
+    color: red;
+}

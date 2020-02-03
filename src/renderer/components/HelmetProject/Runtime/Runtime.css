@@ -1,0 +1,74 @@
+.Runtime {
+    width: 24em;
+    padding-left: 0.75em;
+}
+
+.Runtime__heading {
+    font-size: 1.5em;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+}
+
+.Runtime__project-path {
+    font-size: 1em;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.Runtime__reload-scenarios-btn {
+}
+
+.Runtime__scenarios {
+    display: table;
+}
+
+.Runtime__scenario {
+    display: table-row;
+}
+
+.Runtime__scenario-activate-btn {
+    display: table-cell;
+    margin: 0.25em;
+    line-height: 1.75em;
+}
+.Runtime__scenario-activate-btn--active {
+    background: mediumseagreen;
+}
+
+.Runtime__scenario-open-config-btn {
+    display: table-cell;
+    margin: 0.25em;
+    line-height: 1.75em;
+    max-width: 15em;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Runtime__scenario-open-config-btn--active {
+    background: lightslategrey;
+}
+
+.Runtime__scenarios-footer {
+}
+
+.Runtime__add-new-scenario-btn {
+}
+
+.Runtime__control-group-separator {
+    margin: 1em 0 0 0;
+}
+
+.Runtime__start-stop-controls {
+}
+
+.Runtime__start-stop-description {
+}
+
+.Runtime__start-stop-scenarios {
+    color: mediumseagreen;
+    font-weight: bold;
+}
+
+.Runtime__start-stop-btn {
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Helmet 4.0</title>
+    <!-- HubSpot's vex-js for `prompt()` (not supported otherwise by Electron) -->
+    <script src="../../node_modules/vex-js/dist/js/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-os'</script>
+    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex.css" />
+    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex-theme-os.css" />
+    <!-- Babel (standalone ver.) transpiler -->
+    <script src="../../node_modules/babel-standalone/babel.min.js"></script>
+    <!-- React components -->
+    <script type="text/babel" src="components/App.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/App.css">
+    <script type="text/babel" src="components/Settings/Settings.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/Settings/Settings.css">
+    <script type="text/babel" src="components/HelmetProject/HelmetProject.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetProject.css">
+    <script type="text/babel" src="components/HelmetProject/HelmetScenario/HelmetScenario.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetScenario/HelmetScenario.css">
+    <script type="text/babel" src="components/HelmetProject/Runtime/Runtime.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/Runtime/Runtime.css">
+    <script type="text/babel" src="components/HelmetProject/Runtime/RunStatus/RunStatus.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/Runtime/RunStatus/RunStatus.css">
+    <script type="text/babel" src="components/HelmetProject/RunLog/RunLog.jsx"></script>
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/RunLog/RunLog.css">
+    <script type="text/javascript">
+        const {webFrame} = require('electron');
+        // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
+        webFrame.setZoomLevel(1);
+        webFrame.setVisualZoomLevelLimits(1, 1);
+        webFrame.setLayoutZoomLevelLimits(0, 0);
+    </script>
+</head>
+<body>
+
+<div id="root"></div>
+
+<!-- ReactDOM init point -->
+<script type="text/babel">
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import {searchEMMEPython} from './search_emme_pythonpath';
+  import {version} from '../../package';
+  import versions from '../versions';
+
+  ReactDOM.render(
+    <App
+      helmetUIVersion={version}
+      versions={versions} // 3rd party dependencies' versions (EMME & EMME's custom python interpreter)
+      searchEMMEPython={searchEMMEPython}
+    />,
+    document.getElementById('root'),
+  );
+</script>
+</body>
+</html>
