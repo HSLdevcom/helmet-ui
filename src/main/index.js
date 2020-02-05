@@ -68,5 +68,8 @@ ipcMain.on('loggable-event-from-worker', (event, args) => {
 
 // Log worker-errors (by PythonShell, not stderr) in main console
 ipcMain.on('process-error-from-worker', (event, args) => {
-  console.error(args);
+  mainWindow.webContents.send('loggable-event', {
+    "level": "ERROR",
+    "message": (typeof args === "string") ? args : JSON.stringify(args)
+  });
 });
