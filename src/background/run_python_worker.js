@@ -29,10 +29,10 @@ module.exports = {
     worker.send({
       scenario: runParameters.name,
       emme_path: runParameters.emme_project_file_path,
-      first_scenario_id: runParameters.first_scenario_id,
+      first_scenario_id: Number(runParameters.first_scenario_id),
       data_path: runParameters.data_folder_path,
       use_fixed_transit_cost: runParameters.use_fixed_transit_cost,
-      iterations: runParameters.iterations,
+      iterations: Number(runParameters.iterations),
       log_level: runParameters.log_level,
       use_emme: !runParameters.DO_NOT_USE_EMME
     });
