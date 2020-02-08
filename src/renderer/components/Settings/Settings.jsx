@@ -3,7 +3,7 @@ import path from "path";
 
 const Settings = ({
   emmePythonPath, setEMMEPythonPath,
-  helmetScriptsPath, setHelmetScriptsPath,
+  helmetScriptsPath, setHelmetScriptsPath, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   closeSettings,
 }) => {
@@ -28,9 +28,15 @@ const Settings = ({
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet Scripts</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path">
-            {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
-          </label>
+          {isDownloadingHelmetScripts ?
+            <span className="Settings__pseudo-file-select">
+              Downloading latest. . .
+            </span>
+            :
+            <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path">
+              {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
+            </label>
+          }
           <input className="Settings__hidden-input"
                  id="hidden-input-helmet-scripts-path"
                  type="file"
