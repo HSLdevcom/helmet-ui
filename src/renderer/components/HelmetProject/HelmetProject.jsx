@@ -35,36 +35,6 @@ const HelmetProject = ({
   // Scenario-specific settings under currently selected HELMET Project
   const configStores = useRef({});
 
-  // Electron IPC event listeners
-  const onLoggableEvent = (event, args) => {
-    setLogContents(previousLog => [...previousLog, args]);
-    if (args.status) {
-      setStatusIterationsTotal(args.status['total']);
-      setStatusIterationsCurrent(args.status['current']);
-      setStatusIterationsCompleted(args.status['completed']);
-      setStatusIterationsFailed(args.status['failed']);
-      setStatusState(args.status['state']);
-      setStatusLogfilePath(args.status['log']);
-
-      if (args.status.state === 'finished') {
-        setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
-          name: args.status.name,
-          logfile: args.status.log
-        }))
-      }
-    }
-  };
-  const onScenarioComplete = (event, args) => {
-    setRunningScenarioID(args.next.id);
-    setRunningScenarioIDsQueued(runningScenarioIDsQueued.filter((id) => id !== args.completed.id));
-    setLogContents(previousLog => [...previousLog, {level: 'NEWLINE', message: ''}]);
-  };
-  const onAllScenariosComplete = (event, args) => {
-    setRunningScenarioID(null); // Re-enable controls
-    setRunningScenarioIDsQueued([]);
-    signalProjectRunning(false); // Let App-component know too
-  };
-
   const _handleClickScenarioToActive = (scenario) => {
     scenarioIDsToRun.includes(scenario.id) ?
       // If scenario exists in scenarios to run, remove it
@@ -251,6 +221,36 @@ const HelmetProject = ({
     setLogContents(previousLog => [...previousLog, {level: "UI-event", message: "Cancelling remaining scenarios."}]);
     setRunningScenarioIDsQueued([]);
     ipcRenderer.send('message-from-ui-to-cancel-scenarios');
+  };
+
+  // Electron IPC event listeners
+  const onLoggableEvent = (event, args) => {
+    setLogContents(previousLog => [...previousLog, args]);
+    if (args.status) {
+      setStatusIterationsTotal(args.status['total']);
+      setStatusIterationsCurrent(args.status['current']);
+      setStatusIterationsCompleted(args.status['completed']);
+      setStatusIterationsFailed(args.status['failed']);
+      setStatusState(args.status['state']);
+      setStatusLogfilePath(args.status['log']);
+
+      if (args.status.state === 'finished') {
+        setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
+          name: args.status.name,
+          logfile: args.status.log
+        }))
+      }
+    }
+  };
+  const onScenarioComplete = (event, args) => {
+    setRunningScenarioID(args.next.id);
+    setRunningScenarioIDsQueued(runningScenarioIDsQueued.filter((id) => id !== args.completed.id));
+    setLogContents(previousLog => [...previousLog, {level: 'NEWLINE', message: ''}]);
+  };
+  const onAllScenariosComplete = (event, args) => {
+    setRunningScenarioID(null); // Re-enable controls
+    setRunningScenarioIDsQueued([]);
+    signalProjectRunning(false); // Let App-component know too
   };
 
   useEffect(() => {

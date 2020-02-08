@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Store from 'electron-store';
 
-const defaultProjectPath = require('os').homedir();
+const homedir = require('os').homedir();
+const {ipcRenderer} = require('electron');
 
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
@@ -11,6 +12,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
+  const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", and "project_path".
   const globalSettingsStore = useRef(new Store());
@@ -30,7 +32,16 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     globalSettingsStore.current.set('project_path', newPath);
   };
 
+  // Electron IPC event listeners
+  const onDownloadReady = (event, savePath) => {
+    _setHelmetScriptsPath(savePath);
+    setDownloadingHelmetScripts(false);
+  };
+
   useEffect(() => {
+    // Attach Electron IPC event listeners (to worker => UI events)
+    ipcRenderer.on('download-ready', onDownloadReady);
+
     // Search for EMME's Python if not set in global store (default win path is %APPDATA%, should remain there [hidden from user])
     if (!globalSettingsStore.current.get('emme_python_path')) {
       const [found, pythonPath] = searchEMMEPython();
@@ -42,10 +53,37 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
       }
     }
-    // Copy existing global store values to state
-    setEmmePythonPath(globalSettingsStore.current.get('emme_python_path'));
-    setHelmetScriptsPath(globalSettingsStore.current.get('helmet_scripts_path'));
-    setProjectPath(globalSettingsStore.current.get('project_path'));
+    // Copy existing global store values to state. Remember: state updates async so refer to existing.
+    const existingEmmePythonPath = globalSettingsStore.current.get('emme_python_path');
+    const existingHelmetScriptsPath = globalSettingsStore.current.get('helmet_scripts_path');
+    const existingProjectPath = globalSettingsStore.current.get('project_path');
+    setEmmePythonPath(existingEmmePythonPath);
+    setHelmetScriptsPath(existingHelmetScriptsPath);
+    setProjectPath(existingProjectPath);
+
+    // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
+    if (!existingProjectPath) {
+      _setProjectPath(homedir);
+    }
+
+    // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
+    if (!existingHelmetScriptsPath) {
+      const now = new Date();
+      setDownloadingHelmetScripts(true);
+      ipcRenderer.send(
+        'message-from-ui-to-download-helmet-scripts',
+        {
+          url: "https://github.com/HSLdevcom/helmet-model-system/archive/master.zip",
+          destinationDir: homedir,
+          postfix: `${('00'+now.getDate()).slice(-2)}_${('00'+now.getMonth()).slice(-2)}_${now.getFullYear()}`, // DD_MM_YYYY
+        }
+      );
+    }
+
+    return () => {
+      // Detach Electron IPC event listeners
+      ipcRenderer.removeListener('download-ready', onDownloadReady);
+    }
   }, []);
 
   return (
@@ -56,6 +94,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <Settings
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
+          isDownloadingHelmetScripts={isDownloadingHelmetScripts}
           projectPath={projectPath}
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
@@ -83,7 +122,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <HelmetProject
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
-          projectPath={projectPath ? projectPath : defaultProjectPath}
+          projectPath={projectPath ? projectPath : homedir}
           signalProjectRunning={setProjectRunning}
         />
       </div>

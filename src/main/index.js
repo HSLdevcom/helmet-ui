@@ -1,4 +1,9 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
+const {download} = require('electron-dl');
+const path = require('path');
+const fs = require('fs');
+const del = require('del');
+const decompress = require('decompress');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {app.quit();}
@@ -39,6 +44,39 @@ async function createWorker() {
 app.on('ready', async () => {
   await createUI();
   await createWorker();
+});
+
+ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
+  const workDir = args.destinationDir;
+  const tmpDir = path.join(workDir, "helmet-model-system-tmp-workdir");
+  const finalDir = path.join(workDir, `helmet-model-system-${args.postfix}`);
+
+  // Download model system repo (passed in args.url - may vary in future depending on tag/version)
+  download(
+    BrowserWindow.getFocusedWindow(),
+    args.url,
+    {
+      directory: workDir
+    }
+  )
+    .then((downloadItem) => {
+      const archivePath = downloadItem.getSavePath();
+
+      // Decompress downloaded archive to tmpDir
+      decompress(archivePath, tmpDir, {strip: 1})
+        .then(() => {
+          // Single-out "/Scripts" folder and move it to destination
+          fs.renameSync(path.join(tmpDir, "Scripts"), finalDir);
+
+          // Delete archive & tmpDir (del module checks for current working dir, overridable but good sanity check)
+          process.chdir(workDir);
+          del.sync(archivePath);
+          del.sync(tmpDir);
+
+          // Notify UI "download (and post-processing) is ready"
+          mainWindow.webContents.send('download-ready', finalDir);
+        });
+    });
 });
 
 // Relay message to run all scenarios; UI => main => worker
