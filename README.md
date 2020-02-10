@@ -122,5 +122,24 @@ As of 2019-07-19:
         - e.g. `self.logger.error("something broke", extra=self.status)`
     - Fix on UI: without knowing what happened, this might be a bit challenging, but one might try to cover up the situation where Python process ends unexpectely without reporting the status with state `failed`.
 
----
-eof
+## Version history
+**1.2.0**  
+FEA: *enable auto-install of helmet-model-system*  
+
+**1.1.1 (hotfix)**  
+FIX: *cast numeric parameters as numbers when sent to model-system*  
+FIX: *log python-process errors to log component as errors*  
+
+**1.1.0**  
+Rewritten with ReactJS  
+FIX: *out of date lodash package*  
+FEA: *new boolean field USE_FIXED_TRANSIT_COST*  
+FEA: *new number field FIRST_SCENARIO_ID*  
+FEA: *enable multiple saved scenarios*  
+FEA: *enable serial execution of selected scenarios*  
+FEA: *enable changing scenarios' load path (=HELMET Project)*  
+FEA: *enable scenarios' reload ("Refresh") via button*  
+FEA: *change "End" button to remove remaining scenarios from run*  
+
+**1.0.0 (Initial release)**  
+Able to set scenario parameters and run Helmet Model System.  
