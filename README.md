@@ -2,38 +2,35 @@
 
 [![Build Status](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.org/HSLdevcom/helmet-ui)
 
-Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system).
+Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) and [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
 
-## Development env
+# Development
 
- This is an [Electron](https://electrojs.org) application written in JavaScript, HTML and CSS.
+This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/) and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
 
 ### Requirements
 
 - Git client
 - Node.js 10 LTS & NPM
-- [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system)
-- Emme 4.3.3 (Windows-only)
+- EMME 4.x.x _(Windows-only)_
+- _[optionally]_ [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system) _(otherwise downloaded and auto-installed by the UI)_
 
 On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-project.com/) are also required to make the app for Windows.
 
 ### Setup
 
-Due to tight integration with Emme, the application is mainly targeted for Windows but can be developed on Mac and Linux as well. However, the final testing should always happen on Windows with Emme.
+Due to tight integration with EMME, the application is mainly targeted for Windows but can be developed on Mac and Linux as well. However, the final testing should always happen on Windows with Emme.
 
 ```
 $ git clone <this repository>
 $ npm install
 ```
 
-See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. Emme and Python versions can be set in [versions.js](src/versions.js), affecting mainly the automatic resolving of Python binary.
+See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affecting the automatic resolving of Python binary.
 
 ### Running and building
 
-As usual, the `start` script is used to start the application in development environment. Running `make` will create an installer binary to be distributed to end-users.
-
-- `$ npm start`
-- `$ npm run make` (builds the app for current platform)
+`npm start` command is used to start the application in development environment. Running `npm run make` will create an installer binary to be distributed to end-users.
 
 See also: [Electronforge.io](https://www.electronforge.io/)
 
@@ -54,7 +51,7 @@ The Electron Forge's [Github publisher](https://www.electronforge.io/config/publ
 The resulting draft must be reviewed, edited and approved in Github to make it publically available to everyone. This allows testing the package and making final fixes to it before making it public.
 
 1. Test and bring all the desired changes in the `master` branch.
-1. Remove the word `SNAPSHOT` from the `version` field in [package.json](./package.json) and update version as per semver practises.
+1. Remove if there's word `SNAPSHOT` in `version` field of [package.json](./package.json), and update version as per semver practises.
     - See also: [Semantic Versioning](https://semver.org/)
 1. Switch to `release` branch
 1. Merge `master` to `release` and push to remote
@@ -71,13 +68,13 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
 
-## End-User Environment
+# End-User Environment
 
 Before using Helmet UI, the following requirements must be met:
 
   1. [Emme 4.3.3](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
-  1. [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up
+  1. _[optionally]_ [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up _(or let UI download it)_
 
 The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release. The release packages are not signed at the moment so Windows will complaint about it and prevents the installer from running, but this can be overridden simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyways" ("Suorita joka tapauksessa").
 
@@ -108,19 +105,13 @@ The package to be downloaded is named `Helmet.4.0.UI-x.y.z.Setup.exe`, where the
 
 ## TODO & Known Problems
 
-As of 2019-07-19:
+As of 2020-02-12:
 
 1. User cannot select the logging level of Helmet Model System
     - Fix: add a dropdown select in settings dialog and set it in the Python shell command parameters.
 1. The application is not [signed](https://electronjs.org/docs/tutorial/code-signing), causing the anti-virus software and Windows to consider it suspicious.
     - Fix: aqcuire a certificate and add it to the [build process](https://www.electronforge.io/config/makers/squirrel.windows) to enable signing
-1. The simulation can be stopped by pressing "Lopeta" button, but this in fact terminates only the Python child process, while the Emme process started by Python seems to remain running.
-    - Fix: perhaps the Python could be commanded to stop Emme process gracefully?
 1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
-1. Uncaught exceptions in Python scripts might result in an inconsistent state of the UI. For example, leaving the UI in running state although the script has crashed.
-    - Fix: ensure the Exceptions are caught and update the `status` dictionary accordingly, and also remember to always pass it to the logger as the `extra` parameter. That is, all errors should be logged on level `ERROR` and with `status["state"]` set to `failed`.
-        - e.g. `self.logger.error("something broke", extra=self.status)`
-    - Fix on UI: without knowing what happened, this might be a bit challenging, but one might try to cover up the situation where Python process ends unexpectely without reporting the status with state `failed`.
 
 ## Version history
 **1.4.0**  
