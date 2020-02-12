@@ -123,8 +123,11 @@ As of 2019-07-19:
     - Fix on UI: without knowing what happened, this might be a bit challenging, but one might try to cover up the situation where Python process ends unexpectely without reporting the status with state `failed`.
 
 ## Version history
+**1.4.0**  
+FEA: *enable model-system version selection (before auto-install)*  
+
 **1.3.0**  
-FEA: auto-install model-system dependencies when directory reference changes  
+FEA: *auto-install also model-system dependencies whenever model-system reference changes*  
 
 **1.2.0**  
 FEA: *enable auto-install of helmet-model-system*  
