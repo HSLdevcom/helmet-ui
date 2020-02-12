@@ -3,7 +3,7 @@ import path from "path";
 
 const Settings = ({
   emmePythonPath, setEMMEPythonPath,
-  helmetScriptsPath, setHelmetScriptsPath, isDownloadingHelmetScripts,
+  helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   closeSettings,
 }) => {
@@ -13,10 +13,10 @@ const Settings = ({
       <div className="Settings__overlay">{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
-        <div className="Settings__dialog-heading">Asetukset</div>
+        <div className="Settings__dialog-heading">Projekti</div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Emme Python</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path">
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
             {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
@@ -30,10 +30,10 @@ const Settings = ({
           <span className="Settings__pseudo-label">Helmet Scripts</span>
           {isDownloadingHelmetScripts ?
             <span className="Settings__pseudo-file-select">
-              Downloading latest. . .
+              Downloading model-system {dlHelmetScriptsVersion === 'master' ? 'latest' : dlHelmetScriptsVersion}. . .
             </span>
             :
-            <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path">
+            <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={helmetScriptsPath}>
               {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
             </label>
           }
@@ -47,7 +47,7 @@ const Settings = ({
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Projektin kansiopolku (oletusarvoisesti kotihakemistosi)</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-project-path">
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-project-path" title={projectPath}>
             {projectPath ? path.basename(projectPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"

@@ -17,6 +17,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
   const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
+  const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState(undefined); // which version is being downloaded
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", and "project_path".
   const globalSettingsStore = useRef(new Store());
@@ -98,6 +99,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
                 return;
               }
               const now = new Date();
+              setDlHelmetScriptsVersion(data.version);
               setDownloadingHelmetScripts(true);
               ipcRenderer.send(
                 'message-from-ui-to-download-helmet-scripts',
@@ -126,6 +128,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <Settings
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
+          dlHelmetScriptsVersion={dlHelmetScriptsVersion}
           isDownloadingHelmetScripts={isDownloadingHelmetScripts}
           projectPath={projectPath}
           closeSettings={() => setSettingsOpen(false)}
