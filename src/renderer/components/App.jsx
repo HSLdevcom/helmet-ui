@@ -6,6 +6,8 @@ const {ipcRenderer} = require('electron');
 const {execSync} = require('child_process');
 const path = require('path');
 
+// vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
+
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
   // Global settings
@@ -74,17 +76,40 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
 
     // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
-    if (!existingHelmetScriptsPath) {
-      const now = new Date();
-      setDownloadingHelmetScripts(true);
-      ipcRenderer.send(
-        'message-from-ui-to-download-helmet-scripts',
-        {
-          url: "https://github.com/HSLdevcom/helmet-model-system/archive/master.zip",
-          destinationDir: homedir,
-          postfix: `${('00'+now.getDate()).slice(-2)}_${('00'+now.getMonth()).slice(-2)}_${now.getFullYear()}`, // DD_MM_YYYY
-        }
-      );
+    if (!existingHelmetScriptsPath && confirm("Ladataanko model-system automaattisesti?")) {
+      fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
+        .then((response) => {
+          return response.json();
+        })
+        .then((tags) => {
+          vex.dialog.open({
+            message: "Valitse model-system versio:",
+            input: [
+              '<div class="vex-custom-field-wrapper">',
+                '<select name="version">',
+                  '<option value="master">latest</option>',
+                  tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join(''),
+                '</select>',
+              '</div>'
+            ].join(''),
+            callback: (data) => {
+              if (!data) {
+                // Cancelled
+                return;
+              }
+              const now = new Date();
+              setDownloadingHelmetScripts(true);
+              ipcRenderer.send(
+                'message-from-ui-to-download-helmet-scripts',
+                {
+                  version: data.version,
+                  destinationDir: homedir,
+                  postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${now.getFullYear()}`, // DD-MM-YYYY
+                }
+              );
+            }
+          });
+        });
     }
 
     return () => {
