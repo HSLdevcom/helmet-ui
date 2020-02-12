@@ -49,12 +49,12 @@ app.on('ready', async () => {
 ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
   const workDir = args.destinationDir;
   const tmpDir = path.join(workDir, "helmet-model-system-tmp-workdir");
-  const finalDir = path.join(workDir, `helmet-model-system-${args.postfix}`);
+  const finalDir = path.join(workDir, `helmet-model-system-${args.version === 'master' ? args.postfix : args.version}`);
 
   // Download model system repo (passed in args.url - may vary in future depending on tag/version)
   download(
     BrowserWindow.getFocusedWindow(),
-    args.url,
+    `https://github.com/HSLdevcom/helmet-model-system/archive/${args.version}.zip`,
     {
       directory: workDir
     }
