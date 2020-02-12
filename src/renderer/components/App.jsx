@@ -3,6 +3,8 @@ import Store from 'electron-store';
 
 const homedir = require('os').homedir();
 const {ipcRenderer} = require('electron');
+const {execSync} = require('child_process');
+const path = require('path');
 
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
@@ -23,6 +25,11 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   };
 
   const _setHelmetScriptsPath = (newPath) => {
+    try {
+      execSync(`"${path.join(path.dirname(emmePythonPath), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
+    } catch (e) {
+      console.log("No requirements file found for HELMET Scripts. Some functionality may not work properly.");
+    }
     setHelmetScriptsPath(newPath);
     globalSettingsStore.current.set('helmet_scripts_path', newPath);
   };
