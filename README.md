@@ -114,6 +114,9 @@ As of 2020-02-12:
 1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
 
 ## Version history
+**1.5.0**  
+FEA: *Various UI/UX enhancements from discussion with an end-user*  
+
 **1.4.0**  
 FEA: *enable model-system version selection (before auto-install)*  
 
