@@ -13,9 +13,9 @@ const Settings = ({
       <div className="Settings__overlay">{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
-        <div className="Settings__dialog-heading">Projekti</div>
+        <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Emme Python</span>
+          <span className="Settings__pseudo-label">EMME Python (v2.7)</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
             {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
@@ -27,7 +27,7 @@ const Settings = ({
           />
         </div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Helmet Scripts</span>
+          <span className="Settings__pseudo-label">HELMET model-system</span>
           {isDownloadingHelmetScripts ?
             <span className="Settings__pseudo-file-select">
               Downloading model-system {dlHelmetScriptsVersion === 'master' ? 'latest' : dlHelmetScriptsVersion}. . .

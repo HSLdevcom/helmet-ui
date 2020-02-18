@@ -88,7 +88,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
             input: [
               '<div class="vex-custom-field-wrapper">',
                 '<select name="version">',
-                  '<option value="master">latest</option>',
                   tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join(''),
                 '</select>',
               '</div>'
@@ -148,7 +147,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
                 onClick={(e) => setSettingsOpen(true)}
                 disabled={isProjectRunning}
         >
-          Asetukset
+          Projektin asetukset
         </button>
       </div>
 

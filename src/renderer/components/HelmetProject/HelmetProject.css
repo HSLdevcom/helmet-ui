@@ -1,4 +1,4 @@
 .Project {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr minmax(0, 1fr);
 }

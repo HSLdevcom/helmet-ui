@@ -1,28 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import path from 'path';
 
-const HelmetScenario = ({scenario, deleteScenario, updateScenario}) => {
+const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherNames}) => {
+
+  const [nameError, setNameError] = useState("");
 
   return (
     <div className="Scenario" key={scenario.id}>
 
-      {/* Un-links the configuration from file system */}
-      <button className="Scenario__delete-btn"
-              onClick={(e) => deleteScenario(scenario)}
+      <button className="Scenario__close-btn"
+              onClick={(e) => {
+                closeScenario();
+              }}
       >
-        Poista
+        x
       </button>
 
       {/* Name field (updates the filename live as well) */}
       <div className="Scenario__section">
+        <span className="Scenario__name-label">Skenaarion nimi</span>
         <input className="Scenario__name"
                type="text"
-               placeholder="Skenaarion nimi"
+               placeholder="esim. 2030_v1"
                value={scenario.name}
                onChange={(e) => {
-                 updateScenario({...scenario, name: e.target.value});
+                 const newName = e.target.value;
+                 if (!existingOtherNames.includes(newName)) {
+                   updateScenario({...scenario, name: newName});
+                   setNameError("");
+                 } else {
+                   setNameError(`Invalid name. Scenario "${newName}" already exists.`);
+                 }
                }}
         />
+        {nameError ? <span className="Scenario__name-error">{nameError}</span> : ""}
       </div>
 
       {/* File path to EMME project reference-file (generally same in all scenarios of a given HELMET project) */}
@@ -44,7 +55,7 @@ const HelmetScenario = ({scenario, deleteScenario, updateScenario}) => {
       {/* Number of first EMME-scenario ID (of 4) - NOTE: EMME-scenario is different from HELMET-scenario (ie. this config) */}
       <div className="Scenario__section">
         <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
-               htmlFor="first-scenario-id">Ensimm&auml;isen skenaarion numero:</label>
+               htmlFor="first-scenario-id">Ensimm&auml;isen EMME-skenaarion numero:</label>
         <input id="first-scenario-id"
                type="number"
                step="1"
@@ -55,9 +66,9 @@ const HelmetScenario = ({scenario, deleteScenario, updateScenario}) => {
         />
       </div>
 
-      {/* Folder path to variable input data (matrices with variables sent to EMME) */}
+      {/* Folder path to variable input data (input data with variables sent to EMME) */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">Data-kansio (matriisit)</span>
+        <span className="Scenario__pseudo-label">L&auml;ht&ouml;data</span>
         <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select">
           {scenario.data_folder_path ? path.basename(scenario.data_folder_path) : "Valitse.."}
         </label>

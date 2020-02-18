@@ -21,8 +21,8 @@ module.exports = {
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
-    worker.on('message', (event) => ipcRenderer.send('loggable-event-from-worker', event));
-    worker.on('stderr', (event) => ipcRenderer.send('loggable-event-from-worker', event));
+    worker.on('message', (event) => ipcRenderer.send('loggable-event-from-worker', {...event, time: new Date()}));
+    worker.on('stderr', (event) => ipcRenderer.send('loggable-event-from-worker', {...event, time: new Date()}));
     worker.on('error', (error) => ipcRenderer.send('process-error-from-worker', error));
 
     // Send run parameters via stdin

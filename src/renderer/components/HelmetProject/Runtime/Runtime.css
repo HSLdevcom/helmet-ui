@@ -1,10 +1,10 @@
 .Runtime {
-    width: 24em;
+    width: 25em;
     padding-left: 0.75em;
 }
 
 .Runtime__heading {
-    font-size: 1.5em;
+    font-size: 1.25em;
     margin: 0 0 1em 0;
     font-weight: normal;
 }
@@ -20,15 +20,17 @@
 }
 
 .Runtime__scenarios {
-    display: table;
 }
 
 .Runtime__scenario {
-    display: table-row;
+}
+
+.Runtime__scenario-name {
+    margin: 0.25em;
+    line-height: 1.75em;
 }
 
 .Runtime__scenario-activate-btn {
-    display: table-cell;
     margin: 0.25em;
     line-height: 1.75em;
 }
@@ -37,7 +39,6 @@
 }
 
 .Runtime__scenario-open-config-btn {
-    display: table-cell;
     margin: 0.25em;
     line-height: 1.75em;
     max-width: 15em;
@@ -47,6 +48,13 @@
 }
 .Runtime__scenario-open-config-btn--active {
     background: lightslategrey;
+}
+
+.Runtime__scenario-delete-btn {
+    line-height: 0.75em;
+    background: #ffd2da;
+    vertical-align: super;
+    padding: 0.15em;
 }
 
 .Runtime__scenarios-footer {
