@@ -7,10 +7,10 @@
     padding-bottom: 1.25em;
 }
 
-.Scenario__delete-btn {
+.Scenario__close-btn {
     float: right;
     line-height: 1.25em;
-    background: #ffb397;
+    background: #c6c6c6;
 }
 
 /* Labels */
@@ -26,6 +26,11 @@
 }
 
 /* Inputs */
+.Scenario__name-label {
+    display: table;
+    margin: 0 auto;
+    line-height: 1.75em;
+}
 .Scenario__name {
     border-top: none;
     border-left: none;
@@ -33,6 +38,14 @@
     display: table;
     margin: 0 auto;
     line-height: 1.75em;
+}
+.Scenario__name-error {
+    display: table;
+    margin: 0 auto;
+    color: #801a00;
+    font-size: 0.95em;
+    font-style: italic;
+    line-height: 1.5em;
 }
 
 .Scenario__pseudo-file-select {

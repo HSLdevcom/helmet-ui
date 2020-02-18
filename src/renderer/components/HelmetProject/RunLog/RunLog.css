@@ -1,8 +1,29 @@
 .Log {
 }
 
+.Log__header {
+    text-align: right;
+}
+
+.Log__close-btn {
+    line-height: 1.25em;
+    background: #c6c6c6;
+}
+
+.Log__header-controls {
+    display: table;
+    margin: 0 auto;
+}
+
+.Log__header-control {
+    margin: 4px;
+}
+.Log__header-control--on {
+    background: cadetblue;
+}
+
 .Log__entries {
-    max-height: 34em;
+    max-height: 33em;
     overflow-y: scroll;
     white-space: pre;
     overflow-x: scroll;

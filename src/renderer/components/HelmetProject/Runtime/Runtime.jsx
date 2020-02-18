@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Runtime = ({
-  projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID,
+  projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID, deleteScenario,
   setOpenScenarioID,
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
@@ -10,14 +10,14 @@ const Runtime = ({
 }) => {
   return (
     <div className="Runtime">
-      <div className="Runtime__heading">Lis&auml;&auml; skenaario(t) ajettavaksi, tai luo uusi skenaario</div>
+      <div className="Runtime__heading">Lis&auml;&auml; HELMET-skenaario(t) ajettavaksi, tai luo uusi HELMET-skenaario</div>
       <p className="Runtime__project-path">
-        Skenaarioiden tallennuspolku: {projectPath}
+        HELMET-skenaarioiden tallennuspolku: {projectPath}
         <button className="Runtime__reload-scenarios-btn"
                 onClick={(e) => reloadScenarios()}
                 disabled={runningScenarioID}
         >
-          Uudelleenlataa skenaariot
+          Uudelleenlataa HELMET-projektin skenaariot
         </button>
       </p>
       <div className="Runtime__scenarios">
@@ -25,6 +25,10 @@ const Runtime = ({
         {scenarios.map((s) => {
           return (
             <div className="Runtime__scenario" key={s.id}>
+              <span className="Runtime__scenario-name">
+                {s.name ? s.name : `Unnamed project (${s.id})`}
+              </span>
+              &nbsp;
               <button className={"Runtime__scenario-activate-btn" + (
                         scenarioIDsToRun.includes(s.id) ?
                           " Runtime__scenario-activate-btn--active"
@@ -43,7 +47,14 @@ const Runtime = ({
                       disabled={runningScenarioID}
                       onClick={(e) => setOpenScenarioID(s.id)}
               >
-                {s.name ? s.name : `Unnamed project (${s.id})`}
+                Muokkaa
+              </button>
+              &nbsp;
+              <button className={"Runtime__scenario-delete-btn"}
+                      disabled={runningScenarioID}
+                      onClick={(e) => deleteScenario(s)}
+              >
+                Poista
               </button>
             </div>
           )
@@ -78,6 +89,7 @@ const Runtime = ({
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
         />
         <button className="Runtime__start-stop-btn"
+                disabled={scenarioIDsToRun.length === 0}
                 onClick={(e) => handleClickStartStop()}
         >
           {!runningScenarioID ? `K\u00e4ynnist\u00e4 (${scenarioIDsToRun.length}) skenaariota` : `Keskeyt\u00e4 loput skenaariot`}

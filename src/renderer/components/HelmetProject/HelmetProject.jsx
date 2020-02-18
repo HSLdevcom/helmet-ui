@@ -282,6 +282,7 @@ const HelmetProject = ({
           runningScenarioID={runningScenarioID}
           openScenarioID={openScenarioID}
           setOpenScenarioID={setOpenScenarioID}
+          deleteScenario={(scenario) => {_deleteScenario(scenario)}}
           handleClickScenarioToActive={_handleClickScenarioToActive}
           handleClickNewScenario={_handleClickNewScenario}
           handleClickStartStop={_handleClickStartStop}
@@ -306,7 +307,8 @@ const HelmetProject = ({
               <HelmetScenario
                 scenario={scenarios.find((s) => s.id === openScenarioID)}
                 updateScenario={_updateScenario}
-                deleteScenario={_deleteScenario}
+                closeScenario={() => setOpenScenarioID(null)}
+                existingOtherNames={scenarios.filter(s => s.id !== openScenarioID).map(s => s.name)}
               />
               :
               ""
