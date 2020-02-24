@@ -3,7 +3,7 @@ const {ipcRenderer} = require('electron');
 
 module.exports = {
 
-  runPythonShell: function (worker, runParameters, onEndCallback) {
+  runHelmetEntrypointPythonShell: function (worker, runParameters, onEndCallback) {
 
     // Make sure worker isn't overridden (and if so, abort the run)
     if (worker) {
@@ -13,29 +13,28 @@ module.exports = {
 
     // Start helmet-model-system's helmet_remote.py in shell with python interpreter
     worker = new ps.PythonShell(
-      `${runParameters.helmet_scripts_path}/helmet_remote.py`,
+      `${runParameters.helmet_scripts_path}/helmet.py`,
       {
         mode: 'json',
-        pythonOptions: ['-u'],
         pythonPath: runParameters.emme_python_path,
+        pythonOptions: ['-u'], // unbuffered
+        args: [
+          "--log-level", runParameters.log_level,
+          "--log-format", "JSON",
+          "--scenario-name", runParameters.name,
+          "--emme-path", runParameters.emme_project_file_path,
+          "--first-scenario-id", runParameters.first_scenario_id,
+          "--data-path", runParameters.data_folder_path,
+          "--iterations", runParameters.iterations
+        ]
+          .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
+          .concat(runParameters.DO_NOT_USE_EMME ? ["--do-not-use-emme"] : []),
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
     worker.on('message', (event) => ipcRenderer.send('loggable-event-from-worker', {...event, time: new Date()}));
     worker.on('stderr', (event) => ipcRenderer.send('loggable-event-from-worker', {...event, time: new Date()}));
     worker.on('error', (error) => ipcRenderer.send('process-error-from-worker', error));
-
-    // Send run parameters via stdin
-    worker.send({
-      scenario: runParameters.name,
-      emme_path: runParameters.emme_project_file_path,
-      first_scenario_id: Number(runParameters.first_scenario_id),
-      data_path: runParameters.data_folder_path,
-      use_fixed_transit_cost: runParameters.use_fixed_transit_cost,
-      iterations: Number(runParameters.iterations),
-      log_level: runParameters.log_level,
-      use_emme: !runParameters.DO_NOT_USE_EMME
-    });
 
     // Attach end handler
     worker.end((err, code, signal) => {

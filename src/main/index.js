@@ -9,7 +9,7 @@ const decompress = require('decompress');
 if (require('electron-squirrel-startup')) {app.quit();}
 
 // Keep a global reference of certain objects, so they won't be garbage collected. (This is Electron-app best practise)
-let mainWindow, workerWindow;
+let mainWindow, workerWindow, useMockAssignmentInsteadOfEmme;
 
 async function createUI() {
   // Render main window including UI (index.html linking to all UI components)
@@ -34,16 +34,16 @@ async function createUI() {
   });
 }
 
-async function createWorker() {
+async function createHelmetEntrypointWorker() {
   // Create hidden window for background processes (Electron best practise, alternative is web workers with limited API)
   workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
-  await workerWindow.loadFile('src/background/worker.html');
+  await workerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
 }
 
 // When Electron has initialized, and is ready to create windows. Some APIs can only be used from here on.
 app.on('ready', async () => {
   await createUI();
-  await createWorker();
+  await createHelmetEntrypointWorker();
 });
 
 ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
@@ -79,8 +79,22 @@ ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
     });
 });
 
+ipcMain.on('message-from-ui-to-disable-emme', (event, args) => {
+  useMockAssignmentInsteadOfEmme = true;
+});
+
+ipcMain.on('message-from-ui-to-enable-emme', (event, args) => {
+  useMockAssignmentInsteadOfEmme = false;
+});
+
 // Relay message to run all scenarios; UI => main => worker
 ipcMain.on('message-from-ui-to-run-scenarios', (event, args) => {
+  if (useMockAssignmentInsteadOfEmme) {
+    // If debug switch is activated, choose to run MockAssignment instead, without requiring an EMME-license on this PC
+    for (let runParameters of args) {
+      runParameters.DO_NOT_USE_EMME = true;
+    }
+  }
   workerWindow.webContents.send('run-scenarios', args);
 });
 

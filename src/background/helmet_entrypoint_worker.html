@@ -5,7 +5,7 @@
     <title>Hidden process-running window</title>
     <script type="text/javascript">
       const {ipcRenderer} = require('electron');
-      const {runPythonShell} = require('./run_python_worker');
+      const {runHelmetEntrypointPythonShell} = require('./helmet_entrypoint_python_shell');
 
       const sendLoggableEvent = (message) => {
         ipcRenderer.send('loggable-event-from-worker', {
@@ -30,7 +30,7 @@
           // Run next scenario in queue
           queuedRunParams = queuedRunParams.slice(1);
           sendLoggableEvent(`Running scenario "${nextRunParams.name}"`);
-          worker = runPythonShell(worker, nextRunParams, () => onScenarioComplete(nextRunParams));
+          worker = runHelmetEntrypointPythonShell(worker, nextRunParams, () => onScenarioComplete(nextRunParams));
         } else {
           // Notify UI that all scenarios completed
           ipcRenderer.send('message-from-worker-all-scenarios-complete');
@@ -41,7 +41,7 @@
         const initialRunParams = args[0];
         queuedRunParams = args.slice(1);
         sendLoggableEvent(`Running scenario "${initialRunParams.name}"`);
-        worker = runPythonShell(worker, initialRunParams, () => onScenarioComplete(initialRunParams));
+        worker = runHelmetEntrypointPythonShell(worker, initialRunParams, () => onScenarioComplete(initialRunParams));
       });
 
       ipcRenderer.on('cancel-scenarios', (event, args) => {
