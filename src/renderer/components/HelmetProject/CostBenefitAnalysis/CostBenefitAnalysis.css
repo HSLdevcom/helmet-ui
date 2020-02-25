@@ -1,0 +1,33 @@
+.CBA {
+    padding-left: 0.75em;
+}
+
+.CBA__heading {
+    font-size: 1.25em;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+}
+
+.CBA__pseudo-label {
+    display: block;
+    line-height: 1.75em;
+    vertical-align: middle;
+}
+
+.CBA__pseudo-file-select {
+    display: block;
+    width: 14em;
+    line-height: 1.75em;
+    padding: 0 0.25em;
+    background: #f5f5f5;
+    border: 1px solid #c0c0c0;
+    cursor: pointer;
+    /* Overflowing file/dir names show as "First part..." */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CBA__hidden-input {
+    display: none;
+}
