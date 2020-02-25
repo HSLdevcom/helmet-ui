@@ -9,13 +9,13 @@ const decompress = require('decompress');
 if (require('electron-squirrel-startup')) {app.quit();}
 
 // Keep a global reference of certain objects, so they won't be garbage collected. (This is Electron-app best practise)
-let mainWindow, workerWindow, useMockAssignmentInsteadOfEmme;
+let mainWindow, entrypointWorkerWindow, cbaWorkerWindow, useMockAssignmentInsteadOfEmme;
 
 async function createUI() {
   // Render main window including UI (index.html linking to all UI components)
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 800,
     resizable: false,
     maximizable: false,
     fullscreen: false,
@@ -35,15 +35,22 @@ async function createUI() {
 }
 
 async function createHelmetEntrypointWorker() {
-  // Create hidden window for background processes (Electron best practise, alternative is web workers with limited API)
-  workerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
-  await workerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
+  // Create hidden window for background process #1 (Electron best practise, alternative is web workers with limited API)
+  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  await entrypointWorkerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
+}
+
+async function createCbaScriptWorker() {
+  // Create hidden window for background process #2 (Electron best practise, alternative is web workers with limited API)
+  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  await cbaWorkerWindow.loadFile('src/background/cba_script_worker.html');
 }
 
 // When Electron has initialized, and is ready to create windows. Some APIs can only be used from here on.
 app.on('ready', async () => {
   await createUI();
   await createHelmetEntrypointWorker();
+  await createCbaScriptWorker();
 });
 
 ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
@@ -95,12 +102,17 @@ ipcMain.on('message-from-ui-to-run-scenarios', (event, args) => {
       runParameters.DO_NOT_USE_EMME = true;
     }
   }
-  workerWindow.webContents.send('run-scenarios', args);
+  entrypointWorkerWindow.webContents.send('run-scenarios', args);
+});
+
+// Relay message to run Cost-Benefit Analysis script; UI => main => worker
+ipcMain.on('message-from-ui-to-run-cba-script', (event, args) => {
+  cbaWorkerWindow.webContents.send('run-cba-script', args);
 });
 
 // Relay message (interruption) to terminate current scenario and cancel any queued scenarios; UI => main => worker
 ipcMain.on('message-from-ui-to-cancel-scenarios', (event, args) => {
-  workerWindow.webContents.send('cancel-scenarios');
+  entrypointWorkerWindow.webContents.send('cancel-scenarios');
 });
 
 // Relay message of scenarios complete when switching to next; worker => main => UI

@@ -1,9 +1,10 @@
 const ps = require('python-shell');
 const {ipcRenderer} = require('electron');
+const path = require('path');
 
 module.exports = {
 
-  runHelmetEntrypointPythonShell: function (worker, runParameters, onEndCallback) {
+  runCBAScriptPythonShell: function (worker, runParameters, onEndCallback) {
 
     // Make sure worker isn't overridden (and if so, abort the run)
     if (worker) {
@@ -11,24 +12,16 @@ module.exports = {
       return;
     }
 
-    // Start helmet-model-system's helmet.py in shell with EMME's python interpreter
+    // Start helmet-model-system's cba.py script with EMME's python interpreter
+    const baseline_scenario = path.basename(runParameters.baseline_scenario_path);
+    const projected_scenario = path.basename(runParameters.projected_scenario_path);
     worker = new ps.PythonShell(
-      `${runParameters.helmet_scripts_path}/helmet.py`,
+      `${runParameters.helmet_scripts_path}/cba.py`,
       {
         mode: 'json',
         pythonPath: runParameters.emme_python_path,
         pythonOptions: ['-u'], // unbuffered
-        args: [
-          "--log-level", runParameters.log_level,
-          "--log-format", "JSON",
-          "--scenario-name", runParameters.name,
-          "--emme-path", runParameters.emme_project_file_path,
-          "--first-scenario-id", runParameters.first_scenario_id,
-          "--data-path", runParameters.data_folder_path,
-          "--iterations", runParameters.iterations
-        ]
-          .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
-          .concat(runParameters.DO_NOT_USE_EMME ? ["--do-not-use-emme"] : []),
+        args: [baseline_scenario, projected_scenario, runParameters.evaluation_year]
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
@@ -42,7 +35,6 @@ module.exports = {
       if (err) {
         ipcRenderer.send('process-error-from-worker', err.message);
       }
-      ipcRenderer.send('scenario-complete', runParameters.name);
       onEndCallback();
     });
 

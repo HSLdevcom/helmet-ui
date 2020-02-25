@@ -32,6 +32,9 @@ const HelmetProject = ({
   const [statusLogfilePath, setStatusLogfilePath] = useState(null);
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState([]); // [{name: .., logfile: ..}]
 
+  // Cost-Benefit Analysis (CBA) controls
+  const [cbaOptions, setCbaOptions] = useState({});
+
   // Scenario-specific settings under currently selected HELMET Project
   const configStores = useRef({});
 
@@ -222,6 +225,47 @@ const HelmetProject = ({
     ipcRenderer.send('message-from-ui-to-cancel-scenarios');
   };
 
+  const _runCbaScript = () => {
+    // Check required global parameters are set
+    if (!emmePythonPath) {
+      alert("Python -sijaintia ei ole asetettu!");
+      return;
+    }
+    if (!helmetScriptsPath) {
+      alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
+      return;
+    }
+
+    // Check required CBA parameters are set
+    if (!cbaOptions.baseline_scenario_path) {
+      alert(`Baseline skenaariota ei ole valittu`);
+      return;
+    }
+    if (!cbaOptions.projected_scenario_path) {
+      alert(`Projektoitua skenaariota ei ole valittu`);
+      return;
+    }
+    if (!cbaOptions.evaluation_year) {
+      alert(`Evaluointivuotta ei ole valittu`);
+      return;
+    }
+
+    // Perform UI changes to indicate "initializing run of script"
+    setOpenScenarioID(null); // Close any open scenario configuration
+    setLogContents([
+      {
+        level: "UI-event",
+        message: `Initializing run CBA Script`
+      }
+    ]);
+    setLogOpened(true); // Keep log open even after run finishes (or is cancelled)
+    signalProjectRunning(true); // Let App-component know too
+    ipcRenderer.send(
+      'message-from-ui-to-run-cba-script',
+      {...cbaOptions, emme_python_path: emmePythonPath, helmet_scripts_path: helmetScriptsPath}
+      );
+  };
+
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
@@ -288,6 +332,12 @@ const HelmetProject = ({
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
+        />
+        <hr/>
+        <CostBenefitAnalysis
+          cbaOptions={cbaOptions}
+          setCbaOptions={setCbaOptions}
+          runCbaScript={_runCbaScript}
         />
       </div>
 

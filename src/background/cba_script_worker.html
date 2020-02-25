@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hidden process-running window</title>
+    <script type="text/javascript">
+      const {ipcRenderer} = require('electron');
+      const {runCBAScriptPythonShell} = require('./cba_script_python_shell');
+
+      const sendLoggableEvent = (message) => {
+        ipcRenderer.send('loggable-event-from-worker', {
+          level: "UI-event",
+          message: message
+        });
+      };
+
+      let worker = null;
+
+      const onComplete = (completedRunParams) => {
+        worker = null; // Reset worker reference for new/next runs
+        // Send to log "finished"
+        sendLoggableEvent(`Finished Cost-Benefit Analysis`);
+        // Notify UI that all processing complete for now
+        ipcRenderer.send('message-from-worker-all-scenarios-complete');
+      };
+
+      ipcRenderer.on('run-cba-script', (event, args) => {
+        sendLoggableEvent(
+          `Running Cost-Benefit Analysis between`
+          + ` (baseline) "${args.baseline_scenario_path}" and (projected) "${args.projected_scenario_path}"`
+          + ` with evaluation year ${args.evaluation_year}`
+        );
+        worker = runCBAScriptPythonShell(worker, args, () => onComplete(args));
+      });
+    </script>
+</head>
+<body>
+</body>
+</html>
