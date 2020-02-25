@@ -211,7 +211,6 @@ const HelmetProject = ({
           emme_python_path: emmePythonPath,
           helmet_scripts_path: helmetScriptsPath,
           log_level: 'DEBUG',
-          DO_NOT_USE_EMME: window.DO_NOT_USE_EMME, // A dry-run enabling parameter passable from chrome console
         }
       })
     );
