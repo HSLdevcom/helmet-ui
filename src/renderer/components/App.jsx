@@ -28,9 +28,12 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   };
 
   const _setHelmetScriptsPath = (newPath) => {
+    // Cannot use state variable since it'd be undefined at times
+    const pythonPath = globalSettingsStore.current.get('emme_python_path');
     try {
-      execSync(`"${path.join(path.dirname(emmePythonPath), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
+      execSync(`"${path.join(path.dirname(pythonPath), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
     } catch (e) {
+      console.log(e);
       console.log("No requirements file found for HELMET Scripts. Some functionality may not work properly.");
     }
     setHelmetScriptsPath(newPath);
@@ -42,9 +45,45 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     globalSettingsStore.current.set('project_path', newPath);
   };
 
+  const _promptModelSystemDownload = () => {
+    fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
+      .then((response) => {
+        return response.json();
+      })
+      .then((tags) => {
+        vex.dialog.open({
+          message: "Valitse model-system versio:",
+          input: [
+            '<div class="vex-custom-field-wrapper">',
+              '<select name="version">',
+                tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join(''),
+              '</select>',
+            '</div>'
+          ].join(''),
+          callback: (data) => {
+            if (!data) {
+              // Cancelled
+              return;
+            }
+            const now = new Date();
+            setDlHelmetScriptsVersion(data.version);
+            setDownloadingHelmetScripts(true);
+            ipcRenderer.send(
+              'message-from-ui-to-download-helmet-scripts',
+              {
+                version: data.version,
+                destinationDir: homedir,
+                postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
+              }
+            );
+          }
+        });
+      });
+  };
+
   // Electron IPC event listeners
   const onDownloadReady = (event, savePath) => {
-    _setHelmetScriptsPath(savePath);
+    _setHelmetScriptsPath(savePath, emmePythonPath);
     setDownloadingHelmetScripts(false);
   };
 
@@ -77,40 +116,8 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
 
     // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
-    if (!existingHelmetScriptsPath && confirm("Ladataanko model-system automaattisesti?")) {
-      fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
-        .then((response) => {
-          return response.json();
-        })
-        .then((tags) => {
-          vex.dialog.open({
-            message: "Valitse model-system versio:",
-            input: [
-              '<div class="vex-custom-field-wrapper">',
-                '<select name="version">',
-                  tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join(''),
-                '</select>',
-              '</div>'
-            ].join(''),
-            callback: (data) => {
-              if (!data) {
-                // Cancelled
-                return;
-              }
-              const now = new Date();
-              setDlHelmetScriptsVersion(data.version);
-              setDownloadingHelmetScripts(true);
-              ipcRenderer.send(
-                'message-from-ui-to-download-helmet-scripts',
-                {
-                  version: data.version,
-                  destinationDir: homedir,
-                  postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${now.getFullYear()}`, // DD-MM-YYYY
-                }
-              );
-            }
-          });
-        });
+    if (!existingHelmetScriptsPath && confirm("Ladataanko model-system automaattisesti? (Vaatii internet-yhteyden \u{0001F4F6})")) {
+      _promptModelSystemDownload();
     }
 
     return () => {
@@ -134,6 +141,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           setEMMEPythonPath={_setEMMEPythonPath}
           setHelmetScriptsPath={_setHelmetScriptsPath}
           setProjectPath={_setProjectPath}
+          promptModelSystemDownload={_promptModelSystemDownload}
         />
       </div>
 

@@ -56,7 +56,7 @@ app.on('ready', async () => {
 ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
   const workDir = args.destinationDir;
   const tmpDir = path.join(workDir, "helmet-model-system-tmp-workdir");
-  const finalDir = path.join(workDir, `helmet-model-system-${args.version === 'master' ? args.postfix : args.version}`);
+  const finalDir = path.join(workDir, `helmet-model-system-${args.version}-${args.postfix}`);
 
   // Download model system repo (passed in args.url - may vary in future depending on tag/version)
   download(
