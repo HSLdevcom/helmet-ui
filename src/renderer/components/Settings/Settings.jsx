@@ -6,6 +6,7 @@ const Settings = ({
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   closeSettings,
+  promptModelSystemDownload,
 }) => {
   return (
     <div className="Settings">
@@ -42,8 +43,13 @@ const Settings = ({
                  type="file"
                  webkitdirectory=""
                  directory=""
-                 onChange={(e) => setHelmetScriptsPath(e.target.files[0].path)}
+                 onChange={(e) => setHelmetScriptsPath(e.target.files[0].path, emmePythonPath)}
           />
+          <button className="Settings__beside-input-btn"
+                  onClick={(e) => {promptModelSystemDownload()}}
+          >
+            Lataa eri versio (vaatii internet-yhteyden {'\u{0001F4F6}'})
+          </button>
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Projektin kansiopolku (oletusarvoisesti kotihakemistosi)</span>

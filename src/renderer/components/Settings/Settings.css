@@ -50,7 +50,7 @@
 }
 
 .Settings__pseudo-file-select {
-    display: block;
+    display: inline-block;
     width: 20em;
     line-height: 1.75em;
     padding: 0 0.25em;
@@ -70,4 +70,9 @@
 .Settings__dialog-controls {
     margin: 0.75em 0 0 0;
     padding: 0;
+}
+
+.Settings__beside-input-btn {
+    display: inline-block;
+    margin-left: 4px;
 }
