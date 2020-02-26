@@ -114,6 +114,18 @@ As of 2020-02-12:
 1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
 
 ## Version history
+**2.1.1**  
+ENHANCEMENT: *Reminder text "downloading new model-system requires internet connection"*    
+ENHANCEMENT: *Add button in Settings to download new helmet-model-system version*  
+FIX: *Overriding old model-system versions is postfixed with epoch timestamp in folder name*    
+FIX: *pip install is performed after download of model-systed (previously triggered only on switching folder)*  
+
+**2.1.0**  
+FEA: *Cost Benefit Analysis (two input scenario result folders, and evaluation year, passed to side-script)*  
+
+**2.0.0**  
+Breaking change: Python interface is called via args, instead of stdin. Also the Python file name is different. Compatible with model-system version 0.1.0 and newer.  
+
 **1.5.0**  
 FEA: *Various UI/UX enhancements from discussion with an end-user*  
 
