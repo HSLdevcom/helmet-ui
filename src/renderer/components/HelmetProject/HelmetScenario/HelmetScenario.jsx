@@ -85,7 +85,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Choice whether to use pre-calculated transit cost matrices (instead of calculating them mid-run) */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">K&auml;yt&auml; esilaskettuja matka-aikoja:</span>
+        <span className="Scenario__pseudo-label">K&auml;yt&auml; esilaskettua joukkoliikenteen kustannusmatriisia:</span>
         <label className="Scenario__radio-input">
           Kyll&auml;&nbsp;
           <input type="radio"
