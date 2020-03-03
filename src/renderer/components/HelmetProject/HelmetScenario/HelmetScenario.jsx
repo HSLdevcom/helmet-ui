@@ -70,7 +70,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       <div className="Scenario__section">
         <span className="Scenario__pseudo-label">L&auml;ht&ouml;data</span>
         <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select">
-          {scenario.data_folder_path ? path.basename(scenario.data_folder_path) : "Valitse.."}
+          {scenario.forecast_data_folder_path ? path.basename(scenario.forecast_data_folder_path) : "Valitse.."}
         </label>
         <input className="Scenario__hidden-input"
                id="data-folder-select"
@@ -78,7 +78,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                webkitdirectory=""
                directory=""
                onChange={(e) => {
-                 updateScenario({...scenario, data_folder_path: e.target.files[0].path});
+                 updateScenario({...scenario, forecast_data_folder_path: e.target.files[0].path});
                }}
         />
       </div>

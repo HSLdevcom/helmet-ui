@@ -16,10 +16,12 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
+  const [basedataPath, setBasedataPath] = useState(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
+  const [resultsPath, setResultsPath] = useState(undefined); // folder path to Results directory
   const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
   const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState(undefined); // which version is being downloaded
 
-  // Global settings store contains "emme_python_path", "helmet_scripts_path", and "project_path".
+  // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
   const globalSettingsStore = useRef(new Store());
 
   const _setEMMEPythonPath = (newPath) => {
@@ -43,6 +45,16 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const _setProjectPath = (newPath) => {
     setProjectPath(newPath);
     globalSettingsStore.current.set('project_path', newPath);
+  };
+
+  const _setBasedataPath = (newPath) => {
+    setBasedataPath(newPath);
+    globalSettingsStore.current.set('basedata_path', newPath);
+  };
+
+  const _setResultsPath = (newPath) => {
+    setResultsPath(newPath);
+    globalSettingsStore.current.set('resultdata_path', newPath);
   };
 
   const _promptModelSystemDownload = () => {
@@ -106,9 +118,13 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     const existingEmmePythonPath = globalSettingsStore.current.get('emme_python_path');
     const existingHelmetScriptsPath = globalSettingsStore.current.get('helmet_scripts_path');
     const existingProjectPath = globalSettingsStore.current.get('project_path');
+    const existingBasedataPath = globalSettingsStore.current.get('basedata_path');
+    const existingResultsPath = globalSettingsStore.current.get('results_path');
     setEmmePythonPath(existingEmmePythonPath);
     setHelmetScriptsPath(existingHelmetScriptsPath);
     setProjectPath(existingProjectPath);
+    setBasedataPath(existingBasedataPath);
+    setResultsPath(existingResultsPath);
 
     // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath) {
@@ -118,6 +134,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
     if (!existingHelmetScriptsPath && confirm("Ladataanko model-system automaattisesti? (Vaatii internet-yhteyden \u{0001F4F6})")) {
       _promptModelSystemDownload();
+    // Else if required paths are un-set, open settings anyway
+    } else if (!existingBasedataPath || !existingResultsPath) {
+      setSettingsOpen(true);
     }
 
     return () => {
@@ -134,13 +153,17 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <Settings
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
+          projectPath={projectPath}
+          basedataPath={basedataPath}
+          resultsPath={resultsPath}
           dlHelmetScriptsVersion={dlHelmetScriptsVersion}
           isDownloadingHelmetScripts={isDownloadingHelmetScripts}
-          projectPath={projectPath}
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
           setHelmetScriptsPath={_setHelmetScriptsPath}
           setProjectPath={_setProjectPath}
+          setBasedataPath={_setBasedataPath}
+          setResultsPath={_setResultsPath}
           promptModelSystemDownload={_promptModelSystemDownload}
         />
       </div>
@@ -165,6 +188,8 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}
           projectPath={projectPath ? projectPath : homedir}
+          basedataPath={basedataPath}
+          resultsPath={resultsPath}
           signalProjectRunning={setProjectRunning}
         />
       </div>

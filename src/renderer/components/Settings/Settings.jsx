@@ -5,6 +5,8 @@ const Settings = ({
   emmePythonPath, setEMMEPythonPath,
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
+  basedataPath, setBasedataPath,
+  resultsPath, setResultsPath,
   closeSettings,
   promptModelSystemDownload,
 }) => {
@@ -62,6 +64,32 @@ const Settings = ({
                  webkitdirectory=""
                  directory=""
                  onChange={(e) => setProjectPath(e.target.files[0].path)}
+          />
+        </div>
+        <div className="Settings__dialog-input-group">
+          <span className="Settings__pseudo-label">L&auml;ht&ouml;datan sis&auml;lt&auml;v&auml; kansio</span>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-basedata-path" title={basedataPath}>
+            {basedataPath ? path.basename(basedataPath) : "Valitse.."}
+          </label>
+          <input className="Settings__hidden-input"
+                 id="hidden-input-basedata-path"
+                 type="file"
+                 webkitdirectory=""
+                 directory=""
+                 onChange={(e) => setBasedataPath(e.target.files[0].path)}
+          />
+        </div>
+        <div className="Settings__dialog-input-group">
+          <span className="Settings__pseudo-label">Tulosten tallennuspolku</span>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-results-path" title={resultsPath}>
+            {resultsPath ? path.basename(resultsPath) : "Valitse.."}
+          </label>
+          <input className="Settings__hidden-input"
+                 id="hidden-input-results-path"
+                 type="file"
+                 webkitdirectory=""
+                 directory=""
+                 onChange={(e) => setResultsPath(e.target.files[0].path)}
           />
         </div>
         <div className="Settings__dialog-controls">
