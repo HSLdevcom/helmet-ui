@@ -119,7 +119,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     const existingHelmetScriptsPath = globalSettingsStore.current.get('helmet_scripts_path');
     const existingProjectPath = globalSettingsStore.current.get('project_path');
     const existingBasedataPath = globalSettingsStore.current.get('basedata_path');
-    const existingResultsPath = globalSettingsStore.current.get('results_path');
+    const existingResultsPath = globalSettingsStore.current.get('resultdata_path');
     setEmmePythonPath(existingEmmePythonPath);
     setHelmetScriptsPath(existingHelmetScriptsPath);
     setProjectPath(existingProjectPath);

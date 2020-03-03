@@ -31,3 +31,8 @@
 .CBA__hidden-input {
     display: none;
 }
+
+.CBA__radio-label {
+    margin: 0;
+    padding: 0;
+}

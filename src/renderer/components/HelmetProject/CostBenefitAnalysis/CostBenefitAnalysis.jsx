@@ -6,7 +6,7 @@ const CostBenefitAnalysis = ({
 }) => {
   return (
     <div className="CBA">
-      <div className="CBA__heading">Cost-Benefit Analysis</div>
+      <div className="CBA__heading">Hy&ouml;ty-kustannus-analyysi</div>
       <div>
         {/* Baseline scenario results folder */}
         <div>
@@ -51,7 +51,7 @@ const CostBenefitAnalysis = ({
       </div>
       <div>
         {/* Evaluation year, 1 or 2 */}
-        <p>Evaluointivuosi</p>
+        <p className="CBA__radio-label">Evaluointivuosi</p>
         <label>
           1
           <input type="radio"
@@ -80,7 +80,7 @@ const CostBenefitAnalysis = ({
         </label>
       </div>
       <div>
-        <button onClick={(e) => {runCbaScript()}}>Run CBA</button>
+        <button onClick={(e) => {runCbaScript()}}>Aja H/K analyysi</button>
       </div>
     </div>
   );
