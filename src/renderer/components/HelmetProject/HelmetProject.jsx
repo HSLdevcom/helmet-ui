@@ -93,8 +93,6 @@ const HelmetProject = ({
         const obj = JSON.parse(fs.readFileSync(path.join(configPath, fileName), 'utf8'));
         if ("id" in obj
           && "name" in obj
-          && "emme_project_file_path" in obj
-          && "data_folder_path" in obj
           && "use_fixed_transit_cost" in obj
           && "iterations" in obj
         ) {
@@ -121,7 +119,7 @@ const HelmetProject = ({
       name: newScenarioName,
       emme_project_file_path: null,
       first_scenario_id: 19,
-      data_folder_path: null,
+      forecast_data_folder_path: null,
       use_fixed_transit_cost: false,
       iterations: 10,
     };
@@ -183,7 +181,7 @@ const HelmetProject = ({
         alert(`Emme-projektia ei ole valittu skenaariossa "${scenario.name}"`);
         return;
       }
-      if (!store.get('data_folder_path')) {
+      if (!store.get('forecast_data_folder_path')) {
         alert(`Data-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
         return;
       }

@@ -24,7 +24,7 @@ module.exports = {
           "--scenario-name", runParameters.name,
           "--emme-path", runParameters.emme_project_file_path,
           "--first-scenario-id", runParameters.first_scenario_id,
-          "--data-path", runParameters.data_folder_path,
+          "--forecast-data-path", runParameters.forecast_data_folder_path,
           "--iterations", runParameters.iterations
         ]
           .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
