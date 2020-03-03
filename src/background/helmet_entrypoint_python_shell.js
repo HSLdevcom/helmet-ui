@@ -22,8 +22,10 @@ module.exports = {
           "--log-level", runParameters.log_level,
           "--log-format", "JSON",
           "--scenario-name", runParameters.name,
+          "--results-path", runParameters.results_data_folder_path,
           "--emme-path", runParameters.emme_project_file_path,
           "--first-scenario-id", runParameters.first_scenario_id,
+          "--baseline-data-path", runParameters.base_data_folder_path,
           "--forecast-data-path", runParameters.forecast_data_folder_path,
           "--iterations", runParameters.iterations
         ]

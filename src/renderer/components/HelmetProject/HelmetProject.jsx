@@ -9,7 +9,7 @@ const {ipcRenderer} = require('electron');
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
 const HelmetProject = ({
-  emmePythonPath, helmetScriptsPath, projectPath,
+  emmePythonPath, helmetScriptsPath, projectPath, basedataPath, resultsPath,
   signalProjectRunning,
 }) => {
   // HELMET Project -specific settings
@@ -172,6 +172,18 @@ const HelmetProject = ({
       alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
       return;
     }
+    if (!projectPath) {
+      alert("Projektin kotikansiota ei ole asetettu, tarkista Asetukset.");
+      return;
+    }
+    if (!basedataPath) {
+      alert("L\u00E4ht\u00F6datan kansiota ei ole asetettu, tarkista Asetukset.");
+      return;
+    }
+    if (!resultsPath) {
+      alert("Tulosdatan kansiota ei ole asetettu, tarkista Asetukset.");
+      return;
+    }
 
     // For each active scenario, check required scenario-specific parameters are set
     for (let scenario of scenariosToRun) {
@@ -182,7 +194,7 @@ const HelmetProject = ({
         return;
       }
       if (!store.get('forecast_data_folder_path')) {
-        alert(`Data-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
+        alert(`Ennustedata-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
         return;
       }
       if (iterations < 1 || iterations > 99) {
@@ -211,6 +223,8 @@ const HelmetProject = ({
           ...s,
           emme_python_path: emmePythonPath,
           helmet_scripts_path: helmetScriptsPath,
+          base_data_folder_path: basedataPath,
+          results_data_folder_path: resultsPath,
           log_level: 'DEBUG',
         }
       })
