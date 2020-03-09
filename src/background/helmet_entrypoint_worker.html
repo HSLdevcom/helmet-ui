@@ -5,7 +5,7 @@
     <title>Hidden process-running window</title>
     <script type="text/javascript">
       const {ipcRenderer} = require('electron');
-      const {runHelmetEntrypointPythonShell} = require('./helmet_entrypoint_python_shell');
+      const {runHelmetEntrypointPythonShell, runInputValidationPythonShell} = require('./helmet_entrypoint_python_shell');
 
       const sendLoggableEvent = (message) => {
         ipcRenderer.send('loggable-event-from-worker', {
@@ -16,6 +16,16 @@
 
       let queuedRunParams = [];
       let worker = null;
+
+      const onValidationComplete = () => {
+        worker = null; // Reset worker reference for actual entrypoint
+
+        // Send to log "validation successful"
+        sendLoggableEvent("Input data validated successfully");
+
+        // Start entrypoint
+
+      };
 
       const onScenarioComplete = (completedRunParams) => {
         worker = null; // Reset worker reference for new/next runs
@@ -38,10 +48,22 @@
       };
 
       ipcRenderer.on('run-scenarios', (event, args) => {
-        const initialRunParams = args[0];
-        queuedRunParams = args.slice(1);
-        sendLoggableEvent(`Running scenario "${initialRunParams.name}"`);
-        worker = runHelmetEntrypointPythonShell(worker, initialRunParams, () => onScenarioComplete(initialRunParams));
+        // Run entrypoint when validation complete
+        const onValidationComplete = (err) => {
+          if (err) {
+            // On validation error, cancel entrypoint run & reset UI
+            worker = null;
+            ipcRenderer.send('message-from-worker-all-scenarios-complete');
+            return;
+          }
+          worker = null; // Reset worker reference for entrypoint
+          const initialRunParams = args[0];
+          queuedRunParams = args.slice(1);
+          sendLoggableEvent(`Running scenario "${initialRunParams.name}"`);
+          worker = runHelmetEntrypointPythonShell(worker, initialRunParams, () => onScenarioComplete(initialRunParams));
+        };
+        // Run validation -> entrypoint
+        worker = runInputValidationPythonShell(worker, args, onValidationComplete);
       });
 
       ipcRenderer.on('cancel-scenarios', (event, args) => {

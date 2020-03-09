@@ -114,6 +114,9 @@ As of 2020-02-12:
 1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
 
 ## Version history
+**3.0.0**  
+Breaking change: Changes all Python interface input data paths _(as well as output Results directory path)_ to dynamic.  
+
 **2.1.1**  
 ENHANCEMENT: *Reminder text "downloading new model-system requires internet connection"*    
 ENHANCEMENT: *Add button in Settings to download new helmet-model-system version*  
