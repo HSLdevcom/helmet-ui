@@ -4,7 +4,7 @@
 
 Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) and [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
 
-# Development
+## Development
 
 This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/) and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
 
@@ -68,34 +68,56 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
 
-# End-User Environment
+## End-User Environment
+
+### Installation
 
 Before using Helmet UI, the following requirements must be met:
 
-  1. [Emme 4.3.3](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
+  1. [Emme 4.4.X](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
   1. _[optionally]_ [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up _(or let UI download it)_
 
-The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release. The release packages are not signed at the moment so Windows will complaint about it and prevents the installer from running, but this can be overridden simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyways" ("Suorita joka tapauksessa").
+The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release.
+
+:warning: **The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways:**
+
+- Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway". (This option will probably work only if you have admin rights)
+- By right-clicking the downloaded .exe-file, selecting Properties and ticking the box "Unblock".
+
+![Unblock](docs/unblock.png)
 
 The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
 
-On first start, the application attempts to find Emme installation on the workstation, but this may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder:
+On first start, the application attempts to find Emme installation on the workstation and download the latest version of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) scripts. The application will also run `pip install`. The EMME Python path setup may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder.
+
+### Settings
 
 - Emme Python executable
-    - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
-    - e.g. `C:\Program Files\INRO\Emme-4.3.3\Python27\python.exe`
+  - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
+  - e.g. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
 - The `Scripts` folder of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)
-    - e.g. `C:\Helmet\helmet-model-system\Scripts`
-    - this is the Python backend doing most of the work
+  - This is the Python backend doing most of the work.
+  - This can be updated to a fresh/updated version by clicking "Lataa eri versio...". This will not overwrite your old (tweaked) scripts, it will always save the scripts in a new directory.
+  - It can also be set to an existing folder on your computer.
+- Project directory
+  - This is where your model run specifications (.json) will be saved.
+- Base data directory
+  - This is where base demand matrices and base year (2016) data are located
+- Result data directory
+  - This is where you want your model run results to be saved
 
-Before running simulations, you must also specify the following:
+### Model run setup
 
+For each HELMET scenario you want to run, you must also specify the following:
+
+1. Scenario/run name
 1. Emme project file (`.emp`)
-1. Folder containing the initial model data.
-    - e.g. `c:\Helmet\helmet-model-system\Zone_data\2030`
-1. Number of iterations to be executed (optional)
-1. Scenario/run name (optional)
+1. The number of the Emme scenario where the bike network is located (usually 19), this scenario must be followed by the walk scenario and three time-dependent car and transit scenarios (aht, pt, iht).
+1. Folder containing the input data.
+    - e.g. `c:\Helmet\helmet-model-system\Scenario_input_data\2030`
+1. Whether or not you have a pre-calculated transit cost matrix (located in the results folder for this scenario)
+1. Number of iterations to be executed
 
 This is the download link that can be handed to users, along with an advice to download the latest version, i.e. the first one on the list.
 
@@ -105,15 +127,13 @@ The package to be downloaded is named `Helmet.4.0.UI-x.y.z.Setup.exe`, where the
 
 ## TODO & Known Problems
 
-As of 2020-02-12:
+As of 2020-03-17:
 
-1. User cannot select the logging level of Helmet Model System
-    - Fix: add a dropdown select in settings dialog and set it in the Python shell command parameters.
 1. The application is not [signed](https://electronjs.org/docs/tutorial/code-signing), causing the anti-virus software and Windows to consider it suspicious.
     - Fix: aqcuire a certificate and add it to the [build process](https://www.electronforge.io/config/makers/squirrel.windows) to enable signing
-1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
 
 ## Version history
+
 **3.0.0**  
 Breaking change: Changes all Python interface input data paths _(as well as output Results directory path)_ to dynamic.  
 
