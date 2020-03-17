@@ -4,7 +4,7 @@
 
 Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) and [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
 
-# Development
+## Development
 
 This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/) and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
 
@@ -68,7 +68,9 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
 
-# End-User Environment
+## End-User Environment
+
+### Installation
 
 Before using Helmet UI, the following requirements must be met:
 
@@ -89,7 +91,7 @@ The application installs itself in the user's `%HOMEPATH%/AppData` folder. The a
 
 On first start, the application attempts to find Emme installation on the workstation and download the latest version of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) scripts. The application will also run `pip install`. The EMME Python path setup may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder.
 
-## Settings
+### Settings
 
 - Emme Python executable
   - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
@@ -105,7 +107,9 @@ On first start, the application attempts to find Emme installation on the workst
 - Result data directory
   - This is where you want your model run results to be saved
 
-Before running simulations, you must also specify the following:
+### Model run setup
+
+For each HELMET scenario you want to run, you must also specify the following:
 
 1. Scenario/run name
 1. Emme project file (`.emp`)
