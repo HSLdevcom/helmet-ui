@@ -80,29 +80,40 @@ The Helmet UI installer can be downloaded from [releases](https://github.com/HSL
 
 :warning: **The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways:**
 
-- Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa").
-- By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock".
+- Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway". (This option will probably work only if you have admin rights)
+- By right-clicking the downloaded .exe-file, selecting Properties and ticking the box "Unblock".
 
-![Unblock](docs/unblock.png) |
+![Unblock](docs/unblock.png)
 
 The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
 
-On first start, the application attempts to find Emme installation on the workstation, but this may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder:
+On first start, the application attempts to find Emme installation on the workstation and download the latest version of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) scripts. The application will also run `pip install`. The EMME Python path setup may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder.
+
+## Settings
 
 - Emme Python executable
-    - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
-    - e.g. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
+  - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
+  - e.g. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
 - The `Scripts` folder of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)
-    - e.g. `C:\Helmet\helmet-model-system\Scripts`
-    - this is the Python backend doing most of the work
+  - This is the Python backend doing most of the work.
+  - This can be updated to a fresh/updated version by clicking "Lataa eri versio...". This will not overwrite your old (tweaked) scripts, it will always save the scripts in a new directory.
+  - It can also be set to an existing folder on your computer.
+- Project directory
+  - This is where your model run specifications (.json) will be saved.
+- Base data directory
+  - This is where base demand matrices and base year (2016) data are located
+- Result data directory
+  - This is where you want your model run results to be saved
 
 Before running simulations, you must also specify the following:
 
+1. Scenario/run name
 1. Emme project file (`.emp`)
-1. Folder containing the initial model data.
-    - e.g. `c:\Helmet\helmet-model-system\Zone_data\2030`
-1. Number of iterations to be executed (optional)
-1. Scenario/run name (optional)
+1. The number of the Emme scenario where the bike network is located (usually 19), this scenario must be followed by the walk scenario and three time-dependent car and transit scenarios (aht, pt, iht).
+1. Folder containing the input data.
+    - e.g. `c:\Helmet\helmet-model-system\Scenario_input_data\2030`
+1. Whether or not you have a pre-calculated transit cost matrix (located in the results folder for this scenario)
+1. Number of iterations to be executed
 
 This is the download link that can be handed to users, along with an advice to download the latest version, i.e. the first one on the list.
 
