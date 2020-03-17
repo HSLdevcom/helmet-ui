@@ -72,11 +72,15 @@ _Notice: you cannot create drafts with an existing version number (i.e. release 
 
 Before using Helmet UI, the following requirements must be met:
 
-  1. [Emme 4.3.3](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
+  1. [Emme 4.4.X](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
   1. _[optionally]_ [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up _(or let UI download it)_
 
-The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release. The release packages are not signed at the moment so Windows will complaint about it and prevents the installer from running, but this can be overridden simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyways" ("Suorita joka tapauksessa").
+The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release.
+
+> :warning The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways:
+> Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa").
+> By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock". ![Unblock](https://github.com/HSLdevcom/helmet-ui/blob/master/src/docs/unblock.png)
 
 The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
 
@@ -84,7 +88,7 @@ On first start, the application attempts to find Emme installation on the workst
 
 - Emme Python executable
     - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
-    - e.g. `C:\Program Files\INRO\Emme-4.3.3\Python27\python.exe`
+    - e.g. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
 - The `Scripts` folder of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)
     - e.g. `C:\Helmet\helmet-model-system\Scripts`
     - this is the Python backend doing most of the work
@@ -105,15 +109,13 @@ The package to be downloaded is named `Helmet.4.0.UI-x.y.z.Setup.exe`, where the
 
 ## TODO & Known Problems
 
-As of 2020-02-12:
+As of 2020-03-17:
 
-1. User cannot select the logging level of Helmet Model System
-    - Fix: add a dropdown select in settings dialog and set it in the Python shell command parameters.
 1. The application is not [signed](https://electronjs.org/docs/tutorial/code-signing), causing the anti-virus software and Windows to consider it suspicious.
     - Fix: aqcuire a certificate and add it to the [build process](https://www.electronforge.io/config/makers/squirrel.windows) to enable signing
-1. Logs are written under the Helmet Model System folder and while they are rotated on daily basis per given filename, the folder is never ultimately cleaned up.
 
 ## Version history
+
 **3.0.0**  
 Breaking change: Changes all Python interface input data paths _(as well as output Results directory path)_ to dynamic.  
 
