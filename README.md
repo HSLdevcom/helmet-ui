@@ -78,9 +78,11 @@ Before using Helmet UI, the following requirements must be met:
 
 The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release.
 
-> :warning The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways:
-> Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa").
-> By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock".
+| :warning: The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways: |
+| --- |
+
+- Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa").
+- By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock".
 
 ![Unblock](docs/unblock.png)
 
