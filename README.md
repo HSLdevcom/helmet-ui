@@ -80,11 +80,9 @@ The Helmet UI installer can be downloaded from [releases](https://github.com/HSL
 
 | :warning: The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways: |
 | --- |
-
-- Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa").
-- By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock".
-
-![Unblock](docs/unblock.png)
+| Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway" ("Suorita joka tapauksessa"). |
+| By right-clicking the .exe-file, selecting Properties and unticking the box "Unblock".
+![Unblock](docs/unblock.png) |
 
 The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
 
