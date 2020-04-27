@@ -3,7 +3,7 @@ const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
 /**
  * Electron Forge config.
  *
- * https://www.electronforge.io/config/makers/zip
+ * https://www.electronforge.io/config/makers/squirrel.windows
  * https://www.electronforge.io/config/publishers/github
  */
 module.exports = {
@@ -13,7 +13,18 @@ module.exports = {
     },
     makers: [
         {
-            name: "@electron-forge/maker-zip",
+            name: "@electron-forge/maker-squirrel",
+            config: {
+                name: "helmet-ui",
+
+                // TODO branding
+                // iconUrl: '',
+                // loadingGif: '',
+                // setupIcon: ''
+
+                certificateFile: process.env.WINDOWS_CERTIFICATE_FILE,
+                certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD
+            }
         },
         {
             name: "@electron-forge/maker-deb",
