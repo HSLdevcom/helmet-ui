@@ -4,4 +4,4 @@ Helmet liikenne-ennustejärjestelmä toimii tiiviisti Emmen kanssa. Ennen Helmet
 
 Helmet-käyttöliitymän asennuspaketti löytyy tästä: <https://github.com/HSLdevcom/helmet-ui/releases>
 
-Timo täydentää ohjeita kesällä
+*Timo* täydentää ohjeita kesällä
