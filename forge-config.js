@@ -22,7 +22,7 @@ module.exports = {
                 // loadingGif: '',
                 // setupIcon: ''
 
-                certificateFile: "202004_Helmet.pfx",
+                certificateFile: "helmet_cs2.pfx",
                 certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD
             }
         },
