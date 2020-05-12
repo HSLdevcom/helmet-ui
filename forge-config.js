@@ -13,10 +13,10 @@ module.exports = {
     },
     makers: [
         {
-            name: "@electron-forge/maker-wix",
+            name: "@electron-forge/maker-squirrel",
             config: {
                 name: "helmet",
-                manufacturer: "Helsingin Seudun Liikenne -kuntayhtyma",
+                authors: "Helsingin Seudun Liikenne -kuntayhtyma",
                 // TODO branding
                 // iconUrl: '',
                 // loadingGif: '',
