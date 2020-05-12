@@ -13,15 +13,15 @@ module.exports = {
     },
     makers: [
         {
-            name: "@electron-forge/maker-squirrel",
+            name: "@electron-forge/maker-wix",
             config: {
                 name: "helmet",
-                authors: "Helsingin Seudun Liikenne -kuntayhtyma",
+                manufacturer: "Helsingin Seudun Liikenne -kuntayhtyma",
                 // TODO branding
                 // iconUrl: '',
                 // loadingGif: '',
                 // setupIcon: ''
-                // Move to base64
+                // TODO Move to base64
                 certificateFile: "helmet_cs4.pfx",
                 certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD
             }
