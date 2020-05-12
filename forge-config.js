@@ -21,8 +21,8 @@ module.exports = {
                 // iconUrl: '',
                 // loadingGif: '',
                 // setupIcon: ''
-
-                certificateFile: "helmet_cs2.pfx",
+                // Move to base64
+                certificateFile: "helmet_cs4.pfx",
                 certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD
             }
         },
