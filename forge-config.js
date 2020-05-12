@@ -16,7 +16,7 @@ module.exports = {
             name: "@electron-forge/maker-squirrel",
             config: {
                 name: "helmet",
-
+                authors: "Helsingin Seudun Liikenne -kuntayhtyma",
                 // TODO branding
                 // iconUrl: '',
                 // loadingGif: '',
