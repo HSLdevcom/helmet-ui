@@ -15,7 +15,7 @@ module.exports = {
         {
             name: "@electron-forge/maker-squirrel",
             config: {
-                name: "helmet-ui",
+                name: "helmet",
 
                 // TODO branding
                 // iconUrl: '',
