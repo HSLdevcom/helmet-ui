@@ -22,7 +22,6 @@
     "del": "^5.1.0",
     "electron-dl": "^3.0.0",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-wix-msi": "^2.0.0",
     "electron-store": "^4.0.0",
     "python-shell": "^1.0.7",
     "react": "^16.12.0",
