@@ -16,7 +16,7 @@ module.exports = {
             name: "@electron-forge/maker-squirrel",
             config: {
                 name: "helmet-ui",
-                iconUrl: "helmet.ico",
+                iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
                 // loadingGif: '',
                 // setupIcon: '',
             }
