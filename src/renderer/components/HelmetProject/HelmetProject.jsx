@@ -257,10 +257,6 @@ const HelmetProject = ({
       alert(`Projektoitua skenaariota ei ole valittu`);
       return;
     }
-    if (!cbaOptions.evaluation_year) {
-      alert(`Evaluointivuotta ei ole valittu`);
-      return;
-    }
 
     // Perform UI changes to indicate "initializing run of script"
     setOpenScenarioID(null); // Close any open scenario configuration
@@ -274,8 +270,12 @@ const HelmetProject = ({
     signalProjectRunning(true); // Let App-component know too
     ipcRenderer.send(
       'message-from-ui-to-run-cba-script',
-      {...cbaOptions, emme_python_path: emmePythonPath, helmet_scripts_path: helmetScriptsPath}
-      );
+      {
+          ...cbaOptions,
+          emme_python_path: emmePythonPath,
+          helmet_scripts_path: helmetScriptsPath,
+          results_path: resultsPath,
+      });
   };
 
   // Electron IPC event listeners
