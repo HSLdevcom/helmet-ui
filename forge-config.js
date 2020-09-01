@@ -16,11 +16,10 @@ module.exports = {
             name: "@electron-forge/maker-squirrel",
             config: {
                 name: "helmet-ui",
-
-                // TODO branding
-                // iconUrl: '',
+                iconUrl: "helmet.ico",
                 // loadingGif: '',
-                // setupIcon: ''
+                // setupIcon: '',
+            }
         },
         {
             name: "@electron-forge/maker-deb",
