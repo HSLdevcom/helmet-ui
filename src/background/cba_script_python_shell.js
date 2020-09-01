@@ -13,15 +13,23 @@ module.exports = {
     }
 
     // Start helmet-model-system's cba.py script with EMME's python interpreter
-    const baseline_scenario = path.basename(runParameters.baseline_scenario_path);
-    const projected_scenario = path.basename(runParameters.projected_scenario_path);
+    const baseline_scenario = runParameters.baseline_scenario_path;
+    const projected_scenario = runParameters.projected_scenario_path;
+    const baseline_scenario_2 = runParameters.baseline_scenario_2_path;
+    const projected_scenario_2 = runParameters.projected_scenario_2_path;
     worker = new ps.PythonShell(
       `${runParameters.helmet_scripts_path}/cba.py`,
       {
         mode: 'json',
         pythonPath: runParameters.emme_python_path,
         pythonOptions: ['-u'], // unbuffered
-        args: [baseline_scenario, projected_scenario, runParameters.evaluation_year]
+        args: [
+            baseline_scenario,
+            projected_scenario,
+            baseline_scenario_2,
+            projected_scenario_2,
+            "--results-path", runParameters.results_path
+        ]
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
