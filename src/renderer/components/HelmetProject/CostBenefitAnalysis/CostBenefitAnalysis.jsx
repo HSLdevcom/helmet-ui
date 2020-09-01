@@ -10,7 +10,7 @@ const CostBenefitAnalysis = ({
       <div>
         {/* Baseline scenario results folder */}
         <div>
-          <span className="CBA__pseudo-label">L&auml;ht&ouml;skenaario</span>
+          <span className="CBA__pseudo-label">Vertailuvaihtoehto</span>
           <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-results-folder-select">
             {cbaOptions.baseline_scenario_path ? path.basename(cbaOptions.baseline_scenario_path) : "Valitse.."}
           </label>
@@ -31,7 +31,7 @@ const CostBenefitAnalysis = ({
       <div>
         {/* Projected scenario results folder */}
         <div>
-          <span className="CBA__pseudo-label">Projektoitu skenaario</span>
+          <span className="CBA__pseudo-label">Hankevaihtoehto</span>
           <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-results-folder-select">
             {cbaOptions.projected_scenario_path ? path.basename(cbaOptions.projected_scenario_path) : "Valitse.."}
           </label>
@@ -50,34 +50,46 @@ const CostBenefitAnalysis = ({
         </div>
       </div>
       <div>
-        {/* Evaluation year, 1 or 2 */}
-        <p className="CBA__radio-label">Evaluointivuosi</p>
-        <label>
-          1
-          <input type="radio"
-                 name="evaluation-year"
-                 value="1"
-                 checked={cbaOptions.evaluation_year ? cbaOptions.evaluation_year === 1 : false}
+        {/* Baseline scenario 2 results folder */}
+        <div>
+          <span className="CBA__pseudo-label">Vertailuvaihtoehto vuosi 2 (valinnainen)</span>
+          <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-2-results-folder-select">
+            {cbaOptions.baseline_scenario_2_path ? path.basename(cbaOptions.baseline_scenario_2_path) : "Valitse.."}
+          </label>
+          <input className="CBA__hidden-input"
+                 id="baseline-scenario-2-results-folder-select"
+                 type="file"
+                 directory=""
+                 webkitdirectory=""
                  onChange={(e) => {
+                   const target_path = e.target.files[0].path;
                    setCbaOptions(prevOptions => {
-                     return {...prevOptions, evaluation_year: 1};
+                     return {...prevOptions, baseline_scenario_2_path: target_path};
                    });
                  }}
           />
-        </label>
-        <label>
-          2
-          <input type="radio"
-                 name="evaluation-year"
-                 value="2"
-                 checked={cbaOptions.evaluation_year ? cbaOptions.evaluation_year === 2 : false}
+        </div>
+      </div>
+      <div>
+        {/* Projected scenario 2 results folder */}
+        <div>
+          <span className="CBA__pseudo-label">Hankevaihtoehto vuosi 2 (valinnainen)</span>
+          <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-2-results-folder-select">
+            {cbaOptions.projected_scenario_2_path ? path.basename(cbaOptions.projected_scenario_2_path) : "Valitse.."}
+          </label>
+          <input className="CBA__hidden-input"
+                 id="projected-scenario-2-results-folder-select"
+                 type="file"
+                 directory=""
+                 webkitdirectory=""
                  onChange={(e) => {
+                   const target_path = e.target.files[0].path;
                    setCbaOptions(prevOptions => {
-                     return {...prevOptions, evaluation_year: 2};
+                     return {...prevOptions, projected_scenario_2_path: target_path};
                    });
                  }}
           />
-        </label>
+        </div>
       </div>
       <div>
         <button onClick={(e) => {runCbaScript()}}>Aja H/K analyysi</button>
