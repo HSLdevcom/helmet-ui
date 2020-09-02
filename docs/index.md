@@ -39,18 +39,20 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 
 - suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
-  - esim. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
+  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
 - GitHubin [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
   - Kansiossa ovat järjestelmän käyttämät Python-ohjelmat.
   - Version päivitys voidaan tehdä klikkaamalla "Lataa eri versio...". Nämä eivät korvaa skriptien vanhoja versioita, 
   vaan uusimmat versiot skripteistä talletetaan uuteen kansioon.
   - Voidaan käyttää myös olemassa olevaa kansiota.
-- kansio Project
-  - Tänne talletetaan malliajon määrittelyt (.json).
-- kansio Base data 
-  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen vuosi (2016)
-- kansio Result data 
-  - Tänne talletetaan ennusteajon tulokset 
+- Projektin kansiopolku
+  - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
+  - Tämä **ei** siis viita Emmen projektitiedostoon (.emp)
+- Lähtödatan sisältävä kansio
+  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
+  - Kansion sisältön saa HSL:ltä
+- Tulosten tallennuspolku
+  - Tänne talletetaan ennusteajojen tulokset
 
 ### Malliajon määrittely
 
@@ -60,9 +62,10 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 2.	Emmen project-tiedosto (.emp)
 3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
 kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
-4.	Kansio, jossa ovat syöttötiedot. 
-  - esim. `C:\Helmet\helmet-model-system\Scenario_input_data\2030`
-5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua (sijaitsee tämän skenaarion kansiossa results)
+4.	Kansio, jossa ovat syöttötiedot
+  - esim. `C:\Helmet\Scenario_input_data\2030`
+  - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
+5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
 6.	Suoritettavien iteraatiokierrosten määrä
 
 Tässä on latauslinkki käyttäjiä varten. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
