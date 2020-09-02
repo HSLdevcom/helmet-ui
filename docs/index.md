@@ -16,14 +16,14 @@ ja koneessa on lisenssitikku (INRO Key).
 _(tai annetaan tämän käyttöliittymän ladata se)_
 
 Helmet UI:n asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta.
+josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
 :warning: **Tällä hetkellä versioiden jakelupaketteja ei ole allekirjoitettu, joten Windows huomauttaa siitä ja estää asennuksen suorituksen. 
 Tämä voidaan ohittaa kahdella tavalla:**
 - Valitse "More info" ("Lisätiedot") ja klikkaa "Run anyway". (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
 - Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock".
 
-![Unblock](docs/unblock.png)
+![Unblock](unblock.png)
  
 Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinainen sovellus on kansiossa `AppData\Local`, ja sen asetukset 
 kansiossa `AppData\Roaming`. Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
@@ -39,18 +39,20 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 
 - suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
-  - esim. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
+  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
 - GitHubin [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
   - Kansiossa ovat järjestelmän käyttämät Python-ohjelmat.
   - Version päivitys voidaan tehdä klikkaamalla "Lataa eri versio...". Nämä eivät korvaa skriptien vanhoja versioita, 
   vaan uusimmat versiot skripteistä talletetaan uuteen kansioon.
   - Voidaan käyttää myös olemassa olevaa kansiota.
-- kansio Project
-  - Tänne talletetaan malliajon määrittelyt (.json).
-- kansio Base data 
-  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen vuosi (2016)
-- kansio Result data 
-  - Tänne talletetaan ennusteajon tulokset 
+- Projektin kansiopolku
+  - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
+  - Tämä **ei** siis viita Emmen projektitiedostoon (.emp)
+- Lähtödatan sisältävä kansio
+  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
+  - Kansion sisältön saa HSL:ltä
+- Tulosten tallennuspolku
+  - Tänne talletetaan ennusteajojen tulokset
 
 ### Malliajon määrittely
 
@@ -60,13 +62,17 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 2.	Emmen project-tiedosto (.emp)
 3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
 kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
-4.	Kansio, jossa ovat syöttötiedot. 
-  - esim. `C:\Helmet\helmet-model-system\Scenario_input_data\2030`
-5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua (sijaitsee tämän skenaarion kansiossa results)
+4.	Kansio, jossa ovat syöttötiedot
+  - esim. `C:\Helmet\Scenario_input_data\2030`
+  - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
+5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
 6.	Suoritettavien iteraatiokierrosten määrä
 
-Tässä on latauslinkki käyttäjiä varten. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
+### Höyty-kustannusanalyysin (hankearvioinnin) määrittely
 
-- https://github.com/HSLdevcom/helmet-ui/releases
+Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
 
-Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, missä `x.y.z` on sovellusversion numero.
+1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaario nimi`)
+2. Hankevaihtoehdon (ve1) tuloskansio
+
+Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
