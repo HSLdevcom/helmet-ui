@@ -23,7 +23,7 @@ Tämä voidaan ohittaa kahdella tavalla:**
 - Valitse "More info" ("Lisätiedot") ja klikkaa "Run anyway". (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
 - Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock".
 
-![Unblock](docs/unblock.png)
+![Unblock](unblock.png)
  
 Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinainen sovellus on kansiossa `AppData\Local`, ja sen asetukset 
 kansiossa `AppData\Roaming`. Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
