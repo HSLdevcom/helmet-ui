@@ -16,7 +16,7 @@ ja koneessa on lisenssitikku (INRO Key).
 _(tai annetaan tämän käyttöliittymän ladata se)_
 
 Helmet UI:n asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta.
+josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
 :warning: **Tällä hetkellä versioiden jakelupaketteja ei ole allekirjoitettu, joten Windows huomauttaa siitä ja estää asennuksen suorituksen. 
 Tämä voidaan ohittaa kahdella tavalla:**
@@ -68,8 +68,11 @@ kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
 5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
 6.	Suoritettavien iteraatiokierrosten määrä
 
-Tässä on latauslinkki käyttäjiä varten. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
+### Höyty-kustannusanalyysin (hankearvioinnin) määrittely
 
-- https://github.com/HSLdevcom/helmet-ui/releases
+Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
 
-Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, missä `x.y.z` on sovellusversion numero.
+1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaario nimi`)
+2. Hankevaihtoehdon (ve1) tuloskansio
+
+Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
