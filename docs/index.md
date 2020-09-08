@@ -8,9 +8,9 @@ title: Koti
 [Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymä. 
 Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
 
-## Loppukäyttäjän ohje
+## Asennus
 
-### Asennus
+### Emmen asennus
 
 Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellytysten on täytyttävä:
 
@@ -25,6 +25,8 @@ Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellyt
 3.	[valinnainen] [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) on ladattu käyttöön ja määritelty 
    _(tai annetaan tämän käyttöliittymän ladata se)_
 
+### Emme-projektin määrittely
+
 Seuraavaksi sinun on määriteltävä *Emme-projekti*:
 
 1. Käynnistä Emme-ohjelmisto.
@@ -34,7 +36,9 @@ Seuraavaksi sinun on määriteltävä *Emme-projekti*:
 3. Noudata erillistä ohjetta, jossa kerrotaan mm. sopivista dimensioista (solmujen, linkkien ym. maksimimäärät). 
    Ne vaikuttavat em. `emmebank`-tiedoston kokoon. Aja sisään verkot ja linjastot ohjeen mukaan.
 
-Helmet UI:n asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
+### Helmet asennus
+
+Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
 josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
 missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
@@ -55,7 +59,7 @@ uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
 jos ympäristömuuttujaa ’EMMEPATH’ ei ole määritelty tai jos sovellus on asennettu epätavallisella tavalla. Jos näin käy, suorituskelpoisen 
 Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Asetukset-valikosta.
 
-### Asetukset
+## Asetukset
 
 - suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
@@ -74,7 +78,7 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
-### Malliajon määrittely
+## Malliajon määrittely
 
 Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittelyt:
 
@@ -90,7 +94,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
 6.	Suoritettavien iteraatiokierrosten määrä
 
-### Höyty-kustannusanalyysin (hankearvioinnin) määrittely
+## Höyty-kustannusanalyysin (hankearvioinnin) määrittely
 
 Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
 
