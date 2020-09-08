@@ -1,6 +1,6 @@
 # Helmet UI
 
-[![Build Status](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.org/HSLdevcom/helmet-ui)
+[![Build Status](https://travis-ci.com/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.com/HSLdevcom/helmet-ui)
 
 Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) and [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
 
