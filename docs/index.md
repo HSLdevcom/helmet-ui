@@ -39,8 +39,8 @@ missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettel
 
 :warning: **Tällä hetkellä versioiden jakelupaketteja ei ole allekirjoitettu, joten Windows huomauttaa siitä ja estää asennuksen suorituksen. 
 Tämä voidaan ohittaa kahdella tavalla:**
-- Valitse "More info" ("Lisätiedot") ja klikkaa "Run anyway". (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
-- Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock".
+- Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
+- Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
 
 ![Unblock](unblock.png)
  
@@ -50,7 +50,10 @@ on taakse päin yhteensopiva vanhojen asetusten kanssa.
 
 Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
 [Helmet 4.0 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
-uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. EMMEn Python-polussa oleva määrittely saattaa epäonnistua, 
+uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
+Nämä kommennot pyörivät hiljaa taustalla, ja sovellus alkaa reagoida vasta niiden valmistuttua.
+
+EMMEn Python-polussa oleva määrittely saattaa epäonnistua, 
 jos ympäristömuuttujaa ’EMMEPATH’ ei ole määritelty tai jos sovellus on asennettu epätavallisella tavalla. Jos näin käy, suorituskelpoisen 
 Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Asetukset-valikosta.
 
@@ -93,7 +96,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 
 Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
 
-1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaario nimi`)
+1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaarion nimi`)
 2. Hankevaihtoehdon (ve1) tuloskansio
 
 Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
