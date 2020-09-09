@@ -19,7 +19,7 @@ module.exports = {
                 authors: "Helsingin Seudun Liikenne -kuntayhtyma",
                 iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
                 // loadingGif: '',
-                // setupIcon: '',
+                setupIcon: 'helmet.ico',
             }
         },
         {
