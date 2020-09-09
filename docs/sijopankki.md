@@ -4,23 +4,23 @@ Luo uusi Emme-projekti haluamaasi kansioon (esimerkiksi `C:\HELMET40\sijoittelu`
 Huomaa, että emp-tiedoston nimen pitää vastata alikansion nimeä, tässä tapauksessa siis `sijoittelu.emp`. 
 
 HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot:
-Koko| Muuttuja
----|---
-4–20 |  network scenarios (vähintään 5, mutta voi olla enemmänkin, esim. 20)
-2100 |	zones or centroids
-20000 |	nodes incl. centroids (17999 regular nodes)
-55000 |	directional links
-30 |	transit vehicle types
-2000 |	transit lines or routes
-200000 |	transit line segments
-10000 |	turn table entries
-400 |	matrices of type mf
-200 |	matrices of type mo
-200 |	matrices of type md
-9999 |	matrices of type ms
-99 |	functions per function class
-5000 |	operators per function class
-1650300 |	words for extra attributes
+|Koko| Muuttuja|
+|---|---|
+|4–20 |  network scenarios (vähintään 5, mutta voi olla enemmänkin, esim. 20)|
+|2100 |	zones or centroids|
+|20000 |	nodes incl. centroids (17999 regular nodes)|
+|55000 |	directional links|
+|30 |	transit vehicle types|
+|2000 |	transit lines or routes|
+|200000 |	transit line segments|
+|10000 |	turn table entries|
+|400 |	matrices of type mf|
+|200 |	matrices of type mo|
+|200 |	matrices of type md|
+|9999 |	matrices of type ms|
+|99 |	functions per function class|
+|5000 |	operators per function class|
+|1650300 |	words for extra attributes|
 
 Asetuksiksi käyvät seuraavat (moduuli 1.23):
 - unit of energy: MJ
@@ -43,21 +43,21 @@ Avaa sijoittelupankki Emmen päävalikossa (Emme prompt)
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23.
  
 Skenaarioihin 21–23 voidaan kätevästi lukea tarpeelliset tiedot moduuleilla x.yy tiedostoista
-Tiedosto | Sisältö
----|---
-`d201_modes_M2016.in`	|	kulkutavat (yhteinen kaikille vaihtoehdoille)
-`d202_veh_M2016.in`	|	ajoneuvotyypit (yhteinen kaikille vaihtoehdoille)
-`d211_verkko_tunnus.in` |	verkko (yhteinen kaikille aikajaksoille)
-`d221_linjat_tunnus.in` |	linjasto (yhteinen kaikille aikajaksoille)
-`d231_verkko_tunnus.in` |	kääntymiset (yhteinen kaikille aikajaksoille)
-`d241_hinta_tunnus.in` |	mahdolliset aikajaksokohtaiset ruuhkamaksut tai tietullit
-`d241_vuorovalit_tunnus.in` |	kunkin aikajakson vuorovälit
+|Tiedosto | Sisältö|
+|---|---|
+|`d201_modes_M2016.in`	|	kulkutavat (yhteinen kaikille vaihtoehdoille)|
+|`d202_veh_M2016.in`	|	ajoneuvotyypit (yhteinen kaikille vaihtoehdoille)|
+|`d211_verkko_tunnus.in` |	verkko (yhteinen kaikille aikajaksoille)|
+|`d221_linjat_tunnus.in` |	linjasto (yhteinen kaikille aikajaksoille)|
+|`d231_verkko_tunnus.in` |	kääntymiset (yhteinen kaikille aikajaksoille)|
+|`d241_hinta_tunnus.in` |	mahdolliset aikajaksokohtaiset ruuhkamaksut tai tietullit|
+|`d241_vuorovalit_tunnus.in` |	kunkin aikajakson vuorovälit|
 
 sekä skenaarioon 19 tiedostoista
-Tiedosto | Sisältö
----|---
-`d201_modes_M2016_pyora.in` |	kulkutavat (muutettu fillari ”autokulkutavaksi”)
-`d211_verkko_tunnus.in` |	verkko (sama kuin moottoroidulla liikenteellä)
+|Tiedosto | Sisältö|
+|---|---|
+|`d201_modes_M2016_pyora.in` |	kulkutavat (muutettu fillari ”autokulkutavaksi”)|
+|`d211_verkko_tunnus.in` |	verkko (sama kuin moottoroidulla liikenteellä)|
 
 käyttäen makroa `batin_4verkkoa_M2019.mac`, jolle annetaan parametreina:
 1. vaihtoehdon tunnus (esim. 2017LM_20170131)
