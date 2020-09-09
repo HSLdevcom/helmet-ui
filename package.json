@@ -1,8 +1,8 @@
 {
   "name": "helmet-ui",
-  "productName": "Helmet 4.0 UI",
-  "version": "4.0.0",
-  "description": "Helmet 4.0 Model System UI",
+  "productName": "Helmet 4",
+  "version": "4.0.3",
+  "description": "Helmet 4 Model System UI",
   "main": "src/main/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -30,12 +30,12 @@
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.53",
-    "@electron-forge/maker-deb": "^6.0.0-beta.53",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.53",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.53",
-    "@electron-forge/maker-zip": "^6.0.0-beta.53",
-    "@electron-forge/publisher-github": "^6.0.0-beta.53",
+    "@electron-forge/cli": "6.0.0-beta.39",
+    "@electron-forge/maker-deb": "6.0.0-beta.39",
+    "@electron-forge/maker-rpm": "6.0.0-beta.39",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.39",
+    "@electron-forge/maker-zip": "6.0.0-beta.39",
+    "@electron-forge/publisher-github": "6.0.0-beta.39",
     "electron": "7.2.4"
   }
 }
