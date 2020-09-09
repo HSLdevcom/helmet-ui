@@ -1,8 +1,3 @@
----
-layout: page
-title: Koti
----
-
 # Helmet liikenne-ennustejärjestelmä
 
 [Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymä. 
@@ -33,7 +28,7 @@ Seuraavaksi sinun on määriteltävä *Emme-projekti*:
 2. Perusta uusi projekti. Määrittele, mihin kansioon haluat sen asentaa. 
    - Emme muodostaa tiedoston `projektin_nimi.emp` kansioon `projektin_nimi` ja sen alikansioon 
      `projektin_nimi\database` suuren binaaritiedoston `emmebank` sekä muitakin alikansioita ja tiedostoja.
-3. Noudata erillistä ohjetta, jossa kerrotaan mm. sopivista dimensioista (solmujen, linkkien ym. maksimimäärät). 
+3. Noudata [erillistä ohjetta](sijopankki.md), jossa kerrotaan mm. sopivista dimensioista (solmujen, linkkien ym. maksimimäärät). 
    Ne vaikuttavat em. `emmebank`-tiedoston kokoon. Aja sisään verkot ja linjastot ohjeen mukaan.
 
 ### Helmet asennus
