@@ -36,6 +36,8 @@ Muuta Emme promptissa laitetyyppejä komennolla dev. Päätteen tyypiksi on hyv�
 
 **Järjestelmä käyttää skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
 
+Verkkojen sisäänajoon tarvitset HELMET-makrot ([zip](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/HSLdevcom/helmet-model-system/tree/master/Database)). Laita ne Emme-projektin Database-kansioon (esimerkiksi `C:\HELMET40\sijoittelu\Database`).
+
 Avaa sijoittelupankki Emmen päävalikossa (Emme prompt)
 -	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac`
 -	Aja skenaariossa 20 makro `batin_tyhjaverkko.mac`, joka lukee pienen testiverkon.
