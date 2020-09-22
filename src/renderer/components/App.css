@@ -1,11 +1,25 @@
 /* Reset css */
+@font-face {
+    font-family: proxima_nova_softregular;
+    src: url(proxima_nova_softregular.woff);
+}
+
 body {
     margin: 0;
     padding: 0;
     position: relative;
-    background: #fafafa;
+    background: #ffffff;
     font-size: 0.85em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: GothamRounded, sans-serif;
+}
+
+button {
+    background-color: #ffffff;
+    color: #007AC9;
+    border: 1px solid #000000;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: inherit;
 }
 
 .App {
@@ -31,11 +45,12 @@ body {
 }
 
 .App__header {
+    background-color: #007AC9;
+    color: #ffffff;
     font-size: 2em;
     margin: 0 0 1em 0;
     padding: 0 0 5px 0;
     font-weight: normal;
-    border-bottom: 1px solid silver;
 }
 
 .App__header-version {

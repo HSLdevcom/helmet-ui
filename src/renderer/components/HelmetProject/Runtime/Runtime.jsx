@@ -59,14 +59,14 @@ const Runtime = ({
             </div>
           )
         })}
-        <div className="Runtime__scenarios-footer">
-          <button className="Runtime__add-new-scenario-btn"
-                  disabled={runningScenarioID}
-                  onClick={(e) => handleClickNewScenario()}
-          >
-            Uusi skenaario
-          </button>
-        </div>
+      </div>
+      <div className="Runtime__scenarios-footer">
+        <button className="Runtime__add-new-scenario-btn"
+                disabled={runningScenarioID}
+                onClick={(e) => handleClickNewScenario()}
+        >
+          Uusi skenaario
+        </button>
       </div>
       <hr className="Runtime__control-group-separator"/>
       <div className="Runtime__start-stop-controls">
