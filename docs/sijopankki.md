@@ -46,7 +46,7 @@ Valitse koordinaatisto:
 -	Spatial reference: Edit - ERTS89 / GK25FIN (uudemmat EMME-versiot) 
 - Koordinaatistoa voi myöhemmin muuttaa valikossa File - Project Settings – GIS.
 
-Luotuasi projektin, muuta Emme promptissa (Tools – Prompt) laitetyyppejä komennolla dev. 
+Luotuasi projektin, muuta Emme promptissa (Tools – Prompt) laitetyyppejä komennolla `dev`. 
 Päätteen tyypiksi on hyvä valita ”Emtool (non-graphic report /40l)” ja tulostimen tyypiksi (6): ”ASCII (no page / header)”.
 
 Verkkojen sisäänajoon tarvitset HELMET-makrot 
@@ -58,7 +58,7 @@ jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, käänty
 Luo Promptin (module 1.22) tai Modellerin (Tools - modeller) avulla toinen tyhjä skenaario (19 tai 20, toisen näistä loit jo aiemmin).
 
 Luo seuraavaksi testiverkot:
--	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla ~<).
+-	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla `~<makron_nimi.mac`).
 -	Aja skenaariossa 20 makro `batin_tyhjaverkko.mac`.
 -	Kopioi skenaario 20 skenaarioiksi 21, 22 ja 23 (module 1.22 tai Modeller).
 
