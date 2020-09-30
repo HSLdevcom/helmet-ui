@@ -7,7 +7,7 @@ const CostBenefitAnalysis = ({
   return (
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannus-analyysi</div>
-      <div>
+      <div className="CBA__choices">
         {/* Baseline scenario results folder */}
         <div>
           <span className="CBA__pseudo-label">Vertailuvaihtoehto</span>
@@ -27,8 +27,6 @@ const CostBenefitAnalysis = ({
                  }}
           />
         </div>
-      </div>
-      <div>
         {/* Projected scenario results folder */}
         <div>
           <span className="CBA__pseudo-label">Hankevaihtoehto</span>
@@ -48,8 +46,6 @@ const CostBenefitAnalysis = ({
                  }}
           />
         </div>
-      </div>
-      <div>
         {/* Baseline scenario 2 results folder */}
         <div>
           <span className="CBA__pseudo-label">Vertailuvaihtoehto vuosi 2 (valinnainen)</span>
@@ -69,8 +65,6 @@ const CostBenefitAnalysis = ({
                  }}
           />
         </div>
-      </div>
-      <div>
         {/* Projected scenario 2 results folder */}
         <div>
           <span className="CBA__pseudo-label">Hankevaihtoehto vuosi 2 (valinnainen)</span>
@@ -91,7 +85,7 @@ const CostBenefitAnalysis = ({
           />
         </div>
       </div>
-      <div>
+      <div className="CBA__run">
         <button onClick={(e) => {runCbaScript()}}>Aja H/K analyysi</button>
       </div>
     </div>

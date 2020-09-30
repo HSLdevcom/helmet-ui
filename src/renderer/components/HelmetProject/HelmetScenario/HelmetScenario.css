@@ -10,7 +10,13 @@
 .Scenario__close-btn {
     float: right;
     line-height: 1.25em;
-    background: #c6c6c6;
+    color: #ffffff;
+    font-size: 2em;
+    background: none;
+    border: none;
+}
+.Scenario__close-btn:hover {
+    color: #000000;
 }
 
 /* Labels */
