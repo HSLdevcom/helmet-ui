@@ -6,40 +6,42 @@
 
 .Runtime__heading {
     font-size: 1.25em;
-    margin: 0 0 1em 0;
+    margin-bottom: 15px;
     font-weight: normal;
 }
 
 .Runtime__project-path {
     font-size: 1em;
-    margin: 0 0 1em 0;
+    margin-bottom: 7px;
     font-weight: normal;
     font-style: italic;
 }
 
 .Runtime__reload-scenarios-btn {
+    margin-bottom: 12px;
 }
 
 .Runtime__scenarios {
     background-color: #EEF1F3;
-    max-height: 200px;
+    max-height: 160px;
     overflow-y: auto;
+    padding: 6px;
 }
 
 .Runtime__scenario {
-    margin: 0.25em;
+    margin: 6px;
 }
 
 .Runtime__scenario-name {
     display: inline-block;
-    margin: 0.25em;
-    line-height: 1.75em;
-    width: 7em;
+    padding: 8px 0;
+    width: 120px;
     overflow: hidden;
 }
 
 .Runtime__scenario-activate-btn {
-    line-height: 1.75em;
+    margin-right: 14px;
+    vertical-align: top;
 }
 .Runtime__scenario-activate-btn--active {
     background-color: #00985F;
@@ -48,10 +50,10 @@
 }
 
 .Runtime__scenario-open-config-btn {
-    line-height: 1.75em;
-    max-width: 15em;
+    margin-right: 14px;
     white-space: pre;
     overflow: hidden;
+    vertical-align: top;
     text-overflow: ellipsis;
 }
 .Runtime__scenario-open-config-btn--active {
@@ -61,10 +63,8 @@
 }
 
 .Runtime__scenario-delete-btn {
-    line-height: 1.75em;
     background: #F4DEEA;
-    vertical-align: super;
-    padding: 0.15em;
+    vertical-align: top;
 }
 
 .Runtime__scenarios-footer {
@@ -75,7 +75,7 @@
 }
 
 .Runtime__control-group-separator {
-    margin: 1em 0 0 0;
+    margin: 14px 0 0 0;
 }
 
 .Runtime__start-stop-controls {

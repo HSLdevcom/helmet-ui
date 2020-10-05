@@ -16,6 +16,9 @@ const Settings = ({
       <div className="Settings__overlay">{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
+        <button className="Settings__dialog-controls" onClick={(e) => closeSettings()}>
+            X
+        </button>
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">EMME Python (v2.7)</span>
@@ -91,11 +94,6 @@ const Settings = ({
                  directory=""
                  onChange={(e) => setResultsPath(e.target.files[0].path)}
           />
-        </div>
-        <div className="Settings__dialog-controls">
-          <button onClick={(e) => closeSettings()}>
-            Sulje
-          </button>
         </div>
       </div>
 

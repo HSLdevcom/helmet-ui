@@ -5,6 +5,7 @@ const homedir = require('os').homedir();
 const {ipcRenderer} = require('electron');
 const {execSync} = require('child_process');
 const path = require('path');
+
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
@@ -19,7 +20,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [resultsPath, setResultsPath] = useState(undefined); // folder path to Results directory
   const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
   const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState(undefined); // which version is being downloaded
-  
+
   // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
   const globalSettingsStore = useRef(new Store());
 
@@ -172,7 +173,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <span className="App__header-title">Helmet 4.0</span>
         &nbsp;
         <span className="App__header-version">{`UI v${helmetUIVersion}`}</span>
-        <span className="App__header-logo"></span>
       </div>
       <div>
         <button className="App__open-settings-btn"
@@ -183,9 +183,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           Projektin asetukset
         </button>
       </div>
+
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}
       <div className="App__body">
-
         <HelmetProject
           emmePythonPath={emmePythonPath}
           helmetScriptsPath={helmetScriptsPath}

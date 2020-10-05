@@ -1,6 +1,8 @@
 .Scenario {
     padding: 1em 0.75em 0 0.75em;
-    background-color: #007AC9;
+    margin: 50px 150px 10px 10px;
+    background-color: #EEF1F3;
+    border-radius: 3px;
 }
 
 .Scenario__section {
@@ -9,14 +11,12 @@
 
 .Scenario__close-btn {
     float: right;
-    line-height: 1.25em;
-    color: #ffffff;
-    font-size: 2em;
-    background: none;
-    border: none;
-}
-.Scenario__close-btn:hover {
-    color: #000000;
+    min-width: 0px;
+    width: auto;
+    heigth: auto;
+    color: #DC0451;
+    border-radius: 3px;
+    font-size: 15px;
 }
 
 /* Labels */
@@ -33,16 +33,13 @@
 
 /* Inputs */
 .Scenario__name-label {
-    display: table;
+    display: block;
     margin: 0 auto;
     line-height: 1.75em;
 }
 .Scenario__name {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    display: table;
-    margin: 0 auto;
+    display: block;
+    width: 14em;
     line-height: 1.75em;
 }
 .Scenario__name-error {
@@ -58,9 +55,10 @@
     display: block;
     width: 14em;
     line-height: 1.75em;
-    padding: 0 0.25em;
-    background: #f5f5f5;
+    background-color: #ffffff;
     border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    padding: 0 0.25em;
     cursor: pointer;
     /* Overflowing file/dir names show as "First part..." */
     white-space: nowrap;
