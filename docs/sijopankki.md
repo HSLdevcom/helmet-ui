@@ -61,6 +61,8 @@ Luo seuraavaksi testiverkot:
 -	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla `~<makron_nimi.mac`).
 -	Aja skenaariossa 20 makro `batin_tyhjaverkko.mac`.
 -	Kopioi skenaario 20 skenaarioiksi 21, 22 ja 23 (module 1.22 tai Modeller).
+-   Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
+  joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
 Lue makrolla 4verkkoa_HM40.mac sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
 1. vaihtoehdon tunnus (esim. 2017LM_20170131)
