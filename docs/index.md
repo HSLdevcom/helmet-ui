@@ -48,6 +48,8 @@ Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinaine
 kansiossa `AppData\Roaming`. Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
 on taakse päin yhteensopiva vanhojen asetusten kanssa.
 
+:warning: Jos käyttäjällä jostain syystä ei ole pääsyä `AppData`-kansioon, vaihtoehto on sovelluksen lataaminen zip-tiedostona ja purku haluamaan kansioon.
+
 Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
 [Helmet 4.0 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
 uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
@@ -83,6 +85,7 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittelyt:
 
 1.	Skenaarion tai ajon nimi
+    - *Skenaario* ei tässä viita Emme-skenaarioon, vaan tässä annetaan nimi verkkokuvaus- ja maankäyttötietoyhdistelmälle joka menee yhteen malliajoon.
 2.	Emmen project-tiedosto (.emp)
 3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
    kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
