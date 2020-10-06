@@ -4,6 +4,7 @@ const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
  * Electron Forge config.
  *
  * https://www.electronforge.io/config/makers/squirrel.windows
+ * https://www.electronforge.io/config/makers/zip
  * https://www.electronforge.io/config/publishers/github
  */
 module.exports = {
@@ -20,7 +21,13 @@ module.exports = {
                 iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
                 // loadingGif: '',
                 // setupIcon: 'helmet.ico',
+                // TODO Move to base64
+                certificateFile: "helmet_cs4.pfx",
+                certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD,
             }
+        },
+        {
+            name: "@electron-forge/maker-zip",
         },
         {
             name: "@electron-forge/maker-deb",
