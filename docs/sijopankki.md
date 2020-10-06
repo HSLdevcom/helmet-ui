@@ -112,9 +112,4 @@ Jos skenaarion muodostaminen epäonnistuu esim. tunnuksessa tai alikansion nimes
 poista skenaario ja perusta se uudelleen moduulilla 1.22 sekä alusta se makrolla 
 `batin_tyhjaverkko.mac`. Aja sitten uudelleen makro `4verkkoa_HM40.mac` oikeilla parametreilla.
 
-Jatka sijoittelupankissa Emmen päävalikossa (Emme prompt):
--	Lue sisään partitiot tiedostosta `d301_sijoittelupankki_M2019.in` (module 3.01 -> 1= input/modify zone groups (using batch entry)).  
--	Lue sisään funktiot tiedostosta `d411_pituusriippuvaiset_HM30.in` (module 4.11) 
-(ei välttämätöntä, koska luetaan sisään myös ennusteprosessin aikana).
-
 Muut tarvittavat lähtötiedot ajetaan automaattisesti sisään ennusteprosessin aikana.
