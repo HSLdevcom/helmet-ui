@@ -13,7 +13,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                 closeScenario();
               }}
       >
-        x
+        X
       </button>
 
       {/* Name field (updates the filename live as well) */}
@@ -58,6 +58,8 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                htmlFor="first-scenario-id">Ensimm&auml;isen EMME-skenaarion numero:</label>
         <input id="first-scenario-id"
                type="number"
+               min="1"
+               max="999"
                step="1"
                value={scenario.first_scenario_id}
                onChange={(e) => {
@@ -116,7 +118,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                htmlFor="iterations">Iteraatiot:</label>
         <input id="iterations"
                type="number"
-               min="1"
+               min="0"
                max="99"
                step="1"
                value={scenario.iterations}

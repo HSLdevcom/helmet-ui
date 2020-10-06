@@ -4,6 +4,7 @@ const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
  * Electron Forge config.
  *
  * https://www.electronforge.io/config/makers/squirrel.windows
+ * https://www.electronforge.io/config/makers/zip
  * https://www.electronforge.io/config/publishers/github
  */
 module.exports = {
@@ -21,6 +22,9 @@ module.exports = {
                 // loadingGif: '',
                 // setupIcon: 'helmet.ico',
             }
+        },
+        {
+            name: "@electron-forge/maker-zip",
         },
         {
             name: "@electron-forge/maker-deb",

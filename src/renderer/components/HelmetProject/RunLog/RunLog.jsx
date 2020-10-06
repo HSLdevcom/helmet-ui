@@ -15,7 +15,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
                 disabled={isScenarioRunning}
                 onClick={(e) => closeRunLog()}
         >
-          Sulje
+          X
         </button>
 
         <div className="Log__header-controls">

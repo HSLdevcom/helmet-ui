@@ -25,7 +25,7 @@
     position: absolute;
     left: 16%;
     top: 10%;
-    width: 66%;
+    width: 400px;
     padding: 1.5em;
     margin-top: 5%;
     background-color: #fafafa;
@@ -34,10 +34,10 @@
 
 .Settings__dialog-heading {
     font-size: 1.5em;
-    margin: 0 0 1em 0;
+    margin: 0 50px 1em 0;
     padding: 0 0 5px 0;
     font-weight: normal;
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid black;
 }
 
 .Settings__dialog-input-group {
@@ -54,6 +54,7 @@
     width: 20em;
     line-height: 1.75em;
     padding: 0 0.25em;
+    margin-bottom: 10px;
     background: #f5f5f5;
     border: 1px solid #c0c0c0;
     cursor: pointer;
@@ -68,11 +69,15 @@
 }
 
 .Settings__dialog-controls {
-    margin: 0.75em 0 0 0;
-    padding: 0;
+    float: right;
+    min-width: 0px;
+    width: auto;
+    heigth: auto;
+    color: #DC0451;
+    border-radius: 3px;
+    font-size: 15px;
 }
 
 .Settings__beside-input-btn {
-    display: inline-block;
-    margin-left: 4px;
+    margin-bottom: 10px;
 }

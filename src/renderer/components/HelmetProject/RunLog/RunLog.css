@@ -1,4 +1,8 @@
 .Log {
+    padding: 1em 0.75em 0 0.75em;
+    margin: 50px 10px 10px 10px;
+    background-color: #EEF1F3;
+    border-radius: 3px;
 }
 
 .Log__header {
@@ -6,8 +10,12 @@
 }
 
 .Log__close-btn {
-    line-height: 1.25em;
-    background: #c6c6c6;
+    min-width: 0px;
+    width: auto;
+    heigth: auto;
+    color: #DC0451;
+    border-radius: 3px;
+    font-size: 15px;
 }
 
 .Log__header-controls {
@@ -19,23 +27,25 @@
     margin: 4px;
 }
 .Log__header-control--on {
-    background: cadetblue;
+    background-color: #007AC9;
+    color: #ffffff;
+    border: none;
 }
 
 .Log__entries {
     max-height: 33em;
     overflow-y: scroll;
-    white-space: pre;
     overflow-x: scroll;
+    white-space: pre;
 }
 
 .Log__entry {
+    color: #007AC9
 }
 
 .Log__entry--ui {
-    color: navy;
 }
 
 .Log__entry--error {
-    color: red;
+    color: #DC0451;
 }

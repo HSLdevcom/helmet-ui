@@ -197,8 +197,8 @@ const HelmetProject = ({
         alert(`Ennustedata-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
         return;
       }
-      if (iterations < 1 || iterations > 99) {
-        alert(`Aseta iteraatiot väliltä 1 - 99 skenaariossa "${scenario.name}"`);
+      if (iterations < 0 || iterations > 99) {
+        alert(`Aseta iteraatiot väliltä 0 - 99 skenaariossa "${scenario.name}"`);
         return;
       }
     }
@@ -345,7 +345,7 @@ const HelmetProject = ({
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
         />
-        <hr/>
+        <hr className="HelmetProject__control-group-separator"/>
         <CostBenefitAnalysis
           cbaOptions={cbaOptions}
           setCbaOptions={setCbaOptions}
