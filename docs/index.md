@@ -59,6 +59,8 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 
 ## Asetukset
 
+:warning: **Kansiopoluissa ei saa olla ääkkösiä!**
+
 - suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
   - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
@@ -90,7 +92,9 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
       Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
 5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua 
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
-6.	Suoritettavien iteraatiokierrosten määrä
+6.	Suoritettavien iteraatiokierrosten määrä (yleensä 10)
+    - Iteraatiomäärä 0 tarkoittaa että tehdään heti loppusijoittelu
+      (vaatii että kysyntämatriisit aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
 
 ## Höyty-kustannusanalyysin (hankearvioinnin) määrittely
 
