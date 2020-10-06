@@ -37,18 +37,19 @@ Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](htt
 josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
 missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
-:warning: **Tällä hetkellä versioiden jakelupaketteja ei ole allekirjoitettu, joten Windows huomauttaa siitä ja estää asennuksen suorituksen. 
+:warning: **Tällä hetkellä sovellus on niin harvoin asennettu, että Windows huomauttaa siitä ja estää asennuksen suorituksen. 
 Tämä voidaan ohittaa kahdella tavalla:**
 - Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
-- Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
+- Klikkaa ladattua .exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
 
 ![Unblock](unblock.png)
  
 Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinainen sovellus on kansiossa `AppData\Local`, ja sen asetukset 
-kansiossa `AppData\Roaming`. Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
-on taakse päin yhteensopiva vanhojen asetusten kanssa.
+kansiossa `AppData\Roaming`. 
+Jos käyttäjällä jostain syystä ei ole pääsyä `AppData`-kansioon, vaihtoehto on sovelluksen lataaminen zip-tiedostona ja purku haluamaan kansioon.
 
-:warning: Jos käyttäjällä jostain syystä ei ole pääsyä `AppData`-kansioon, vaihtoehto on sovelluksen lataaminen zip-tiedostona ja purku haluamaan kansioon.
+Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
+on taakse päin yhteensopiva vanhojen asetusten kanssa.
 
 Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
 [Helmet 4.0 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
