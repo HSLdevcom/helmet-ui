@@ -1,11 +1,47 @@
-/* Reset css */
+@font-face {
+    font-family: gotham_rounded_medium;
+    src: url(GothamRnd-Medium.otf);
+}
+
 body {
     margin: 0;
     padding: 0;
     position: relative;
-    background: #fafafa;
-    font-size: 0.85em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: #ffffff;
+    font-size: 8pt;
+    font-family: gotham_rounded_medium, sans-serif;
+}
+
+button {
+    background-color: #ffffff;
+    color: #007AC9;
+    border: 1px solid #888888;
+    min-width: 120px;
+    height: 30px;
+    padding: 0 20px;
+    border-radius: 37px;
+    outline: none;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+button:hover {
+    color: #000000;
+}
+
+input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #ffffff;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    padding: 0 0.25em;
+}
+
+hr {
+    border-top: 1px solid black;
+    border-bottom: none;
 }
 
 .App {
@@ -27,15 +63,26 @@ body {
 }
 
 .App__open-settings-btn {
-    float: right;
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 .App__header {
-    font-size: 2em;
-    margin: 0 0 1em 0;
-    padding: 0 0 5px 0;
+    height: 50px;
+    background-color: #007AC9;
+    background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
+    background-size: auto, 102px 41px;
+    background-position: 10px, 97%;
+    background-repeat: no-repeat, no-repeat;
+    color: #ffffff;
+    font-size: 20pt;
+    padding: 30px 0 0 75px;
     font-weight: normal;
-    border-bottom: 1px solid silver;
+}
+
+.App__header-title {
 }
 
 .App__header-version {

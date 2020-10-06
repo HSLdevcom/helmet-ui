@@ -170,9 +170,11 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
       {/* UI title bar, app-version, etc. */}
       <div className="App__header">
-        Helmet 4.0
+        <span className="App__header-title">Helmet 4.0</span>
         &nbsp;
         <span className="App__header-version">{`UI v${helmetUIVersion}`}</span>
+      </div>
+      <div>
         <button className="App__open-settings-btn"
                 style={{display: isSettingsOpen ? "none" : "block"}}
                 onClick={(e) => setSettingsOpen(true)}
