@@ -27,7 +27,7 @@ Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot
 | 9 999     | matrices of type ms                                                 |
 | 99        | functions per function class                                        |
 | 5 000     | operators per function class                                        |
-| 2 920 000 | words for extra attributes                                          |
+| 3 000 000 | words for extra attributes                                          |
 
 Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös Promptissa moduulilla 1.23):
 - unit of energy: MJ
