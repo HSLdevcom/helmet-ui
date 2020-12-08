@@ -21,3 +21,5 @@ Tarjontamallin lähtötietoja on kuvattu tarkemmin täällä: **linkki HSL_lahto
 ## Muut muutokset
 
 Vuosipäivityksen yhteydessä päivitetään tarvittaessa myös mallimakrot (**linkki jonnekin missä kuvattu makroja**).
+
+**Onko tarvetta määritellä myös kysyntämuutosten dokumentointia (vrt. muokattavat tiedot)?**
