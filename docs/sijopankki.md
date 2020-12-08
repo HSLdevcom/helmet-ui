@@ -39,7 +39,7 @@ Perusta tyhjä skenaario kohdassa _First scenario_ (tarvitset alussa skenaariot 
 -	Number: esim. 19 
 -	Title: esim. pp
 
-**Huom: järjestelmä käyttää skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
+**Huom: järjestelmä käyttää skenaarioita 19 (pp), 20 (vrk), 21 (aht), 22 (pt) ja 23 (iht).**
 
 Valitse koordinaatisto:
 -	Spatial reference: File - Load: National Grids -> Finland -> ETRS 1989 GK25FIN.prj **TAI**
