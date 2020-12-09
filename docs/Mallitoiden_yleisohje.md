@@ -4,7 +4,8 @@ Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä!
 
 ## Yleiskuvaus
 
-Yleistietoa mallijärjestelmästä löydät täältä: **linkki mallin_yleiskuvaus.md**
+Yleistietoa mallijärjestelmästä löydät täältä: (https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallin_yleiskuvaus.md)
+
 Mallin käyttämiä lähtötietoja on kuvattu yleisellä tasolla **täällä** ja tarkemmat tiedot löytyvät **täältä**
 
 ### Tiedostorakenteet
