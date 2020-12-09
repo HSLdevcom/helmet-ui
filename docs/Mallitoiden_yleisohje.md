@@ -31,6 +31,8 @@ Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttö
 
 Mallin lataamis- ja käyttöohjeita löydät täältä: **linkki index**
 
+Tarkistus- ja muiden makrojen ohjeet löydät **täältä**
+
 ## Työn aikana
 
 ### Ohjeet lähtötietojen muokkaamiseen
