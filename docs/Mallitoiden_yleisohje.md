@@ -23,6 +23,8 @@ Mallin käyttämiä lähtötietoja on kuvattu yleisellä tasolla **täällä** j
 
 ### Mallin lähtötietoaineistojen jakelu
 
+Pohjaverkot työhön saat HSL:stä. Pohjaverkkona toimii yleensä HSL:n tuorein verkkokuvaus, mutta jos niissä on paljon MAL-työn jälkeen tehtyjä muutoksia, herkkyystarkasteluja tehdään myös edellisen MAL-kierroksen virallisissa verkoissa. HSL:n tilaamissa töissä HSL tekee aina nollavaihtoehdon. Töiden aloituksessa on huomioitava, että nollavaihtoehdon laatiminen vie pari viikkoa. **Onko tämä edelleen ajankohtainen??**
+
 HSL:n ylläpitämiä tarjontamallin lähtötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
 
 Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
