@@ -80,6 +80,8 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 
 https://hslfi.sharepoint.com/sites/ext-hlj-toimikunta/Jaetut%20asiakirjat/Forms/AllItems1.aspx?originalPath=aHR0cHM6Ly9oc2xmaS5zaGFyZXBvaW50LmNvbS86Zjovcy9leHQtaGxqLXRvaW1pa3VudGEvRWstTFBqdW1NekZIaU1BTElpYjNHMEVCVUZyWm95eFJCSHkyTjN6ZGJJQmdvUT9ydGltZT1MdXBCZjFDYjJFZw&id=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus%2FLiikenteen%20ennustaminen%2Epdf&parent=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus
 
+**Tähän yleistä neliporrasmalleista**
+
 Mallijärjestelmää kuvataan tarkemmin raportissa: **tähän linkki malliraporttiin**
 
 ### Helmet 4 uusia ominaisuuksia
