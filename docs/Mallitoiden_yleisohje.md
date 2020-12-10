@@ -1,6 +1,6 @@
 # Ohje mallitöihin
 
-Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä!
+Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä! On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla, jotta saadaan mahdollisimman luotettavia tuloksia, ja aineistoja voidaan hyödyntää myös muissa projekteissa.
 
 ## Yleiskuvaus
 
