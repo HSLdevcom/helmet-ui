@@ -1,6 +1,10 @@
 # Ohje mallitöihin
 
-Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä! On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla, jotta saadaan mahdollisimman luotettavia tuloksia, ja aineistoja voidaan hyödyntää myös muissa projekteissa.
+Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä! 
+
+On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. Näin tomien saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. Myös työn huolellinen dokumentointi on tärkeää, sillä se auttaa aineistojen tulkinnassa ja myöhemmässä hyödyntämisessä. 
+
+Noudatathan HSL:n tilaamissa töissä näitä käyttö- ja dokumentointiohjeita. HSL:n yhteyshenkilöiltä saat tarvittaessa apua pulmatilanteisiin.
 
 ## Yleiskuvaus
 
@@ -8,9 +12,13 @@ Yleistietoa mallijärjestelmästä löydät täältä: (https://github.com/eevav
 
 Mallin käyttämiä lähtötietoja on kuvattu yleisellä tasolla **täällä** ja tarkemmat tiedot löytyvät **täältä**
 
+Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
+
+Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita mallissa.
+
 ### Tiedostorakenteet
 
-**Tähän tekstiä: yleiskuvaus mitä tarvitaan, miten aineistot rakentuvat**
+**Tähän tekstiä: yleiskuvaus mitä tarvitaan, miten aineistot rakentuvat (millaisia pankkeja kannattaa luoda (kaikki samaan vai joka skenaariolle oma pankki) ja miten käsitellään lähtö- ja tulostiedostoja)**
 
 ### Yleistä lähtötietojen muokkauksesta
 
