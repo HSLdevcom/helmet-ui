@@ -8,11 +8,11 @@ Noudatathan HSL:n tilaamissa töissä näitä käyttö- ja dokumentointiohjeita.
 
 ## Yleiskuvaus
 
-Yleistietoa mallijärjestelmästä löydät täältä: (https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallin_yleiskuvaus.md)
+Yleistietoa mallijärjestelmästä löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallin_yleiskuvaus.md
 
-Mallin käyttämiä lähtötietoja on kuvattu yleisellä tasolla **täällä** ja tarkemmat tiedot löytyvät **täältä**
+Mallin käyttämiä lähtötietoja on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
 
-Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
+Mallin käyttämiä parametreja ja muita oletuksia on kuvattu **täällä (puuttuu)**. Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
 
 Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita mallissa.
 
@@ -20,13 +20,9 @@ Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita m
 
 **Tähän tekstiä: yleiskuvaus mitä tarvitaan, miten aineistot rakentuvat (millaisia pankkeja kannattaa luoda (kaikki samaan vai joka skenaariolle oma pankki) ja miten käsitellään lähtö- ja tulostiedostoja)**
 
-### Yleistä lähtötietojen muokkauksesta
-
-**Täydennettävä (yleiskuvaus ja keskeisimmät nostot, viitaus tarkempiin ohjeisiin)**
-
 ### Dokumentointi
 
-**Täydennettävä (yleiskuvaus ja keskeisimmät nostot, viitaus tarkempiin ohjeisiin)**
+HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Tarkemmat ohjeet HSL-töiden dokumentoinnista löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL-toiden_dokumentointi.md
 
 ## Työn aluksi
 
@@ -38,19 +34,25 @@ HSL:n ylläpitämiä tarjontamallin lähtötietoja luovutetaan ainoastaan täytt
 
 Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
+**Täydennä tähän kuvaus siitä, millaisia verkkoja missäkin työssä käytetään. Miten huolehditaan eri tarkastelujen vertailtavuudesta, jos päivityksiä tehdään pari kertaa vuodessa?**
+
 ### Ohjeet mallin lataamiseen ja käyttöön
 
-Mallin lataamis- ja käyttöohjeita löydät täältä: **linkki index**
+Mallin lataamis- ja käyttöohjeita löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/index.md
 
-Tarkistus- ja muiden makrojen ohjeet löydät **täältä**
+Tarkistus- ja muiden makrojen ohjeet löydät **täältä (puuttuu)**
 
 ## Työn aikana
 
 ### Ohjeet lähtötietojen muokkaamiseen
 
-Kysyntämallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä**
+HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
 
-Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä**
+Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja.
+
+Kysyntämallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä (puuttuu)**
+
+Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä (puuttuu)**
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
