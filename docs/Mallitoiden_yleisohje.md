@@ -12,7 +12,8 @@ Yleistietoa mallijärjestelmästä löydät täältä: https://github.com/eevave
 
 Mallin käyttämiä lähtötietoja on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
 
-Mallin käyttämiä parametreja ja muita oletuksia on kuvattu **täällä (puuttuu)**. Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
+Mallin käyttämiä parametreja ja muita oletuksia on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
+Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
 
 Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita mallissa.
 
@@ -40,7 +41,7 @@ Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttö
 
 Mallin lataamis- ja käyttöohjeita löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/index.md
 
-Tarkistus- ja muiden makrojen ohjeet löydät **täältä (puuttuu)**
+Tarkistus- ja muiden makrojen ohjeet löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
 
 ## Työn aikana
 
@@ -50,9 +51,9 @@ HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleisti
 
 Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja.
 
-Kysyntämallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä (puuttuu)**
+Kysyntämallin lähtötiedoista ja niiden muokkaamisesta lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/kysyntamallin_lahtotiedot.md
 
-Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **täällä (puuttuu)**
+Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/tarjontamallin_lahtotiedot.md
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
@@ -62,10 +63,8 @@ Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja **tääll�
 
 **Täydennettävä mm. mitä tietoja tallennetaan, minne tallentuu, keskeiset mittarit**
 
-### Dokumentointi
-
-**Täydennettävä**
-
 ## Työn lopuksi
 
 **Täydennettävä mm. mitä tiedostoja toimitetaan HSL:ään, missä muodossa**
+
+HSL:n tilaamissa töissä dokumentointi tämän ohjeen mukaan: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL-toiden_dokumentointi.md
