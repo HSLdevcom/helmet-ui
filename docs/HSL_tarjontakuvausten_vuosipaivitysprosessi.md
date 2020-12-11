@@ -14,9 +14,9 @@ Verkkojen vuosipäivityksiä laaditaan vuosittain kuvaamaan kunkin syksyn liiken
 
 Mervi Vatanen ylläpitää muutostarpeista korjauslistaa **linkki**. Ilmoitathan Merville, mikäli havaitset tarjontakuvauksissa puutteita tai korjaustarpeita.
 
-Korjauksen jälkeen tiedot päivitetään Tarjonnan kuvaus -dokumenttiin **linkki**. Mervi ylläpitää myös tätä dokumenttia.
+Muutosten jälkeen tiedot päivitetään Tarjonnan kuvaus -dokumenttiin **linkki**. Mervi ylläpitää myös tätä dokumenttia.
 
-Tarjontamallin lähtötietoja on kuvattu tarkemmin täällä: **linkki HSL_lahtotiedot.md**
+Tarjontamallin lähtötietoja on kuvattu tarkemmin täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
 
 ## Muut muutokset
 
