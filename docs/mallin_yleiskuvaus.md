@@ -4,7 +4,7 @@ Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 
 
 HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään. Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia. HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
-Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”. Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita. Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista täällä: **linkki uudelle erilliselle sivulle**
+Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”. Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita. Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista **täällä (puuttuu)**.
 
 ## Mallintamisen taustoja
 
@@ -34,7 +34,7 @@ Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
 
 ### Mallin lähtötiedot
 
-Lähtötietojen määrittäminen on jo itsessään ennustamista. HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Lisätietoja HSL:n tarjoamista aineistoista täällä (**linkki uudelle erilliselle sivulle**).
+Lähtötietojen määrittäminen on jo itsessään ennustamista. HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Lisätietoja HSL:n tarjoamista aineistoista täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
 
 Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 
@@ -105,3 +105,8 @@ Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin v
   * Sekaliikenne (oletus)
 * Pyöräilyn yhteydet vaikuttavat reitinvalintoihin
 
+## Tietopyynnöt
+
+**Tähän kuvaus siitä, mitä aineistoja käytetään erilaisiin tietopyyntöihin vastatessa.** 
+
+**Tarpeen määritellä, mitä versioita hyödynnetään erilaisissa tietopyynnöissä koskien mallituloksia. Esim. Mikä on HSL:n virallinen näkemys länsimetrosta ym? Tarvitaanko tähän prosessi (esim. että ei kysytä konsulteilta ennusteita vaan että HSL:ssä olisi keskitetysti kaikki tarvittavat pankit ja me voisimme sieltä poimia pyydetyt tiedot, jolloin säilyisi talossa myös tieto siitä, mitä kaikkia ennusteita on olemassa)**
