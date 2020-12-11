@@ -61,7 +61,9 @@ Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja täällä:
 
 ### Tulostiedot
 
-**Täydennettävä mm. mitä tietoja tallennetaan, minne tallentuu, keskeiset mittarit**
+Tulostiedostoista ja niiden analysoinnista lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/tulokset.md
+
+Esimerkkejä mallituloksista tehtävistä visualisoinneista täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/esimerkkeja_tuloksista.md
 
 ## Työn lopuksi
 
