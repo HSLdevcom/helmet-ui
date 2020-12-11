@@ -25,7 +25,7 @@ Kysyntämallin lähtötiedot ovat ladattavissa täältä: **linkki ohjeeseen**
 
 HSL:n virallisia tarjontamallin lähtötietoja ylläpitävät Mervi Vatanen (2030 ve0 ja aiempien vuosien tarkasteluskenaariot) ja Jens West (2030 suunnitelmavaihtoehto ja myöhempien vuosien tarkasteluskenaariot). 
 
-Vuosittain päivitetään tuore nykytilan kuvaus sekä mahdolliset muutokset tulevien vuosien kuvauksiin HSL:n ja kuntien tuottamiin suunnitelmiin perustuen. Uusi vuosipäivitys julkaistaan syksyisin. Lisätietoja vuosipäivitysprosessista täällä: **linkki uudelle sivulle**. 
+Vuosittain päivitetään tuore nykytilan kuvaus sekä mahdolliset muutokset tulevien vuosien kuvauksiin HSL:n ja kuntien tuottamiin suunnitelmiin perustuen. Uusi vuosipäivitys julkaistaan syksyisin. Lisätietoja vuosipäivitysprosessista täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_tarjontakuvausten_vuosipaivitysprosessi.md 
 
 Laajempia muutoksia tehdään MAL-suunnittelun yhteydessä n. neljän vuoden välein, ja tässä pohjana käytetään viimeisimmän vuosipäivityksen mukaisia verkkoja.
 
