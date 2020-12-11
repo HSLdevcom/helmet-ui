@@ -110,3 +110,7 @@ Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin v
 **Tähän kuvaus siitä, mitä aineistoja käytetään erilaisiin tietopyyntöihin vastatessa.** 
 
 **Tarpeen määritellä, mitä versioita hyödynnetään erilaisissa tietopyynnöissä koskien mallituloksia. Esim. Mikä on HSL:n virallinen näkemys länsimetrosta ym? Tarvitaanko tähän prosessi (esim. että ei kysytä konsulteilta ennusteita vaan että HSL:ssä olisi keskitetysti kaikki tarvittavat pankit ja me voisimme sieltä poimia pyydetyt tiedot, jolloin säilyisi talossa myös tieto siitä, mitä kaikkia ennusteita on olemassa)**
+
+## Mallin käyttöohjeet
+
+Lisätietoa mallin käyttämisestä löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/Mallitoiden_yleisohje.md
