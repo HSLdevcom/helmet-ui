@@ -20,6 +20,6 @@ Tarjontamallin lähtötietoja on kuvattu tarkemmin täällä: https://github.com
 
 ## Muut muutokset
 
-Vuosipäivityksen yhteydessä päivitetään tarvittaessa myös mallimakrot (**linkki jonnekin missä kuvattu makroja**).
+Vuosipäivityksen yhteydessä päivitetään tarvittaessa myös mallimakrot. Makroja ja parametreja on kuvattu tarkemmin täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
 
 **Onko tarvetta määritellä myös kysyntämuutosten dokumentointia (vrt. muokattavat tiedot)?**
