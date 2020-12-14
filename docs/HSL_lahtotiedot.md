@@ -50,7 +50,7 @@ Vuosipäivitysten yhteydessä päivitettyjä tarjontamallin lähtötietoja on se
   * 2020:
     * 2020 joukkoliikenneverkosta on erikseen versiot normaaleilla joukkoliikenteen vuoroväleillä ja koronan myötä supistetulla tarjonnalla
 *	Sellaisten välivuosien verkot, jolloin tapahtuu olennaisia muutoksia liikennejärjestelmässä:
-  *	2023 (Kivenlahden metro, Raide-Jokeri, uusia runkolinjoja)
+    *	2023 (Kivenlahden metro, Raide-Jokeri, uusia runkolinjoja)
 * MAL2019-suunnitelman tulevaisuusverkot, joihin on viety vuosittain tuorein tieto liikennejärjestelmän kehityksestä (**päivitetäänhän näitä??**):
   * 2030: 
     * vaihtoehto 0
