@@ -8,22 +8,28 @@ Noudatathan HSL:n tilaamissa töissä näitä käyttö- ja dokumentointiohjeita.
 
 ## Yleiskuvaus
 
-Yleistietoa mallijärjestelmästä löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallin_yleiskuvaus.md
+Yleistietoa mallijärjestelmästä löydät [täältä](mallin_yleiskuvaus.md).
 
-Mallin käyttämiä lähtötietoja on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
+Mallin käyttämiä lähtötietoja on kuvattu [täällä](HSL_lahtotiedot.md).
 
 Mallin käyttämiä parametreja ja muita oletuksia on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
-Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia mallimakroja ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
+Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia skriptejä ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
 
 Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita mallissa.
 
 ### Tiedostorakenteet
 
-**Tähän tekstiä: yleiskuvaus mitä tarvitaan, miten aineistot rakentuvat (millaisia pankkeja kannattaa luoda (kaikki samaan vai joka skenaariolle oma pankki) ja miten käsitellään lähtö- ja tulostiedostoja)**
+Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-pankki, johon kootaan eri tarkasteluskenaariot (esim. eri linjastovaihtoehdot). Emmeen luodaan kutakin tarkasteluskenaariota kohden viisi eri Emme-skenaariota (pyöräliikenne, vuorokausiliikenne, aamuhuipputunti, päivätunti ja iltahuipputunti).
+
+HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-paketteina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Lähtötiedot voi ladata sisään Emmen skenaarioihin erillisen makron avulla. 
+
+Helmet-järjestelmä tuottaa valmiiksi erilaisia tulosteita malliajojen tuloksista. Nämä tallentuvat oletuksena **minne?**. Emmellä ja muilla sovelluksilla voidaan tuottaa lisäksi erilaisia analyysejä.
+
+Alempana on kuvattu tarkemmin lähtötietoja, niiden muokkaamista sekä tulosten käsittelyä.
 
 ### Dokumentointi
 
-HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Tarkemmat ohjeet HSL-töiden dokumentoinnista löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL-toiden_dokumentointi.md
+HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Tarkemmat ohjeet HSL-töiden dokumentoinnista löydät [täältä](HSL-toiden_dokumentointi.md).
 
 ## Työn aluksi
 
@@ -31,11 +37,9 @@ HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida malliteknis
 
 Pohjaverkot työhön saat HSL:stä. Pohjaverkkona toimii yleensä HSL:n tuorein verkkokuvaus, mutta jos niissä on paljon MAL-työn jälkeen tehtyjä muutoksia, herkkyystarkasteluja tehdään myös edellisen MAL-kierroksen virallisissa verkoissa. HSL:n tilaamissa töissä HSL tekee aina nollavaihtoehdon. Töiden aloituksessa on huomioitava, että nollavaihtoehdon laatiminen vie pari viikkoa. **Onko tämä edelleen ajankohtainen??**
 
-HSL:n ylläpitämiä tarjontamallin lähtötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
+HSL:n ylläpitämiä ennuskenskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
 
 Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
-
-**Täydennä tähän kuvaus siitä, millaisia verkkoja missäkin työssä käytetään. Miten huolehditaan eri tarkastelujen vertailtavuudesta, jos päivityksiä tehdään pari kertaa vuodessa?**
 
 ### Ohjeet mallin lataamiseen ja käyttöön
 
