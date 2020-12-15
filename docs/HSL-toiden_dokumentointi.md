@@ -2,7 +2,7 @@
 
 Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. Ohjeita voi toki soveltaa myös muissa projekteissa.
 
-HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot.
+HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Alla on kuvattu tarkemmin mallitöissä tuotettavia ja HSL:lle luovutettavia aineistoja. Lisäohjeita saat tarvittaessa HSL:n yhteyshenkilöiltä.
 
 ## Luovutettavat aineistot
 
@@ -10,8 +10,9 @@ Työn päättyessä toimita HSL:n yhteyshenkilölle tässä luetellut aineistot.
 
 ### Mallitarkastelujen yleiskuvaus
 
-Kirjaa tehdyistä tarkasteluista ja verkkomuutoksista yleiskuvaus taulukon Mallitarkastelujen pikaseloste (liite D) mukaisesti. **mikä tämä on??**
-Kirjaa vastaavat asiat myös työn raporttiin. Raportissa on kuvattava lyhyesti myös mm. poikkeavien makrojen ja parametrien käyttö. 
+Kirjaa tehdyistä tarkasteluista ja verkkomuutoksista yleiskuvaus omaan dokumenttiinsa ja kirjaa vastaavat asiat myös työn raporttiin. Esimerkkinä voi käyttää lähtöaineistojen yhteydessä olevia yleiskuvauksia.
+
+Kuvaa lyhyesti myös mm. mahdollisten poikkeavien skriptien ja parametrien käyttö. 
 
 ### Mallitekninen muistio
 
@@ -20,7 +21,6 @@ Työn mallitekniseen toteutukseen liittyvät huomiot kirjataan mallitekniseen mu
 Merkitse myös muutosmakro (ems-tiedosto), jolla muutos on toistettavissa ja josta käyvät ilmi käytetyt lukuarvot, tai lähtötietotiedosto, johon muutokset on viety.
 
 ### Tallennettavat muutos- ja lähtötietotiedostot 
-**tätä listaa olisi hyvä yhtenäistää niin että myös muista muutoksista on selkeät kuvaukset, ei vain verkkomuutoksista??**
 
 * Tallenna kaikista tekemistäsi muutoksista muokatut versiot lähtötietotiedostoista tilaajalle toimitettavaksi
 * Tallenna muutosmakrot kaikista tekemistäsi muutoksista: Tallenna kaikista muutoksista ems-tiedostot, ja nimeä tiedostot hankkeen/muutoksen mukaan. Muutokset voi tarvittaessa jakaa useampaan osaan. 
@@ -28,6 +28,10 @@ Merkitse myös muutosmakro (ems-tiedosto), jolla muutos on toistettavissa ja jos
   * Linja 10141 ja 10142 reittimuutos Töölössä
   * Linja 25501 ja 25502 uudet vuorovälit
   * Solmut 123456 ja 123457 lisätty label-tiedot
+
+### Muokatut malliskriptit
+
+Jos työn yhteydessä tehdään muutoksia mallin käyttämiin skripteihin, toimita muokatut skriptit Githubiin.
 
 ### Emme-pankit
 
