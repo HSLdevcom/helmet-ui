@@ -44,9 +44,7 @@ Tuoreimman MAL2019-suunnitelman mukaisia tarjontamallin lähtötietoja on seuraa
 Vuosipäivitysten yhteydessä päivitettyjä tarjontamallin lähtötietoja on seuraaville vuosille ja skenaarioille:
 
 * Nykytilaverkot:
-  * 2017
   * 2018
-  * 2019
   * 2020:
     * 2020 joukkoliikenneverkosta on erikseen versiot normaaleilla joukkoliikenteen vuoroväleillä ja koronan myötä supistetulla tarjonnalla
 *	Sellaisten välivuosien verkot, jolloin tapahtuu olennaisia muutoksia liikennejärjestelmässä:
