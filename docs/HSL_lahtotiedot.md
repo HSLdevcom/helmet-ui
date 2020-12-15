@@ -1,65 +1,31 @@
 # HSL:n ylläpitämät lähtötiedot
 
-HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi.
+HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Aineistojen nimissä on yleensä jokin vuosiskenaario, mutta ennusteet eivät koskaan kuvaa tarkkaa vuotta, vaan tiettyä hankkeiden, maankäyttöjen ja muiden lähtötietojen yhdistelmää. 
 
-## Kysyntämallin lähtötiedot
+## Ennusteskenaarioiden syöttötiedot (maankäyttö, kustannukset ym)
 
 HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Jens West. Lähtötietoja tuotetaan MAL-suunnittelun yhteydessä n. neljän vuoden välein.
 
-Tuoreimman MAL2019-suunnitelman kysyntämallin lähtötietoja on seuraaville vuosille ja skenaarioille:
-* 2016 (MAL2019 nykytila)
-* 2030: 
-  * vaihtoehto 0
-  * suunnitelmavaihtoehto
-* 2050:
-  * "Jatkumo"
-  * "Tesla"
-  * "Bladerunner"
-  * ?
-  
-**Lisättävä yleiskuvaukset ja tarkemmat kuvaukset näiden sisällöistä!**
+Lähtötietoja tuotetaan MAL-suunnittelun yhteydessä seuraaville skenaarioille:
+* Nykytilakuvaus
+* Ennuste n. 10 vuoden päähän (voi olla useita erilaisia)
+* Ennuste n. 30 vuoden päähän (voi olla useita erilaisia)
 
-Kysyntämallin lähtötiedot ovat ladattavissa täältä: **linkki ohjeeseen**
+Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Tiedostopolun juuressa dokumentti MAL2019-ennusteet.docx sisältää aineistojen yleiskuvauksen, ja tarkempia tietoja löytyy kunkin tiedoston sisältä kommmentteina.
 
 ## Tarjontamallin lähtötiedot
 
-HSL:n virallisia tarjontamallin lähtötietoja ylläpitävät Mervi Vatanen (2030 ve0 ja aiempien vuosien tarkasteluskenaariot) ja Jens West (2030 suunnitelmavaihtoehto ja myöhempien vuosien tarkasteluskenaariot). 
+HSL:n virallisia tarjontamallin lähtötietoja ylläpitää Mervi Vatanen.
 
 Vuosittain päivitetään tuore nykytilan kuvaus sekä mahdolliset muutokset tulevien vuosien kuvauksiin HSL:n ja kuntien tuottamiin suunnitelmiin perustuen. Uusi vuosipäivitys julkaistaan syksyisin. Lisätietoja vuosipäivitysprosessista täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_tarjontakuvausten_vuosipaivitysprosessi.md 
 
 Laajempia muutoksia tehdään MAL-suunnittelun yhteydessä n. neljän vuoden välein, ja tässä pohjana käytetään viimeisimmän vuosipäivityksen mukaisia verkkoja.
 
-Tuoreimman MAL2019-suunnitelman mukaisia tarjontamallin lähtötietoja on seuraaville vuosille ja skenaarioille:
+Lähtötietoja tuotetaan seuraaville skenaarioille:
+* Nykytilakuvaus
+* Välivuosi
+* Ennuste n. 10 vuoden päähän (voi olla useita erilaisia)
+* Ennuste n. 30 vuoden päähän (voi olla useita erilaisia)
 
-* 2016 (MAL2019 nykytila)
-* 2030: 
-  * vaihtoehto 0
-  * suunnitelmavaihtoehto
-* 2050:
-  * "Jatkumo"
-  * "Tesla"
-  * "Bladerunner"
-  * ?
-
-Vuosipäivitysten yhteydessä päivitettyjä tarjontamallin lähtötietoja on seuraaville vuosille ja skenaarioille:
-
-* Nykytilaverkot:
-  * 2018
-  * 2020:
-    * 2020 joukkoliikenneverkosta on erikseen versiot normaaleilla joukkoliikenteen vuoroväleillä ja koronan myötä supistetulla tarjonnalla
-*	Sellaisten välivuosien verkot, jolloin tapahtuu olennaisia muutoksia liikennejärjestelmässä:
-    *	2023 (Kivenlahden metro, Raide-Jokeri, uusia runkolinjoja)
-* MAL2019-suunnitelman tulevaisuusverkot, joihin on viety vuosittain tuorein tieto liikennejärjestelmän kehityksestä (**päivitetäänhän näitä??**):
-  * 2030: 
-    * vaihtoehto 0
-    * suunnitelmavaihtoehto
-  * 2050:
-    * "Jatkumo"
-    * "Tesla"
-    * "Bladerunner"
-    * ?
-
-**Lisättävä yleiskuvaukset ja tarkemmat kuvaukset näiden sisällöistä!**
-
-Tarjontamallin lähtötiedot ovat ladattavissa täältä: **linkki ohjeeseen**
+Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Kullekin vuodelle on oma alikansionsa ja niistä löytyy readme-tiedostot, joissa on selostettu yleiskuvaus aineistosta. Tarkempia tietoja saa pyydettäessä Merviltä.
 
