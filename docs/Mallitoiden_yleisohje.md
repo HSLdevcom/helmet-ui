@@ -37,13 +37,13 @@ HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida malliteknis
 
 Pohjaverkot työhön saat HSL:stä. Pohjaverkkona toimii yleensä HSL:n tuorein verkkokuvaus, mutta jos niissä on paljon MAL-työn jälkeen tehtyjä muutoksia, herkkyystarkasteluja tehdään myös edellisen MAL-kierroksen virallisissa verkoissa. HSL:n tilaamissa töissä HSL tekee aina nollavaihtoehdon. Töiden aloituksessa on huomioitava, että nollavaihtoehdon laatiminen vie pari viikkoa. **Onko tämä edelleen ajankohtainen??**
 
-HSL:n ylläpitämiä ennuskenskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
+HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md).
 
-Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
+HSL:n ylläpitämiä ennuskenskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West). Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
 ### Ohjeet mallin lataamiseen ja käyttöön
 
-Mallin lataamis- ja käyttöohjeita löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/index.md
+Mallin lataamis- ja käyttöohjeita löydät [täältä](index.md).
 
 Tarkistus- ja muiden makrojen ohjeet löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
 
@@ -51,26 +51,24 @@ Tarkistus- ja muiden makrojen ohjeet löydät täältä: https://github.com/eeva
 
 ### Ohjeet lähtötietojen muokkaamiseen
 
-HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md
+HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja. Lähtötietoja voi muokata joko sisään ajettavia tiedostoja editoimalla (ja ajamalla muokatut tiedot uudelleen sisään) tai Emme-ohjelman kautta. Tehdyt muutokset on hyvä dokumentoida huolella.
 
-Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja.
-
-Kysyntämallin lähtötiedoista ja niiden muokkaamisesta lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/kysyntamallin_lahtotiedot.md
-
-Tarjontamallin lähtötiedoista ja niiden muokkaamisesta lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/tarjontamallin_lahtotiedot.md
+Yleistietoa HSL:n tarjoamista lähtötietoaineistoista löydät [täältä](HSL_lahtotiedot.md). Mallin käyttämiä tiedostoja ja niiden muokkaamista on kuvattu tarkemmin [täällä](mallin_lahtotietotiedostot.md).
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
-**Täydennettävä**
+Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan sekenaarioon kerrallaan (ohje **täällä**). Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
+
+Varmista ennen malliajoa myös, että Helmet 4-käyttöliittymä viittaa haluamaasi ennusteskenaarion lähtötietokansioon (maankäyttö, kustannukset ym), ja että tulokset tallentuvat haluttuun paikkaan (ks. tarkemmin alempana).
+
+Lähtötietojen muokkaamisen jälkeen voit ajaa mallin Helmet 4-käyttöliittymällä [perusohjeen](index.md) mukaan.
 
 ### Tulostiedot
 
-Tulostiedostoista ja niiden analysoinnista lisätietoja täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/tulokset.md
+Tulostiedostoista ja niiden analysoinnista lisätietoja [täällä](tulokset.md).
 
-Esimerkkejä mallituloksista tehtävistä visualisoinneista täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/esimerkkeja_tuloksista.md
+Esimerkkejä mallituloksista tehtävistä visualisoinneista [täällä](esimerkkeja_tuloksista.md).
 
 ## Työn lopuksi
 
-**Täydennettävä mm. mitä tiedostoja toimitetaan HSL:ään, missä muodossa**
-
-HSL:n tilaamissa töissä dokumentointi tämän ohjeen mukaan: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL-toiden_dokumentointi.md
+Työn lopuksi kannattaa dokumentoida huolella tehdyt muutokset. Yleensä työn tilaajalla on tietyt toiveet siitä, millaiset dokumentit mallitöistä halutaan. HSL:n tilaamissa töissä dokumentointi tehdään [tämän ohjeen](HSL-toiden_dokumentointi.md) mukaan.
