@@ -57,7 +57,7 @@ Yleistietoa HSL:n tarjoamista lähtötietoaineistoista löydät [täältä](HSL_
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
-Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan sekenaarioon kerrallaan (ohje **täällä**). Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
+Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan skenaarioon kerrallaan (ohje **täällä**). Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
 
 Varmista ennen malliajoa myös, että Helmet 4-käyttöliittymä viittaa haluamaasi ennusteskenaarion lähtötietokansioon (maankäyttö, kustannukset ym), ja että tulokset tallentuvat haluttuun paikkaan (ks. tarkemmin alempana).
 
