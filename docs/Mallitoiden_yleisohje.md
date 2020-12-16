@@ -2,7 +2,7 @@
 
 Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä! 
 
-On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. Näin tomien saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. Myös työn huolellinen dokumentointi on tärkeää, sillä se auttaa aineistojen tulkinnassa ja myöhemmässä hyödyntämisessä. 
+On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. Näin saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. Myös työn huolellinen dokumentointi on tärkeää, sillä se auttaa aineistojen tulkinnassa ja myöhemmässä hyödyntämisessä. 
 
 Noudatathan HSL:n tilaamissa töissä näitä käyttö- ja dokumentointiohjeita. HSL:n yhteyshenkilöiltä saat tarvittaessa apua pulmatilanteisiin.
 
