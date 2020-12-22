@@ -82,7 +82,9 @@ https://hslfi.sharepoint.com/sites/ext-hlj-toimikunta/Jaetut%20asiakirjat/Forms/
 
 **Tähän yleistä neliporrasmalleista**
 
-Mallijärjestelmää kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
+Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
+
+Mallijärjestelmän tarjontakuvauksista 
 
 ### Helmet 4 uusia ominaisuuksia
 
@@ -106,6 +108,8 @@ Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin v
 * Pyöräilyn yhteydet vaikuttavat reitinvalintoihin
 
 ## Tietopyynnöt
+
+Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle. Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa.
 
 **Tähän kuvaus siitä, mitä aineistoja käytetään erilaisiin tietopyyntöihin vastatessa.** 
 
