@@ -39,7 +39,7 @@ Pohjaverkot työhön saat HSL:stä. Pohjaverkkona toimii yleensä HSL:n tuorein 
 
 HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md).
 
-HSL:n ylläpitämiä ennuskenskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West). Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
+HSL:n ylläpitämiä ennusteskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West). Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
 ### Ohjeet mallin lataamiseen ja käyttöön
 
