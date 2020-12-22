@@ -12,7 +12,7 @@ Yleistietoa mallijärjestelmästä löydät [täältä](mallin_yleiskuvaus.md).
 
 Mallin käyttämiä lähtötietoja on kuvattu [täällä](HSL_lahtotiedot.md).
 
-Mallin käyttämiä parametreja ja muita oletuksia on kuvattu täällä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
+Mallin ajoa sekä mallin käyttämiä parametreja ja muita oletuksia on kuvattu [täällä](index.md).
 Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia skriptejä ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella.
 
 Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita mallissa.
