@@ -113,4 +113,4 @@ Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin v
 
 ## Mallin käyttöohjeet
 
-Lisätietoa mallin käyttämisestä löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/Mallitoiden_yleisohje.md
+Lisätietoa mallin käyttämisestä löydät [täältä](Mallitoiden_yleisohje.md).
