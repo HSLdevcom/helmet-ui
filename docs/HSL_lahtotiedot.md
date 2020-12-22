@@ -2,7 +2,7 @@
 
 HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Aineistojen nimissä on yleensä jokin vuosiskenaario, mutta ennusteet eivät koskaan kuvaa tarkkaa vuotta, vaan tiettyä hankkeiden, maankäyttöjen ja muiden lähtötietojen yhdistelmää.
 
-Tässä on kuvattu yleisesti HSL:n ylläpitämiä lähtötietoaineistoja. Ohjeita aineistojen lataamisen ja käyttöön löydät [täältä](Mallitoiden_yleisohje.md).
+Tässä on kuvattu yleisesti HSL:n ylläpitämiä lähtötietoaineistoja. Ohjeita aineistojen lataamiseen ja käyttöön löydät [täältä](Mallitoiden_yleisohje.md).
 
 ## Ennusteskenaarioiden syöttötiedot (maankäyttö, kustannukset ym)
 
