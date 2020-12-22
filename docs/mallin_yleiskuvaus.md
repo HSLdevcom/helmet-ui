@@ -82,7 +82,7 @@ https://hslfi.sharepoint.com/sites/ext-hlj-toimikunta/Jaetut%20asiakirjat/Forms/
 
 **Tähän yleistä neliporrasmalleista**
 
-Mallijärjestelmää kuvataan tarkemmin raportissa: **tähän linkki malliraporttiin**
+Mallijärjestelmää kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
 
 ### Helmet 4 uusia ominaisuuksia
 
