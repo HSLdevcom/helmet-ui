@@ -15,6 +15,8 @@ HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Jens West.
 
 Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Tiedostopolun juuressa dokumentti MAL2019-ennusteet.docx sisältää aineistojen yleiskuvauksen, ja tarkempia tietoja löytyy kunkin tiedoston sisältä kommmentteina.
 
+Kysyntämalleja on kuvattu tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
+
 ## Verkkokuvaukset
 
 HSL:n virallisia tarjontamallin lähtötietoja ylläpitää Mervi Vatanen.
@@ -32,3 +34,5 @@ Laajempia muutoksia tehdään MAL-suunnittelun yhteydessä n. neljän vuoden vä
 Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Kullekin vuodelle on oma alikansionsa ja niistä löytyy readme-tiedostot, joissa on selostettu yleiskuvaus aineistosta.
 
 Ilmoitathan Merville, mikäli havaitset tarjontakuvauksissa puutteita tai korjaustarpeita. Mervi ylläpitää korjaustarvelistaa sekä tarjontamallin lähtötietojen tarkempia kuvauksia.
+
+Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet).
