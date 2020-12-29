@@ -88,6 +88,14 @@ Mallijärjestelmän tarjontakuvauksista lisätietoa raportissa [Helsingin seudun
 
 ### Helmet 4 uusia ominaisuuksia
 
+**Kiertomatkat**
+
+Helmet 4 -ennustejärjestelmässä kysyntä ei perustu enää matkoihin, vaan kiertomatkoihin, johon meno- ja paluumatkojen - esimerkiksi kotoa töihin tai kouluun ja takaisin - lisäksi voi kuulua toissijainen määräpaikka - esimerkiksi työmatkaan liittyvä kauppa- tai asiointimatka.  
+
+**Agenttisimuloinnin kehittäminen**
+
+Uudessa ennustejärjestelmässä on mahdollisuus ajaa perinteisen malliajon lisäksi niin sanottuja agenttisimulointeja, joissa voidaan seurata yksilöiden matkustamista vuorokauden aikana. Tällä tavalla voidaan tutkia miten erilaiset toimenpiteet vaikuttavat eri väestöryhmiin. Tätä mahdollisuutta kehitetään edelleen talven 2020-2021 aikana MAL-suunnittelun vaikutusten arvioinnin kehittämisen yhteydessä. 
+
 **Joukkoliikenteen ruuhkautuvuus**
 
 Aikaisemmissa malliversioissa ruuhkautuminen aiheutti ongelmia:
