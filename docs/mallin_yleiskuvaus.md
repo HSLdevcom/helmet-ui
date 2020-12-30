@@ -83,10 +83,10 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 ### Mallijärjestelmän rakenne
 
 Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa järjestyksessä:
-* Matkatuotos
-* Kulkutavanvalinta
-* Suuntautuminen
-* Sijoittelu
+1. Matkatuotos
+2. Kulkutavanvalinta
+3. Suuntautuminen
+4. Sijoittelu
 
 Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
 
