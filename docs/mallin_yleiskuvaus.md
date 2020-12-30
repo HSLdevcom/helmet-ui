@@ -30,6 +30,12 @@ Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
 * Mallijärjestelmä rakentuu useista eri osamalleista, joissa kuvataan logit-malleilla todennäköisyyttä, että päätöksentekijä valitsee tietyn vaihtoehdon (esim. kulkutapa)
 * Teoriapohjaksi ks. esim. Kenneth Trainin e-kirja Discrete Choice Methods with Simulation, ensimmäinen osa luvusta 2 (Properties of Discrete Choice Models), s. 11-23: (https://eml.berkeley.edu/books/choice2.html))
 
+Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
+* _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
+* _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
+* _Kulkutavan valinta_ eli jako mm. henkilöauton ja joukkoliikenteen kesken
+* _Sijoittelu_ eli reittien valinta
+
 ## HSL:n Helmet-malli
 
 ### Mallin lähtötiedot
@@ -76,17 +82,28 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 
 ### Mallijärjestelmän rakenne
 
+Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa järjestyksessä:
+* Matkatuotos
+* Kulkutavanvalinta
+* Suuntautuminen
+* Sijoittelu
+
+Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
+
 **Tähän kuva s. 14:** 
-
 https://hslfi.sharepoint.com/sites/ext-hlj-toimikunta/Jaetut%20asiakirjat/Forms/AllItems1.aspx?originalPath=aHR0cHM6Ly9oc2xmaS5zaGFyZXBvaW50LmNvbS86Zjovcy9leHQtaGxqLXRvaW1pa3VudGEvRWstTFBqdW1NekZIaU1BTElpYjNHMEVCVUZyWm95eFJCSHkyTjN6ZGJJQmdvUT9ydGltZT1MdXBCZjFDYjJFZw&id=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus%2FLiikenteen%20ennustaminen%2Epdf&parent=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus
-
-**Tähän yleistä neliporrasmalleista**
 
 Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
 
 Mallijärjestelmän tarjontakuvauksista lisätietoa raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet).
 
 ### Helmet 4 uusia ominaisuuksia
+
+**Kulkutapa- ja suuntautumismallien rakenne**
+
+Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten, että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
+
+**Tähän kuva 1 raportista https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf**
 
 **Kiertomatkat**
 
