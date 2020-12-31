@@ -53,7 +53,8 @@ Verkkojen sisäänajoon tarvitset HELMET-makrot
 ([zip](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/HSLdevcom/helmet-model-system/tree/master/Database)). 
 Laita ne Emme-projektin Database-kansioon (esimerkiksi `C:\HELMET40\sijoittelu\Database`). 
 Lisää Database-kansioon myös alikansiot kullekin tarkasteluvuodelle (esim. 2019 ja 2030) ja alikansioihin tiedostot, 
-jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista. 
+jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista.
+**Tähän voisi täydentää yleiskuvauksen eri makrojen toiminnasta**
 
 Luo Promptin (module 1.22) tai Modellerin (Tools - modeller) avulla toinen tyhjä skenaario (19 tai 20, toisen näistä loit jo aiemmin).
 
