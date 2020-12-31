@@ -90,8 +90,7 @@ Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa 
 
 Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
 
-**Tähän kuva s. 14:** 
-https://hslfi.sharepoint.com/sites/ext-hlj-toimikunta/Jaetut%20asiakirjat/Forms/AllItems1.aspx?originalPath=aHR0cHM6Ly9oc2xmaS5zaGFyZXBvaW50LmNvbS86Zjovcy9leHQtaGxqLXRvaW1pa3VudGEvRWstTFBqdW1NekZIaU1BTElpYjNHMEVCVUZyWm95eFJCSHkyTjN6ZGJJQmdvUT9ydGltZT1MdXBCZjFDYjJFZw&id=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus%2FLiikenteen%20ennustaminen%2Epdf&parent=%2Fsites%2Fext%2Dhlj%2Dtoimikunta%2FJaetut%20asiakirjat%2FGeneral%2FHelmet%204%2E0%20%2Desittelytilaisuus
+![Helmet-mallijärjestelmän rakenne](Helmet-mallijarjestelma.png)
 
 Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
 
@@ -103,7 +102,7 @@ Mallijärjestelmän tarjontakuvauksista lisätietoa raportissa [Helsingin seudun
 
 Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten, että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
 
-**Tähän kuva 1 raportista https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf**
+![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
 
 **Kiertomatkat**
 
