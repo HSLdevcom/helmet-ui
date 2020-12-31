@@ -1,8 +1,10 @@
 # Mallin lähtötietotiedostot ja niiden muokkaaminen
 
-HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Paketti sisältää seuraavat aineistot:
+## HSL:n ylläpitämät lähtötiedot
 
-## Ennusteskenaarioiden syöttötiedot
+Yleiskuvaus HSL:n ylläpitämistä aineistoista löytyy [täältä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Paketti sisältää seuraavat aineistot:
+
+### Ennusteskenaarioiden syöttötiedot
 
 Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. **Näihin pitäisi varmaan lisätä readme-selsoteet?**
 
@@ -18,11 +20,11 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 * **Trk** = rekkaliikenteen lähtötiedot: yhdistelmäajoneuvoilta kielletyt ennustealueet ja jätehuollon ennustealueet
 * **Wrk** = kunkin ennustealueen kokonaistyöpaikkamäärä sekä eri alojen työpaikkojen osuudet (palvelut, kaupat, logistiikka, teollisuus)
 
-## Lähtötiedot
+### Lähtötiedot
 
 **Täydennettävä selostus**
 
-## Verkot
+### Verkot
 
 Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on liikenneverkon lähtötiedot sekä niiden selostus (readme).
 
@@ -38,3 +40,7 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 * **d311_matktermkys** = **???**
 * **d311_tama_ennustevektorit** = **???**
 * Muut tiedostot **Tarkistettava näiden yhtenäisyys eri vuosina ja kuvattava mitä sisältyy**
+
+## Lähtötietojen muokkaaminen
+
+Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelman kautta. **Onko muokkausohjeosuudelle tarvetta vai riittääkö yleisohje ja index?**
