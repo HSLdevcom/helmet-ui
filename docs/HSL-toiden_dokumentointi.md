@@ -4,6 +4,8 @@ Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. 
 
 HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Alla on kuvattu tarkemmin mallitöissä tuotettavia ja HSL:lle luovutettavia aineistoja. Lisäohjeita saat tarvittaessa HSL:n yhteyshenkilöiltä.
 
+[Mallin käyttöön](Mallitoiden_yleisohje.md) ja [lähtötietojen muokkaamiseen](linkki) löydät lisätietoja edellisten linkkien kautta.
+
 ## Luovutettavat aineistot
 
 Työn päättyessä toimita HSL:n yhteyshenkilölle tässä luetellut aineistot. Tämän dokumentoinnin tavoitteena on helpottaa tulosten tulkintaa, mahdollistaa tulosten toistettavuus ja helpottaa aineistojen jatkohyödyntämistä.
