@@ -21,7 +21,7 @@ Ilmoitathan HSL:n yhteyshenkilöille mikäli havaitset virheitä tai puutteita m
 
 Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-pankki, johon kootaan eri tarkasteluskenaariot (esim. eri linjastovaihtoehdot). Emmeen luodaan kutakin tarkasteluskenaariota kohden viisi eri Emme-skenaariota (pyöräliikenne, vuorokausiliikenne, aamuhuipputunti, päivätunti ja iltahuipputunti).
 
-HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-paketteina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Lähtötiedot voi ladata sisään Emmen skenaarioihin erillisen makron avulla. 
+HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Lähtötiedot voi ladata sisään Emmen skenaarioihin erillisen makron avulla. 
 
 Helmet-järjestelmä tuottaa valmiiksi erilaisia tulosteita malliajojen tuloksista. Nämä tallentuvat oletuksena **minne?**. Emmellä ja muilla sovelluksilla voidaan tuottaa lisäksi erilaisia analyysejä.
 
