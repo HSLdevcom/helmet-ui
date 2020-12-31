@@ -4,7 +4,7 @@ Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. 
 
 HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Alla on kuvattu tarkemmin mallitöissä tuotettavia ja HSL:lle luovutettavia aineistoja. Lisäohjeita saat tarvittaessa HSL:n yhteyshenkilöiltä.
 
-[Mallin käyttöön](Mallitoiden_yleisohje.md) ja [lähtötietojen muokkaamiseen](linkki) löydät lisätietoja edellisten linkkien kautta.
+[Mallin käyttöön](Mallitoiden_yleisohje.md) ja [lähtötietojen muokkaamiseen](mallin_lahtotietotiedostot.md) löydät lisätietoja edellisten linkkien kautta.
 
 ## Luovutettavat aineistot
 
@@ -25,7 +25,7 @@ Dokumentoi muistioon myös muutosten perustelut.
 ### Tallennettavat muutos- ja lähtötietotiedostot 
 
 * Tallenna kaikista tekemistäsi muutoksista muokatut versiot lähtötietotiedostoista tilaajalle toimitettavaksi
-* Tallenna muutosmakrot kaikista tekemistäsi muutoksista: Tallenna kaikista muutoksista ems-tiedostot, ja nimeä tiedostot hankkeen/muutoksen mukaan. Muutokset voi tarvittaessa jakaa useampaan osaan. 
+* Tallenna muutosmakrot kaikista tekemistäsi muutoksista: Tallenna kaikista muutoksista ems-tiedostot, ja nimeä tiedostot hankkeen/muutoksen mukaan. Muutokset voi tarvittaessa jakaa useampaan osaan, pieniä osia on helpompi jatkokäsitellä kuin liian suuria paloja. Koodaa aina erikseen verkolle ja linjastoon tehtävät muutokset, jotta näistä muodostuu erilliset muutostiedostot.
 * Tarjontamuutoksista, joista ei ole .ems-tiedostoja, toimita tilaajalle muokatut lähtötiedostot, ja kirjaa mallitekniseen muistioon, mitä muutoksia olet tehnyt, esim.:
   * Linja 10141 ja 10142 reittimuutos Töölössä
   * Linja 25501 ja 25502 uudet vuorovälit
