@@ -45,15 +45,13 @@ HSL:n ylläpitämiä ennusteskenaarioiden syöttötietoja luovutetaan ainoastaan
 
 Mallin lataamis- ja käyttöohjeita löydät [täältä](index.md).
 
-Tarkistus- ja muiden makrojen ohjeet löydät täältä: https://github.com/eevavesaoja/helmet-ui/blob/master/docs/mallimakrot_ja_parametrit.md
-
 ## Työn aikana
 
 ### Ohjeet lähtötietojen muokkaamiseen
 
 HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja. Lähtötietoja voi muokata joko sisään ajettavia tiedostoja editoimalla (ja ajamalla muokatut tiedot uudelleen sisään) tai Emme-ohjelman kautta. Tehdyt muutokset on hyvä dokumentoida huolella.
 
-Yleistietoa HSL:n tarjoamista lähtötietoaineistoista löydät [täältä](HSL_lahtotiedot.md). Mallin käyttämiä tiedostoja ja niiden muokkaamista on kuvattu tarkemmin [täällä](mallin_lahtotietotiedostot.md).
+Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohjeita löydät [täältä](HSL_lahtotiedot.md).
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
