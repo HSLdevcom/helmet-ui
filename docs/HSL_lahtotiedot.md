@@ -2,7 +2,7 @@
 
 HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Aineistojen nimissä on yleensä jokin vuosiskenaario, mutta ennusteet eivät koskaan kuvaa tarkkaa vuotta, vaan tiettyä hankkeiden, maankäyttöjen ja muiden lähtötietojen yhdistelmää.
 
-Tässä on kuvattu yleisesti HSL:n ylläpitämiä lähtötietoaineistoja. Ohjeita aineistojen lataamiseen ja käyttöön löydät [täältä](Mallitoiden_yleisohje.md).
+Tässä on kuvattu yleisesti HSL:n ylläpitämiä lähtötietoaineistoja. Ohjeita aineistojen lataamiseen ja käyttöön löydät [täältä](mallitoiden_yleisohje.md).
 
 ## Ennusteskenaarioiden syöttötiedot (maankäyttö, kustannukset ym)
 
@@ -35,4 +35,4 @@ Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saa
 
 Ilmoitathan Merville, mikäli havaitset tarjontakuvauksissa puutteita tai korjaustarpeita. Mervi ylläpitää korjaustarvelistaa sekä tarjontamallin lähtötietojen tarkempia kuvauksia.
 
-Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet). Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä. Lisätietoja mallin käyttämisestä [täällä](Mallitoiden_yleisohje.md).
+Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet). Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä. Lisätietoja mallin käyttämisestä [täällä](mallitoiden_yleisohje.md).
