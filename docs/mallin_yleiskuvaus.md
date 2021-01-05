@@ -107,6 +107,10 @@ Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien 
 
 ![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
 
+**Aluejako**
+
+Helmet 4 -malleissa käytetään vain yhtä aluejakoa, eli mallissa ei enää ole erillisiä ennuste- ja sijoittelualueita tai näiden välisiä jakolukuja. Ennustealuejaon tihentyminen kasvattaa jonkin verran mallin ajon vaatimaa aikaa.
+
 **Kiertomatkat**
 
 Helmet 4 -ennustejärjestelmässä kysyntä ei perustu enää matkoihin, vaan kiertomatkoihin, johon meno- ja paluumatkojen - esimerkiksi kotoa töihin tai kouluun ja takaisin - lisäksi voi kuulua toissijainen määräpaikka - esimerkiksi työmatkaan liittyvä kauppa- tai asiointimatka.  
