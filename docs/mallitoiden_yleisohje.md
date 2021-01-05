@@ -51,7 +51,7 @@ Mallin lataamis- ja käyttöohjeita löydät [täältä](index.md).
 
 HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja. Lähtötietoja voi muokata joko sisään ajettavia tiedostoja editoimalla (ja ajamalla muokatut tiedot uudelleen sisään) tai Emme-ohjelman kautta. Tehdyt muutokset on hyvä dokumentoida huolella.
 
-Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohjeita löydät [täältä](HSL_lahtotiedot.md).
+Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohjeita löydät [täältä](HSL_lahtotiedot.md). Noudatathan HSL:n ohjeita ja periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
