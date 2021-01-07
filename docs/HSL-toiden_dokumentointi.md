@@ -18,7 +18,7 @@ Kuvaa lyhyesti myös mm. mahdollisten poikkeavien skriptien ja parametrien käyt
 
 ### Mallitekninen muistio
 
-Työn mallitekniseen toteutukseen liittyvät huomiot kirjataan mallitekniseen muistioon, joka luovutetaan työn päättyessä. Kirjaa kaikki tehdyt muutokset mallitekniseen muistioon. Merkinnästä tulee käydä ilmi, mitä kysyntä- ja tarjontakuvauksen tai malliajon osaa ja ominaisuuksia on muokattu. Merkitse myös muutosmakro (ems-tiedosto), jolla muutos on toistettavissa ja josta käyvät ilmi käytetyt lukuarvot, tai lähtötietotiedosto, johon muutokset on viety. Jos olet lisännyt verkolle solmuja, listaa käyttämäsi uudet solmunumerot.
+Työn mallitekniseen toteutukseen liittyvät huomiot kirjataan mallitekniseen muistioon, joka luovutetaan työn päättyessä. Kirjaa kaikki tehdyt muutokset mallitekniseen muistioon. Merkinnästä tulee käydä ilmi, mitä kysyntä- ja tarjontakuvauksen tai malliajon osaa ja ominaisuuksia on muokattu. Merkitse myös muutosmakro (ems-tiedosto), jolla muutos on toistettavissa ja josta käyvät ilmi käytetyt lukuarvot, tai lähtötietotiedosto, johon muutokset on viety. Jos olet lisännyt verkolle solmuja, listaa käyttämäsi uudet solmunumerot. Kirjaa muistioon, mistä tiedostoista ja/tai kansioista eri tiedot löytyvät.
 
 Dokumentoi muistioon myös muutosten perustelut.
 
