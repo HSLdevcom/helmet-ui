@@ -66,6 +66,7 @@ Luo seuraavaksi testiverkot:
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
 Lue makrolla 4verkkoa_HM40.mac sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
+
 1. vaihtoehdon tunnus (esim. 2017LM_20170131), pakollinen
 2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
 3. pyöräverkon skenaario (oletus s=19)
@@ -74,12 +75,15 @@ Lue makrolla 4verkkoa_HM40.mac sisään kulkutavat, ajoneuvotyypit, verkot, kä�
 6. pt skenaarion numero (oletus s+3)
 7. iht skenaarion numero (oletus s+4)
 8. skenaarion nimi (oletus sama kuin 1)
+
 Jos kutsussa ei anneta parametreja, ne kysytaan ajon alussa interaktiivisesti ja ehdotetaan oletusarvoja.
 
 Vaihtoehdon tunnuksen näet esim. alikansiossa `C:\HELMET40\sijoittelu\Database\2019` olevien tiedostojen nimistä (tiedostonimen loppuosa). Ajo esim
+
     ~<4verkkoa_HM40.mac 2016_20191014 sijopankki2016 19 20 21 22 23 V2016
     ~<4verkkoa_HM40.mac 2018_20191014 sijopankki2018 29 30 31 32 33 V2018
     ~<4verkkoa_HM40.mac 2019_20191122 sijopankki2019 39 40 41 42 43 V2019
+    
 Vain ensimmäinen parametri (vaihtoehdon tunnus) on pakollinen. Myös toinen parametri tarvitaan, jos tiedostot eivät ole kansiossa database. Muilta osin voidaan hyväksyä ohjelman ehdottamat oletusarvot.
 
 Makro `4verkkoa_HM40.mac` lukee skenaarioon 19 tarpeelliset tiedot moduuleilla x.yy seuraavista tiedostoista 
