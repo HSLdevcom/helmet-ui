@@ -1,6 +1,6 @@
 # HSL:n liikenne-ennustemallin yleiskuvaus
 
-Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West ja Timo Elolähde), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
+Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
 
 HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään. Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia. HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
@@ -11,8 +11,8 @@ Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitte
 ### Termejä
 
 * **Malli:** Matemaattinen kuvaus järjestelmästä (tässä tapauksessa Helsingin seudun liikkumisesta)
-* **Mallin estimointi:** Mallin parametrien määritys niin että malli antaa tietyillä lähtötiedoilla tietyn tuloksen (nykytilan)
-* **Mallin validointi:** Testaus että malli tosiaan ennakoi nykytilalle oikean tuloksen
+* **Mallin estimointi:** Mallin parametrien määritys niin, että malli kuvaa käytetyillä lähtötiedoilla mahdollisimman hyvin lähtöaineistossa (nykytila) havaittua käyttäytymistä 
+* **Mallin validointi:** Testaus, että malli tosiaan ennakoi nykytilalle oikean tuloksen
 * **Ennuste:** Mallin käyttö _samoilla parametreilla_, mutta _eri lähtötiedoilla_ kuin estimoinnissa
 
 ### Mallin oletuksia, perusteluita ja rajoituksia
@@ -33,7 +33,7 @@ Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
 Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
 * _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
 * _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
-* _Kulkutavan valinta_ eli jako mm. henkilöauton ja joukkoliikenteen kesken
+* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton ja joukkoliikenteen kesken
 * _Sijoittelu_ eli reittien valinta
 
 ## HSL:n Helmet-malli
@@ -50,7 +50,7 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 * Kerros- ja pientalojen osuudet
 * Kaupan työpaikkojen määrät
 * Palvelutyöpaikkojen määrät
-* 2. ja 3. asteen oppilaspaikkamäärät
+* 1., 2. ja 3. asteen oppilaspaikkamäärät
 
 **Liikennejärjestelmää koskevat tiedot:**
 * Henkilöauton kilometrikustannus
