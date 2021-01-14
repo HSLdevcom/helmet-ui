@@ -66,20 +66,21 @@ Luo seuraavaksi testiverkot:
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
 Lue makrolla 4verkkoa_HM40.mac sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
-1. vaihtoehdon tunnus (esim. 2017LM_20170131)
-2. alikansio (jos ei nykyinen, esim. `sijopankki2017`).
-3. pyöräverkon skenaario
-4. vuorokausiverkko
-5. aht skenaarion numero
-6. pt skenaarion numero
-7. iht skenaarion numero
-8. skenaarion nimi
+1. vaihtoehdon tunnus (esim. 2017LM_20170131), pakollinen
+2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
+3. pyöräverkon skenaario (oletus s=19)
+4. vuorokausiverkko (oletus s+1)
+5. aht skenaarion numero (oletus s+2)
+6. pt skenaarion numero (oletus s+3)
+7. iht skenaarion numero (oletus s+4)
+8. skenaarion nimi (oletus sama kuin 1)
+Jos kutsussa ei anneta parametreja, ne kysytaan ajon alussa interaktiivisesti ja ehdotetaan oletusarvoja.
 
 Vaihtoehdon tunnuksen näet esim. alikansiossa `C:\HELMET40\sijoittelu\Database\2019` olevien tiedostojen nimistä (tiedostonimen loppuosa). Ajo esim
-
     ~<4verkkoa_HM40.mac 2016_20191014 sijopankki2016 19 20 21 22 23 V2016
     ~<4verkkoa_HM40.mac 2018_20191014 sijopankki2018 29 30 31 32 33 V2018
     ~<4verkkoa_HM40.mac 2019_20191122 sijopankki2019 39 40 41 42 43 V2019
+Vain ensimmäinen parametri (vaihtoehdon tunnus) on pakollinen. Myös toinen parametri tarvitaan, jos tiedostot eivät ole kansiossa database. Muilta osin voidaan hyväksyä ohjelman ehdottamat oletusarvot.
 
 Makro `4verkkoa_HM40.mac` lukee skenaarioon 19 tarpeelliset tiedot moduuleilla x.yy seuraavista tiedostoista 
 (käytettävän moduulin voi päätellä tiedostonimestä, esimerkiksi tiedoston `d201_modes_M2016.in` kohdalla käytettävä moduuli on 2.01).
@@ -98,15 +99,15 @@ Skenaarioihin 21–23 voidaan kätevästi lukea tarpeelliset tiedot moduuleilla 
 |`d211_verkko_tunnus.in`     |	verkko (yhteinen kaikille aikajaksoille)                  |
 |`d221_linjat_tunnus.in`     |	linjasto (yhteinen kaikille aikajaksoille)                |
 |`d231_verkko_tunnus.in`     |	kääntymiset (yhteinen kaikille aikajaksoille)             |
-|`d241_hinta_tunnus.in`      |	mahdolliset aikajaksokohtaiset ruuhkamaksut tai tietullit |
-|`d241_vuorovalit_tunnus.in` |	kunkin aikajakson vuorovälit                              |
+|`d241_hinta_tunnus.in`      |	mahdolliset ruuhkamaksut tai tietullit aikajaksoittain    |
+|`d241_vuorovalit_tunnus.in` |	linjojen vuorovälit aikajaksoittain                       | 
 
-Skenaariota 20 ei tarvitse muuttaa, sillä sen paikalle kopioidaan skenaario 21 (aht) kävelyskenaarioksi sijoittelussa.
+Skenaariota 20 ei tarvitse muuttaa, sillä sen paikalle kopioidaan skenaario 22 (päiväliikenne) vuorokausiskenaarioksi, johon talletetaan sijoittelun tuloksia.
 
 Makro tekee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. 
 Samalla luetaan skenaarioon myös ruuhkamaksut tiedostoista `d241_hinta_tunnus.in` moduulilla 2.41.
 
-Makro `4verkkoa_HM40.mac` kopioi skenaarion 21 skenaarioiksi 22 ja 23 (vanha sisältö poistetaan) ja käynnistää tarvittaessa myös makrot, 
+Makro `4verkkoa_HM40.mac` kopioi skenaarion 21 skenaarioiksi 22 ja 23 (vanha sisältö poistetaan) ja käynnistää myös makrot, 
 jotka muuttavat kenttiä `hdwy`, `us2`, `vdf` ja `ttf` skenaarion aikajakson (mm. bussikaistan käyttö) mukaisiksi.
 
 Jos skenaarion muodostaminen epäonnistuu esim. tunnuksessa tai alikansion nimessä olevan virheen takia, 
