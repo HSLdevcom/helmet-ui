@@ -10,15 +10,15 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 
 **Tiedostot**
 
-* **Cco** = autoilun kilometrikustannus
-* **Edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
-* **Ext** = **???**
-* **Lnd** = kunkin ennustealueen rakennetun maa-alan osuus sekä erillistalojen osuus rakennuskannasta
-* **Pop** = kunkin ennustealueen kokonaisväkiluku sekä eri ikäryhmien osuudet
-* **Prk** = kunkin ennustealueen työpaikan ja asiointimatkojen pysäköintikustannukset
-* **Tco** = joukkoliikenteen kuukausikustannukset eri vyöhykkeillä
-* **Trk** = rekkaliikenteen lähtötiedot: yhdistelmäajoneuvoilta kielletyt ennustealueet ja jätehuollon ennustealueet
-* **Wrk** = kunkin ennustealueen kokonaistyöpaikkamäärä sekä eri alojen työpaikkojen osuudet (palvelut, kaupat, logistiikka, teollisuus)
+* **cco** = autoilun kilometrikustannus
+* **edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
+* **ext** = ulkoinen liikenne eli työsäkäyntialueen tienpäät
+* **lnd** = kunkin ennustealueen rakennetun maa-alan osuus sekä erillistalojen osuus rakennuskannasta
+* **pop** = kunkin ennustealueen kokonaisväkiluku sekä eri ikäryhmien osuudet
+* **prk** = kunkin ennustealueen työpaikan ja asiointimatkojen pysäköintikustannukset
+* **tco** = joukkoliikenteen kuukausikustannukset eri vyöhykkeillä
+* **trk** = rekkaliikenteen lähtötiedot: yhdistelmäajoneuvoilta kielletyt ennustealueet ja jätteenkäsittelylaitosten ennustealueet
+* **wrk** = kunkin ennustealueen kokonaistyöpaikkamäärä sekä eri alojen työpaikkojen osuudet (palvelut, kaupat, logistiikka, teollisuus)
 
 ### Lähtötiedot
 
@@ -30,15 +30,15 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 
 **Tiedostot**
 
-* **d211** = liikenneverkon solmut ja niiden attribuutit (HUOM: Helmet 4 käyttää myös uutta label-attribuuttia)
+* **d211** = liikenneverkon solmut ja linkit sekä niiden attribuutit (HUOM: Helmet 4 käyttää myös solmun label-attribuuttia, jossa lippuvyöhykkeen kirjain)
 * **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla (**nimi!!**) ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta)
 * **d231** = kääntymiskiellot eri solmujen välillä
-* **d241_hinta** = tienkäyttömaksu eri solmujen välillä
+* **d241_hinta** = linkkikohtainen tienkäyttömaksu eri aikajaksoilla (aht, pt, iht)
 * **d241_pyoratieluokka** = pyörätieluokka eri linkeillä
-* **d241_vuorovalit** = joukkoliikennelinjaston vuorovälit eri aikajaksoilla (aht, pt, iht)
-* **d311_jakoluvut** = **???**
-* **d311_matktermkys** = **???**
-* **d311_tama_ennustevektorit** = **???**
+* **d241_vuorovalit** = joukkoliikennelinjojen vuorovälit eri aikajaksoilla (aht, pt, iht)
+* **d311_jakoluvut** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (JAKOLUVUT ENN16-->SIJ19, EI TARVITA VERSIOSSA 4
+* **d311_matktermkys** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (LENTOASEMAN JA SATAMIEN MATKAT), EI TARVITA VERSIOSSA 4
+* **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VAERTEN), EI TARVITA VERSIOSSA 4
 * Muut tiedostot **Tarkistettava näiden yhtenäisyys eri vuosina ja kuvattava mitä sisältyy**
 
 ## Lähtötietojen muokkaaminen
