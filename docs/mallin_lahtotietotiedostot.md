@@ -2,7 +2,7 @@
 
 ## HSL:n ylläpitämät lähtötiedot
 
-Yleiskuvaus HSL:n ylläpitämistä aineistoista löytyy [täältä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Paketti sisältää seuraavat aineistot:
+Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista löytyy [täältä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Paketti sisältää seuraavat aineistot:
 
 ### Ennusteskenaarioiden syöttötiedot
 
