@@ -10,7 +10,7 @@ Työohjelmaa laadittaessa ole yhteydessä HSL:n malliasiantuntijoihin (Jens West
 
 Työn tilausvaiheessa varmista, että konsultti tuntee ja käyttää HSL:n laatimia mallin käyttö- ja dokumentointiohjeita. Näitä ohjeita tulee noudattaa, jotta voidaan varmistua mallitarkastelujen tulosten luotettavuudesta sekä hyödynnettävyydestä jatkotarkasteluissa.
 
-Työn valmistuessa varmista, että sen tulokset ja malliaineistot toimitetaan HSL:n malliasiantuntijoille ohjeissa määritellyssä muodossa.
+Työn valmistuessa varmista, että sen tulokset ja malliaineistot toimitetaan HSL:n malliasiantuntijoille ohjeissa määritellyssä muodossa. Projektin päättyessä sovitaan myös, viedäänkö työn lopputuloksia jatkossa osaksi HSL:n virallisia lähtötietoja seuraavia projekteja varten.
 
 ## Menneiden projektien aineistot
 
