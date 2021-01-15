@@ -138,6 +138,24 @@ Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin v
   * Sekaliikenne (oletus)
 * Pyöräilyn yhteydet vaikuttavat reitinvalintoihin
 
+**Tulokset verrattuna Helmet 3.1:een**
+
+Autoliikenteen liikennemäärät ovat pääväylillä hieman pienempiä kuin Helmet 3.1 versiossa ja vastaavasti poikittaisessa liikenteessä kehäteillä on enemmän kuormitusta. Uudet liikennemäärät vastaavat hieman paremmin laskentatietoja, mutta molemmissa malliversiossa vastaavuus on hyvällä tasolla.
+
+Joukkoliikennekulkutapojen väliset painosuhteet muuttuvat siten, että uusi malliversio ennustaa enemmän juna- ja raitiotiematkoja, mikä on todennäköisesti seurausta joukkoliikenteen ruuhkasijoittelun käyttöönotosta malliversioiden välillä. Muutos on juna- ja raitioliikenteessä oikeansuuntainen suhteessa laskentatietoihin.
+
+Muutoksiin reagoimisen osalta malli toimii vähemmän herkästi suhteessa Helmet 3.1 -malliin. Erityisenä huomiona muutoksien osalta aiemman malliversion jalankulkumalli reagoi hyvin voimakkaasti pysäköintimaksujen nostoon, koska kustannus oli mallissa mukana suorana matkojen määrää ennustavana muuttujana ja kulkutavan valinta ei ollut liitoksissa muiden kulkutapojen valintaan ja olosuhteiden kehitykseen.
+
+### Helmet 4 -tuloksiin liittyviä epävarmuuksia
+
+Mallia laadittaessa sen antamia tuloksia on verrattu monipuolisesti erilaiseen havaintoaineistoon ja pyritty saamaan tulokset vastaamaan mahdollisimman hyvin havaintoja. Tuloksiin liittyy silti tiettyjä epävarmuuksia ja rajoitteita, joista on nostettu tähän keskeisimpiä havaintoja. Mallin testausta ja testien tuloksia on kuvattu laajemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf) (luvut 12 ja 13).
+
+Nykytilanteen osalta malli toimii hyvin, eikä kysynnän ennustamiseen liittyviä systemaattisia virheitä testauksessa havaittu. Malli tuottaa suuntautumisen, autoliikennemäärien ja pyöräliikennemäärien osalta ulkopuolisia havaintoja vastaavia nykytilanteen ennusteita. Mallin tulokset eivät poikkea nykytilanteen osalta merkittävästi Helmet 3.1-versiosta.
+
+Joukkoliikenteen osalta havaittiin kuitenkin ongelma, joka on syytä huomioida hanketarkasteluissa. Vuorokauden matkustajamääräarviot on aliarvioitu runkoyhteyksillä metrolla, junalla ja raitiovaunuilla, kun taas bussien matkustajamäärät on hieman yliarvioitu. Huipputuntien osalta nykyennuste vastaa laskentoja hyvin, joten ongelma on todennäköisesti vuorokausilaajennuskertoimissa, jotka eivät nykyisellään huomioi runkoyhteyksien ja muiden yhteyksien erilaisia liikennöintiaikoja.
+
+Helmet 4 -mallin avulla tehtäviä H/K-laskelmia kannattanee hyödyntää vain suurille liikennejärjestelmätason hankkeille.
+
 ## Tietopyynnöt
 
 Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle. Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
