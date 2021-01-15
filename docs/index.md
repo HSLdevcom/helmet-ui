@@ -1,9 +1,9 @@
-# Helmet liikenne-ennustejärjestelmä
+# Ohjeet Helmet 4 -liikenne-ennustejärjestelmän käyttöön
 
 [Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymä. 
 Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
 
-## Asennus
+## Asennus ja käytön aloitus
 
 ### Emmen asennus
 
@@ -60,7 +60,9 @@ EMMEn Python-polussa oleva määrittely saattaa epäonnistua,
 jos ympäristömuuttujaa ’EMMEPATH’ ei ole määritelty tai jos sovellus on asennettu epätavallisella tavalla. Jos näin käy, suorituskelpoisen 
 Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Asetukset-valikosta.
 
-## Asetukset
+## Malliajojen ohje
+
+### Asetukset
 
 :warning: **Kansiopoluissa ei saa olla ääkkösiä!**
 
@@ -74,14 +76,14 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
   - Voidaan käyttää myös olemassa olevaa kansiota.
 - Projektin kansiopolku
   - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
-  - Tämä **ei** siis viita Emmen projektitiedostoon (.emp)
+  - Tämä **ei** siis viittaa Emmen projektitiedostoon (.emp)
 - Lähtödatan sisältävä kansio
   - Täällä ovat pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
   - Kansion sisältön saa HSL:ltä
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
-## Malliajon määrittely
+### Malliajon määrittely
 
 Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittelyt:
 
@@ -100,7 +102,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
     - Iteraatiomäärä 0 tarkoittaa että tehdään heti loppusijoittelu
       (vaatii että kysyntämatriisit aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
 
-## Höyty-kustannusanalyysin (hankearvioinnin) määrittely
+### Hyöty-kustannusanalyysin (hankearvioinnin) määrittely
 
 Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
 
@@ -108,3 +110,7 @@ Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulo
 2. Hankevaihtoehdon (ve1) tuloskansio
 
 Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
+
+### Tulosten käsittely ja tulkinta
+
+Lisätietoa mallin tuottamista tulostiedostoista ja tulosten tulkinnasta [täällä](tulokset.md).
