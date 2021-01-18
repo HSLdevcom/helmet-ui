@@ -166,4 +166,4 @@ HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
 
 ## Mallin käyttöohjeet
 
-Lisätietoa mallin käyttämisestä löydät [täältä](Mallitoiden_yleisohje.md).
+Lisätietoa mallin käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
