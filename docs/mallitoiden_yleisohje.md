@@ -23,7 +23,7 @@ Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-pankki, johon kootaa
 
 HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Lähtötiedot voi ladata sisään Emmen skenaarioihin erillisen makron avulla. 
 
-Helmet-järjestelmä tuottaa valmiiksi erilaisia tulosteita malliajojen tuloksista. Nämä tallentuvat oletuksena **minne?**. Emmellä ja muilla sovelluksilla voidaan tuottaa lisäksi erilaisia analyysejä.
+Helmet-järjestelmä tuottaa valmiiksi erilaisia tulosteita malliajojen tuloksista. Emmellä ja muilla sovelluksilla voidaan tuottaa lisäksi erilaisia analyysejä.
 
 Alempana on kuvattu tarkemmin lähtötietoja, niiden muokkaamista sekä tulosten käsittelyä.
 
@@ -34,8 +34,6 @@ HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida malliteknis
 ## Työn aluksi
 
 ### Mallin lähtötietoaineistojen jakelu
-
-Pohjaverkot työhön saat HSL:stä. Pohjaverkkona toimii yleensä HSL:n tuorein verkkokuvaus, mutta jos niissä on paljon MAL-työn jälkeen tehtyjä muutoksia, herkkyystarkasteluja tehdään myös edellisen MAL-kierroksen virallisissa verkoissa. HSL:n tilaamissa töissä HSL tekee aina nollavaihtoehdon. Töiden aloituksessa on huomioitava, että nollavaihtoehdon laatiminen vie pari viikkoa. **Onko tämä edelleen ajankohtainen??**
 
 HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](https://github.com/eevavesaoja/helmet-ui/blob/master/docs/HSL_lahtotiedot.md).
 
@@ -55,7 +53,7 @@ Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohje
 
 ### Ohjeet malliajoon muokatuilla lähtötiedoilla
 
-Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan skenaarioon kerrallaan (ohje **täällä**). Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
+Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan skenaarioon kerrallaan. Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
 
 Varmista ennen malliajoa myös, että Helmet 4-käyttöliittymä viittaa haluamaasi ennusteskenaarion lähtötietokansioon (maankäyttö, kustannukset ym), ja että tulokset tallentuvat haluttuun paikkaan (ks. tarkemmin alempana).
 
