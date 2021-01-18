@@ -110,7 +110,7 @@ Skenaariota 20 ei tarvitse muuttaa, sillä sen paikalle kopioidaan skenaario 22 
 Makro tekee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. 
 Samalla luetaan skenaarioon myös ruuhkamaksut tiedostoista `d241_hinta_tunnus.in` moduulilla 2.41.
 
-Makro `4verkkoa_HM40.mac` kopioi skenaarion 21 skenaarioiksi 22 ja 23 (vanha sisältö poistetaan) ja käynnistää myös makrot, jotka muuttavat kenttiä 'ul1', 'ul2', `hdwy`, `us2`, `vdf` ja `ttf` skenaarion aikajakson (mm. bussikaistan käyttö) mukaisiksi. Lisäksi tehdään erilaisia tarkistuksia (mm. nollalinkit, puuttuvat vuorovälit, ratikoiden nopeudet, junien matka-ajat). 
+Makro `4verkkoa_HM40.mac` kopioi skenaarion 21 skenaarioiksi 22 ja 23 (vanha sisältö poistetaan) ja käynnistää myös makrot, jotka muuttavat kenttiä `ul1`, `ul2`, `hdwy`, `us2`, `vdf` ja `ttf` skenaarion aikajakson (mm. bussikaistan käyttö) mukaisiksi. Lisäksi tehdään erilaisia tarkistuksia (mm. nollalinkit, puuttuvat vuorovälit, ratikoiden nopeudet, junien matka-ajat). 
 
 Jos skenaarion muodostaminen epäonnistuu esim. tunnuksessa tai alikansion nimessä olevan virheen takia, 
 poista skenaario ja perusta se uudelleen moduulilla 1.22 sekä alusta se makrolla 
