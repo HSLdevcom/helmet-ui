@@ -1,6 +1,6 @@
 # HSL:n mallitöiden dokumentointiohje
 
-Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. Ohjeita voi toki soveltaa myös muissa projekteissa.
+Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. Ohjeita voi toki soveltaa myös muissa projekteissa. Ohjeeseen kannattaa perehtyä jo työn aloitusvaiheessa, jotta työskentelytavat tukevat parhaiten tarvittavien dokumenttien tuottamista.
 
 HSL:n tilaamissa töissä kaikki tehdyt muutokset tulee dokumentoida mallitekniseen muistioon ja tallentaa lisäksi muutostiedostot ja/tai muokatut lähtötiedot. Alla on kuvattu tarkemmin mallitöissä tuotettavia ja HSL:lle luovutettavia aineistoja. Lisäohjeita saat tarvittaessa HSL:n yhteyshenkilöiltä.
 
