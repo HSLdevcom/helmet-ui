@@ -6,7 +6,7 @@ Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista
 
 ### Ennusteskenaarioiden syöttötiedot
 
-Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. **Näihin pitäisi varmaan lisätä readme-selsoteet?**
+Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta.
 
 **Tiedostot**
 
@@ -22,7 +22,7 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 
 ### Lähtötiedot
 
-**Täydennettävä selostus**
+*Osio täydentyy*
 
 ### Verkot
 
@@ -31,7 +31,7 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 **Tiedostot**
 
 * **d211** = liikenneverkon solmut ja linkit sekä niiden attribuutit (HUOM: Helmet 4 käyttää myös solmun label-attribuuttia, jossa lippuvyöhykkeen kirjain)
-* **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla (**nimi!!**) ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta)
+* **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta)
 * **d231** = kääntymiskiellot eri solmujen välillä
 * **d241_hinta** = linkkikohtainen tienkäyttömaksu eri aikajaksoilla (aht, pt, iht)
 * **d241_pyoratieluokka** = pyörätieluokka eri linkeillä
@@ -39,8 +39,8 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 * **d311_jakoluvut** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (JAKOLUVUT ENN16-->SIJ19, EI TARVITA VERSIOSSA 4
 * **d311_matktermkys** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (LENTOASEMAN JA SATAMIEN MATKAT), EI TARVITA VERSIOSSA 4
 * **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VAERTEN), EI TARVITA VERSIOSSA 4
-* Muut tiedostot **Tarkistettava näiden yhtenäisyys eri vuosina ja kuvattava mitä sisältyy**
+* Muut tiedostot 
 
 ## Lähtötietojen muokkaaminen
 
-Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelman kautta. **Onko muokkausohjeosuudelle tarvetta vai riittääkö yleisohje ja index?**
+Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelman kautta.
