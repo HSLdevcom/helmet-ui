@@ -6,7 +6,7 @@ Yleistietoa HSL:n Helmet-mallista, sen lähtötiedoista, epävarmuuksista ja tul
 
 ## Mallitöiden tilaaminen
 
-Työohjelmaa laadittaessa ole yhteydessä HSL:n malliasiantuntijoihin (Jens West, Mervi Vatanen). Heiltä saat apua mm. lähtötietojen ja skenaarioiden määrittelyyn sekä dokumentointiin. Pääsääntöisesti töiden lähtötietoina käytetään HSL:n virallisia aineistoja, joita projekteissa sitten muokataan.
+Työohjelmaa laadittaessa ole yhteydessä HSL:n malliasiantuntijoihin (Jens West, Mervi Vatanen). Heiltä saat apua mm. lähtötietojen ja skenaarioiden määrittelyyn sekä dokumentointiin. Pääsääntöisesti töiden lähtötietoina käytetään HSL:n virallisia aineistoja, joita projekteissa sitten muokataan. Pohja-aineiston valinnassa kannattaa ottaa kyseisen projektin tarpeiden lisäksi huomioon myös mahdolliset tarpeet käyttää projektin tuloksia ja koodauksia jatkossa.
 
 Työn tilausvaiheessa varmista, että konsultti tuntee ja käyttää HSL:n laatimia mallin [käyttö-](mallitoiden_yleisohje.md) ja [dokumentointiohjeita](HSL-toiden_dokumentointi.md). Näitä ohjeita tulee noudattaa, jotta voidaan varmistua mallitarkastelujen tulosten luotettavuudesta sekä hyödynnettävyydestä jatkotarkasteluissa.
 
