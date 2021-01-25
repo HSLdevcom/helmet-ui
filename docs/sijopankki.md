@@ -1,6 +1,6 @@
 # Uuden HELMET 4.0 sij19 -sijoittelupankin perustaminen ”tyhjästä”
 
-Luo uusi Emme-projekti haluamaasi kansioon:
+## Luo uusi Emme-projekti haluamaasi kansioon:
 - File - New - Project…
 -	Name: esim. sijoittelu
 -	Project location: esim. `C:\HELMET40`
@@ -39,7 +39,7 @@ Perusta tyhjä skenaario kohdassa _First scenario_ (tarvitset alussa skenaariot 
 -	Number: esim. 19 
 -	Title: esim. pp
 
-**Huom: järjestelmä käyttää skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
+**Huom: järjestelmä käyttää oletusarvoisesti skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
 
 Valitse koordinaatisto:
 -	Spatial reference: File - Load: National Grids -> Finland -> ETRS 1989 GK25FIN.prj **TAI**
@@ -49,24 +49,32 @@ Valitse koordinaatisto:
 Luotuasi projektin, muuta Emme promptissa (Tools – Prompt) laitetyyppejä komennolla `dev`. 
 Päätteen tyypiksi on hyvä valita ”Emtool (non-graphic report /40l)” ja tulostimen tyypiksi (6): ”ASCII (no page / header)”.
 
+## Kopioi syöttötiedostot
+
 Verkkojen sisäänajoon tarvitset HELMET-makrot 
 ([zip](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/HSLdevcom/helmet-model-system/tree/master/Database)). 
 Laita ne Emme-projektin Database-kansioon (esimerkiksi `C:\HELMET40\sijoittelu\Database`). 
 Lisää Database-kansioon myös alikansiot kullekin tarkasteluvuodelle (esim. 2019 ja 2030) ja alikansioihin tiedostot, 
 jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista.
 
+## Valmistele skenaariot
+
 Luo Promptin (module 1.22) tai Modellerin (Tools - modeller) avulla toinen tyhjä skenaario (19 tai 20, toisen näistä loit jo aiemmin).
 
-Luo seuraavaksi testiverkot:
+Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 -	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla `~<makron_nimi.mac`).
 -	Aja skenaariossa 20 makro `batin_tyhjaverkko.mac`.
 -	Kopioi skenaario 20 skenaarioiksi 21, 22 ja 23 (module 1.22 tai Modeller).
 -   Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
-Lue makrolla 4verkkoa_HM40.mac sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
+Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko.
 
-1. vaihtoehdon tunnus (esim. 2017LM_20170131), pakollinen
+## Aja makro 4verkkoa_HM40.mac
+
+Makro 4verkkoa_HM40.mac lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
+
+1. vaihtoehdon tunnus (esim. 2019_20191122), pakollinen
 2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
 3. pyöräverkon skenaario (oletus s=19)
 4. vuorokausiverkko (oletus s+1)
@@ -93,7 +101,7 @@ Makro `4verkkoa_HM40.mac` lukee skenaarioon 19 tarpeelliset tiedot moduuleilla x
 |`d201_modes_M2016_pyora.in` |	kulkutavat (muutettu fillari ”autokulkutavaksi”) |
 |`d211_verkko_tunnus.in`     |	verkko (sama kuin moottoroidulla liikenteellä)   |
 
-Skenaarioihin 21–23 voidaan kätevästi lukea tarpeelliset tiedot moduuleilla x.yy tiedostoista
+Makro lukee myös skenaarioihin 21–23 tarpeelliset tiedot moduuleilla x.yy tiedostoista
 
 |Tiedosto                    | Sisältö                                                    |
 |----------------------------|------------------------------------------------------------|
@@ -116,4 +124,7 @@ Jos skenaarion muodostaminen epäonnistuu esim. tunnuksessa tai alikansion nimes
 poista skenaario ja perusta se uudelleen moduulilla 1.22 sekä alusta se makrolla 
 `batin_tyhjaverkko.mac`. Aja sitten uudelleen makro `4verkkoa_HM40.mac` oikeilla parametreilla.
 
-Muut tarvittavat lähtötiedot ajetaan automaattisesti sisään ennusteprosessin aikana.
+Muut tarvittavat lähtötiedot (mm. maankäyttö, kustannukset, pohjakysyntä) ajetaan automaattisesti sisään ennusteprosessin aikana.
+
+## Makron 4verkkoa_HM40.mac toiminta 
+
