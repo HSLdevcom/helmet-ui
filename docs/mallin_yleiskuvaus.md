@@ -1,6 +1,6 @@
 # HSL:n liikenne-ennustemallin yleiskuvaus
 
-Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
+Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siunton sekä niitä ympäröivän työssäkäyntialueen. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
 
 HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään. Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia. HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
@@ -33,7 +33,7 @@ Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
 Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
 * _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
 * _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
-* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton ja joukkoliikenteen kesken
+* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton, joukkoliikenteen ja pyöräilyn kesken
 * _Sijoittelu_ eli reittien valinta
 
 ## HSL:n Helmet-malli
@@ -44,23 +44,26 @@ Lähtötietojen määrittäminen on jo itsessään ennustamista. HSL ylläpitä�
 
 Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 
-**Maankäyttöä koskevat tiedot:**
-* Asukkaiden kokonaismäärät ja ikäryhmittäin
+**Alueiden maankäyttöä koskevat tiedot:**
+* Asukkaiden kokonaismäärät ja ikäryhmien osuudet
 * Työpaikkojen kokonaismäärät
-* Kerros- ja pientalojen osuudet
-* Kaupan työpaikkojen määrät
-* Palvelutyöpaikkojen määrät
+* Kaupan työpaikkojen osuus kaikista työpaikoista 
+* Palvelutyöpaikkojen osuus kaikista työpaikoista 
+* Teollisuustyöpaikkojen osuus kaikista työpaikoista 
+* Logistiikan työpaikkojen osuus kaikista työpaikoista 
 * 1., 2. ja 3. asteen oppilaspaikkamäärät
+* Kerros- ja pientalojen osuudet
 
 **Liikennejärjestelmää koskevat tiedot:**
-* Henkilöauton kilometrikustannus
+* Henkilöauton kilometrikustannus (polttoaine, renkaat)
 * Joukkoliikenteen vyöhykehinnat
 * Tie-ja katuverkon ominaisuudet (linkin tieluokka, kaistamäärä, pituus)
 * Joukkoliikennelinjasto (tunnus, reitti, keskimääräinen vuoroväli)
 * Erillisillä malleilla laskettu tavaraliikenne sekä satamien ja lentoaseman henkilöliikenne
 
-**Seuraavista usein kysytään, mutta malli ei käytä näitä lähtötietoinaan:**
-* Pysäköintimaksut
+**Seuraavista usein kysytään, mutta malli ei käytä näitä lähtötietoinaan (MITEN NIIN EI KÄYTÄ? Myös tiedoto .prk tarvitaan!) :**
+* Työmatkojen pysäköintimaksu aluettain
+* Asiointimatkojen pysäköintimaksut aluettain
 
 ### Lähtötietojen vaikutus ennustemallin eri osiin
 
@@ -71,17 +74,18 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
   * Asukasmäärä ikäryhmittäin
   * Autonomistus
 * Kulkutavan valinta
-  * Matka-aika
-  * Matkakustannus
-  * Autonomistus
+  * Alueparien väliset matka-ajat autolla ja joukkoliikenteellä
+  * Alueparien väliset etäisyydet polkupyörällä ja autolla
+  * Alueparien väliset matkakustannukset: joukkoliikennelipun hinta, autoiun muuttuvat kustannukset (polttoaine, renkaat) ja mahdollinen ruuhkamaksu/tietulli
+  * Autonomistus alueittain
 * Matkakohteiden valinta
-  * Matka-aika
-  * Matkakustannus
-  * Työpaikkamäärä
-  * Oppilaspaikkojen määrä
+  * Saavutettavuus (matka-aika, etäiyys ja matkakustannus määräpaikkaan eri kulkutavoilla)
+  * Työpaikkamäärä määräpaikassa
+  * Oppilaspaikkojen määrä määräpaikassa
 * Reitin valinta
-  * Matka-aika
-  * Matkakustannus
+  * Auto- ja joukkoliikennelinkin matka-aika
+  * Pyörälinkin pituus
+  * Autolinkin matkakustannus 
 
 ### Mallijärjestelmän rakenne
 
