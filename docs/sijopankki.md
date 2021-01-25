@@ -1,6 +1,6 @@
 # Uuden HELMET 4.0 sij19 -sijoittelupankin perustaminen ”tyhjästä”
 
-## Luo uusi Emme-projekti haluamaasi kansioon:
+## Luo uusi Emme-projekti haluamaasi kansioon
 - File - New - Project…
 -	Name: esim. sijoittelu
 -	Project location: esim. `C:\HELMET40`
@@ -40,6 +40,7 @@ Perusta tyhjä skenaario kohdassa _First scenario_ (tarvitset alussa skenaariot 
 -	Title: esim. pp
 
 **Huom: järjestelmä käyttää oletusarvoisesti skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
+Näitä numeroita käytetään tässä ohjeessa, mutta tarvittaessa voidaan käyttää muitakin numeroita ja ilmoittaa ne makron 4verkkoa_HM40.mac kutsussa
 
 Valitse koordinaatisto:
 -	Spatial reference: File - Load: National Grids -> Finland -> ETRS 1989 GK25FIN.prj **TAI**
