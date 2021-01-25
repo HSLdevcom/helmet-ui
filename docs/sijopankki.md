@@ -124,7 +124,44 @@ Jos skenaarion muodostaminen epäonnistuu esim. tunnuksessa tai alikansion nimes
 poista skenaario ja perusta se uudelleen moduulilla 1.22 sekä alusta se makrolla 
 `batin_tyhjaverkko.mac`. Aja sitten uudelleen makro `4verkkoa_HM40.mac` oikeilla parametreilla.
 
+## Muut lähtötiedot
+
 Muut tarvittavat lähtötiedot (mm. maankäyttö, kustannukset, pohjakysyntä) ajetaan automaattisesti sisään ennusteprosessin aikana.
 
 ## Makron 4verkkoa_HM40.mac toiminta 
 
+Tarkistetaan ja tarvittaessa täydennetään kutsuparametrit.
+
+Muodostetaan pyöräilyskenaario
+* Luetaan kulkutavat, verkkotiedosto (solmut ja linkit) sekä pyörätieluokat. 
+* Muutetaan linkeille pyörätieluokan mukaiset viivytysfunktiot.
+
+Muodostetaan moottoroidun liikenteen skenaariot
+* Luetaan  kulkutavat, ajoneuvotyypit, verkkotiedosto (solmut ja linkit), kääntymiskiellot ja 
+aamuruuhkan joukkoliikennelinjasto.
+* Muutetaan linkkien attribuutit (viivytysfunktio, kapasiteetti ja vapaa nopeus) linkkityypin perusteella.
+* Määritellään joukkoliikennelinjojen pysähtymiset solmutyypin perusteella.
+* Luetaan aht-skenaarioon linkkien ruuhkamaksut tai tietullit aikajaksoittain
+* Luetaan aht-skenaarioon joukkoliikennelinjojen vuorovälit aikajaksoittain.
+* Kopioidaan aht-skenaario pt- ja iht-skenaarioiksi.
+* Määritellään aikajaksokohtaiset attribuuttien arvot
+  - viivytysfunktion numero (bussikaista voimassa vai ei)
+  - kapasiteetti (ul1), jos vahintaan kolmesta kaistasta yksi on joukkoliikennekaista
+  - bussiliikenteen viivytysfunkton parametri us2 linkkityypin ja bussikaistan voimassaolon perusteella
+  - joukkoliikenteen viivytysfunktion numero (busseille bussikaistan voimassaolon ja ratikoille aikajakson perusteella)
+  - joukkoliikenteen vuoroväli
+  - ruuhkamaksun tai tietullin suuruus.
+
+Tehdään tarkistuksia eri aikajaksojen skenaarioihin
+* Yhteenveto linkkityypeista ja viivytysfunktioista
+* Luettelo linkeistä, joilta puuttuu pituus (length=0)
+* Luettelo autolinkeistä, joilta puuttuu kapasiteetti (ul1=0)
+* Luettelo autoiinkeistä, joilta puuttuu vapaa nopeus (ul2=0)
+* Luettelo autoiinkeistä, joilta puuttuu viivytysfunktio (vdf=0)
+* Raitiovaunulinkkien ul1-kentassa olevan raitiovaunuliikenteen nopeuden minimi- ja maksimiarvot sekä 
+onko jokin nopeuksista nolla.
+* Puuttuuko juna- tai metroliikenteen matka-aika (us1=0) ennen pysahtymista olevalla segmentillä (noalin=0 tai noboan=0).
+* Poikkeaako juna- tai metroliikenteen matka-aika us1 nollasta, vaikka ei pysahdysta (noalin=1 ja noboan=1).
+* Linjat, joilta puuttuu vuorovali (hdwy=0.01)
+
+Kopioidaan pt-skenaario vrk-skenaarioksi.
