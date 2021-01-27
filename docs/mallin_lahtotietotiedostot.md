@@ -31,15 +31,17 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 **Tiedostot**
 
 * **d211** = liikenneverkon solmut ja linkit sekä niiden attribuutit (HUOM: Helmet 4 käyttää myös solmun label-attribuuttia, jossa lippuvyöhykkeen kirjain)
-* **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta)
+* **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla `4verkkoa_HM40.mac` ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta)
 * **d231** = kääntymiskiellot eri solmujen välillä
 * **d241_hinta** = linkkikohtainen tienkäyttömaksu eri aikajaksoilla (aht, pt, iht)
 * **d241_pyoratieluokka** = pyörätieluokka eri linkeillä
 * **d241_vuorovalit** = joukkoliikennelinjojen vuorovälit eri aikajaksoilla (aht, pt, iht)
 * **d311_jakoluvut** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (JAKOLUVUT ENN16-->SIJ19, EI TARVITA VERSIOSSA 4
 * **d311_matktermkys** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (LENTOASEMAN JA SATAMIEN MATKAT), EI TARVITA VERSIOSSA 4
-* **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VAERTEN), EI TARVITA VERSIOSSA 4
+* **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VARTEN), EI TARVITA VERSIOSSA 4
 * Muut tiedostot 
+
+Skenaariot voi muodostaa kätevästi makrolla `4verkkoa_HM40.mac`, tarkemmpi kuvaus ohjeessa `docs\sijopankki.md`
 
 ## Lähtötietojen muokkaaminen
 
