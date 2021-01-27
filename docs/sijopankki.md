@@ -29,7 +29,7 @@ Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot
 | 5 000     | operators per function class                                        |
 | 3 000 000 | words for extra attributes                                          |
 
-Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös Promptissa moduulilla 1.23):
+Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös valitssemalla Tools - Prompt ja moduulin 1.23):
 - unit of energy: MJ
 - unit of cost: eur
 - unit of length: km
@@ -39,7 +39,7 @@ Perusta tyhjä skenaario kohdassa _First scenario_ (tarvitset alussa skenaariot 
 -	Number: esim. 19 
 -	Title: esim. pp
 
-**Huom: järjestelmä käyttää oletusarvoisesti skenaarioita 19 (pp), 20 (jk), 21 (aht), 22 (pt) ja 23 (iht).**
+**Huom: järjestelmä käyttää oletusarvoisesti skenaarioita 19 (pp), 20 (vrk), 21 (aht), 22 (pt) ja 23 (iht).**
 Näitä numeroita käytetään tässä ohjeessa, mutta tarvittaessa voidaan käyttää muitakin numeroita ja ilmoittaa ne makron 4verkkoa_HM40.mac kutsussa
 
 Valitse koordinaatisto:
@@ -60,7 +60,7 @@ jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, käänty
 
 ## Valmistele skenaariot
 
-Luo Promptin (module 1.22) tai Modellerin (Tools - modeller) avulla toinen tyhjä skenaario (19 tai 20, toisen näistä loit jo aiemmin).
+Luo Promptin (module 1.22) tai Modellerin (Tools - Modeller - Data management - Scenario) avulla toinen tyhjä skenaario (19 tai 20, toisen näistä loit jo aiemmin).
 
 Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 -	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla `~<makron_nimi.mac`).
@@ -69,11 +69,11 @@ Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 -   Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
-Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko.
+Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltsvan vaihtoehdon tiedostot.
 
 ## Aja makro 4verkkoa_HM40.mac
 
-Makro 4verkkoa_HM40.mac lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut.  Makrolle annetaan parametreina:
+Makro 4verkkoa_HM40.mac lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut. Makrolle annetaan parametreina:
 
 1. vaihtoehdon tunnus (esim. 2019_20191122), pakollinen
 2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
@@ -114,7 +114,7 @@ Makro lukee myös skenaarioihin 21–23 tarpeelliset tiedot moduuleilla x.yy tie
 |`d241_hinta_tunnus.in`      |	mahdolliset ruuhkamaksut tai tietullit aikajaksoittain    |
 |`d241_vuorovalit_tunnus.in` |	linjojen vuorovälit aikajaksoittain                       | 
 
-Skenaariota 20 ei tarvitse muuttaa, sillä sen paikalle kopioidaan skenaario 22 (päiväliikenne) vuorokausiskenaarioksi, johon talletetaan sijoittelun tuloksia.
+Skenaariota 20 ei tarvitse muuttaa, sillä sen paikalle kopioidaan skenaario 22 (päiväliikenne) vuorokausiskenaarioksi, johon ennustejärjestelmä tallettaa sijoittelun tuloksia.
 
 Makro tekee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. 
 Samalla luetaan skenaarioon myös ruuhkamaksut tiedostoista `d241_hinta_tunnus.in` moduulilla 2.41.
