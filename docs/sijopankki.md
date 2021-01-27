@@ -69,11 +69,11 @@ Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 -   Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
-Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltsvan vaihtoehdon tiedostot.
+Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltavan vaihtoehdon tiedostot.
 
 ## Aja makro 4verkkoa_HM40.mac
 
-Makro 4verkkoa_HM40.mac lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut. Makrolle annetaan parametreina:
+Makro `4verkkoa_HM40.mac` lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut. Makrolle annetaan parametreina:
 
 1. vaihtoehdon tunnus (esim. 2019_20191122), pakollinen
 2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
