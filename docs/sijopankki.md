@@ -167,6 +167,8 @@ Kopioidaan pt-skenaario vrk-skenaarioksi.
 
 ## Muita makroja
 
-**lvari_M2016.mac** laskee kulkutavan mukaisen värikoodin linkkiattribuuttiin `@lvari` 
+**lvari_M2016.mac** laskee kulkutavan mukaisen värikoodin linkkiattribuuttiin `@lvari`
+
 **tee_luokittelumuuttujat.mac** määrittelee linkkiattribuutit `@kunc,  @lvari, @neli` ja `@sij19`, joita voidaan käyttää esim. alueluokituksissa
+
 **tee_suoritemuuttujat.mac** määrittelee linkkiattribuutit `@ajnkm,  @ajnh, @hlokm` ja `@hloh`, joihin voidaan tallettaa linkkien suoritteita
