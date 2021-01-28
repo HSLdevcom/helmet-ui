@@ -149,8 +149,8 @@ Muodostetaan moottoroidun liikenteen skenaariot
   - kapasiteetti (ul1), jos vahintaan kolmesta kaistasta yksi on joukkoliikennekaista (makroilla `f_bussi_M2016_3?.mac`)
   - bussiliikenteen viivytysfunkton parametri us2 linkkityypin ja bussikaistan voimassaolon perusteella (makroilla `f_us2_M2016_4?.mac`)
   - joukkoliikenteen viivytysfunktion numero (busseille bussikaistan voimassaolon ja ratikoille aikajakson perusteella) (makroilla `f_jkl_M2016_5?.mac`)
-  - joukkoliikenteen vuoroväli (makrolla `vuorovalit_kopioi.mac')
-  - ruuhkamaksun tai tietullin suuruus (makrolla `vuorovalit_kopioi.mac').
+  - joukkoliikenteen vuoroväli (makrolla `vuorovalit_kopioi.mac`)
+  - ruuhkamaksun tai tietullin suuruus (makrolla `vuorovalit_kopioi.mac`).
 
 Tehdään tarkistuksia eri aikajaksojen skenaarioihin (makrolla `tarkista_verkko.mac`)
 * Yhteenveto linkkityypeista ja viivytysfunktioista
