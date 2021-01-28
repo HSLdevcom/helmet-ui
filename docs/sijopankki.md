@@ -66,7 +66,7 @@ Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 -	Aja skenaariossa 19 makrot `batin_tyhjapyoraverkko.mac` (makrot ajetaan kommennolla `~<makron_nimi.mac`).
 -	Aja skenaariossa 20 makro `batin_tyhjaverkko.mac`.
 -	Kopioi skenaario 20 skenaarioiksi 21, 22 ja 23 (module 1.22 tai Modeller).
--   Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
+- Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
 Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltavan vaihtoehdon tiedostot.
@@ -139,28 +139,34 @@ Muodostetaan pyöräilyskenaario
 
 Muodostetaan moottoroidun liikenteen skenaariot
 * Luetaan  kulkutavat, ajoneuvotyypit, verkkotiedosto (solmut ja linkit), kääntymiskiellot ja aamuruuhkan joukkoliikennelinjasto.
-* Muutetaan linkkien attribuutit (viivytysfunktio, kapasiteetti ja vapaa nopeus) linkkityypin perusteella (makrolla `muuta_linkkien_attribuutit_eikorj.mac`)
-* Määritellään joukkoliikennelinjojen pysähtymiset solmutyypin perusteella (makroilla `hsl_kunnat.mac` ja `pysakki.mac`)
+* Muutetaan linkkien attribuutit (viivytysfunktio `vdf`, kapasiteetti `ul1` ja vapaa nopeus `ul2`) linkkityypin `type` perusteella (makrolla `muuta_linkkien_attribuutit_eikorj.mac`)
+* Määritellään joukkoliikennelinjojen pysähtymiset solmutyypin `ui2` perusteella (makroilla `hsl_kunnat.mac` ja `pysakki.mac`)
 * Luetaan aht-skenaarioon linkkien ruuhkamaksut tai tietullit aikajaksoittain (makrolla `hinnat_lue.mac`)
-* Luetaan aht-skenaarioon joukkoliikennelinjojen vuorovälit aikajaksoittain (makrolla `vuorovalit_lue.mac`)
+* Luetaan aht-skenaarioon joukkoliikennelinjojen vuorovälit `hdwy` aikajaksoittain (makrolla `vuorovalit_lue.mac`)
 * Kopioidaan aht-skenaario pt- ja iht-skenaarioiksi.
 * Määritellään aikajaksokohtaiset attribuuttien arvot
-  - viivytysfunktion numero (bussikaista voimassa vai ei) (makroilla `f_bussi_M2016_3?.mac`)
-  - kapasiteetti (ul1), jos vahintaan kolmesta kaistasta yksi on joukkoliikennekaista (makroilla `f_bussi_M2016_3?.mac`)
-  - bussiliikenteen viivytysfunkton parametri us2 linkkityypin ja bussikaistan voimassaolon perusteella (makroilla `f_us2_M2016_4?.mac`)
-  - joukkoliikenteen viivytysfunktion numero (busseille bussikaistan voimassaolon ja ratikoille aikajakson perusteella) (makroilla `f_jkl_M2016_5?.mac`)
-  - joukkoliikenteen vuoroväli (makrolla `vuorovalit_kopioi.mac`)
+  - autoliikenteen viivytysfunktion `vdf` numero (bussikaista voimassa vai ei) (makroilla `f_bussi_M2016_3?.mac`)
+  - kapasiteetti (`ul1`), jos vahintaan kolmesta kaistasta yksi on joukkoliikennekaista (makroilla `f_bussi_M2016_3?.mac`)
+  - bussiliikenteen viivytysfunkton parametri `us2` linkkityypin ja bussikaistan voimassaolon perusteella (makroilla `f_us2_M2016_4?.mac`)
+  - joukkoliikenteen viivytysfunktion `ttf` numero (busseille bussikaistan voimassaolon ja ratikoille aikajakson perusteella) (makroilla `f_jkl_M2016_5?.mac`)
+  - joukkoliikenteen vuoroväli `hdwy` (makrolla `vuorovalit_kopioi.mac`)
   - ruuhkamaksun tai tietullin suuruus (makrolla `vuorovalit_kopioi.mac`).
 
 Tehdään tarkistuksia eri aikajaksojen skenaarioihin (makrolla `tarkista_verkko.mac`)
 * Yhteenveto linkkityypeista ja viivytysfunktioista
-* Luettelo linkeistä, joilta puuttuu pituus (length=0)
-* Luettelo autolinkeistä, joilta puuttuu kapasiteetti (ul1=0)
-* Luettelo autoiinkeistä, joilta puuttuu vapaa nopeus (ul2=0)
-* Luettelo autoiinkeistä, joilta puuttuu viivytysfunktio (vdf=0)
-* Raitiovaunulinkkien ul1-kentassa olevan raitiovaunuliikenteen nopeuden minimi- ja maksimiarvot sekä onko jokin nopeuksista nolla.
-* Puuttuuko juna- tai metroliikenteen matka-aika (us1=0) ennen pysahtymista olevalla segmentillä (noalin=0 tai noboan=0).
-* Poikkeaako juna- tai metroliikenteen matka-aika us1 nollasta, vaikka ei pysahdysta (noalin=1 ja noboan=1).
-* Linjat, joilta puuttuu vuorovali (hdwy=0.01)
+* Luettelo linkeistä, joilta puuttuu pituus (`length=0`)
+* Luettelo autolinkeistä, joilta puuttuu kapasiteetti (`ul1=0`)
+* Luettelo autoiinkeistä, joilta puuttuu vapaa nopeus (`ul2=0`)
+* Luettelo autoiinkeistä, joilta puuttuu viivytysfunktio (`vdf=0`)
+* Raitiovaunulinkkien `ul1`-kentassa olevan raitiovaunuliikenteen nopeuden minimi- ja maksimiarvot sekä onko jokin nopeuksista nolla.
+* Puuttuuko juna- tai metroliikenteen matka-aika (`us1=0`) ennen pysahtymista olevalla segmentillä (`noalin=0` tai `noboan=0`).
+* Poikkeaako juna- tai metroliikenteen matka-aika `us1` nollasta, vaikka ei pysahdysta (`noalin=1` ja `noboan=1`).
+* Linjat, joilta puuttuu vuorovali (`hdwy=0.01`)
 
 Kopioidaan pt-skenaario vrk-skenaarioksi.
+
+## Muita makroja
+
+**lvari_M2016.mac** laskee kulkutavan mukaisen värikoodin linkkiattribuuttiin `@lvari` 
+**tee_luokittelumuuttujat.mac** määrittelee linkkiattribuutit `@kunc,  @lvari, @neli` ja `@sij19`, joita voidaan käyttää esim. alueluokituksissa
+**tee_suoritemuuttujat.mac** määrittelee linkkiattribuutit `@ajnkm,  @ajnh, @hlokm` ja `@hloh`, joihin voidaan tallettaa linkkien suoritteita
