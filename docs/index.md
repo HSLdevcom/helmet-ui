@@ -78,7 +78,7 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
   - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
   - Tämä **ei** siis viittaa Emmen projektitiedostoon (.emp)
 - Lähtödatan sisältävä kansio
-  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
+  - Tässä ovat omissa alakansioissaan pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
   - Kansion sisältön saa HSL:ltä
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
@@ -100,7 +100,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
 6.	Suoritettavien iteraatiokierrosten määrä (yleensä 10)
     - Iteraatiomäärä 0 tarkoittaa että tehdään heti loppusijoittelu
-      (vaatii että kysyntämatriisit aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
+      (vaatii että kysyntämatriisit omx-muodossa aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
 
 ### Hyöty-kustannusanalyysin (hankearvioinnin) määrittely
 
