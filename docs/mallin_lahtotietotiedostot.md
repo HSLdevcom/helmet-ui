@@ -34,6 +34,8 @@ Kaikille vaihtoehdolle yhteiset
 * **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
 * **d201_modes_M2016.in** autoverkon kulkutavat
 * **d202_veh_M2016.in** joukkoliikenteen ajoneuvotyypit
+* **d411_pituusriippuvaiset_HM30.in** auto- ja joukkoliikenteen viivytysfunktiot
+* **d411_pituusriippuvaiset_pyora.in** pyöräliikenteen viivytysfunktiot
 
 Kustakin vaihtoehdosta
 * **d211** = liikenneverkon solmut ja linkit sekä niiden attribuutit (HUOM: Helmet 4 käyttää myös solmun label-attribuuttia, jossa lippuvyöhykkeen kirjain)
@@ -45,10 +47,10 @@ Kustakin vaihtoehdosta
 * **d311_jakoluvut** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (JAKOLUVUT ENN16-->SIJ19), EI TARVITA VERSIOSSA 4
 * **d311_matktermkys** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (LENTOASEMAN JA SATAMIEN MATKAT), EI TARVITA VERSIOSSA 4
 * **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VARTEN), EI TARVITA VERSIOSSA 4
-* Muut tiedostot 
+* Muut tiedostot ??
 
 Skenaariot voi muodostaa kätevästi makrolla `4verkkoa_HM40.mac`, tarkemmpi kuvaus ohjeessa `docs\sijopankki.md`
 
 ## Lähtötietojen muokkaaminen
 
-Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelman kautta.
+Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelmiston (Modeller, Network Editor, Prompt) kautta.
