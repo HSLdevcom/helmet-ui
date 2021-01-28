@@ -25,7 +25,7 @@ Dokumentoi muistioon myös muutosten perustelut.
 ### Tallennettavat muutos- ja lähtötietotiedostot 
 
 * Tallenna kaikista tekemistäsi muutoksista muokatut versiot lähtötietotiedostoista tilaajalle toimitettavaksi
-* Tallenna muutosmakrot kaikista tekemistäsi muutoksista: Tallenna kaikista muutoksista ems-tiedostot, ja nimeä tiedostot hankkeen/muutoksen mukaan. Tallenna eri skenaarioiden (myös eri tarkasteluvuodet) muutokset eri tiedostoihin. Muutokset voi tarvittaessa jakaa vieläkin useampaan osaan, sillä pieniä osia on helpompi jatkokäsitellä kuin liian suuria paloja. Koodaa aina erikseen verkolle ja linjastoon tehtävät muutokset, jotta näistä muodostuu erilliset muutostiedostot.
+* Tallenna muutosmakrot kaikista tekemistäsi muutoksista: Tallenna kaikista muutoksista ems-tiedostot, ja nimeä tiedostot hankkeen/muutoksen mukaan. Tallenna eri skenaarioiden (myös eri tarkasteluvuodet) muutokset eri tiedostoihin. Muutokset voi tarvittaessa jakaa vieläkin useampaan osaan, sillä pieniä osia on helpompi jatkokäsitellä kuin liian suuria paloja. Koodaa aina erikseen autoverkolle, joukkoliikenneverkolle (sis. vaihdot) ja joukkoliikennelinjastoon tehtävät muutokset, jotta näistä muodostuu erilliset muutostiedostot.
 * Tarjontamuutoksista, joista ei ole .ems-tiedostoja, toimita tilaajalle muokatut lähtötiedostot, ja kirjaa mallitekniseen muistioon, mitä muutoksia olet tehnyt, esim.:
   * Linja 10141 ja 10142 reittimuutos Töölössä
   * Linja 25501 ja 25502 uudet vuorovälit
