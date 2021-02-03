@@ -49,7 +49,7 @@ Kustakin vaihtoehdosta
 * **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VARTEN), EI TARVITA VERSIOSSA 4
 * Muut tiedostot ??
 
-Skenaariot voi muodostaa kätevästi makrolla `4verkkoa_HM40.mac`, tarkemmpi kuvaus ohjeessa `docs\sijopankki.md`
+Skenaariot voi muodostaa kootusti makrolla `4verkkoa_HM40.mac`, tarkempi kuvaus [täällä](sijopankki.md).
 
 ## Lähtötietojen muokkaaminen
 
