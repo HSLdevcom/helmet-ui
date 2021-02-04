@@ -60,10 +60,8 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 * Tie-ja katuverkon ominaisuudet (linkin tieluokka, kaistamäärä, pituus)
 * Joukkoliikennelinjasto (tunnus, reitti, keskimääräinen vuoroväli)
 * Erillisillä malleilla laskettu tavaraliikenne sekä satamien ja lentoaseman henkilöliikenne
-
-**Seuraavista usein kysytään, mutta malli ei käytä näitä lähtötietoinaan (MITEN NIIN EI KÄYTÄ? Myös tiedoto .prk tarvitaan!) :**
-* Työmatkojen pysäköintimaksu aluettain
-* Asiointimatkojen pysäköintimaksut aluettain
+* Työmatkojen pysäköintimaksu alueittain
+* Asiointimatkojen pysäköintimaksut alueittain
 
 ### Lähtötietojen vaikutus ennustemallin eri osiin
 
