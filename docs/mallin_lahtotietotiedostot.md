@@ -6,7 +6,7 @@ Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista
 
 ### Ennusteskenaarioiden syöttötiedot
 
-Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta.
+Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. Kunkin tiedoston alussa on kuvattu mitä tiedosto sisältää ja mistä tiedot tulevat.
 
 **Tiedostot**
 
