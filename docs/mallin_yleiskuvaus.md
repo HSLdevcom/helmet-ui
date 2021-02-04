@@ -103,6 +103,8 @@ Mallijärjestelmän tarjontakuvauksista lisätietoa raportissa [Helsingin seudun
 
 ### Helmet 4 uusia ominaisuuksia
 
+**Lisätietoja Helmet 3 ja 4 eroista mallirportissa (linkki). Tässä keskeisiä nostoja.**
+
 **Kulkutapa- ja suuntautumismallien rakenne**
 
 Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten, että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
