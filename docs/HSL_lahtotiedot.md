@@ -13,7 +13,7 @@ HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Jens West.
 * Ennuste n. 10 vuoden päähän (voi olla useita erilaisia)
 * Ennuste n. 30 vuoden päähän (voi olla useita erilaisia)
 
-Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Tiedostopolun juuressa dokumentti MAL2019-ennusteet.docx sisältää aineistojen yleiskuvauksen, ja tarkempia tietoja löytyy kunkin tiedoston sisältä kommmentteina.
+Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Tiedostopolun juuressa on dokumentti (esim. MAL2019-ennusteet.docx), joka sisältää aineistojen yleiskuvauksen, ja tarkempia tietoja löytyy kunkin tiedoston sisältä kommmentteina.
 
 Kysyntämalleja on kuvattu tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
 
