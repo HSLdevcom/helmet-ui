@@ -6,9 +6,9 @@ Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista
 
 ### Ennusteskenaarioiden syöttötiedot
 
-Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. Kunkin tiedoston alussa on kuvattu mitä tiedosto sisältää ja mistä tiedot tulevat.
+Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. Kunkin tiedoston alussa on kuvattu mitä tiedosto sisältää ja mistä tiedot tulevat. Kansiossa on oltava yksi kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk)
 
-**Tiedostot**
+##### Tiedostot
 
 * **cco** = autoilun kilometrikustannus
 * **edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
@@ -20,15 +20,17 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 * **trk** = rekkaliikenteen lähtötiedot: yhdistelmäajoneuvoilta kielletyt ennustealueet ja jätteenkäsittelylaitosten ennustealueet
 * **wrk** = kunkin ennustealueen kokonaistyöpaikkamäärä sekä eri alojen työpaikkojen osuudet (palvelut, kaupat, logistiikka, teollisuus)
 
-### Lähtötiedot
+### Lähtödata
 
-*Osio täydentyy*
+Kansio sisältää perusvuoden (lähtökohtaisesti 2018, mutta jotkut tiedot voivat olla vanhempia) syöttötietoja (kuvattu yllä) ja [kysyntämatriiseja](tulokset.md#tuloskansion-matriisitiedostojen-kuvaukset). Syöttötiedoissa on yksi ylimääräinen verrattuna ennusteskenaarioiden syöttötietoihin:
+
+* **car** = kunkin ennustealueen autotiheys
 
 ### Verkot
 
 Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on liikenneverkon lähtötiedot sekä niiden selostus (readme).
 
-**Tiedostot**
+##### Tiedostot
 
 Kaikille vaihtoehdolle yhteiset
 * **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
@@ -44,10 +46,7 @@ Kustakin vaihtoehdosta
 * **d241_hinta** = linkkikohtainen tienkäyttömaksu eri aikajaksoilla (aht, pt, iht)
 * **d241_pyoratieluokka** = pyörätieluokka eri linkeillä
 * **d241_vuorovalit** = joukkoliikennelinjojen vuorovälit eri aikajaksoilla (aht, pt, iht)
-* **d311_jakoluvut** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (JAKOLUVUT ENN16-->SIJ19), EI TARVITA VERSIOSSA 4
-* **d311_matktermkys** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (LENTOASEMAN JA SATAMIEN MATKAT), EI TARVITA VERSIOSSA 4
-* **d311_tama_ennustevektorit** = *** AIEMPIEN HELMET-VERSIOIDEN LÄHTÖTIEDOSTO (MAANKÄYTTÖVEKTOREITA TAVARALIIKENTEEN MALLIA VARTEN), EI TARVITA VERSIOSSA 4
-* Muut tiedostot ??
+* **hsl_kunnat** = macro joka laskee kuntakoodista (`ui1`) attribuutin `@hsl`, joka kertoo, onko pysäkkisolmu HSL-alueella (0=ei, 1=on)
 
 Skenaariot voi muodostaa kootusti makrolla `4verkkoa_HM40.mac`, tarkempi kuvaus [täällä](sijopankki.md).
 
