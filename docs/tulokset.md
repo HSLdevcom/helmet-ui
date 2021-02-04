@@ -97,7 +97,7 @@ Sekä kysyntä- että vastusmatriisit ovat tuntimatriiseja.
 | pt    | päivätunti      |
 | iht   | iltahuipputunti |
 
-Tuntimatriisit aggregoidaan mallijärjestelmässä koko vuorokauteen kiinteillä kertoimilla.
+Tuntimatriisit aggregoidaan mallijärjestelmässä [koko vuorokauteen kiinteillä kertoimilla](https://github.com/HSLdevcom/helmet-model-system/blob/master/Scripts/parameters/assignment.py#L122).
 
 | Tiedoston nimi (jossa xxx on tunnin koodi) | Selite | Tarkempi kuvaus |
 |--------------------------------------------|--------|-----------------|
