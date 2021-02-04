@@ -164,8 +164,6 @@ Helmet 4 -mallin avulla tehtäviä H/K-laskelmia kannattanee hyödyntää vain s
 
 Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle. Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
 
-*Osio täydentyy*
-
 HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
 
 ## Mallin käyttöohjeet
