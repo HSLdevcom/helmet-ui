@@ -12,7 +12,7 @@ Yleistietoa mallijärjestelmästä löydät [täältä](index.md).
 
 Mallin käyttämiä lähtötietoja on kuvattu [täällä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Lähtötiedot voi ladata sisään Emmen skenaarioihin erillisen makron avulla. 
 
-Mallin asennus- ja käyttöohjeet löydät [täältä](kaytto-ohje.md). Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia skriptejä ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella (ks. [dokumentointiohje](HSL-toiden_dokumentointi.md)).
+Mallin asennus- ja käyttöohjeet löydät [täältä](kaytto-ohje.md), ja tarkempia lähtötietojen käsittelyn ohjeita sekä Helmet-makrojen ohjeet ja latauslinkin [täältä](sijopankki.md). Pääosin suositellaan käytettäväksi vain HSL:n julkaisemia skriptejä ja näiden oletusparametrejä. Poikkeamat näihin on syytä dokumentoida huolella (ks. [dokumentointiohje](HSL-toiden_dokumentointi.md)).
 
 Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-pankki, johon kootaan eri Helmet-skenaariot (esim. eri linjastovaihtoehdot). Emmeen luodaan kutakin Helmet-skenaariota kohden viisi eri Emme-skenaariota (pyöräliikenne, vuorokausiliikenne, aamuhuipputunti, päivätunti ja iltahuipputunti).
 
