@@ -9,7 +9,7 @@ Emme luo valitsemaasi kansioon alikansion (tässä tapauksessa `C:\HELMET40\sijo
 Huomaa, että emp-tiedoston nimen pitää vastata alikansion nimeä, tässä tapauksessa siis `sijoittelu.emp`.
 
 Seuraavassa valintaikkunassa valitse kohta _Create an empty project_ ja jatka dimensioiden määrittelyyn. 
-Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot::
+Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot:
 
 | Koko      |Muuttuja                                                             |
 |-----------|---------------------------------------------------------------------|
@@ -56,7 +56,7 @@ Verkkojen sisäänajoon tarvitset HELMET-makrot
 ([zip](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/HSLdevcom/helmet-model-system/tree/master/Database)). 
 Laita ne Emme-projektin Database-kansioon (esimerkiksi `C:\HELMET40\sijoittelu\Database`). 
 Lisää Database-kansioon myös alikansiot kullekin tarkasteluvuodelle (esim. 2019 ja 2030) ja alikansioihin tiedostot, 
-jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista.
+jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista. HSL:n tarjoamien valmiiden lähtötietojen osalta tarvittavat aineistot eri tarkasteluvuosille löytyvät jakokansiosta Verkot (lisätietoja [täällä](mallin_lahtotietotiedostot.md).)
 
 ## Valmistele skenaariot
 
