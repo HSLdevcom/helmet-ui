@@ -26,7 +26,7 @@ Alempana on kuvattu tarkemmin lähtötietoja, niiden muokkaamista sekä tulosten
 
 ## Mallin lähtötietoaineistojen jakelu
 
-HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](HSL_lahtotiedot.md).
+HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](HSL_lahtotiedot.md) ja tarkemmat kuvaukset [täältä](mallin_lahtotietotiedostot.md).
 
 HSL:n ylläpitämiä ennusteskenaarioiden syöttötietoja luovutetaan ainoastaan täyttämällä hakemuslomake aineistojen luovuttamiseksi. Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West). Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
