@@ -83,7 +83,7 @@ Mallin ajoa varten tulee määritellä seuraavat asetukset.
   - Tämä **ei** siis viittaa Emmen projektitiedostoon (.emp)
 - Lähtödatan sisältävä kansio
   - Tässä ovat omissa alakansioissaan pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
-  - Kansion sisältön saa HSL:ltä
+  - Kansion sisällön saa HSL:ltä (ks. [lähtötietotiedostojen ohje](mallin_lahtotietotiedostot.md))
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
