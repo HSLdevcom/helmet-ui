@@ -15,7 +15,7 @@ HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Jens West.
 
 Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saat käyttöoikeuden täyttämällä hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Tiedostopolun juuressa on dokumentti (esim. MAL2019-ennusteet.docx), joka sisältää aineistojen yleiskuvauksen, ja tarkempia tietoja löytyy kunkin tiedoston sisältä kommmentteina.
 
-Kysyntämalleja on kuvattu tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
+Kysyntämalleja on kuvattu tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
 ## Verkkokuvaukset
 
@@ -37,4 +37,6 @@ Aineistojen sisältöjä on kuvattu tarkemmin aineiston jakokansiossa, johon saa
 
 Ilmoitathan Merville, mikäli havaitset tarjontakuvauksissa puutteita tai korjaustarpeita. Mervi ylläpitää korjaustarvelistaa sekä tarjontamallin lähtötietojen tarkempia kuvauksia.
 
-Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet). Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä. Lisätietoja mallin käyttämisestä [täällä](mallitoiden_yleisohje.md). Taustatietoa verkkokuvausten muodostamisesta ja historiasta löydät raportista [Helsingin seudun työssäkäyntialueen  liikenne-ennustejärjestelmän tarjontamallit 2017](https://www.hsl.fi/sites/default/files/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_tarjontamallit.pdf).
+Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa Helsingin seudun liikenteen Emme-verkon kuvaus, joka on saatavilla mallin käyttäjien EXT-Helmet -Teams-ryhmässä. Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä. 
+
+Lisätietoja mallin käyttämisestä [täällä](mallitoiden_yleisohje.md). Taustatietoa verkkokuvausten muodostamisesta ja historiasta löydät raportista [Helsingin seudun työssäkäyntialueen  liikenne-ennustejärjestelmän tarjontamallit 2017](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2019/helsingin-seudun-tyossakayntialueen-liikenne-ennustejarjestelman-tarjontamallit-6-2019.pdf).
