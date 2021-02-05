@@ -169,3 +169,8 @@ HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
 ## Mallin käyttöohjeet
 
 Lisätietoa mallin käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
+
+## Mallitöiden tilaajan ohjeet
+
+Lisätietoa etenkin HSL:n teettämien mallitöiden tilaamisesta löydät [täältä](HSL-mallitoiden_tilaajan_ohje.md).
+
