@@ -1,6 +1,6 @@
 # HSL:n liikenne-ennustemallin yleiskuvaus
 
-Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siunton sekä niitä ympäröivän työssäkäyntialueen. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
+Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siuntion sekä niitä ympäröivän työssäkäyntialueen. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
 
 HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään. Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia. HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
