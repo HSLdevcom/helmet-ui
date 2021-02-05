@@ -1,6 +1,6 @@
 # Ohjeet Helmet 4 -liikenne-ennustejärjestelmän käyttöön
 
-[Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymä. 
+Tässä ohjeessa kuvataan [Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymää. 
 Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
 
 ## Asennus ja käytön aloitus
@@ -22,7 +22,7 @@ Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellyt
 
 ### Emme-projektin määrittely
 
-Seuraavaksi sinun on määriteltävä *Emme-projekti*:
+Seuraavaksi sinun on määriteltävä *Emme-projekti*. Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-projektipankki, johon kootaan eri Helmet-skenaariot (esim. eri linjastovaihtoehdot). Emmeen luodaan kutakin Helmet-skenaariota kohden viisi eri Emme-skenaariota (pyöräliikenne, vuorokausiliikenne, aamuhuipputunti, päivätunti ja iltahuipputunti). 
 
 1. Käynnistä Emme-ohjelmisto.
 2. Perusta uusi projekti. Määrittele, mihin kansioon haluat sen asentaa. 
@@ -34,7 +34,7 @@ Seuraavaksi sinun on määriteltävä *Emme-projekti*:
 ### Helmet asennus
 
 Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
+josta kunkin version exe-paketit löytyvät oman väliotsikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
 missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
 :warning: **Tällä hetkellä sovellus on niin harvoin asennettu, että Windows huomauttaa siitä ja estää asennuksen suorituksen. 
@@ -56,17 +56,21 @@ Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työa
 uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
 Nämä kommennot pyörivät hiljaa taustalla, ja sovellus alkaa reagoida vasta niiden valmistuttua.
 
-EMMEn Python-polussa oleva määrittely saattaa epäonnistua, 
+Emmen Python-polussa oleva määrittely saattaa epäonnistua, 
 jos ympäristömuuttujaa ’EMMEPATH’ ei ole määritelty tai jos sovellus on asennettu epätavallisella tavalla. Jos näin käy, suorituskelpoisen 
 Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Asetukset-valikosta.
 
 ## Malliajojen ohje
 
+Asennuksen jälkeen pääset määrittämään projektin asetukset ja lähtötiedot.
+
 ### Asetukset
+
+Mallin ajoa varten tulee määritellä seuraavat asetukset. 
 
 :warning: **Kansiopoluissa ei saa olla ääkkösiä!**
 
-- suorituskelpoinen Emme Python 
+- Suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
   - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
 - GitHubin [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
@@ -83,12 +87,14 @@ Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Aset
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
+Mikäli eri Helmet-skenaarioiden matriisit halutaan tallentaa, config-tiedostoon (**missä??**) tulee muokata **mitä??**.
+
 ### Malliajon määrittely
 
 Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittelyt:
 
 1.	Skenaarion tai ajon nimi
-    - *Skenaario* ei tässä viita Emme-skenaarioon, vaan tässä annetaan nimi verkkokuvaus- ja maankäyttötietoyhdistelmälle joka menee yhteen malliajoon.
+    - *Skenaario* ei tässä viittaa Emme-skenaarioon, vaan tässä annetaan nimi verkkokuvaus- ja maankäyttötietoyhdistelmälle joka menee yhteen malliajoon.
 2.	Emmen project-tiedosto (.emp)
 3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
    kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
@@ -104,12 +110,12 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 
 ### Hyöty-kustannusanalyysin (hankearvioinnin) määrittely
 
-Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
+H/K-analyysillä voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävä:
 
 1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaarion nimi`)
 2. Hankevaihtoehdon (ve1) tuloskansio
 
-Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
+Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto on mahdollista määrittää toisellekin ennustevuodelle.
 
 ### Tulosten käsittely ja tulkinta
 
