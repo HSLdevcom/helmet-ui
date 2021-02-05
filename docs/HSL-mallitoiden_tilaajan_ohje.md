@@ -1,8 +1,10 @@
 # Ohje HSL:n mallitöiden tilaamiseen
 
+Tähän on koottu ohjeita HSL:n teettämien mallitöiden tilaamiseen. Ohjeita voi soveltaa myös muiden tilaamissa töissä.
+
 ## Yleistietoa mallista
 
-Yleistietoa HSL:n Helmet-mallista, sen lähtötiedoista, epävarmuuksista ja tuloksista löydät [täältä](mallin_yleiskuvaus.md).
+Yleistietoa HSL:n Helmet-mallista, sen lähtötiedoista, epävarmuuksista ja tuloksista löydät [täältä](index.md).
 
 ## Mallitöiden tilaaminen
 
