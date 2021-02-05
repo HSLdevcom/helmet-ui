@@ -56,7 +56,7 @@ Verkkojen sisäänajoon tarvitset HELMET-makrot, jotka saat ladattua
 [täältä](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/HSLdevcom/helmet-model-system/tree/master/Database) (zip). 
 Laita ne Emme-projektin Database-kansioon (esimerkiksi `C:\HELMET40\sijoittelu\Database`). 
 Lisää Database-kansioon myös alikansiot kullekin tarkasteluvuodelle (esim. 2019 ja 2030) ja alikansioihin tiedostot, 
-jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista. HSL:n tarjoamien valmiiden lähtötietojen osalta tarvittavat aineistot eri tarkasteluvuosille löytyvät jakokansiosta Verkot (lisätietoja [täällä](mallin_lahtotietotiedostot.md).)
+jotka sisältävät tiedot kulkutavoista, ajoneuvotyypeistä, verkosta, kääntymisistä sekä linkkien ruuhkamaksuista. HSL:n tarjoamien valmiiden lähtötietojen osalta tarvittavat aineistot eri tarkasteluvuosille löytyvät jakokansiosta Verkot (lisätietoja [täällä](mallin_lahtotietotiedostot.md)).
 
 ## Valmistele skenaariot
 
