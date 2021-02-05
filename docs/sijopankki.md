@@ -73,7 +73,7 @@ Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, 
 
 ## Aja makro 4verkkoa_HM40.mac
 
-Makro `4verkkoa_HM40.mac` lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut. Makrolle annetaan parametreina:
+Makron `4verkkoa_HM40.mac` ajo voidaan käynnistää minkä tahansa skenaarion sisällä. Makro lukee sisään kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjaston sekä linkkien ruuhkamaksut. Makrolle annetaan parametreina:
 
 1. vaihtoehdon tunnus (esim. 2019_20191122), pakollinen
 2. alikansio (oletus nykyinen, esim. `sijopankki2017`).
@@ -92,7 +92,7 @@ Vaihtoehdon tunnuksen näet esim. alikansiossa `C:\HELMET40\sijoittelu\Database\
     ~<4verkkoa_HM40.mac 2018_20191014 sijopankki2018 29 30 31 32 33 V2018
     ~<4verkkoa_HM40.mac 2019_20191122 sijopankki2019 39 40 41 42 43 V2019
     
-Vain ensimmäinen parametri (vaihtoehdon tunnus) on pakollinen. Myös toinen parametri tarvitaan, jos tiedostot eivät ole kansiossa database. Muilta osin voidaan hyväksyä ohjelman ehdottamat oletusarvot.
+Vain ensimmäinen parametri (vaihtoehdon tunnus) on pakollinen. Myös toinen parametri tarvitaan, jos tiedostot eivät ole kansiossa database. Muilta osin voidaan hyväksyä ohjelman ehdottamat oletusarvot. Huom! Makrokutsun maksimimerkkimäärä on 65, mikä on syytä huomioida tiedosto- ja skenaariotunnuksia valitessa.
 
 Makro `4verkkoa_HM40.mac` lukee skenaarioon 19 tarpeelliset tiedot moduuleilla x.yy seuraavista tiedostoista 
 (käytettävän moduulin voi päätellä tiedostonimestä, esimerkiksi tiedoston `d201_modes_M2016.in` kohdalla käytettävä moduuli on 2.01).
