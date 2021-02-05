@@ -1,12 +1,12 @@
 # Malliajon tulokset
 
-Tulosten kansiopolku määritellään Helmet-käyttöliittymän projektiasetuksissa. 
-Tähän Helmet-skenaarion (malliajon) tulokset tallentuvat Helmet-skenaarion nimellä nimettyyn alakansioon. 
-Tulokset jotka tallentuvat tähän kansioon ovat kahdentyyppisiä: matriiseja ja tekstitiedostoja.
-Näiden lisäksi tulokset jäävät Emme-pankkiin talteen sijoitteluista.
-Lisää tietoja sijoittelun tuloksista ja niiden analysoinnista löytyy Emmen dokumentaatiosta.
+Tulosten kansiopolku määritellään Helmet-käyttöliittymän projektiasetuksissa (ks. [ohjeet](kaytto-ohje.md)). 
+Kunkin Helmet-skenaarion (malliajon) tulokset tallentuvat kyseisen Helmet-skenaarion nimellä nimettyyn alikansioon. 
+Näihin kansioihin tallentuu kahdentyyppisiä tiedostoja: matriiseja ja tekstitiedostoja.
+Näiden lisäksi sijoittelutulokset jäävät talteen Emme-pankkiin.
+Lisää tietoja sijoittelun tuloksista ja niiden analysoinnista löytyy Emmen dokumentaatiosta. Huom! Jos ajat samassa Emme-pankissa useita Helmet-skenaarioita, matriisitulokset jäävät Emmeen talteen vain, jos config-tiedostoon on määritelty matriiseille omat tallennuspaikat (ks. [ohjeet](kaytto-ohje.md)).
 
-Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityksestä saadaan
+Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityksestä saat
 [malliraportista](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
 ## Tuloskansion tekstitiedostojen kuvaukset
@@ -97,7 +97,7 @@ Sekä kysyntä- että vastusmatriisit ovat tuntimatriiseja.
 | pt    | päivätunti      |
 | iht   | iltahuipputunti |
 
-Tuntimatriisit aggregoidaan mallijärjestelmässä [koko vuorokauteen kiinteillä kertoimilla](https://github.com/HSLdevcom/helmet-model-system/blob/master/Scripts/parameters/assignment.py#L122).
+Tuntimatriisit aggregoidaan mallijärjestelmässä koko vuorokauteen kiinteillä kertoimilla (ks. [sijoitteluskripti](https://github.com/HSLdevcom/helmet-model-system/blob/master/Scripts/parameters/assignment.py#L122)).
 
 | Tiedoston nimi (jossa xxx on tunnin koodi) | Selite | Tarkempi kuvaus |
 |--------------------------------------------|--------|-----------------|
