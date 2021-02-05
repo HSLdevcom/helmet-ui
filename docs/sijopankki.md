@@ -129,7 +129,9 @@ poista skenaario ja perusta se uudelleen moduulilla 1.22 sekä alusta se makroll
 
 Muut tarvittavat lähtötiedot (mm. maankäyttö, kustannukset, pohjakysyntä) ajetaan automaattisesti sisään ennusteprosessin aikana.
 
-## Makron 4verkkoa_HM40.mac toiminta 
+## Helmet-makrojen kuvaus
+
+### Makron 4verkkoa_HM40.mac toiminta 
 
 Tarkistetaan ja tarvittaessa täydennetään kutsuparametrit.
 
@@ -165,7 +167,7 @@ Tehdään tarkistuksia eri aikajaksojen skenaarioihin (makrolla `tarkista_verkko
 
 Kopioidaan pt-skenaario vrk-skenaarioksi.
 
-## Muita makroja
+### Muita makroja
 
 **lvari_M2016.mac** laskee kulkutavan mukaisen värikoodin linkkiattribuuttiin `@lvari`
 
