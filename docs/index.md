@@ -103,7 +103,7 @@ Mallijärjestelmän tarjontakuvauksista lisätietoa on raportissa Helsingin seud
 
 ### Helmet 4 uusia ominaisuuksia
 
-Tässä on kuvattu keskeisiä nostoja Helmet 4:n uusista ominaisuuksista sekä eroavaisuuksista Helmet 3:een verrattuna. Laajemmin aiheutta on kuvattu [malliraportissa](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf). 
+Tässä on kuvattu keskeisiä nostoja Helmet 4:n uusista ominaisuuksista sekä eroavaisuuksista Helmet 3:een verrattuna. Laajemmin aihetta on kuvattu [malliraportissa](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf). 
 
 **Kulkutapa- ja suuntautumismallien rakenne**
 
