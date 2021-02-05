@@ -97,13 +97,13 @@ Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa:
 
 ![Helmet-mallijärjestelmän rakenne](Helmet-mallijarjestelma.png)
 
-Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf).
+Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
-Mallijärjestelmän tarjontakuvauksista lisätietoa raportissa [Helsingin seudun liikenteen Emme-verkon kuvaus](https://hslfi.sharepoint.com/sites/ext-helmet/Jaetut%20asiakirjat/Forms/AllItems1.aspx?FolderCTID=0x012000D424AF5AB4008242ABBD5A3D509AEA7E&id=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet%2FLiite%20B%20%2D%20Emme%2Dverkon%5Fkuvaus%5F20200805%2Epdf&parent=%2Fsites%2Fext%2Dhelmet%2FJaetut%20asiakirjat%2FGeneral%2FOhjeet).
+Mallijärjestelmän tarjontakuvauksista lisätietoa on raportissa Helsingin seudun liikenteen Emme-verkon kuvaus, joka on saatavilla mallin käyttäjien EXT-Helmet-ryhmässä.
 
 ### Helmet 4 uusia ominaisuuksia
 
-**Lisätietoja Helmet 3 ja 4 eroista mallirportissa (linkki). Tässä keskeisiä nostoja.**
+Tässä on kuvattu keskeisiä nostoja Helmet 4:n uusista ominaisuuksista sekä eroavaisuuksista Helmet 3:een verrattuna. Laajemmin aiheutta on kuvattu [malliraportissa](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf). 
 
 **Kulkutapa- ja suuntautumismallien rakenne**
 
@@ -152,7 +152,7 @@ Muutoksiin reagoimisen osalta malli toimii vähemmän herkästi suhteessa Helmet
 
 ### Helmet 4 -tuloksiin liittyviä epävarmuuksia
 
-Mallia laadittaessa sen antamia tuloksia on verrattu monipuolisesti erilaiseen havaintoaineistoon ja pyritty saamaan tulokset vastaamaan mahdollisimman hyvin havaintoja. Tuloksiin liittyy silti tiettyjä epävarmuuksia ja rajoitteita, joista on nostettu tähän keskeisimpiä havaintoja. Mallin testausta ja testien tuloksia on kuvattu laajemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://classic.hsl.fi/sites/default/files/uploads/helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit_6_2020.pdf) (luvut 12 ja 13).
+Mallia laadittaessa sen antamia tuloksia on verrattu monipuolisesti erilaiseen havaintoaineistoon ja pyritty saamaan tulokset vastaamaan mahdollisimman hyvin havaintoja. Tuloksiin liittyy silti tiettyjä epävarmuuksia ja rajoitteita, joista on nostettu tähän keskeisimpiä havaintoja. Mallin testausta ja testien tuloksia on kuvattu laajemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf) (luvut 12 ja 13).
 
 Nykytilanteen osalta malli toimii hyvin, eikä kysynnän ennustamiseen liittyviä systemaattisia virheitä testauksessa havaittu. Malli tuottaa suuntautumisen, autoliikennemäärien ja pyöräliikennemäärien osalta ulkopuolisia havaintoja vastaavia nykytilanteen ennusteita. Mallin tulokset eivät poikkea nykytilanteen osalta merkittävästi Helmet 3.1-versiosta.
 
