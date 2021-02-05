@@ -2,13 +2,13 @@
 
 ## HSL:n ylläpitämät lähtötiedot
 
-Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista löytyy [täältä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen. Paketti sisältää seuraavat aineistot:
+Yleiskuvaus HSL:n ylläpitämistä aineistoista ja niiden päivitysperiaatteista löytyy [täältä](HSL_lahtotiedot.md). HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen EXT-Helmet -Teams-ryhmässä. Paketti sisältää seuraavat aineistot:
 
 ### Ennusteskenaarioiden syöttötiedot
 
-Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannukset osalta. Kunkin tiedoston alussa on kuvattu mitä tiedosto sisältää ja mistä tiedot tulevat. Kansiossa on oltava yksi kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk)
+Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on lähtötiedot mm. maankäytön ja kustannusten osalta. Kunkin tiedoston alussa on kuvattu mitä tiedosto sisältää ja mistä tiedot tulevat. Kansiossa on oltava yksi kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk)
 
-##### Tiedostot
+**Tiedostot**
 
 * **cco** = autoilun kilometrikustannus
 * **edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
@@ -30,9 +30,9 @@ Kansio sisältää perusvuoden (lähtökohtaisesti 2018, mutta jotkut tiedot voi
 
 Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on liikenneverkon lähtötiedot sekä niiden selostus (readme).
 
-##### Tiedostot
+**Tiedostot**
 
-Kaikille vaihtoehdolle yhteiset
+Kaikille vaihtoehdoille yhteiset
 * **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
 * **d201_modes_M2016.in** autoverkon kulkutavat
 * **d202_veh_M2016.in** joukkoliikenteen ajoneuvotyypit
