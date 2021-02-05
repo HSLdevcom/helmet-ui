@@ -32,17 +32,17 @@ HSL:n ylläpitämiä ennusteskenaarioiden syöttötietoja luovutetaan ainoastaan
 
 ## Ohjeet lähtötietojen muokkaamiseen
 
-HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Yleensä mallitöiden yhteydessä on kuitenkin tarpeen muokata joitakin lähtötietoja. Lähtötietoja voi muokata joko sisään ajettavia tiedostoja editoimalla (ja ajamalla muokatut tiedot uudelleen sisään) tai Emme-ohjelman kautta. Tehdyt muutokset on hyvä dokumentoida huolella.
+Yleensä mallitöiden yhteydessä on tarpeen muokata joitakin lähtötietoja. Lähtötietoja voi muokata joko sisään ajettavia tiedostoja editoimalla (ja ajamalla muokatut tiedot uudelleen sisään) tai Emme-ohjelman kautta. Tehdyt muutokset on hyvä dokumentoida huolella.
 
-Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohjeita löydät [täältä](HSL_lahtotiedot.md). Noudatathan HSL:n ohjeita ja periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
+Yleistietoa HSL:n tarjoamista lähtötietoaineistoista ja tarkempia muokkausohjeita löydät [täältä](HSL_lahtotiedot.md) ja [täältä](mallin_lahtotietotiedostot.md). Noudatathan HSL:n ohjeita ja periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
 
 ## Ohjeet malliajoon muokatuilla lähtötiedoilla
 
-Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla (ks. [ohje](sijopankki.md)) voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan skenaarioon kerrallaan. Vaihtoehtoisesti voi Emmen kautta esim. liikenverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
+Lähtötietojen muokkaamisen jälkeen varmista, että muutokset tulevat mukaan kaikkiin haluamiisi skenaarioihin. Lähtötietojen sisäänajomakrolla (ks. [ohje](sijopankki.md)) voit päivittää lähtötietotiedostoihin muokattuja tietoja useampaan skenaarioon kerrallaan. Vaihtoehtoisesti voi Emmen kautta esim. liikenneverkkoon tehtyjä muutoksia kopioida muihin skenaarioihin .ems-muutostiedostojen avulla.
 
 Varmista ennen malliajoa myös, että Helmet 4-käyttöliittymä viittaa haluamaasi ennusteskenaarion lähtötietokansioon (maankäyttö, kustannukset ym), ja että tulokset tallentuvat haluttuun paikkaan (ks. [mallin käyttö-ohje](kaytto-ohje.md)).
 
-Lähtötietojen muokkaamisen jälkeen voit ajaa mallin Helmet 4-käyttöliittymällä [perusohjeen](kaytto-ohje.md) mukaan.
+Lähtötietojen muokkaamisen jälkeen voit ajaa mallin [Helmet 4-käyttöliittymän ohjeen](kaytto-ohje.md) mukaan.
 
 ## Tulostiedot
 
