@@ -13,7 +13,7 @@ Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot
 
 | Koko      |Muuttuja                                                             |
 |-----------|---------------------------------------------------------------------|
-| 5–20      | network scenarios (vähintään 5, mutta voi olla enemmänkin, esim. 20)|
+| 5+        | network scenarios (5 kpl kutakin tarkasteltavaa Helmet-skenaariota kohti) |
 | 2100      | zones or centroids                                                  |
 | 20 000    | nodes incl. centroids (17999 regular nodes)                         |
 | 55 000    | directional links                                                   |
@@ -29,7 +29,7 @@ Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot
 | 5 000     | operators per function class                                        |
 | 3 000 000 | words for extra attributes                                          |
 
-Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös valitssemalla Tools - Prompt ja moduulin 1.23):
+Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös valitsemalla Tools - Prompt ja moduulin 1.23):
 - unit of energy: MJ
 - unit of cost: eur
 - unit of length: km
@@ -69,7 +69,7 @@ Mene Emme-promptiin ja luo seuraavaksi testiverkot:
 - Tee valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. Tämä onnistuu helpoiten makrolla `aja_extra_attr_HM31.mac`, 
   joka luo tarvittavat attribuutit skenaarioihin 19 ja 21–23
 
-Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea emmepankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että emmepankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltavan vaihtoehdon tiedostot.
+Liikennejärjestelmää kuvaavat tiedostot (kulkutavat, ajoneuvotyypit, verkot, kääntymiset, joukkoliikennelinjasto) pitää lukea Emme-pankkiin tietyssä järjestyksessä ja poistaa vastakkaisessa järjestyksessä. Siksi on hyödyllistä, että Emme-pankissa on valmiina yksinkertainen testiverkko, jotta se voidaan poistaa hallitusti ja lukea tilalle tarkasteltavan vaihtoehdon tiedostot.
 
 ## Aja makro 4verkkoa_HM40.mac
 
