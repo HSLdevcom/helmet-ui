@@ -22,8 +22,6 @@ HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua
 
 Helmet-järjestelmä tuottaa valmiiksi erilaisia tulosteita malliajojen tuloksista. Emmellä ja muilla sovelluksilla voidaan tuottaa lisäksi erilaisia analyysejä.
 
-Alempana on kuvattu tarkemmin lähtötietoja, niiden muokkaamista sekä tulosten käsittelyä.
-
 ## Mallin lähtötietoaineistojen jakelu
 
 HSL tarjoaa valmiina erilaisia lähtötietoaineistoja. Näistä löydät yleistietoa [täältä](HSL_lahtotiedot.md) ja tarkemmat kuvaukset [täältä](mallin_lahtotietotiedostot.md).
