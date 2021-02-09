@@ -22,7 +22,7 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 
 ### Lähtödata
 
-Kansio sisältää perusvuoden (lähtökohtaisesti 2018, mutta jotkut tiedot voivat olla vanhempia) syöttötietoja (kuvattu yllä) ja [kysyntämatriiseja](tulokset.md#tuloskansion-matriisitiedostojen-kuvaukset). Syöttötiedoissa on yksi ylimääräinen verrattuna ennusteskenaarioiden syöttötietoihin:
+Kansio sisältää perusvuoden (lähtökohtaisesti 2018, mutta jotkut tiedot voivat olla vanhempia) syöttötietoja (kuvattu yllä) ja [kysyntämatriiseja](tulokset.md#tuloskansion-matriisitiedostojen-kuvaukset). Kysyntämatriisit menevät ensimmäiseen sijoitteluun, josta kysyntälaskenta alkaa. Perusvuoden syöttötiedot menevät tavaraliikennemalliin ja autonomistusmalliin, jotka molemmat ovat muutosmalleja. Syöttötiedoissa on yksi ylimääräinen tiedosto verrattuna ennusteskenaarioiden syöttötietoihin:
 
 * **car** = kunkin ennustealueen autotiheys
 
