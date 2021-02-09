@@ -41,7 +41,7 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 * **hsl_kunnat** = macro joka laskee kuntakoodista (`ui1`) attribuutin `@hsl`, joka kertoo, onko pysäkkisolmu HSL-alueella (0=ei, 1=on)
 
 Skenaariot voi muodostaa kootusti makrolla `4verkkoa_HM40.mac`, tarkempi kuvaus [täällä](sijopankki.md). 
-Makro ajaa myös sisään kaikille vaihtoehdoille yhteiset tiedot
+Makro ajaa myös sisään kaikille vaihtoehdoille yhteiset tiedot:
 
 * **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
 * **d201_modes_M2016.in** autoverkon kulkutavat
