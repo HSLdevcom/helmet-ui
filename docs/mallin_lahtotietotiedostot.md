@@ -32,14 +32,6 @@ Kansio sisältää kullekin tarkasteluvuodelle/skenaariolle alikansion, jossa on
 
 **Tiedostot**
 
-Kaikille vaihtoehdoille yhteiset
-* **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
-* **d201_modes_M2016.in** autoverkon kulkutavat
-* **d202_veh_M2016.in** joukkoliikenteen ajoneuvotyypit
-* **d411_pituusriippuvaiset_HM30.in** auto- ja joukkoliikenteen viivytysfunktiot
-* **d411_pituusriippuvaiset_pyora.in** pyöräliikenteen viivytysfunktiot
-
-Kustakin vaihtoehdosta
 * **d211** = liikenneverkon solmut ja linkit sekä niiden attribuutit (HUOM: Helmet 4 käyttää myös solmun label-attribuuttia, jossa lippuvyöhykkeen kirjain)
 * **d221** = joukkoliikennelinjaston kuvaus: mm. linjatunnus, kulkumuoto, ajoneuvotyyppi (vehicle), reitin otsikko, reitin käyttämät solmut (HUOM: pysähtymiset lasketaan solmujen tietojen perusteella verkkojen sisäänajomakrolla `4verkkoa_HM40.mac` ja eri aikajaksojen vuorovälit ajetaan sisään erillisestä tiedostosta d241_vuorovalit)
 * **d231** = kääntymiskiellot eri solmujen välillä
@@ -48,7 +40,14 @@ Kustakin vaihtoehdosta
 * **d241_vuorovalit** = joukkoliikennelinjojen vuorovälit eri aikajaksoilla (aht, pt, iht)
 * **hsl_kunnat** = macro joka laskee kuntakoodista (`ui1`) attribuutin `@hsl`, joka kertoo, onko pysäkkisolmu HSL-alueella (0=ei, 1=on)
 
-Skenaariot voi muodostaa kootusti makrolla `4verkkoa_HM40.mac`, tarkempi kuvaus [täällä](sijopankki.md).
+Skenaariot voi muodostaa kootusti makrolla `4verkkoa_HM40.mac`, tarkempi kuvaus [täällä](sijopankki.md). 
+Makro ajaa myös sisään kaikille vaihtoehdoille yhteiset tiedot
+
+* **d201_modes_M2016_pyora.in** pyöräverkon kulkutavat
+* **d201_modes_M2016.in** autoverkon kulkutavat
+* **d202_veh_M2016.in** joukkoliikenteen ajoneuvotyypit
+* **d411_pituusriippuvaiset_HM30.in** auto- ja joukkoliikenteen viivytysfunktiot
+* **d411_pituusriippuvaiset_pyora.in** pyöräliikenteen viivytysfunktiot
 
 ## Lähtötietojen muokkaaminen
 
