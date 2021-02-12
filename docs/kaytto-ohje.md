@@ -87,7 +87,14 @@ Mallin ajoa varten tulee määritellä seuraavat asetukset.
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
-Mikäli eri Helmet-skenaarioiden matriisit halutaan tallentaa, config-tiedostoon (**missä??**) tulee muokata **mitä??**.
+Näiden asetusten lisäksi on kehittäjille tarkoitettuja asetuksia helmet-model-system -kansion tiedostossa `dev-config.json`.
+Näihin ei ole tavalliselle käyttäjälle yleensä syytä koskea, mutta joissain tapauksissa hyödyllinen asetusmahdollisuus ei ole vielä implementoitu käyttöliittymään.
+Sellaiset asetukset ovat `SAVE_MATRICES_IN_EMME` ja `FIRST_MATRIX_ID`.
+Jos `SAVE_MATRICES_IN_EMME` muutetaan arvoksi `false`, malliajoon ja hankearviointiin tarpeelliset matriisit jäävät edellen talteen .omx-muodossa,
+mutta esim. joukkoliikenteen matka-ajan osamatriisit (in-vehicle time, first waiting time, jne.) eivät jää talteen.
+Mikäli halutaan useiden Helmet-skenaarioiden kaikki Emme-matriisit talteen samaan Emme-projektiin (.emx-tiedostoihin),
+voidaan ennen jokaista malliajoa laittaa parametriin `FIRST_MATRIX_ID` uusi numero.
+Varataan yhteen malliajoon aina 300 matriisin numeroavaruus, joten jos ensimmäiseen malliajoon on käytetty `FIRST_MATRIX_ID` 100, toiseen malliajoon kannattaa laittaa 400.
 
 ### Malliajon määrittely
 
