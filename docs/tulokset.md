@@ -1,3 +1,7 @@
+---
+sort: 3
+---
+
 # Malliajon tulokset
 
 Tulosten tallennuskansiopolku määritellään Helmet-käyttöliittymän projektiasetuksissa (ks. [ohjeet](kaytto-ohje.md)). 
