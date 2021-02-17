@@ -1,3 +1,7 @@
+---
+sort: 4
+---
+
 # HSL:n ylläpitämät lähtötiedot
 
 HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi. Aineistojen nimissä on yleensä jokin vuosiskenaario, mutta ennusteet eivät koskaan kuvaa tarkkaa vuotta, vaan tiettyä hankkeiden, maankäyttöjen ja muiden lähtötietojen yhdistelmää.
