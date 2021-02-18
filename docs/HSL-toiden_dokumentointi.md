@@ -1,3 +1,7 @@
+---
+sort: 8
+---
+
 # HSL:n mallitöiden dokumentointiohje
 
 Tässä ohjeessa kuvataan mallitöiden dokumentointi HSL:n tilaamissa töissä. Ohjeita voi toki soveltaa myös muissa projekteissa. Ohjeeseen kannattaa perehtyä jo työn aloitusvaiheessa, jotta työskentelytavat tukevat parhaiten tarvittavien dokumenttien tuottamista.
