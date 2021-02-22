@@ -1,42 +1,29 @@
-# HSL:n liikenne-ennustemallin yleiskuvaus
+# HSL:n liikenne-ennustejärjestelmän yleiskuvaus
 
-Helmet on HSL:n oma liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siuntion sekä niitä ympäröivän työssäkäyntialueen. Ennustemallin ylläpidosta vastaa Liikennejärjestelmäryhmä (Jens West), ja liikenneverkkokuvausten ylläpidosta vastaa Joukkoliikennejärjestelmät-ryhmä (Mervi Vatanen). Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inro:n Emme-ohjelmistoa.
+Helmet on HSL:n liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siuntion sekä niitä ympäröivän työssäkäyntialueen.
+Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inron Emme-ohjelmistoa.
 
-HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään. Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia. HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
+HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään.
+Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia.
+HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
-Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”. Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita. Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista [täällä](esimerkkeja_tuloksista.md).
+Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”.
+Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita.
+Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista [täällä](esimerkkeja_tuloksista.md).
 
-## Mallintamisen taustoja
+## Helmet-järjestelmä käyttö
 
-### Termejä
+Mallin asennus- ja käyttöohjeet löydät [täältä](kaytto-ohje.md),
+ja tarkempia lähtötietojen käsittelyn ohjeita sekä Helmet-makrojen ohjeet ja latauslinkin [täältä](sijopankki.md).
+Lisätietoa mallin käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
+Lisätietoa etenkin HSL:n teettämien mallitöiden tilaamisesta löydät [täältä](HSL-mallitoiden_tilaajan_ohje.md).
 
-* **Malli:** Matemaattinen kuvaus järjestelmästä (tässä tapauksessa Helsingin seudun liikkumisesta)
-* **Mallin estimointi:** Mallin parametrien määritys niin, että malli kuvaa käytetyillä lähtötiedoilla mahdollisimman hyvin lähtöaineistossa (nykytila) havaittua käyttäytymistä 
-* **Mallin validointi:** Testaus, että malli tosiaan ennakoi nykytilalle oikean tuloksen
-* **Ennuste:** Mallin käyttö _samoilla parametreilla_, mutta _eri lähtötiedoilla_ kuin estimoinnissa
+### Tietopyynnöt
 
-### Mallin oletuksia, perusteluita ja rajoituksia
+Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle.
+Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
 
-Oletuksena yksilöiden hyödyn maksimointi:
-* Malli olettaa, että ihmiset ovat tietoisia kaikista vaihtoehdoista ja niiden hyödyistä ja haitoista
-* Malli tekee ainoastaan ihmisten oman hyödyn maksimoivia valintoja
-* Todellisuudessa ihmisten päätöksenteko ei ole näin suoraviivaista ja rationaalista, mutta hyötymaksimointi on mallintamisessa yleisesti käytetty oletus
-
-Malli perustuu nykytilan havaintoaineiston valintoihin:
-* Oletetaan, että ennustevuoden ihmiset tekevät valintansa samalla perusteella kuin havaintoaineistossa eli nykytilassa
-* Ennusteita ei voida tehdä asenteiden muutoksista (jos matka-aikaa, kustannuksia ym. arvostetaan eri tavalla kuin nykyisin)
-
-Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
-* Mallijärjestelmä rakentuu useista eri osamalleista, joissa kuvataan logit-malleilla todennäköisyyttä, että päätöksentekijä valitsee tietyn vaihtoehdon (esim. kulkutapa)
-* Teoriapohjaksi ks. esim. Kenneth Trainin e-kirja Discrete Choice Methods with Simulation, ensimmäinen osa luvusta 2 (Properties of Discrete Choice Models), s. 11-23: (https://eml.berkeley.edu/books/choice2.html))
-
-Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
-* _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
-* _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
-* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton, joukkoliikenteen ja pyöräilyn kesken
-* _Sijoittelu_ eli reittien valinta
-
-## HSL:n Helmet-malli
+HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
 
 ### Mallin lähtötiedot
 
@@ -160,17 +147,33 @@ Joukkoliikenteen osalta havaittiin kuitenkin ongelma, joka on syytä huomioida h
 
 Helmet 4 -mallin avulla tehtäviä H/K-laskelmia kannattanee hyödyntää vain suurille liikennejärjestelmätason hankkeille.
 
-## Tietopyynnöt
+## Mallintamisen taustoja
 
-Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle. Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
+### Termejä
 
-HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
+* **Malli:** Matemaattinen kuvaus järjestelmästä (tässä tapauksessa Helsingin seudun liikkumisesta)
+* **Mallin estimointi:** Mallin parametrien määritys niin, että malli kuvaa käytetyillä lähtötiedoilla mahdollisimman hyvin lähtöaineistossa (nykytila) havaittua käyttäytymistä 
+* **Mallin validointi:** Testaus, että malli tosiaan ennakoi nykytilalle oikean tuloksen
+* **Ennuste:** Mallin käyttö _samoilla parametreilla_, mutta _eri lähtötiedoilla_ kuin estimoinnissa
 
-## Mallin käyttöohjeet
+### Mallin oletuksia, perusteluita ja rajoituksia
 
-Lisätietoa mallin käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
+Oletuksena yksilöiden hyödyn maksimointi:
+* Malli olettaa, että ihmiset ovat tietoisia kaikista vaihtoehdoista ja niiden hyödyistä ja haitoista
+* Malli tekee ainoastaan ihmisten oman hyödyn maksimoivia valintoja
+* Todellisuudessa ihmisten päätöksenteko ei ole näin suoraviivaista ja rationaalista, mutta hyötymaksimointi on mallintamisessa yleisesti käytetty oletus
 
-## Mallitöiden tilaajan ohjeet
+Malli perustuu nykytilan havaintoaineiston valintoihin:
+* Oletetaan, että ennustevuoden ihmiset tekevät valintansa samalla perusteella kuin havaintoaineistossa eli nykytilassa
+* Ennusteita ei voida tehdä asenteiden muutoksista (jos matka-aikaa, kustannuksia ym. arvostetaan eri tavalla kuin nykyisin)
 
-Lisätietoa etenkin HSL:n teettämien mallitöiden tilaamisesta löydät [täältä](HSL-mallitoiden_tilaajan_ohje.md).
+Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
+* Mallijärjestelmä rakentuu useista eri osamalleista, joissa kuvataan logit-malleilla todennäköisyyttä, että päätöksentekijä valitsee tietyn vaihtoehdon (esim. kulkutapa)
+* Teoriapohjaksi ks. esim. Kenneth Trainin e-kirja Discrete Choice Methods with Simulation, ensimmäinen osa luvusta 2 (Properties of Discrete Choice Models), s. 11-23: 
+(https://eml.berkeley.edu/books/choice2.html))
 
+Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
+* _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
+* _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
+* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton, joukkoliikenteen ja pyöräilyn kesken
+* _Sijoittelu_ eli reittien valinta
