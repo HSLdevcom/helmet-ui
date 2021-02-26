@@ -1,3 +1,7 @@
+---
+sort: 2
+---
+
 # Ohje mallitöihin
 
 Perehdythän tähän ohjeeseen ennen Helmet-mallin käyttöä! 

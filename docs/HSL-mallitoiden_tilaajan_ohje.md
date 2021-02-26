@@ -1,3 +1,7 @@
+---
+sort: 7
+---
+
 # Ohje HSL:n mallitöiden tilaamiseen
 
 Tähän on koottu ohjeita HSL:n teettämien mallitöiden tilaamiseen. Ohjeita voi soveltaa myös muiden tilaamissa töissä.
