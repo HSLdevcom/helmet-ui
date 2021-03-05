@@ -80,13 +80,13 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | car_use.txt                                  | Sijoittelualueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | car_density_per_areas.txt                    | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | car_density_per_municipalities.txt           | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| generation.txt<br />generation.xlsx               | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin |
+| generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain (nimi muutettu versiossa 4.0.4, aikasemmin tours.txt) |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
 | origins_demand.txt                           | Koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
-| tours.txt                                    | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain |
+| tour_combinations.txt<br />tour_combinations.xlsx | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin (nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt) |
 | transit_kms.txt                              | Koko vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuovoille |
 | trip_lengths.txt                             | Koko vuorokauden kiertomatkatuotokset tyyppeittäin, kulkutavoittain ja etäisyysluokittain | Etäisyysluokka perustuu henkilöauton ajoetäisyyteen kilometreissa. |
 | vehicle.kms                                  | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin |
