@@ -75,15 +75,16 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | aggregated_demand.txt aggregated_demand.xlsx | Suuraluetasolle aggregoidut koko vuorokauden kysyntämatriisit |
 | attraction.txt                               | Alueiden kiertomatka-attraktiot, eli kuinka monessa kiertomatkassa kyseinen alue on päämäärä |
 | car_density.txt                              | Sijoittelualueiden autotiheysluvut (auto/asukas) |
-| car_density_per_areas.txt                    | Suuralueiden autotiheysluvut (auto/asukas) |
-| car_density_per_municipalities.txt           | Kuntien autotiheysluvut (auto/asukas) |
+| car_density_areas.txt                        | Suuralueiden autotiheysluvut (auto/asukas) |
+| car_density_municipalities.txt               | Kuntien autotiheysluvut (auto/asukas) |
 | car_use.txt                                  | Sijoittelualueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_density_per_areas.txt                    | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_density_per_municipalities.txt           | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
+| car_density_areas.txt                        | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
+| car_density_municipalities.txt               | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain (nimi muutettu versiossa 4.0.4, aikasemmin tours.txt) |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
-| origins_demand.txt                           | Koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
+| origins_demand.txt                           | Sijoittelualueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
+| origins_demand_areas.txt                     | Suuralueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
 | tour_combinations.txt<br />tour_combinations.xlsx | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin (nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt) |
