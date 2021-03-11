@@ -29,6 +29,9 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | ho    | koti - muu            |
 | wo    | työ - joku            |
 | oo    | muu kiertomatka       |
+| *wh*  | työ - koti [1]        |
+
+[1] Tyyppi *wh* on invertoitu versio kotiperäisten työmatkojen (hw) mallista. Sitä käytetään työvoiman saavutettavuuslaskennassa.
 
 #### Ympäryskunnissa alkavien kiertomatkojen päätyypit
 
@@ -59,13 +62,15 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 
 #### Suuralueet
 
-| Koodi          | Selitys                 | Sijoittelualueet |
-|----------------|-------------------------|------------------|
-| helsinki_cbd   | Helsingin kantakaupunki | 0 - 999          |
-| helsinki_other | Muu Helsinki            | 1 000 - 1 999    |
-| espoo_vant_kau | Muu pääkaupunkiseutu    | 2 000 - 5 999    |
-| surrounding    | Kehyskunnat             | 6 000 - 15 999   |
-| peripheral     | Ympäryskunnat           | 16 000 - 30 999  |
+| Koodi          | Selitys                                         | Sijoittelualueet |
+|----------------|-------------------------------------------------|------------------|
+| helsinki_cbd   | Helsingin kantakaupunki                         | 0 - 999          |
+| helsinki_other | Muu Helsinki                                    | 1 000 - 1 999    |
+| espoo_vant_kau | Muu pääkaupunkiseutu                            | 2 000 - 5 999    |
+| surrounding    | Kehyskunnat                                     | 6 000 - 15 999   |
+| surround_train | Junaliikenteeseen <br /> tukeutuvat kehyskunnat | 6 000 - 6 999 <br /> 10 000 - 11 999 <br /> 13 000 - 14 999 <br /> 15 500 - 15 999 |
+| surround_other | Muut kehyskunnat                                | 7 000 - 9 999 <br /> 12 000 - 12 999 <br /> 15 000 - 15 499 |
+| peripheral     | Ympäryskunnat                                   | 16 000 - 30 999  |
 
 ### Tiedostot
 
@@ -80,17 +85,22 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | car_use.txt                                  | Sijoittelualueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | car_density_areas.txt                        | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | car_density_municipalities.txt               | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain (nimi muutettu versiossa 4.0.4, aikasemmin tours.txt) |
+| generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
+| noise_areas.txt                              | Suuralueiden melualuiden pinta-ala | :exclamation: Uusi versiossa 4.0.4 |
 | origins_demand.txt                           | Sijoittelualueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_demand_areas.txt                     | Suuralueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
-| tour_combinations.txt<br />tour_combinations.xlsx | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin (nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt) |
+| sustainable_accessibility.txt                | Kysyntämallin logsum-muuttujat ilman autokulkutapaa sijoittelualueittain | :exclamation: Uusi versiossa 4.0.4 |
+| tour_combinations.txt<br />tour_combinations.xlsx | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt |
 | transit_kms.txt                              | Koko vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuovoille |
 | trip_lengths.txt                             | Koko vuorokauden kiertomatkatuotokset tyyppeittäin, kulkutavoittain ja etäisyysluokittain | Etäisyysluokka perustuu henkilöauton ajoetäisyyteen kilometreissa. |
-| vehicle.kms                                  | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin |
+| vehicle_kms_areas.txt                        | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
+| vehicle_kms_vdfs.txt                         | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin vehicle_kms.txt |
+| vehicle_kms_vdfs_areas.txt                   | Kokonaisetäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin ja suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
+| workforce_accessibility.txt                  | Työ-koti-mallin logsum-muuttuja sijoittelualueittain muunnettu henkilömääräksi | :exclamation: Uusi versiossa 4.0.4 |
 
 ## Tuloskansion matriisitiedostojen kuvaukset
 
