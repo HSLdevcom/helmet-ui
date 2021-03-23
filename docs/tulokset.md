@@ -88,7 +88,7 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
-| noise_areas.txt                              | Suuralueiden melualuiden pinta-ala | :exclamation: Uusi versiossa 4.0.4 |
+| noise_areas.txt                              | Suuralueiden melualueiden pinta-alat ja väestömäärät | :exclamation: Uusi versiossa 4.0.4 |
 | origins_demand.txt                           | Sijoittelualueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_demand_areas.txt                     | Suuralueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
