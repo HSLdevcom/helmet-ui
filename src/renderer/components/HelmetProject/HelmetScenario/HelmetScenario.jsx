@@ -70,7 +70,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Folder path to variable input data (input data with variables sent to EMME) */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">L&auml;ht&ouml;data</span>
+        <span className="Scenario__pseudo-label">Sy&ouml;tt&ouml;tiedot</span>
         <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select">
           {scenario.forecast_data_folder_path ? path.basename(scenario.forecast_data_folder_path) : "Valitse.."}
         </label>
