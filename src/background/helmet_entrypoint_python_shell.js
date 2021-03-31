@@ -21,7 +21,7 @@ module.exports = {
         args: [
           "--log-level", allRunParameters[0].log_level,
           "--log-format", "JSON",
-          "--baseline-data-path", allRunParameters[0].base_data_folder_path
+          "--baseline-data-path", allRunParameters[0].base_data_folder_path,
         ]
           .concat(["--emme-paths"]).concat(allRunParameters.map(p => p.emme_project_file_path))
           .concat(["--first-scenario-ids"]).concat(allRunParameters.map(p => p.first_scenario_id))
