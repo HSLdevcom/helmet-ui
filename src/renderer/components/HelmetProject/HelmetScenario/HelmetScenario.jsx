@@ -39,7 +39,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       {/* File path to EMME project reference-file (generally same in all scenarios of a given HELMET project) */}
       <div className="Scenario__section">
         <span className="Scenario__pseudo-label">EMME projekti (.emp)</span>
-        <label className="Scenario__pseudo-file-select" htmlFor="emme-project-file-select">
+        <label className="Scenario__pseudo-file-select" htmlFor="emme-project-file-select" title={scenario.emme_project_file_path}>
           {scenario.emme_project_file_path ? path.basename(scenario.emme_project_file_path) : "Valitse.."}
         </label>
         <input className="Scenario__hidden-input"
@@ -70,8 +70,8 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Folder path to variable input data (input data with variables sent to EMME) */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">L&auml;ht&ouml;data</span>
-        <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select">
+        <span className="Scenario__pseudo-label">Sy&ouml;tt&ouml;tiedot</span>
+        <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select" title={scenario.forecast_data_folder_path}>
           {scenario.forecast_data_folder_path ? path.basename(scenario.forecast_data_folder_path) : "Valitse.."}
         </label>
         <input className="Scenario__hidden-input"
