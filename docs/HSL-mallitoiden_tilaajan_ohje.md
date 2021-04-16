@@ -22,4 +22,4 @@ Työn valmistuessa varmista, että sen tulokset ja malliaineistot toimitetaan HS
 
 ## Menneiden projektien aineistot
 
-Projektin päättyessä HSL:n malliasiantuntijat tallentavat saadut aineistot R-levyn arkistoon. Täältä voi tarvittaessa poimia aineistoja myöhempää käyttöä varten. Ennen aineistojen käyttöä, olethan yhteydessä malliasiantuntijoihin.
+Projektin päättyessä HSL:n malliasiantuntijat tallentavat saadut aineistot verkkolevylle arkistoon. Täältä voi tarvittaessa poimia aineistoja myöhempää käyttöä varten. Ennen aineistojen käyttöä, olethan yhteydessä malliasiantuntijoihin.
