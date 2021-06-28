@@ -23,7 +23,9 @@ async function createUI() {
     autoHideMenuBar: true,
     webPreferences: {
       devTools: true, // There's no reason to disable these (CTRL+SHIFT+i) https://superuser.com/questions/367662/ctrlshifti-in-windows-7
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
     }
   });
   await mainWindow.loadFile('src/renderer/index.html');
@@ -36,13 +38,13 @@ async function createUI() {
 
 async function createHelmetEntrypointWorker() {
   // Create hidden window for background process #1 (Electron best practise, alternative is web workers with limited API)
-  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
   await entrypointWorkerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
 }
 
 async function createCbaScriptWorker() {
   // Create hidden window for background process #2 (Electron best practise, alternative is web workers with limited API)
-  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
   await cbaWorkerWindow.loadFile('src/background/cba_script_worker.html');
 }
 
