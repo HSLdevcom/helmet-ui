@@ -16,6 +16,7 @@
   "config": {
     "forge": "./forge-config.js"
   },
+  "type": "commonjs",
   "dependencies": {
     "babel-standalone": "^6.26.0",
     "decompress": "^4.2.1",
