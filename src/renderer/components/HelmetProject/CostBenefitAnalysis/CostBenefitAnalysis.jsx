@@ -10,7 +10,7 @@ const CostBenefitAnalysis = ({
       <div className="CBA__heading">Hy&ouml;ty-kustannus-analyysi</div>
       <table className="CBA__choices">
         <tbody>
-        <tr>
+          <tr>
             {/* Baseline scenario results folder */}
             <td>
               <span className="CBA__pseudo-label">Vertailuvaihtoehto</span>
@@ -57,8 +57,8 @@ const CostBenefitAnalysis = ({
                      }}
               />
             </td>
-        </tr>
-        <tr>
+          </tr>
+          <tr>
             {/* Baseline scenario 2 results folder */}
             <td>
               <span className="CBA__pseudo-label">Vertailuvaihtoehto vuosi 2 (valinnainen)</span>
@@ -105,7 +105,7 @@ const CostBenefitAnalysis = ({
                      }}
               />
             </td>
-        </tr>
+          </tr>
         </tbody>
       </table>
       <div className="CBA__run">
