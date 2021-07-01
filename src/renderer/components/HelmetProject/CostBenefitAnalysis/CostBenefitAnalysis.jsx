@@ -1,5 +1,6 @@
 import React from 'react';
 import path from "path";
+const {dialog} = require('electron').remote;
 
 const CostBenefitAnalysis = ({
   cbaOptions, setCbaOptions, runCbaScript
@@ -17,14 +18,18 @@ const CostBenefitAnalysis = ({
               </label>
               <input className="CBA__hidden-input"
                      id="baseline-scenario-results-folder-select"
-                     type="file"
-                     directory=""
-                     webkitdirectory=""
-                     onChange={(e) => {
-                       const target_path = e.target.files[0].path;
-                       setCbaOptions(prevOptions => {
-                         return {...prevOptions, baseline_scenario_path: target_path};
-                       });
+                     type="text"
+                     onClick={()=>{
+                       dialog.showOpenDialog({
+                         properties: ['openDirectory']
+                       }).then((e)=>{
+                         if (!e.canceled) {
+                           const target_path = e.filePaths[0];
+                           setCbaOptions(prevOptions => {
+                             return {...prevOptions, baseline_scenario_path: target_path};
+                           });
+                         }
+                       })
                      }}
               />
             </td>
@@ -36,14 +41,18 @@ const CostBenefitAnalysis = ({
               </label>
               <input className="CBA__hidden-input"
                      id="projected-scenario-results-folder-select"
-                     type="file"
-                     directory=""
-                     webkitdirectory=""
-                     onChange={(e) => {
-                       const target_path = e.target.files[0].path;
-                       setCbaOptions(prevOptions => {
-                         return {...prevOptions, projected_scenario_path: target_path};
-                       });
+                     type="text"
+                     onClick={()=>{
+                       dialog.showOpenDialog({
+                         properties: ['openDirectory']
+                       }).then((e)=>{
+                         if (!e.canceled) {
+                           const target_path = e.filePaths[0];
+                           setCbaOptions(prevOptions => {
+                             return {...prevOptions, projected_scenario_path: target_path};
+                           });
+                         }
+                       })
                      }}
               />
             </td>
@@ -57,14 +66,18 @@ const CostBenefitAnalysis = ({
               </label>
               <input className="CBA__hidden-input"
                      id="baseline-scenario-2-results-folder-select"
-                     type="file"
-                     directory=""
-                     webkitdirectory=""
-                     onChange={(e) => {
-                       const target_path = e.target.files[0].path;
-                       setCbaOptions(prevOptions => {
-                         return {...prevOptions, baseline_scenario_2_path: target_path};
-                       });
+                     type="text"
+                     onClick={()=>{
+                       dialog.showOpenDialog({
+                         properties: ['openDirectory']
+                       }).then((e)=>{
+                         if (!e.canceled) {
+                           const target_path = e.filePaths[0];
+                           setCbaOptions(prevOptions => {
+                             return {...prevOptions, baseline_scenario_2_path: target_path};
+                           });
+                         }
+                       })
                      }}
               />
             </td>
@@ -76,14 +89,18 @@ const CostBenefitAnalysis = ({
               </label>
               <input className="CBA__hidden-input"
                      id="projected-scenario-2-results-folder-select"
-                     type="file"
-                     directory=""
-                     webkitdirectory=""
-                     onChange={(e) => {
-                       const target_path = e.target.files[0].path;
-                       setCbaOptions(prevOptions => {
-                         return {...prevOptions, projected_scenario_2_path: target_path};
-                       });
+                     type="text"
+                     onClick={()=>{
+                       dialog.showOpenDialog({
+                         properties: ['openDirectory']
+                       }).then((e)=>{
+                         if (!e.canceled) {
+                           const target_path = e.filePaths[0];
+                           setCbaOptions(prevOptions => {
+                             return {...prevOptions, projected_scenario_2_path: target_path};
+                           });
+                         }
+                       })
                      }}
               />
             </td>

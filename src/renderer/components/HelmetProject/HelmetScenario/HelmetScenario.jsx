@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import path from 'path';
+const {dialog} = require('electron').remote;
 
 const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherNames}) => {
 
@@ -76,11 +77,15 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         </label>
         <input className="Scenario__hidden-input"
                id="data-folder-select"
-               type="file"
-               webkitdirectory=""
-               directory=""
-               onChange={(e) => {
-                 updateScenario({...scenario, forecast_data_folder_path: e.target.files[0].path});
+               type="text"
+               onClick={()=>{
+                 dialog.showOpenDialog({
+                   properties: ['openDirectory']
+                 }).then((e)=>{
+                   if (!e.canceled) {
+                     updateScenario({...scenario, forecast_data_folder_path: e.filePaths[0]});
+                   }
+                 })
                }}
         />
       </div>

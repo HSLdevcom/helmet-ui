@@ -1,5 +1,6 @@
 import React from 'react';
 import path from "path";
+const {dialog} = require('electron').remote;
 
 const Settings = ({
   emmePythonPath, setEMMEPythonPath,
@@ -45,10 +46,16 @@ const Settings = ({
           }
           <input className="Settings__hidden-input"
                  id="hidden-input-helmet-scripts-path"
-                 type="file"
-                 webkitdirectory=""
-                 directory=""
-                 onChange={(e) => setHelmetScriptsPath(e.target.files[0].path, emmePythonPath)}
+                 type="text"
+                 onClick={()=>{
+                   dialog.showOpenDialog({
+                     properties: ['openDirectory']
+                   }).then((e)=>{
+                     if (!e.canceled) {
+                       setHelmetScriptsPath(e.filePaths[0], emmePythonPath);
+                     }
+                   })
+                 }}
           />
           <button className="Settings__beside-input-btn"
                   onClick={(e) => {promptModelSystemDownload()}}
@@ -63,10 +70,16 @@ const Settings = ({
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-project-path"
-                 type="file"
-                 webkitdirectory=""
-                 directory=""
-                 onChange={(e) => setProjectPath(e.target.files[0].path)}
+                 type="text"
+                 onClick={()=>{
+                   dialog.showOpenDialog({
+                     properties: ['openDirectory']
+                   }).then((e)=>{
+                     if (!e.canceled) {
+                       setProjectPath(e.filePaths[0]);
+                     }
+                   })
+                 }}
           />
         </div>
         <div className="Settings__dialog-input-group">
@@ -76,10 +89,16 @@ const Settings = ({
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-basedata-path"
-                 type="file"
-                 webkitdirectory=""
-                 directory=""
-                 onChange={(e) => setBasedataPath(e.target.files[0].path)}
+                 type="text"
+                 onClick={()=>{
+                   dialog.showOpenDialog({
+                     properties: ['openDirectory']
+                   }).then((e)=>{
+                     if (!e.canceled) {
+                       setBasedataPath(e.filePaths[0]);
+                     }
+                   })
+                 }}
           />
         </div>
         <div className="Settings__dialog-input-group">
@@ -89,10 +108,16 @@ const Settings = ({
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-results-path"
-                 type="file"
-                 webkitdirectory=""
-                 directory=""
-                 onChange={(e) => setResultsPath(e.target.files[0].path)}
+                 type="text"
+                 onClick={()=>{
+                   dialog.showOpenDialog({
+                     properties: ['openDirectory']
+                   }).then((e)=>{
+                     if (!e.canceled) {
+                       setResultsPath(e.filePaths[0]);
+                     }
+                   })
+                 }}
           />
         </div>
       </div>
