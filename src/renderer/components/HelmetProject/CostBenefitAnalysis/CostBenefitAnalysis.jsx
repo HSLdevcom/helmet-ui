@@ -9,6 +9,7 @@ const CostBenefitAnalysis = ({
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannus-analyysi</div>
       <table className="CBA__choices">
+        <tbody>
         <tr>
             {/* Baseline scenario results folder */}
             <td>
@@ -105,6 +106,7 @@ const CostBenefitAnalysis = ({
               />
             </td>
         </tr>
+        </tbody>
       </table>
       <div className="CBA__run">
         <button onClick={(e) => {runCbaScript()}}>Aja H/K analyysi</button>
