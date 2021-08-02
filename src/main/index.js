@@ -4,6 +4,11 @@ const path = require('path');
 const fs = require('fs');
 const del = require('del');
 const decompress = require('decompress');
+const Store = require('electron-store');
+
+// Handle breaking changes in electron-store-v7.0.0:
+// https://github.com/sindresorhus/electron-store/releases/tag/v7.0.0
+Store.initRenderer();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {app.quit();}
