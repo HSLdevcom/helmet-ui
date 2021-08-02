@@ -20,7 +20,7 @@
   "dependencies": {
     "babel-standalone": "^6.26.0",
     "decompress": "^4.2.1",
-    "del": "^5.1.0",
+    "del": "^6.0.0",
     "electron-dl": "^3.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^4.0.0",
