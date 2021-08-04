@@ -8,7 +8,7 @@
       const {runHelmetEntrypointPythonShell, runInputValidationPythonShell} = require('./helmet_entrypoint_python_shell');
 
       const sendLoggableEvent = (message) => {
-        ipcRenderer.send('loggable-event-from-worker', {
+        ipcRenderer.send('loggable-ui-event-from-worker', {
           level: "UI-event",
           message: message
         });
