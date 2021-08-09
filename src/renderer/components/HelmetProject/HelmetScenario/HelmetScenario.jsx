@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import path from 'path';
-const {dialog} = require('electron').remote;
+const {dialog} = require('@electron/remote');
 
 const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherNames}) => {
 

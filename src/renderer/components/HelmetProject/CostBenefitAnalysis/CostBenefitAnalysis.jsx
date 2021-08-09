@@ -1,6 +1,6 @@
 import React from 'react';
 import path from "path";
-const {dialog} = require('electron').remote;
+const {dialog} = require('@electron/remote');
 
 const CostBenefitAnalysis = ({
   cbaOptions, setCbaOptions, runCbaScript

@@ -18,6 +18,7 @@
   },
   "type": "commonjs",
   "dependencies": {
+    "@electron/remote": "^1.2.1",
     "babel-standalone": "^6.26.0",
     "decompress": "^4.2.1",
     "del": "^6.0.0",

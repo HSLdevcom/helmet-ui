@@ -10,6 +10,9 @@ const Store = require('electron-store');
 // https://github.com/sindresorhus/electron-store/releases/tag/v7.0.0
 Store.initRenderer();
 
+// @electron/remote/main must be initialized in the main process before it can be used from the renderer:
+require('@electron/remote/main').initialize();
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {app.quit();}
 
