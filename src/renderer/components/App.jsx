@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Store from 'electron-store';
+import fs from "fs";
 
 const homedir = require('os').homedir();
 const {ipcRenderer} = require('electron');
@@ -128,6 +129,12 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
     // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath) {
+      _setProjectPath(homedir);
+    }
+
+    // If project path does not exist on set path, set it to homedir. Remember: state updates async so refer to existing.
+    if (!fs.existsSync(existingProjectPath)) {
+      alert(`Projektikansiota ei löydy polusta '${existingProjectPath}'.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
       _setProjectPath(homedir);
     }
 
