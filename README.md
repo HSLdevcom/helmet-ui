@@ -11,7 +11,7 @@ This is an [Electron](https://electrojs.org) application written in JavaScript _
 ### Requirements
 
 - Git client
-- Node.js 10 LTS & NPM
+- Node.js 14 LTS & NPM
 - EMME 4.x.x _(Windows-only)_
 - _[optionally]_ [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system) _(otherwise downloaded and auto-installed by the UI)_
 
