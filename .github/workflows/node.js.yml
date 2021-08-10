@@ -18,3 +18,5 @@ jobs:
       - run: npm ci
       - run: npm run make
       - run: npm run publish
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
