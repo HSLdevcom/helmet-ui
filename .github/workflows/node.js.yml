@@ -17,8 +17,15 @@ jobs:
           node-version: '14.x'
       - run: npm ci
       - run: npm run make
+      - name: Decode certificate file
+        run: |
+          $bytes = [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE_FILE)
+          [IO.File]::WriteAllBytes("helmet_cs4.pfx", $bytes)
+        env:
+          WINDOWS_CERTIFICATE_FILE: ${{ secrets.WINDOWS_CERTIFICATE_FILE }}
       - name: Publish package
         run: npm run publish
         if: ${{ github.ref == 'refs/heads/release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
