@@ -17,6 +17,10 @@ jobs:
           node-version: '14.x'
       - run: npm ci
       - run: npm run make
+      - name: Decode certificate file
+        run: [IO.File]::WriteAllBytes("helmet_cs4.pfx", [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE_FILE))
+        env:
+          WINDOWS_CERTIFICATE_FILE: ${{ secrets.WINDOWS_CERTIFICATE_FILE }}
       - name: Publish package
         run: npm run publish
         env:
