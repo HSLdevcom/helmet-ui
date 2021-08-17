@@ -8,7 +8,8 @@ const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
  * https://www.electronforge.io/config/publishers/github
  */
 module.exports = {
-    buildIdentifier: process.env.TRAVIS_BRANCH === 'release' ? 'prod' : 'beta',
+    // Previously, buildIdentidier was either 'prod' or 'beta'. Now, it is always 'prod'.
+    buildIdentifier: 'prod',
     packagerConfig: {
         appBundleId: fromBuildIdentifier({ prod: 'fi.hsl.helmet.ui', beta: 'fi.hsl.beta.helmet.ui' })
     },

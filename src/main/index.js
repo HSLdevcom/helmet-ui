@@ -4,6 +4,14 @@ const path = require('path');
 const fs = require('fs');
 const del = require('del');
 const decompress = require('decompress');
+const Store = require('electron-store');
+
+// Handle breaking changes in electron-store-v7.0.0:
+// https://github.com/sindresorhus/electron-store/releases/tag/v7.0.0
+Store.initRenderer();
+
+// @electron/remote/main must be initialized in the main process before it can be used from the renderer:
+require('@electron/remote/main').initialize();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {app.quit();}
@@ -23,7 +31,9 @@ async function createUI() {
     autoHideMenuBar: true,
     webPreferences: {
       devTools: true, // There's no reason to disable these (CTRL+SHIFT+i) https://superuser.com/questions/367662/ctrlshifti-in-windows-7
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
     }
   });
   await mainWindow.loadFile('src/renderer/index.html');
@@ -36,13 +46,13 @@ async function createUI() {
 
 async function createHelmetEntrypointWorker() {
   // Create hidden window for background process #1 (Electron best practise, alternative is web workers with limited API)
-  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
   await entrypointWorkerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
 }
 
 async function createCbaScriptWorker() {
   // Create hidden window for background process #2 (Electron best practise, alternative is web workers with limited API)
-  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true}, show: false});
+  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
   await cbaWorkerWindow.loadFile('src/background/cba_script_worker.html');
 }
 
@@ -125,9 +135,34 @@ ipcMain.on('message-from-worker-all-scenarios-complete', (event, args) => {
   mainWindow.webContents.send('all-scenarios-complete');
 });
 
+// Relay a loggable UI-event in worker; worker => main => UI
+ipcMain.on('loggable-ui-event-from-worker', (event, args) => {
+  mainWindow.webContents.send('loggable-event', args);
+});
+
 // Relay a loggable event in worker; worker => main => UI
 ipcMain.on('loggable-event-from-worker', (event, args) => {
-  mainWindow.webContents.send('loggable-event', args);
+  event_time = args["time"];
+  delete(args["time"]);
+  // python-shell 3.0.0 breaking change: Every character from
+  // stderr is its own value (like {0: 'h', 1: 'e', 2: 'l', 3: 'l', 4: 'o'})
+  // so let us join all values into one string ('hello').
+  event_string = Object.values(args).join('');
+  // Try to read the string as JSON. If it fails, use the whole string
+  // as a message. Messages via utils.log are written to stderr as JSON.
+  // Warnings from numpy tend to be written as plain-text. 
+  try {
+    // utils.log
+    event_args = JSON.parse(event_string);
+  } catch (error) {
+    // numpy warnings
+    event_args = {
+      "level": "EXCEPTION",
+      "message": event_string,
+    };
+  }
+  event_args["time"] = event_time;
+  mainWindow.webContents.send('loggable-event', event_args);
 });
 
 // Log worker-errors (by PythonShell, not stderr) in main console

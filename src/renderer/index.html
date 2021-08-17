@@ -30,10 +30,6 @@
     <script type="text/javascript">
         // ipcRenderer is aliased, so that other <script> tag(s) won't crash on startup in "constant-already-set"
         const {webFrame, ipcRenderer: aliasIpcRenderer} = require('electron');
-        // Disable content zooming (it seems prone to glitching on Windows). https://github.com/electron/electron/issues/15496
-        webFrame.setZoomLevel(1);
-        webFrame.setVisualZoomLevelLimits(1, 1);
-        webFrame.setLayoutZoomLevelLimits(0, 0);
         // Enable test-running UI with model-system without an active EMME-license on PC
         window.useMockAssignment = function() {aliasIpcRenderer.send('message-from-ui-to-disable-emme')};
         window.useEmmeAssignment = function () {aliasIpcRenderer.send('message-from-ui-to-enable-emme')};
