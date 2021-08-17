@@ -1,8 +1,7 @@
 name: Node.js CI
 
 on:
-  pull_request:
-    branches: [ master, release ]
+  [ push, pull_request ]
 
 jobs:
   build:
@@ -25,7 +24,7 @@ jobs:
           WINDOWS_CERTIFICATE_FILE: ${{ secrets.WINDOWS_CERTIFICATE_FILE }}
       - name: Publish package
         run: npm run publish
-        if: ${{ github.ref == 'refs/heads/release' }}
+        if: ${{ github.ref == 'refs/heads/release' && github.event_name == 'push' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
