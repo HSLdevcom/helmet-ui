@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: release
+    branches: [ master, release ]
 
 jobs:
   build:
@@ -19,5 +19,6 @@ jobs:
       - run: npm run make
       - name: Publish package
         run: npm run publish
+        if: ${{ github.ref == 'refs/heads/release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
