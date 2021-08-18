@@ -58,7 +58,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
               const timestamp = `${('00'+d.getHours()).slice(-2)}:${('00'+d.getMinutes()).slice(-2)}`;
               return showINFO ?
                 <div className={"Log__entry Log__entry"} key={entry.id}>
-                  {`[INFO ${timestamp}] ${entry.message}`}
+                  {`[${entry.level} ${timestamp}] ${entry.message}`}
                 </div>
                 :
                 "";
@@ -77,7 +77,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
             case "DEBUG":
               return showDEBUG ?
                 <div className={"Log__entry"} key={entry.id}>
-                  {`[DEBUG] ${entry.message}`}
+                  {`[${entry.level}] ${entry.message}`}
                 </div>
                 :
                 "";

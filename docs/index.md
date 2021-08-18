@@ -1,106 +1,202 @@
-# Helmet liikenne-ennustejärjestelmä
+# HSL:n liikenne-ennustejärjestelmän yleiskuvaus
 
-[Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymä. 
-Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
+Helmet on HSL:n liikenne-ennustejärjestelmä, joka kattaa Helsingin seudun 14 kuntaa ja Siuntion sekä niitä ympäröivän työssäkäyntialueen.
+Uusin malliversio Helmet 4 julkaistiin lokakuussa 2020. Järjestelmä käyttää Inron Emme-ohjelmistoa.
 
-## Asennus
+HSL:n Helmet-liikenne-ennustemallia voidaan käyttää arvioimaan erilaisten muutostekijöiden vaikutuksia liikennejärjestelmään.
+Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-suunnitelman vaikutusten arviontia.
+HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
-### Emmen asennus
+Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”.
+Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita.
+Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista [täällä](esimerkkeja_tuloksista.md).
 
-Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellytysten on täytyttävä:
+## Helmet-järjestelmän käyttö
 
-1.	[Emme 4.4.X](https://www.inrosoftware.com/en/products/emme/) on asennettu, lisenssi on aktivoitu (Authorization) 
-   ja koneessa on lisenssitikku (INRO Key).
-2.	Käyttäjän PATH -ympäristömuuttujiin on lisätty `%EMMEPATH%\programs`.
-    -	Avaa Windows-järjestelmän Ohjauspaneeli
-    -	Valitse Käyttäjätilit ja vielä uudelleen Käyttäjätilit. Valitse sen jälkeen vasemmalla olevasta valikosta ”Muuta ympäristömuuttujia”.
-    -	Etsi ylhäällä olevasta laatikosta ”käyttäjän (oma_käyttäjätunnuksesi) muuttujat”, valitse Path-muuttuja ja ”muokkaa ympäristömuuttujia”.
-    -	Valitse "Uusi" ja kirjoita `%EMMEPATH%\Programs`
-    -	Paina OK ikkunassa ”Muokkaa ympäristömuuttujia” ja vielä uudelleen OK ikkunassa ”ympäristömuuttujat”.
-3.	[valinnainen] [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) on ladattu käyttöön ja määritelty 
-   _(tai annetaan tämän käyttöliittymän ladata se)_
+Järjestelmän asennus- ja käyttöohjeet löydät [täältä](kaytto-ohje.md),
+ja tarkempia lähtötietojen käsittelyn ohjeita sekä Helmet-makrojen ohjeet ja latauslinkin [täältä](sijopankki.md).
+Lisätietoa mallijärjestelmän käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
+Lisätietoa etenkin HSL:n teettämien mallitöiden tilaamisesta löydät [täältä](HSL-mallitoiden_tilaajan_ohje.md).
 
-### Emme-projektin määrittely
+### Tietopyynnöt
 
-Seuraavaksi sinun on määriteltävä *Emme-projekti*:
+Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle.
+Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
 
-1. Käynnistä Emme-ohjelmisto.
-2. Perusta uusi projekti. Määrittele, mihin kansioon haluat sen asentaa. 
-   - Emme muodostaa tiedoston `projektin_nimi.emp` kansioon `projektin_nimi` ja sen alikansioon 
-     `projektin_nimi\database` suuren binaaritiedoston `emmebank` sekä muitakin alikansioita ja tiedostoja.
-3. Noudata [erillistä ohjetta](sijopankki.md), jossa kerrotaan mm. sopivista dimensioista (solmujen, linkkien ym. maksimimäärät). 
-   Ne vaikuttavat em. `emmebank`-tiedoston kokoon. Aja sisään verkot ja linjastot ohjeen mukaan.
+HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
 
-### Helmet asennus
+## Mallin lähtötiedot
 
-Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman välitosikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
-missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
+Lähtötietojen määrittäminen on jo itsessään ennustamista. HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi.
+Lisätietoja HSL:n tarjoamista aineistoista [täällä](HSL_lahtotiedot.md).
 
-:warning: **Tällä hetkellä versioiden jakelupaketteja ei ole allekirjoitettu, joten Windows huomauttaa siitä ja estää asennuksen suorituksen. 
-Tämä voidaan ohittaa kahdella tavalla:**
-- Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
-- Klikkaa ladattua.exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
+Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 
-![Unblock](unblock.png)
- 
-Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinainen sovellus on kansiossa `AppData\Local`, ja sen asetukset 
-kansiossa `AppData\Roaming`. Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
-on taakse päin yhteensopiva vanhojen asetusten kanssa.
+**Alueiden maankäyttöä koskevat tiedot:**
+* Asukkaiden kokonaismäärät ja ikäryhmien osuudet
+* Työpaikkojen kokonaismäärät
+* Kaupan työpaikkojen osuus kaikista työpaikoista 
+* Palvelutyöpaikkojen osuus kaikista työpaikoista 
+* Teollisuustyöpaikkojen osuus kaikista työpaikoista 
+* Logistiikan työpaikkojen osuus kaikista työpaikoista 
+* 1., 2. ja 3. asteen oppilaspaikkamäärät
+* Kerros- ja pientalojen osuudet
 
-Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
-[Helmet 4.0 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
-uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
-Nämä kommennot pyörivät hiljaa taustalla, ja sovellus alkaa reagoida vasta niiden valmistuttua.
+**Liikennejärjestelmää koskevat tiedot:**
+* Henkilöauton kilometrikustannus (polttoaine, renkaat)
+* Joukkoliikenteen vyöhykehinnat
+* Tie-ja katuverkon ominaisuudet (linkin tieluokka, kaistamäärä, pituus)
+* Joukkoliikennelinjasto (tunnus, reitti, keskimääräinen vuoroväli)
+* Erillisillä malleilla laskettu tavaraliikenne sekä satamien ja lentoaseman henkilöliikenne
+* Työmatkojen pysäköintimaksu alueittain
+* Asiointimatkojen pysäköintimaksut alueittain
 
-EMMEn Python-polussa oleva määrittely saattaa epäonnistua, 
-jos ympäristömuuttujaa ’EMMEPATH’ ei ole määritelty tai jos sovellus on asennettu epätavallisella tavalla. Jos näin käy, suorituskelpoisen 
-Python-kielen ja kansion Scripts sijainti on määriteltävä manuaalisesti Asetukset-valikosta.
+### Lähtötietojen vaikutus ennustemallin eri osiin
 
-## Asetukset
+* Autonomistus alueittain
+  * Kerros- ja pientalojen osuudet
+  * Matka-aikasuhteet
+* Matkamäärä alueittain
+  * Asukasmäärä ikäryhmittäin
+  * Autonomistus
+* Kulkutavan valinta
+  * Alueparien väliset matka-ajat autolla ja joukkoliikenteellä
+  * Alueparien väliset etäisyydet polkupyörällä ja autolla
+  * Alueparien väliset matkakustannukset: joukkoliikennelipun hinta, autoiun muuttuvat kustannukset (polttoaine, renkaat) ja mahdollinen ruuhkamaksu/tietulli
+  * Autonomistus alueittain
+* Matkakohteiden valinta
+  * Saavutettavuus (matka-aika, etäiyys ja matkakustannus määräpaikkaan eri kulkutavoilla)
+  * Työpaikkamäärä määräpaikassa
+  * Oppilaspaikkojen määrä määräpaikassa
+* Reitin valinta
+  * Auto- ja joukkoliikennelinkin matka-aika
+  * Pyörälinkin pituus
+  * Autolinkin matkakustannus 
 
-:warning: **Kansiopoluissa ei saa olla ääkkösiä!**
+## Mallijärjestelmän rakenne
 
-- suorituskelpoinen Emme Python 
-  - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
-  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
-- GitHubin [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
-  - Kansiossa ovat järjestelmän käyttämät Python-ohjelmat.
-  - Version päivitys voidaan tehdä klikkaamalla "Lataa eri versio...". Nämä eivät korvaa skriptien vanhoja versioita, 
-  vaan uusimmat versiot skripteistä talletetaan uuteen kansioon.
-  - Voidaan käyttää myös olemassa olevaa kansiota.
-- Projektin kansiopolku
-  - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
-  - Tämä **ei** siis viita Emmen projektitiedostoon (.emp)
-- Lähtödatan sisältävä kansio
-  - Täällä ovat pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
-  - Kansion sisältön saa HSL:ltä
-- Tulosten tallennuspolku
-  - Tänne talletetaan ennusteajojen tulokset
+Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa järjestyksessä:
+1. Matkatuotos
+2. Kulkutavanvalinta
+3. Suuntautuminen
+4. Sijoittelu
 
-## Malliajon määrittely
+Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
 
-Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittelyt:
+![Helmet-mallijärjestelmän rakenne](Helmet-mallijarjestelma.png)
 
-1.	Skenaarion tai ajon nimi
-2.	Emmen project-tiedosto (.emp)
-3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
-   kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
-4.	Kansio, jossa ovat syöttötiedot
-    - esim. `C:\Helmet\Scenario_input_data\2030`
-    - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
-      Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
-5.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua 
-   (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`)
-6.	Suoritettavien iteraatiokierrosten määrä (yleensä 10)
-    - Iteraatiomäärä 0 tarkoittaa että tehdään heti loppusijoittelu
-      (vaatii että kysyntämatriisit aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
+Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
-## Höyty-kustannusanalyysin (hankearvioinnin) määrittely
+Mallijärjestelmän tarjontakuvauksista lisätietoa on raportissa Helsingin seudun liikenteen Emme-verkon kuvaus, joka on saatavilla mallin käyttäjien EXT-Helmet -Teams-ryhmässä.
 
-Voidaan verrata ajettujen skenaarioiden hyötyjä ja kustannuksia. Tulokset tulostuvat excel-tiedostoon tuloskansiossa. Analyysia varten on määriteltävää:
+## Helmet 4 uusia ominaisuuksia
 
-1. Vertailuvaihtoehdon (ve0) tuloskansio (`Tulosten tallennuspolku\Skenaarion nimi`)
-2. Hankevaihtoehdon (ve1) tuloskansio
+Tässä on kuvattu keskeisiä nostoja Helmet 4:n uusista ominaisuuksista sekä eroavaisuuksista Helmet 3:een verrattuna.
+Laajemmin aihetta on kuvattu
+[malliraportissa](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf). 
 
-Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto ovat mahdollisia määrittää toisellekin ennustevuodelle.
+### Kulkutapa- ja suuntautumismallien rakenne
+
+Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten,
+että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
+
+![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
+
+### Aluejako
+
+Helmet 4 -malleissa käytetään vain yhtä aluejakoa, eli mallissa ei enää ole erillisiä ennuste- ja sijoittelualueita tai näiden välisiä jakolukuja.
+Ennustealuejaon tihentyminen kasvattaa jonkin verran mallin ajon vaatimaa aikaa.
+
+### Kiertomatkat
+
+Helmet 4 -ennustejärjestelmässä kysyntä ei perustu enää matkoihin, vaan kiertomatkoihin, johon meno- ja paluumatkojen
+(esimerkiksi kotoa töihin tai kouluun ja takaisin) lisäksi voi kuulua toissijainen määräpaikka: esimerkiksi työmatkaan liittyvä kauppa- tai asiointimatka.
+
+### Agenttisimuloinnin kehittäminen
+
+Uudessa ennustejärjestelmässä on mahdollisuus ajaa perinteisen malliajon lisäksi niin sanottuja agenttisimulointeja,
+joissa voidaan seurata yksilöiden matkustamista vuorokauden aikana.
+Tällä tavalla voidaan tutkia miten erilaiset toimenpiteet vaikuttavat eri väestöryhmiin.
+Tätä mahdollisuutta kehitetään edelleen talven 2020-2021 aikana MAL-suunnittelun vaikutusten arvioinnin kehittämisen yhteydessä. 
+
+### Joukkoliikenteen ruuhkautuvuus
+
+Aikaisemmissa malliversioissa ruuhkautuminen aiheutti ongelmia:
+* Jotkut linjat ylikuormittuivat epärealistisesti
+* Hankearvioinnit eivät ole ottaneet huomioon kapasiteettilisäysten vaikutuksia matkan mukavuuteen ja toteutettavuuteen
+
+Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin vastus kasvaa kun linjan kuormitusaste kasvaa.
+
+### Pyöräilyn mallinnus
+
+* Pyöräilylinkit (yhteydet) on tarkistettu
+* Verkolle on lisätty tieto pyörätien karkeasta laatuluokasta:
+  * Baana
+  * Erillinen pyörätie
+  * Pyörätie kadun varressa
+  * Pyöräkaista
+  * Sekaliikenne (oletus)
+* Pyöräilyn yhteydet vaikuttavat reitinvalintoihin
+
+### Tulokset verrattuna Helmet 3.1:een
+
+Autoliikenteen liikennemäärät ovat pääväylillä hieman pienempiä kuin Helmet 3.1 versiossa ja vastaavasti poikittaisessa liikenteessä kehäteillä on enemmän kuormitusta.
+Uudet liikennemäärät vastaavat hieman paremmin laskentatietoja, mutta molemmissa malliversiossa vastaavuus on hyvällä tasolla.
+
+Joukkoliikennekulkutapojen väliset painosuhteet muuttuvat siten, että uusi malliversio ennustaa enemmän juna- ja raitiotiematkoja,
+mikä on todennäköisesti seurausta joukkoliikenteen ruuhkasijoittelun käyttöönotosta malliversioiden välillä.
+Muutos on juna- ja raitioliikenteessä oikeansuuntainen suhteessa laskentatietoihin.
+
+Muutoksiin reagoimisen osalta malli toimii vähemmän herkästi suhteessa Helmet 3.1 -malliin.
+Erityisenä huomiona muutoksien osalta aiemman malliversion jalankulkumalli reagoi hyvin voimakkaasti pysäköintimaksujen nostoon,
+koska kustannus oli mallissa mukana suorana matkojen määrää ennustavana muuttujana ja kulkutavan valinta ei ollut liitoksissa muiden kulkutapojen
+valintaan ja olosuhteiden kehitykseen.
+
+### Helmet 4 -tuloksiin liittyviä epävarmuuksia
+
+Mallia laadittaessa sen antamia tuloksia on verrattu monipuolisesti erilaiseen havaintoaineistoon ja pyritty saamaan tulokset vastaamaan mahdollisimman hyvin havaintoja.
+Tuloksiin liittyy silti tiettyjä epävarmuuksia ja rajoitteita, joista on nostettu tähän keskeisimpiä havaintoja.
+Mallin testausta ja testien tuloksia on kuvattu laajemmin raportissa
+[Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf) (luvut 12 ja 13).
+
+Nykytilanteen osalta malli toimii hyvin, eikä kysynnän ennustamiseen liittyviä systemaattisia virheitä testauksessa havaittu.
+Malli tuottaa suuntautumisen, autoliikennemäärien ja pyöräliikennemäärien osalta ulkopuolisia havaintoja vastaavia nykytilanteen ennusteita.
+Mallin tulokset eivät poikkea nykytilanteen osalta merkittävästi Helmet 3.1-versiosta.
+
+Joukkoliikenteen osalta havaittiin kuitenkin ongelma, joka on syytä huomioida hanketarkasteluissa.
+Vuorokauden matkustajamääräarviot on aliarvioitu runkoyhteyksillä metrolla, junalla ja raitiovaunuilla, kun taas bussien matkustajamäärät on hieman yliarvioitu.
+Huipputuntien osalta nykyennuste vastaa laskentoja hyvin, joten ongelma on todennäköisesti vuorokausilaajennuskertoimissa,
+jotka eivät nykyisellään huomioi runkoyhteyksien ja muiden yhteyksien erilaisia liikennöintiaikoja.
+
+Helmet 4 -mallin avulla tehtäviä H/K-laskelmia kannattanee hyödyntää vain suurille liikennejärjestelmätason hankkeille.
+
+## Mallintamisen taustoja
+
+### Termejä
+
+* **Malli:** Matemaattinen kuvaus järjestelmästä (tässä tapauksessa Helsingin seudun liikkumisesta)
+* **Mallin estimointi:** Mallin parametrien määritys niin, että malli kuvaa käytetyillä lähtötiedoilla mahdollisimman hyvin lähtöaineistossa (nykytila) havaittua käyttäytymistä 
+* **Mallin validointi:** Testaus, että malli tosiaan ennakoi nykytilalle oikean tuloksen
+* **Ennuste:** Mallin käyttö _samoilla parametreilla_, mutta _eri lähtötiedoilla_ kuin estimoinnissa
+
+### Mallin oletuksia, perusteluita ja rajoituksia
+
+Oletuksena yksilöiden hyödyn maksimointi:
+* Malli olettaa, että ihmiset ovat tietoisia kaikista vaihtoehdoista ja niiden hyödyistä ja haitoista
+* Malli tekee ainoastaan ihmisten oman hyödyn maksimoivia valintoja
+* Todellisuudessa ihmisten päätöksenteko ei ole näin suoraviivaista ja rationaalista, mutta hyötymaksimointi on mallintamisessa yleisesti käytetty oletus
+
+Malli perustuu nykytilan havaintoaineiston valintoihin:
+* Oletetaan, että ennustevuoden ihmiset tekevät valintansa samalla perusteella kuin havaintoaineistossa eli nykytilassa
+* Ennusteita ei voida tehdä asenteiden muutoksista (jos matka-aikaa, kustannuksia ym. arvostetaan eri tavalla kuin nykyisin)
+
+Mallin matemaattinen pohja perustuu diskreetteihin valintamalleihin:
+* Mallijärjestelmä rakentuu useista eri osamalleista, joissa kuvataan logit-malleilla todennäköisyyttä, että päätöksentekijä valitsee tietyn vaihtoehdon (esim. kulkutapa)
+* Teoriapohjaksi ks. esim. Kenneth Trainin e-kirja Discrete Choice Methods with Simulation, ensimmäinen osa luvusta 2 (Properties of Discrete Choice Models), s. 11-23: 
+(https://eml.berkeley.edu/books/choice2.html))
+
+Tyypillisesti liikennemallit jakautuvat neljään osaan, jotka on kytketty toisiinsa:
+* _Matkatuotos_ eli matkojen määrät lähtö- ja määräpaikoittain
+* _Suuntautuminen_ eli lähtö- ja määräpaikkojen yhdistelmät
+* _Kulkutavan valinta_ eli matkojen jako mm. henkilöauton, joukkoliikenteen ja pyöräilyn kesken
+* _Sijoittelu_ eli reittien valinta

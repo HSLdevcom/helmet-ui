@@ -16,26 +16,29 @@
   "config": {
     "forge": "./forge-config.js"
   },
+  "type": "commonjs",
   "dependencies": {
+    "@electron/remote": "^1.2.1",
     "babel-standalone": "^6.26.0",
     "decompress": "^4.2.1",
-    "del": "^5.1.0",
-    "electron-dl": "^3.0.0",
+    "del": "^6.0.0",
+    "electron-dl": "^3.2.1",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-store": "^4.0.0",
-    "python-shell": "^1.0.7",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "uuid": "^3.4.0",
+    "electron-store": "^8.0.0",
+    "nugget": "^2.0.1",
+    "python-shell": "^3.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "uuid": "^8.3.2",
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.39",
-    "@electron-forge/maker-deb": "6.0.0-beta.39",
-    "@electron-forge/maker-rpm": "6.0.0-beta.39",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.39",
-    "@electron-forge/maker-zip": "6.0.0-beta.39",
-    "@electron-forge/publisher-github": "6.0.0-beta.39",
-    "electron": "5.0.3"
+    "@electron-forge/cli": "6.0.0-beta.59",
+    "@electron-forge/maker-deb": "6.0.0-beta.59",
+    "@electron-forge/maker-rpm": "6.0.0-beta.59",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.59",
+    "@electron-forge/maker-zip": "6.0.0-beta.59",
+    "@electron-forge/publisher-github": "6.0.0-beta.59",
+    "electron": "13.1.7"
   }
 }

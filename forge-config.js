@@ -8,7 +8,8 @@ const { utils: { fromBuildIdentifier } } = require('@electron-forge/core');
  * https://www.electronforge.io/config/publishers/github
  */
 module.exports = {
-    buildIdentifier: process.env.TRAVIS_BRANCH === 'release' ? 'prod' : 'beta',
+    // Previously, buildIdentidier was either 'prod' or 'beta'. Now, it is always 'prod'.
+    buildIdentifier: 'prod',
     packagerConfig: {
         appBundleId: fromBuildIdentifier({ prod: 'fi.hsl.helmet.ui', beta: 'fi.hsl.beta.helmet.ui' })
     },
@@ -21,6 +22,8 @@ module.exports = {
                 iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
                 // loadingGif: '',
                 // setupIcon: 'helmet.ico',
+                certificateFile: "helmet_cs4.pfx",
+                certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD,
             }
         },
         {
