@@ -109,7 +109,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
     - *Skenaario* ei tässä viittaa Emme-skenaarioon, vaan tässä annetaan nimi verkkokuvaus- ja maankäyttötietoyhdistelmälle joka menee yhteen malliajoon.
 2.	Emmen project-tiedosto (.emp)
 3.	Emme-skenaarion numero. 
-   Asetuksista riippuen sijoittelutulokset tallennetaan tähän skenaarioon tai erikseen seuraavaan neljään skenarioon (verk, aht, pt, iht).
+   Asetuksista riippuen sijoittelutulokset tallennetaan tähän skenaarioon tai erikseen seuraavaan neljään skenarioon (vrk, aht, pt, iht).
 4.	Kansio, jossa ovat syöttötiedot
     - esim. `C:\Helmet\Scenario_input_data\2030`
     - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
