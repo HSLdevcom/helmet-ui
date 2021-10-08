@@ -2,9 +2,9 @@
 sort: 1
 ---
 
-# Ohjeet Helmet 4 -liikenne-ennustejärjestelmän käyttöön
+# Ohjeet Helmet 4.1 -liikenne-ennustejärjestelmän käyttöön
 
-Tässä ohjeessa kuvataan [Helmet 4.0-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymää. 
+Tässä ohjeessa kuvataan [Helmet 4.1-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymää. 
 Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
 
 ## Asennus ja käytön aloitus
@@ -13,7 +13,7 @@ Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com
 
 Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellytysten on täytyttävä:
 
-1.	[Emme 4.4.X](https://www.inrosoftware.com/en/products/emme/) on asennettu, lisenssi on aktivoitu (Authorization) 
+1.	[Emme 4.5.X](https://www.inrosoftware.com/en/products/emme/) on asennettu, lisenssi on aktivoitu (Authorization) 
    ja koneessa on lisenssitikku (INRO Key).
 2.	Käyttäjän PATH -ympäristömuuttujiin on lisätty `%EMMEPATH%\programs`.
     -	Avaa Windows-järjestelmän Ohjauspaneeli
@@ -21,12 +21,13 @@ Ennen kuin Helmet UI -käyttöliittymää voidaan käyttää, seuraavien edellyt
     -	Etsi ylhäällä olevasta laatikosta ”käyttäjän (oma_käyttäjätunnuksesi) muuttujat”, valitse Path-muuttuja ja ”muokkaa ympäristömuuttujia”.
     -	Valitse "Uusi" ja kirjoita `%EMMEPATH%\Programs`
     -	Paina OK ikkunassa ”Muokkaa ympäristömuuttujia” ja vielä uudelleen OK ikkunassa ”ympäristömuuttujat”.
-3.	[valinnainen] [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) on ladattu käyttöön ja määritelty 
+3.	[valinnainen] [Helmet 4.1 Model System](https://github.com/HSLdevcom/helmet-model-system) on ladattu käyttöön ja määritelty 
    _(tai annetaan tämän käyttöliittymän ladata se)_
 
 ### Emme-projektin määrittely
 
-Seuraavaksi sinun on määriteltävä *Emme-projekti*. Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-projektipankki, johon kootaan eri Helmet-skenaariot (esim. eri linjastovaihtoehdot). Emmeen luodaan kutakin Helmet-skenaariota kohden viisi eri Emme-skenaariota (pyöräliikenne, vuorokausiliikenne, aamuhuipputunti, päivätunti ja iltahuipputunti). 
+Seuraavaksi sinun on määriteltävä *Emme-projekti*. 
+Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-projektipankki, johon kootaan eri Helmet-skenaariot (esim. eri linjastovaihtoehdot).
 
 1. Käynnistä Emme-ohjelmisto.
 2. Perusta uusi projekti. Määrittele, mihin kansioon haluat sen asentaa. 
@@ -38,12 +39,12 @@ Seuraavaksi sinun on määriteltävä *Emme-projekti*. Kutakin projektia varten 
 ### Helmet asennus
 
 Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman väliotsikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.0.UI-x.y.z.Setup.exe`, 
+josta kunkin version exe-paketit löytyvät oman väliotsikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.1.UI-x.y.z.Setup.exe`, 
 missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
 
 :warning: **Tällä hetkellä sovellus on niin harvoin asennettu, että Windows huomauttaa siitä ja estää asennuksen suorituksen. 
 Tämä voidaan ohittaa kahdella tavalla:**
-- Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto toimii luultavasti vain, jos sinulla on admin-oikeudet)
+- Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto ei aina toimi)
 - Klikkaa ladattua .exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
 
 ![Unblock](unblock.png)
@@ -56,7 +57,7 @@ Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina ed
 on taakse päin yhteensopiva vanhojen asetusten kanssa.
 
 Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
-[Helmet 4.0 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
+[Helmet 4.1 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
 uusimman version skriptit. Sovellus suorittaa myös komennon ’pip install’. 
 Nämä kommennot pyörivät hiljaa taustalla, ja sovellus alkaa reagoida vasta niiden valmistuttua.
 
@@ -76,8 +77,8 @@ Mallin ajoa varten tulee määritellä seuraavat asetukset.
 
 - Suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
-  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.4.2\Python27\python.exe`
-- GitHubin [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
+  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.5.0\Python27\python.exe`
+- GitHubin [Helmet 4.1 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
   - Kansiossa ovat järjestelmän käyttämät Python-ohjelmat.
   - Version päivitys voidaan tehdä klikkaamalla "Lataa eri versio...". Nämä eivät korvaa skriptien vanhoja versioita, 
   vaan uusimmat versiot skripteistä talletetaan uuteen kansioon.
@@ -107,8 +108,8 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 1.	Skenaarion tai ajon nimi
     - *Skenaario* ei tässä viittaa Emme-skenaarioon, vaan tässä annetaan nimi verkkokuvaus- ja maankäyttötietoyhdistelmälle joka menee yhteen malliajoon.
 2.	Emmen project-tiedosto (.emp)
-3.	Pyöräliikenteen Emme-skenaarion numero (yleensä 19). Seuraavat neljä numeroa on varattava jalankulkuskenaariolle sekä 
-   kolmen aikajakson auto- ja joukkoliikenneskenaarioille (aht, pt, iht).
+3.	Emme-skenaarion numero. 
+   Asetuksista riippuen sijoittelutulokset tallennetaan tähän skenaarioon tai erikseen seuraavaan neljään skenarioon (verk, aht, pt, iht).
 4.	Kansio, jossa ovat syöttötiedot
     - esim. `C:\Helmet\Scenario_input_data\2030`
     - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
