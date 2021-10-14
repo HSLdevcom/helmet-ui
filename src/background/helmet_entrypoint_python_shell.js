@@ -74,6 +74,7 @@ module.exports = {
           "--forecast-data-path", runParameters.forecast_data_folder_path,
           "--iterations", runParameters.iterations
         ]
+          .concat(runParameters.delete_strategy_files ? ["--del-strat-files"] : [])
           .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
           .concat(runParameters.DO_NOT_USE_EMME ? ["--do-not-use-emme"] : []),
       });

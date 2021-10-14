@@ -120,6 +120,7 @@ const HelmetProject = ({
       emme_project_file_path: null,
       first_scenario_id: 19,
       forecast_data_folder_path: null,
+      delete_strategy_files: true,
       use_fixed_transit_cost: false,
       iterations: 10,
     };
