@@ -93,29 +93,17 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Choice whether to use pre-calculated transit cost matrices (instead of calculating them mid-run) */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">K&auml;yt&auml; esilaskettua joukkoliikenteen kustannusmatriisia:</span>
-        <label className="Scenario__radio-input">
-          Kyll&auml;&nbsp;
-          <input type="radio"
-                 name="fixed-transit-cost"
-                 value="true"
+      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+             htmlFor="fixed-transit-cost">
+          <input id="fixed-transit-cost"
+                 type="checkbox"
                  checked={scenario.use_fixed_transit_cost}
                  onChange={(e) => {
-                   updateScenario({...scenario, use_fixed_transit_cost: true});
+                   updateScenario({...scenario, use_fixed_transit_cost: !scenario.use_fixed_transit_cost});
                  }}
           />
-        </label>
-        <label className="Scenario__radio-input">
-          Ei&nbsp;
-          <input type="radio"
-                 name="fixed-transit-cost"
-                 value="false"
-                 checked={!scenario.use_fixed_transit_cost}
-                 onChange={(e) => {
-                   updateScenario({...scenario, use_fixed_transit_cost: false});
-                 }}
-          />
-        </label>
+        <span>K&auml;yt&auml; esilaskettua joukkoliikenteen kustannusmatriisia</span>
+      </label>
       </div>
 
       {/* Number of iterations to run */}
@@ -136,58 +124,34 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Choice whether to delete strategy files at the end of a model run */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">Poista sijoittelun strategiatiedostot malliajon j&auml;lkeen:</span>
-        <label className="Scenario__radio-input">
-          Kyll&auml;&nbsp;
-          <input type="radio"
-                 name="delete-strategy-files"
-                 value="true"
-                 /* If flag is not written to JSON (= null), check radio button. */
+      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+             htmlFor="delete-strategy-files">
+          <input id="delete-strategy-files"
+                 type="checkbox"
+                 /* If flag is not written to JSON (= null), box is checked (= true). */
                  checked={scenario.delete_strategy_files == true | scenario.delete_strategy_files == null}
                  onChange={(e) => {
-                   updateScenario({...scenario, delete_strategy_files: true});
+                   updateScenario({...scenario, delete_strategy_files: e.target.checked});
                  }}
           />
-        </label>
-        <label className="Scenario__radio-input">
-          Ei&nbsp;
-          <input type="radio"
-                 name="delete-strategy-files"
-                 value="false"
-                 checked={!(scenario.delete_strategy_files == true | scenario.delete_strategy_files == null)}
-                 onChange={(e) => {
-                   updateScenario({...scenario, delete_strategy_files: false});
-                 }}
-          />
-        </label>
+        <span>Poista sijoittelun strategiatiedostot malliajon j&auml;lkeen</span>
+      </label>
       </div>
 
       {/* Choice whether to save matrices in Emme */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) eri skenaarioille Emmess&auml;:</span>
-        <label className="Scenario__radio-input">
-          Kyll&auml;&nbsp;
-          <input type="radio"
-                 name="save-matrices-in-emme"
-                 value="true"
-                 /* If flag is not written to JSON (= null), check radio button. */
-                 checked={scenario.save_matrices_in_emme | scenario.save_matrices_in_emme == null}
+      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+             htmlFor="save-matrices-in-emme">
+          <input id="save-matrices-in-emme"
+                 type="checkbox"
+                 /* If flag is not written to JSON (= null), box is checked (= true). */
+                 checked={scenario.save_matrices_in_emme == true | scenario.save_matrices_in_emme == null}
                  onChange={(e) => {
-                   updateScenario({...scenario, save_matrices_in_emme: true});
+                   updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
           />
-        </label>
-        <label className="Scenario__radio-input">
-          Ei&nbsp;
-          <input type="radio"
-                 name="save-matrices-in-emme"
-                 value="false"
-                 checked={!(scenario.save_matrices_in_emme | scenario.save_matrices_in_emme == null)}
-                 onChange={(e) => {
-                   updateScenario({...scenario, save_matrices_in_emme: false});
-                 }}
-          />
-        </label>
+        <span>Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) eri skenaarioille Emmess&auml;</span>
+      </label>
       </div>
 
       {/* Number of first matrix ID */}

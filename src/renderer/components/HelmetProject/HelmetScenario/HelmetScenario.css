@@ -27,8 +27,16 @@
 }
 .Scenario__pseudo-label--inline {
     display: inline-block;
-    vertical-align: initial;
+    vertical-align: middle;
     padding-right: 0.75em;
+}
+.Scenario__pseudo-label--inline input {
+    display: block;
+    float: left;
+}
+.Scenario__pseudo-label--inline span {
+    display: block;
+    padding-left: 22px;
 }
 
 /* Inputs */
