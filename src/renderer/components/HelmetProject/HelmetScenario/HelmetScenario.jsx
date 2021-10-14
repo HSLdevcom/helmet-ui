@@ -157,17 +157,17 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       {/* Number of first matrix ID */}
       <div className="Scenario__section">
         <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
-              htmlFor="first-first-matrix-id">Ensimm&auml;isen matriisin numero:</label>
+               htmlFor="first-first-matrix-id">Ensimm&auml;isen matriisin numero:</label>
         <input id="first-matrix-id"
-              type="number"
-              min="1"
-              max="999"
-              step="1"
-              /* If value is not written to JSON (= null), write default value 100. */
-              value={scenario.first_matrix_id == null ? 101 : scenario.first_matrix_id}
-              onChange={(e) => {
-                updateScenario({...scenario, first_matrix_id: e.target.value});
-              }}
+               type="number"
+               min="1"
+               max="999"
+               step="1"
+               /* If value is not written to JSON (= null), write default value 100. */
+               value={scenario.first_matrix_id == null ? 101 : scenario.first_matrix_id}
+               onChange={(e) => {
+                 updateScenario({...scenario, first_matrix_id: e.target.value});
+               }}
         />
       </div>
     </div>
