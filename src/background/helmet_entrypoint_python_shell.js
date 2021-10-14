@@ -72,9 +72,11 @@ module.exports = {
           "--first-scenario-id", runParameters.first_scenario_id,
           "--baseline-data-path", runParameters.base_data_folder_path,
           "--forecast-data-path", runParameters.forecast_data_folder_path,
+          "--first-matrix-id", runParameters.first_matrix_id,
           "--iterations", runParameters.iterations
         ]
           .concat(runParameters.delete_strategy_files ? ["--del-strat-files"] : [])
+          .concat(runParameters.save_matrices_in_emme ? ["--save-emme-matrices"] : [])
           .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
           .concat(runParameters.DO_NOT_USE_EMME ? ["--do-not-use-emme"] : []),
       });

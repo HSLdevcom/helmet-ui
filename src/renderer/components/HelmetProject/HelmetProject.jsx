@@ -121,6 +121,8 @@ const HelmetProject = ({
       first_scenario_id: 19,
       forecast_data_folder_path: null,
       delete_strategy_files: true,
+      save_matrices_in_emme: true,
+      first_matrix_id: 100,
       use_fixed_transit_cost: false,
       iterations: 10,
     };

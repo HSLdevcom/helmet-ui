@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import path from 'path';
+import { isNull } from 'util';
 const {dialog} = require('@electron/remote');
 
 const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherNames}) => {
@@ -158,6 +159,51 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                  }}
           />
         </label>
+      </div>
+
+      {/* Choice whether to save matrices in Emme */}
+      <div className="Scenario__section">
+        <span className="Scenario__pseudo-label">Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) eri skenaarioille Emmess&auml;:</span>
+        <label className="Scenario__radio-input">
+          Kyll&auml;&nbsp;
+          <input type="radio"
+                 name="save-matrices-in-emme"
+                 value="true"
+                 /* If flag is not written to JSON (= null), check radio button. */
+                 checked={scenario.save_matrices_in_emme | scenario.save_matrices_in_emme == null}
+                 onChange={(e) => {
+                   updateScenario({...scenario, save_matrices_in_emme: true});
+                 }}
+          />
+        </label>
+        <label className="Scenario__radio-input">
+          Ei&nbsp;
+          <input type="radio"
+                 name="save-matrices-in-emme"
+                 value="false"
+                 checked={!(scenario.save_matrices_in_emme | scenario.save_matrices_in_emme == null)}
+                 onChange={(e) => {
+                   updateScenario({...scenario, save_matrices_in_emme: false});
+                 }}
+          />
+        </label>
+      </div>
+
+      {/* Number of first matrix ID */}
+      <div className="Scenario__section">
+        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+              htmlFor="first-first-matrix-id">Ensimm&auml;isen matriisin numero:</label>
+        <input id="first-matrix-id"
+              type="number"
+              min="1"
+              max="999"
+              step="1"
+              /* If value is not written to JSON (= null), write default value 100. */
+              value={scenario.first_matrix_id == null ? 101 : scenario.first_matrix_id}
+              onChange={(e) => {
+                updateScenario({...scenario, first_matrix_id: e.target.value});
+              }}
+        />
       </div>
     </div>
   )
