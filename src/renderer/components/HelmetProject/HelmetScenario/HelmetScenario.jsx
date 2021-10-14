@@ -136,13 +136,14 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
 
       {/* Choice whether to delete strategy files at the end of a model run */}
       <div className="Scenario__section">
-        <span className="Scenario__pseudo-label">Poista strategiatiedostot malliajon p&auml;&auml;tytty&auml;:</span>
+        <span className="Scenario__pseudo-label">Poista sijoittelun strategiatiedostot malliajon j&auml;lkeen:</span>
         <label className="Scenario__radio-input">
           Kyll&auml;&nbsp;
           <input type="radio"
                  name="delete-strategy-files"
                  value="true"
-                 checked={scenario.delete_strategy_files}
+                 /* If flag is not written to JSON (= null), check radio button. */
+                 checked={scenario.delete_strategy_files == true | scenario.delete_strategy_files == null}
                  onChange={(e) => {
                    updateScenario({...scenario, delete_strategy_files: true});
                  }}
@@ -153,7 +154,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
           <input type="radio"
                  name="delete-strategy-files"
                  value="false"
-                 checked={!scenario.delete_strategy_files}
+                 checked={!(scenario.delete_strategy_files == true | scenario.delete_strategy_files == null)}
                  onChange={(e) => {
                    updateScenario({...scenario, delete_strategy_files: false});
                  }}
