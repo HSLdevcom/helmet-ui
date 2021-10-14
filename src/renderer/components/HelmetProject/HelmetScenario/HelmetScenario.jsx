@@ -176,7 +176,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                step="1"
                disabled={scenario.save_matrices_in_emme == false}
                /* If value is not written to JSON (= null), write default value 100. */
-               value={scenario.first_matrix_id == null ? 101 : scenario.first_matrix_id}
+               value={scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id}
                onChange={(e) => {
                  updateScenario({...scenario, first_matrix_id: e.target.value});
                }}
