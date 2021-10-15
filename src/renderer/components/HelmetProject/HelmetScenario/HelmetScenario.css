@@ -68,7 +68,7 @@
     line-height: 1.5em;
 }
 .Scenario__number {
-    display: block;
+    display: inline-block;
     width: 5em;
     line-height: 1.75em;
 }

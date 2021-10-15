@@ -160,14 +160,14 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) eri skenaarioille Emmess&auml;</span>
+        <span>Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
       </label>
 
       {/* Number of first matrix ID */}
       <div className="Scenario__section Scenario__section--indentation">
         <label className="Scenario__pseudo-label"
                style={{color: scenario.save_matrices_in_emme == false ? "#666666" : "inherit"}}
-               htmlFor="first-matrix-id">Ensimm&auml;isen matriisin numero</label>
+               htmlFor="first-matrix-id">Matriisit tallennetaan numeroille</label>
         <input id="first-matrix-id"
                className="Scenario__number"
                type="number"
@@ -181,6 +181,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                  updateScenario({...scenario, first_matrix_id: e.target.value});
                }}
         />
+        <span style={{color: scenario.save_matrices_in_emme == false ? "#666666" : "inherit"}}>&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
       </div>
     </div>
