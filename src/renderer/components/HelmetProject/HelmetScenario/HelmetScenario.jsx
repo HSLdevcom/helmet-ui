@@ -61,7 +61,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       {/* Number of first EMME-scenario ID (of 4) - NOTE: EMME-scenario is different from HELMET-scenario (ie. this config) */}
       <div className="Scenario__section">
         <label className="Scenario__pseudo-label"
-               htmlFor="first-scenario-id">Ensimm&auml;isen Emme-skenaarion numero</label>
+               htmlFor="first-scenario-id">Liikenneverkon sis&auml;lt&auml;v&auml; Emme-skenaario</label>
         <input id="first-scenario-id"
                className="Scenario__number"
                type="number"
