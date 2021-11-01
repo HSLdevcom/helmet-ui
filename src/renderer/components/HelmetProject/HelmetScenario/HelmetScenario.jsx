@@ -151,6 +151,22 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       {/* Choice whether to save matrices in Emme */}
       <div className="Scenario__section">
       <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
+             htmlFor="separate-emme-scenarios">
+          <input id="separate-emme-scenarios"
+                 type="checkbox"
+                 /* If flag is not written to JSON (= null), box is checked (= true). */
+                 checked={scenario.separate_emme_scenarios == true | scenario.separate_emme_scenarios == null}
+                 onChange={(e) => {
+                   updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
+                 }}
+          />
+        <span>Tallenna eri ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
+      </label>
+      </div>
+
+      {/* Choice whether to save matrices in Emme */}
+      <div className="Scenario__section">
+      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline"
              htmlFor="save-matrices-in-emme">
           <input id="save-matrices-in-emme"
                  type="checkbox"
@@ -160,7 +176,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksojen tulokset (liikennem&auml;&auml;r&auml;t, matriisit, yms.) Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
+        <span>Tallenna eri ajanjaksojen matriisit Emme-projektin Database-kansioon</span>
       </label>
 
       {/* Number of first matrix ID */}
