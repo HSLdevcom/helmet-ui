@@ -125,6 +125,7 @@ const HelmetProject = ({
       save_matrices_in_emme: false,
       first_matrix_id: 100,
       use_fixed_transit_cost: false,
+      end_assignment_only: false,
       iterations: 10,
     };
     // Create the new scenario in "scenarios" array first

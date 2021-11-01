@@ -75,6 +75,7 @@ module.exports = {
           "--first-matrix-id", runParameters.first_matrix_id,
           "--iterations", runParameters.iterations
         ]
+          .concat(runParameters.end_assignment_only ? ["--end-assignment-only"] : [])
           .concat(runParameters.delete_strategy_files ? ["--del-strat-files"] : [])
           .concat(runParameters.separate_emme_scenarios ? ["--separate-emme-scenarios"] : [])
           .concat(runParameters.save_matrices_in_emme ? ["--save-emme-matrices"] : [])

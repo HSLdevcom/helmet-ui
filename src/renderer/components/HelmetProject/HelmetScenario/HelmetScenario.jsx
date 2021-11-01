@@ -103,14 +103,32 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         <input id="iterations"
                className="Scenario__number"
                type="number"
-               min="0"
+               min="1"
                max="99"
                step="1"
+               disabled={scenario.end_assignment_only}
                value={scenario.iterations}
                onChange={(e) => {
                  updateScenario({...scenario, iterations: e.target.value});
                }}
         />
+        
+        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline Scenario__pseudo-label--right"
+            htmlFor="end-assignment-only">
+          <input id="end-assignment-only"
+                type="checkbox"
+                checked={scenario.end_assignment_only}
+                onChange={(e) => {
+                  updateScenario({...scenario, end_assignment_only: e.target.checked});
+                }}
+          />
+        <span>Aja vain loppusijoittelu</span>
+      </label>
+      </div>
+
+      {/* Choice whether to delete strategy files at the end of a model run */}
+      <div className="Scenario__section Scenario__section--right">
+      
       </div>
 
       <div className="Scenario__section Scenario__title">

@@ -34,6 +34,9 @@
     vertical-align: middle;
     padding-right: 0.75em;
 }
+.Scenario__pseudo-label--right {
+    padding-left: 2em;
+}
 .Scenario__pseudo-label--inline input {
     display: block;
     float: left;
