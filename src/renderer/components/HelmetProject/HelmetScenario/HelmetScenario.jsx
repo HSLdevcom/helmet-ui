@@ -169,7 +169,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
           <input id="separate-emme-scenarios"
                  type="checkbox"
                  /* If flag is not written to JSON (= null), box is checked (= true). */
-                 checked={scenario.separate_emme_scenarios == true | scenario.separate_emme_scenarios == null}
+                 checked={scenario.separate_emme_scenarios}
                  onChange={(e) => {
                    updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
                  }}
@@ -185,7 +185,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
           <input id="save-matrices-in-emme"
                  type="checkbox"
                  /* If flag is not written to JSON (= null), box is checked (= true). */
-                 checked={scenario.save_matrices_in_emme == true | scenario.save_matrices_in_emme == null}
+                 checked={scenario.save_matrices_in_emme == true}
                  onChange={(e) => {
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
@@ -204,14 +204,14 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                min="1"
                max="999"
                step="1"
-               disabled={scenario.save_matrices_in_emme == false}
+               disabled={!scenario.save_matrices_in_emme}
                /* If value is not written to JSON (= null), write default value 100. */
                value={scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id}
                onChange={(e) => {
                  updateScenario({...scenario, first_matrix_id: e.target.value});
                }}
         />
-        <span style={{color: scenario.save_matrices_in_emme == false ? "#666666" : "inherit"}}>&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
+        <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}>&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
       </div>
     </div>

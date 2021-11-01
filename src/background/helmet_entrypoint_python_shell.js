@@ -76,7 +76,7 @@ module.exports = {
           "--iterations", runParameters.iterations
         ]
           .concat(runParameters.end_assignment_only ? ["--end-assignment-only"] : [])
-          .concat(runParameters.delete_strategy_files ? ["--del-strat-files"] : [])
+          .concat(runParameters.delete_strategy_files == true | runParameters.delete_strategy_files == null ? ["--del-strat-files"] : [])
           .concat(runParameters.separate_emme_scenarios ? ["--separate-emme-scenarios"] : [])
           .concat(runParameters.save_matrices_in_emme ? ["--save-emme-matrices"] : [])
           .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
