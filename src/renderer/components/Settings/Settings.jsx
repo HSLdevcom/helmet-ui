@@ -22,7 +22,7 @@ const Settings = ({
         </button>
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">EMME Python (v2.7)</span>
+          <span className="Settings__pseudo-label">Emme Python (v3.7)</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
             {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
