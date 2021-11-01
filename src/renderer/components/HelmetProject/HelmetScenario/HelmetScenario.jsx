@@ -96,8 +96,8 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         />
       </div>
 
-      {/* Number of iterations to run */}
       <div className="Scenario__section">
+        {/* Number of iterations to run */}
         <label className="Scenario__pseudo-label"
                htmlFor="iterations">Iteraatiot</label>
         <input id="iterations"
@@ -112,23 +112,19 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                  updateScenario({...scenario, iterations: e.target.value});
                }}
         />
-        
-        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline Scenario__pseudo-label--right"
-            htmlFor="end-assignment-only">
-          <input id="end-assignment-only"
-                type="checkbox"
-                checked={scenario.end_assignment_only}
-                onChange={(e) => {
-                  updateScenario({...scenario, end_assignment_only: e.target.checked});
-                }}
-          />
-        <span>Aja vain loppusijoittelu</span>
-      </label>
-      </div>
 
-      {/* Choice whether to delete strategy files at the end of a model run */}
-      <div className="Scenario__section Scenario__section--right">
-      
+        {/* Choice whether to delete strategy files at the end of a model run */}
+        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline Scenario__pseudo-label--right"
+               htmlFor="end-assignment-only">
+          <input id="end-assignment-only"
+                 type="checkbox"
+                 checked={scenario.end_assignment_only}
+                 onChange={(e) => {
+                   updateScenario({...scenario, end_assignment_only: e.target.checked});
+                 }}
+          />
+          <span>Aja vain loppusijoittelu</span>
+        </label>
       </div>
 
       <div className="Scenario__section Scenario__title">
