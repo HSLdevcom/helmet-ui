@@ -72,7 +72,7 @@ module.exports = {
           "--first-scenario-id", runParameters.first_scenario_id,
           "--baseline-data-path", runParameters.base_data_folder_path,
           "--forecast-data-path", runParameters.forecast_data_folder_path,
-          "--first-matrix-id", runParameters.first_matrix_id,
+          "--first-matrix-id", (runParameters.first_matrix_id == null ? "100" : runParameters.first_matrix_id),
           "--iterations", runParameters.iterations
         ]
           .concat(runParameters.end_assignment_only ? ["--end-assignment-only"] : [])
