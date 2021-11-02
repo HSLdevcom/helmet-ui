@@ -107,13 +107,15 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
     - esim. `C:\Helmet\Scenario_input_data\2030`
     - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
       Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
-5.	Suoritettavien iteraatiokierrosten määrä (yleensä 10)
-    - Iteraatiomäärä 0 tarkoittaa että tehdään heti loppusijoittelu
-      (vaatii että kysyntämatriisit omx-muodossa aiemmasta malliajosta löytyvät skenaarion tuloskansiosta)
+5.	Suoritettavien iteraatiokierrosten enimmäismäärä (yleensä 10)
+    - Voit myös tehdä pelkän loppusijoittelun, jolloin iteraatioita ei ajeta. Pelkän
+      loppusijoittelun tekeminen vaatii, että kysyntämatriisit omx-muodossa aiemmasta malliajosta
+      löytyvät skenaarion tuloskansiosta.
 6.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua 
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`).
 7.  Valinta, poistetaanko sijoittelun strategiatiedostot malliajon jälkeen.
-8.  Valinta, tallennetaanko mm. joukkoliikenteen matka-ajan osamatriisit (in-vehicle time, first
+8.  Valinta, tallennetaanko eri ajanjaksot erillisiin Emme-skenaarioihin.
+9.  Valinta, tallennetaanko mm. joukkoliikenteen matka-ajan osamatriisit (in-vehicle time, first
     waiting time, jne.) talteen. Malliajoon ja hankearviointiin tarpeelliset matriisit tallennetaan
     aina .omx-muodossa riippumatta tästä valinnasta.
     - Mikäli halutaan useiden Helmet-skenaarioiden kaikki Emme-matriisit talteen samaan
