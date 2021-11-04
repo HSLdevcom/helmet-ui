@@ -99,7 +99,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
       <div className="Scenario__section">
         {/* Number of iterations to run */}
         <label className="Scenario__pseudo-label"
-               htmlFor="iterations">Iteraatiot</label>
+               htmlFor="iterations">Iteraatioiden enimm&auml;ism&auml;&auml;r&auml;</label>
         <input id="iterations"
                className="Scenario__number"
                type="number"
