@@ -24,7 +24,7 @@
     "del": "^6.0.0",
     "electron-dl": "^3.3.0",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-store": "^8.0.0",
+    "electron-store": "^8.0.1",
     "nugget": "^2.0.1",
     "python-shell": "^3.0.1",
     "react": "^17.0.2",
