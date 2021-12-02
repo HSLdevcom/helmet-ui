@@ -168,8 +168,8 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
              htmlFor="separate-emme-scenarios">
           <input id="separate-emme-scenarios"
                  type="checkbox"
-                 /* If flag is not written to JSON (= null), box is checked (= true). */
-                 checked={scenario.separate_emme_scenarios}
+                 /* If flag is not written to JSON (= null), box is unchecked (= false). */
+                 checked={scenario.separate_emme_scenarios == true}
                  onChange={(e) => {
                    updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
                  }}
@@ -184,7 +184,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
              htmlFor="save-matrices-in-emme">
           <input id="save-matrices-in-emme"
                  type="checkbox"
-                 /* If flag is not written to JSON (= null), box is checked (= true). */
+                 /* If flag is not written to JSON (= null), box is unchecked (= false). */
                  checked={scenario.save_matrices_in_emme == true}
                  onChange={(e) => {
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
