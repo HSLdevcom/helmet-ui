@@ -28,6 +28,7 @@ module.exports = {
           .concat(["--emme-paths"]).concat(allRunParameters.map(p => p.emme_project_file_path))
           .concat(["--first-scenario-ids"]).concat(allRunParameters.map(p => p.first_scenario_id))
           .concat(["--forecast-data-paths"]).concat(allRunParameters.map(p => p.forecast_data_folder_path))
+          .concat(allRunParameters.map(p => p.separate_emme_scenarios).every(Boolean) ? ["--separate-emme-scenarios"] : [])
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
