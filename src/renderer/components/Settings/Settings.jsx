@@ -1,6 +1,8 @@
 import React from 'react';
 import path from "path";
 const {dialog} = require('@electron/remote');
+import {searchEMMEPython} from './search_emme_pythonpath';
+import versions from '../versions';
 
 const Settings = ({
   emmePythonPath, setEMMEPythonPath,
@@ -22,7 +24,7 @@ const Settings = ({
         </button>
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">EMME Python (v2.7)</span>
+          <span className="Settings__pseudo-label">Emme Python v3.7</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
             {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
@@ -32,6 +34,19 @@ const Settings = ({
                  accept=".exe"
                  onChange={(e) => setEMMEPythonPath(e.target.files[0].path)}
           />
+        <button className="Settings__beside-input-btn"
+                  onClick={(e) => {
+                    const [found, pythonPath] = searchEMMEPython();
+                    if (found) {
+                      if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
+                        setEMMEPythonPath(pythonPath);
+                      }
+                    } else {
+                      alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nSyötä Pythonin polku manuaalisesti.`);
+                    }}}
+          >
+            Hae Python automaattisesti
+          </button>
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">HELMET model-system</span>

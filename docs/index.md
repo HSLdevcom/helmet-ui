@@ -8,7 +8,8 @@ Mallia hyödynnetään ja kehitetään erityisesti palvelemaan seudullisen MAL-s
 HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kuten linjastosuunnitelmien vaikutusten arvioinnissa sekä liikennehankkeiden hankearvioinneissa.
 
 Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”.
-Malli tuo esiin esimerkiksi kulkumuotojakauman, matka-ajan, saavutettavuuden, matkamääriä ja liikennesuoritteita.
+Malli tuo esiin esimerkiksi linjastouunnitelman tai liikennehankkeen vaikutukset/vaikutuksia kulkumuotojakaumaan,
+matka-aikaan, saavutettavuuteen, matkamääriin ja liikennesuoritteisiin.
 Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista [täällä](esimerkkeja_tuloksista.md).
 
 ## Helmet-järjestelmän käyttö
@@ -46,8 +47,7 @@ Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
 * Henkilöauton kilometrikustannus (polttoaine, renkaat)
 * Joukkoliikenteen vyöhykehinnat
 * Tie-ja katuverkon ominaisuudet (linkin tieluokka, kaistamäärä, pituus)
-* Joukkoliikennelinjasto (tunnus, reitti, keskimääräinen vuoroväli)
-* Erillisillä malleilla laskettu tavaraliikenne sekä satamien ja lentoaseman henkilöliikenne
+* Joukkoliikennelinjasto (linjatunnus, reitti, keskimääräinen vuoroväli)
 * Työmatkojen pysäköintimaksu alueittain
 * Asiointimatkojen pysäköintimaksut alueittain
 
@@ -125,7 +125,9 @@ Aikaisemmissa malliversioissa ruuhkautuminen aiheutti ongelmia:
 * Jotkut linjat ylikuormittuivat epärealistisesti
 * Hankearvioinnit eivät ole ottaneet huomioon kapasiteettilisäysten vaikutuksia matkan mukavuuteen ja toteutettavuuteen
 
-Jatkossa Helmet 4 myötä kuormitusaste vaikuttaa reitinvalintoihin, ja reitin vastus kasvaa kun linjan kuormitusaste kasvaa.
+Kuormitusaste vaikuttaa reitinvalintoihin, ja reitin vastus kasvaa kun linjan kuormitusaste kasvaa.
+Ruuhkautuvuus vaikuttaa ainoastaan loppusijoitteluun eli siihen minkä kyseistä yhteysväliä palvelevan joukkoliikennelinjan matkustaja valitsee,
+ei kulkutavan valintaan tai suuntautumiseen.
 
 ### Pyöräilyn mallinnus
 

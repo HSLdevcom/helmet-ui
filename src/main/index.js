@@ -37,6 +37,8 @@ async function createUI() {
     }
   });
   await mainWindow.loadFile('src/renderer/index.html');
+  // Starting from electron v14
+  require("@electron/remote/main").enable(mainWindow.webContents);
 
   // Quit when main window is closed
   mainWindow.on('closed', () => {

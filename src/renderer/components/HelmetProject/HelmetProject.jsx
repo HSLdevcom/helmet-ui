@@ -118,9 +118,14 @@ const HelmetProject = ({
       id: newId,
       name: newScenarioName,
       emme_project_file_path: null,
-      first_scenario_id: 19,
+      first_scenario_id: 1,
       forecast_data_folder_path: null,
+      delete_strategy_files: true,
+      separate_emme_scenarios: false,
+      save_matrices_in_emme: false,
+      first_matrix_id: 100,
       use_fixed_transit_cost: false,
+      end_assignment_only: false,
       iterations: 10,
     };
     // Create the new scenario in "scenarios" array first
@@ -197,8 +202,8 @@ const HelmetProject = ({
         alert(`Ennustedata-kansiota ei ole valittu skenaariossa "${scenario.name}"`);
         return;
       }
-      if (iterations < 0 || iterations > 99) {
-        alert(`Aseta iteraatiot väliltä 0 - 99 skenaariossa "${scenario.name}"`);
+      if (iterations < 1 || iterations > 99) {
+        alert(`Aseta iteraatiot väliltä 1 - 99 skenaariossa "${scenario.name}"`);
         return;
       }
     }
