@@ -72,14 +72,14 @@ Moduuli lukee skenaarioon tarpeelliset tiedot tiedostoista
 |------------------------------|------------------------------------------------------------|
 |`modes_xxx.txt`	             |	kulkutavat (yhteinen kaikille skenaarioille)              |
 |`vehicles_xxx.txt`	           |	ajoneuvotyypit (yhteinen kaikille skenaarioille)          |
-|`base_network_xxx.txt`        |	verkko (yhteinen kaikille aikajaksoille)                  |
-|`transit_lines_xxx.txt`       |	linjasto (yhteinen kaikille aikajaksoille)                |
-|`turns_xxx.txt`               |	kääntymiset (yhteinen kaikille aikajaksoille)             |
-|`extra_links_xxx.txt`         |	linkkien pyörätieluokat (yhteinen kaikille aikajaksoille) |
-|`extra_links_xxx.txt`         |	mahdolliset ruuhkamaksut tai tietullit aikajaksoittain    |
-|`extra_transit_lines_xxx.txt` |	linjojen vuorovälit aikajaksoittain                       | 
+|`base_network_xxx.txt`        |	verkko (yhteinen kaikille ajanjaksoille)                  |
+|`transit_lines_xxx.txt`       |	linjasto (yhteinen kaikille ajanjaksoille)                |
+|`turns_xxx.txt`               |	kääntymiset (yhteinen kaikille ajanjaksoille)             |
+|`extra_links_xxx.txt`         |	linkkien pyörätieluokat (yhteinen kaikille ajanjaksoille) |
+|`extra_links_xxx.txt`         |	mahdolliset ruuhkamaksut tai tietullit ajanjaksoittain    |
+|`extra_transit_lines_xxx.txt` |	linjojen vuorovälit ajanjaksoittain                       | 
 
-`extra_xxx.txt`-tiedostot luovat valmiiksi ennustejärjestelmän tarvitsemat extra-attribuutit. 
+`extra_xxx.txt`-tiedostot luovat valmiiksi ennustejärjestelmän tarvitsemat ekstra-attribuutit. 
 
 ## Muut lähtötiedot
 
