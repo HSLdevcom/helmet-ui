@@ -6,32 +6,42 @@ sort: 3
 
 ## Luo uusi Emme-projekti haluamaasi kansioon
 - File - New - Project…
--	Name: esim. sijoittelu
--	Project location: esim. `C:\HELMET40`
+-	Name: esim. `Viima`
+-	Project location: esim. `C:\HELMET41`
 
-Emme luo valitsemaasi kansioon alikansion (tässä tapauksessa `C:\HELMET40\sijoittelu`) ja tähän alikansioon emp-tiedoston. 
-Huomaa, että emp-tiedoston nimen pitää vastata alikansion nimeä, tässä tapauksessa siis `sijoittelu.emp`.
+Emme luo valitsemaasi kansioon alikansion (tässä tapauksessa `C:\HELMET41\Viima`) ja tähän alikansioon emp-tiedoston.
+Huomaa, että emp-tiedoston nimen pitää vastata alikansion nimeä, tässä tapauksessa siis `Viima.emp`.
 
-Seuraavassa valintaikkunassa valitse kohta _Create an empty project_ ja jatka dimensioiden määrittelyyn. 
+Seuraavassa valintaikkunassa valitse kohta _Create an empty project_ ja jatka dimensioiden määrittelyyn.
+
+Tarvittavat skenaario- matriisi- ja ekstra-attribuuttimäärät riippuvat Helmet-asetuksista:
+- Jos malliajon määrittelyssä aiotaan valita _Tallenna eri ajanjaksot erillisiin Emme-skenaarioihin_,
+  tarvitaan viisi Emme-skenaariota kutakin tarkasteltavaa Helmet-skenaariota kohti.
+  Ensimmäinen niistä toimii lähtötietona (verkko ja linjasto) malliajoon ja muut luodaan automaattisesti
+  malliajon aikana ajanjaksojen tuloksia varten (vrk, aht, pt, iht).
+  Tässä tapauksessa pärjätään pienemmällä ekstra-attribuuttimäärällä.
+- Jos malliajon määrittelyssä ei valita _Tallenna eri ajanjaksot erillisiin Emme-skenaarioihin_,
+  tarvitaan yksi Emme-skenaario kutakin tarkasteltavaa Helmet-skenaariota kohti.
+  Tässä tapauksessa tarvitaan tuloksia varten enemmän ekstra-attribuuttitilaa.
+- Jos malliajon määrittelyssä aiotaan valita _Tallenna eri ajanjaksojen matriisit Emme-projektin Database-kansioon_,
+  tarvitaan enemmän tilaa matriiseille
+
 Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot:
 
-| Koko      |Muuttuja                                                             |
-|-----------|---------------------------------------------------------------------|
-| 5+        | network scenarios (5 kpl kutakin tarkasteltavaa Helmet-skenaariota kohti) |
-| 2100      | zones or centroids                                                  |
-| 20 000    | nodes incl. centroids (17999 regular nodes)                         |
-| 55 000    | directional links                                                   |
-| 30        | transit vehicle types                                               |
-| 2 000     | transit lines or routes                                             |
-| 200 000   | transit line segments                                               |
-| 10 000    | turn table entries                                                  |
-| 400       | matrices of type mf                                                 |
-| 200       | matrices of type mo                                                 |
-| 200       | matrices of type md                                                 |
-| 9 999     | matrices of type ms                                                 |
-| 99        | functions per function class                                        |
-| 5 000     | operators per function class                                        |
-| 3 000 000 | words for extra attributes                                          |
+| Muuttuja                                                                  | Koko      | Vaihtoehtoinen koko                                 |
+|---------------------------------------------------------------------------|-----------|-----------------------------------------------------|
+| Network scenarios                                                         | 1+        | 5+ (jos ajanjaksot erillisiin skenaarioihin)        |
+| Zones or centroids                                                        | 2100      |                                                     |
+| Nodes incl. centroids                                                     | 20 000    |                                                     |
+| Directional links                                                         | 55 000    |                                                     |
+| Transit vehicle types                                                     | 30        |                                                     |
+| Transit lines or routes                                                   | 2 000     |                                                     |
+| Transit line segments                                                     | 200 000   |                                                     |
+| Turn table entries                                                        | 10 000    |                                                     |
+| Full matrices                                                             | 100       | 300+ (jos matriisit Emmessä talteen)                |
+| Origin matrices                                                           | 10        |                                                     |
+| Destination matrices                                                      | 10        |                                                     |
+| Words for extra attributes                                                | 9 700 000 | 3 100 000 (jos ajanjaksot erillisiin skenaarioihin) |
 
 Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muokata näitä myös valitsemalla Tools - Prompt ja moduulin 1.23):
 - unit of energy: MJ
@@ -41,11 +51,10 @@ Muokkaa seuraavaksi yksikköasetuksia. Asetuksiksi käyvät seuraavat (voit muok
 
 Perusta tyhjä skenaario kohdassa _First scenario_:
 -	Number: esim. 1
--	Title: esim. 2018
+-	Title: esim. 2018_20211130
 
 Valitse koordinaatisto:
--	Spatial reference: File - Load: National Grids -> Finland -> ETRS 1989 GK25FIN.prj **TAI**
--	Spatial reference: Edit - ERTS89 / GK25FIN (uudemmat EMME-versiot)
+-	Spatial reference: Edit - ETRS89 / GK25FIN
 - Koordinaatistoa voi myöhemmin muuttaa valikossa File - Project Settings – GIS.
 
 ## Lue sisään verkkotiedostot
