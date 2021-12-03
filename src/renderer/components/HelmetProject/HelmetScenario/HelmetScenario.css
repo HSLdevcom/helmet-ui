@@ -8,6 +8,10 @@
 .Scenario__section {
     padding-bottom: 1.25em;
 }
+.Scenario__section--indentation {
+    padding-left: 22px;
+    padding-top: 0.5em;
+}
 
 .Scenario__close-btn {
     float: right;
@@ -27,8 +31,24 @@
 }
 .Scenario__pseudo-label--inline {
     display: inline-block;
-    vertical-align: initial;
+    vertical-align: middle;
     padding-right: 0.75em;
+}
+.Scenario__pseudo-label--right {
+    padding-left: 2em;
+}
+.Scenario__pseudo-label--inline input {
+    display: block;
+    float: left;
+}
+.Scenario__pseudo-label--inline span {
+    display: block;
+    padding-left: 22px;
+}
+
+/* Titles */
+.Scenario__title {
+    font-weight: bold;
 }
 
 /* Inputs */
@@ -49,6 +69,11 @@
     font-size: 0.95em;
     font-style: italic;
     line-height: 1.5em;
+}
+.Scenario__number {
+    display: inline-block;
+    width: 5em;
+    line-height: 1.75em;
 }
 
 .Scenario__pseudo-file-select {

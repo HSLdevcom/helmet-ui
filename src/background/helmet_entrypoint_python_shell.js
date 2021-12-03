@@ -28,6 +28,7 @@ module.exports = {
           .concat(["--emme-paths"]).concat(allRunParameters.map(p => p.emme_project_file_path))
           .concat(["--first-scenario-ids"]).concat(allRunParameters.map(p => p.first_scenario_id))
           .concat(["--forecast-data-paths"]).concat(allRunParameters.map(p => p.forecast_data_folder_path))
+          .concat(allRunParameters.map(p => p.separate_emme_scenarios).every(Boolean) ? ["--separate-emme-scenarios"] : [])
       });
 
     // Attach runtime handlers (stdout/stderr, process errors)
@@ -72,8 +73,13 @@ module.exports = {
           "--first-scenario-id", runParameters.first_scenario_id,
           "--baseline-data-path", runParameters.base_data_folder_path,
           "--forecast-data-path", runParameters.forecast_data_folder_path,
+          "--first-matrix-id", (runParameters.first_matrix_id == null ? "100" : runParameters.first_matrix_id),
           "--iterations", runParameters.iterations
         ]
+          .concat(runParameters.end_assignment_only ? ["--end-assignment-only"] : [])
+          .concat(runParameters.delete_strategy_files == true | runParameters.delete_strategy_files == null ? ["--del-strat-files"] : [])
+          .concat(runParameters.separate_emme_scenarios ? ["--separate-emme-scenarios"] : [])
+          .concat(runParameters.save_matrices_in_emme ? ["--save-emme-matrices"] : [])
           .concat(runParameters.use_fixed_transit_cost ? ["--use-fixed-transit-cost"] : [])
           .concat(runParameters.DO_NOT_USE_EMME ? ["--do-not-use-emme"] : []),
       });
