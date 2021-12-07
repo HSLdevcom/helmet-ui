@@ -23,7 +23,7 @@ async function createUI() {
   // Render main window including UI (index.html linking to all UI components)
   mainWindow = new BrowserWindow({
     width: 1200,
-    height: 800,
+    height: 1005,
     resizable: false,
     maximizable: false,
     fullscreen: false,
