@@ -70,16 +70,18 @@ hr {
 }
 
 .App__header {
-    height: 50px;
+    height: 70px;
     background-color: #007AC9;
     background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
-    background-size: auto, 102px 41px;
-    background-position: 10px, 97%;
+    background-size: 41px 41px, 102px 41px;
+    background-position: left 15px center, right 15px center;
     background-repeat: no-repeat, no-repeat;
     color: #ffffff;
-    font-size: 20pt;
-    padding: 30px 0 0 75px;
+    font-size: 24px;
+    line-height: 70px;
+    padding: 0 0 0 85px;
     font-weight: normal;
+    letter-spacing: -0.02em;
 }
 
 .App__header-title {
