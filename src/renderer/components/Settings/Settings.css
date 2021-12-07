@@ -2,6 +2,9 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Settings__overlay {
@@ -16,20 +19,17 @@
     margin: 0;
     padding: 0;
     border: 0;
-    background-color: black;
-    opacity: 0.25;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .Settings__dialog {
     z-index: 200;  /* Higher than overlay */
-    position: absolute;
-    left: 16%;
-    top: 10%;
     width: 400px;
-    padding: 1.5em;
-    margin-top: 5%;
-    background-color: #fafafa;
-    border: 2px solid silver;
+    padding: 15px 20px 40px;
+    background-color: #ffffff;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
 }
 
 .Settings__dialog-heading {
