@@ -10,6 +10,8 @@ const Runtime = ({
 }) => {
   return (
     <div className="Runtime">
+
+      <div className="Runtime__helmet-project-controls">
       <div className="Runtime__heading">Lis&auml;&auml; HELMET-skenaario(t) ajettavaksi, tai luo uusi HELMET-skenaario</div>
       <p className="Runtime__project-path">
         HELMET-skenaarioiden tallennuspolku: {projectPath}
@@ -22,7 +24,10 @@ const Runtime = ({
           Uudelleenlataa HELMET-projektin skenaariot
         </button>
       </div>
+      </div>
 
+      <div className="Runtime__scenarios-controls">
+      <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s) => {
@@ -71,7 +76,8 @@ const Runtime = ({
           Uusi skenaario
         </button>
       </div>
-      <hr className="Runtime__control-group-separator"/>
+      </div>
+      
       <div className="Runtime__start-stop-controls">
         <p className="Runtime__start-stop-description">
           {scenarioIDsToRun.length ?

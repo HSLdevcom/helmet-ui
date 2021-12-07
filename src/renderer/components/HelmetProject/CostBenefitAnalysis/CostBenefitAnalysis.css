@@ -1,21 +1,21 @@
 .CBA {
-    padding-left: 10px;
-    background-image: url('pylvasdiagrammi_sininen.png');
-    background-position: 10px 5px;
-    background-repeat: no-repeat;
+    background: #F4F4F5;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .CBA__heading {
-    font-size: 1.25em;
-    margin: 10px 0 20px 60px;
-    padding-top: 30px;
-    font-weight: normal;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
 }
 
 .CBA__choices {
-    background-color: #EEF1F3;
-    width: 100%;
-    padding: 6px;
 }
 
 .CBA__pseudo-label {
@@ -32,7 +32,6 @@
     background-color: #ffffff;
     border: 1px solid #c0c0c0;
     border-radius: 3px;
-    padding: 0 0.25em;
     cursor: pointer;
     /* Overflowing file/dir names show as "First part..." */
     white-space: nowrap;
@@ -50,5 +49,4 @@
 }
 
 .CBA__run {
-    padding-top: 12px;
 }

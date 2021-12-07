@@ -1,35 +1,56 @@
-.Runtime {
-    width: 600px;
-    padding-top: 20px;
-    padding-left: 10px;
+.Runtime { 
+}
+
+/* Helmet project */
+
+.Runtime__helmet-project-controls {
+    padding: 20px;
 }
 
 .Runtime__heading {
-    font-size: 1.25em;
-    margin-bottom: 15px;
-    font-weight: normal;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
 }
 
 .Runtime__project-path {
-    font-size: 1em;
-    margin-bottom: 7px;
-    font-weight: normal;
-    font-style: italic;
+    font-style: normal;
+    font-weight: 325;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
 }
 
 .Runtime__reload-scenarios-btn {
-    margin-bottom: 12px;
+}
+
+/* Scenarios */
+
+.Runtime__scenarios-controls {
+    background: #F4F4F5;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.Runtime__scenarios-heading {
+    font-style: normal;
+    font-weight: 350;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
 }
 
 .Runtime__scenarios {
-    background-color: #EEF1F3;
     max-height: 160px;
     overflow-y: auto;
-    padding: 6px;
 }
 
 .Runtime__scenario {
-    margin: 6px;
+    margin: 6px 0 6px 0;
 }
 
 .Runtime__scenario-name {
@@ -74,11 +95,10 @@
 .Runtime__add-new-scenario-btn {
 }
 
-.Runtime__control-group-separator {
-    margin: 14px 0 0 0;
-}
+/* Start-stop */
 
 .Runtime__start-stop-controls {
+    padding: 20px;
 }
 
 .Runtime__start-stop-description {
