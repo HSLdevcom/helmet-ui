@@ -13,25 +13,43 @@
     font-size: 24px;
     line-height: 28px;
     letter-spacing: -0.02em;
+    margin-bottom: 10px;
 }
 
 .CBA__choices {
+    border-spacing: 0;
+}
+
+.CBA__choices tr td {
+    vertical-align: bottom;
 }
 
 .CBA__pseudo-label {
     display: block;
-    line-height: 1.75em;
-    vertical-align: middle;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+    color: #333333;
+    margin-top: 10px;
 }
 
 .CBA__pseudo-file-select {
     display: block;
-    width: 14em;
-    line-height: 1.75em;
-    margin-bottom: 6px;
+    width: 280px;
+    padding: 10px 12px;
+    font-style: normal;
+    font-weight: 325;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    color: #333333;
     background-color: #ffffff;
-    border: 1px solid #c0c0c0;
-    border-radius: 3px;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-top: 4px;
+    margin-right: 10px;
     cursor: pointer;
     /* Overflowing file/dir names show as "First part..." */
     white-space: nowrap;
@@ -49,4 +67,15 @@
 }
 
 .CBA__run {
+}
+
+.CBA__run button {
+    display: block;
+    margin-top: 20px;
+    height: 44px;
+    width: 280px;
+    line-height: 44px;
+    font-size: 18px;
+    font-weight: 350;
+    letter-spacing: -0.5px;
 }
