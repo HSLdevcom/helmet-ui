@@ -24,20 +24,26 @@
 
 .Settings__dialog {
     z-index: 200;  /* Higher than overlay */
-    width: 400px;
-    padding: 15px 20px 40px;
+    width: 520px;
+    padding: 40px 60px;
     background-color: #ffffff;
     border: 1px solid #CCCCCC;
     box-sizing: border-box;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .Settings__dialog-heading {
-    font-size: 1.5em;
-    margin: 0 50px 1em 0;
-    padding: 0 0 5px 0;
-    font-weight: normal;
-    border-bottom: 1px solid black;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 22px;
+    line-height: 26px;
+    letter-spacing: -0.6px;
+    color: #333333;
+    order: 0;
+    margin-bottom: 10px;
 }
 
 .Settings__dialog-input-group {
@@ -45,18 +51,26 @@
 
 .Settings__pseudo-label {
     display: block;
-    line-height: 1.75em;
-    vertical-align: middle;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+    margin-top: 10px;
 }
 
 .Settings__pseudo-file-select {
-    display: inline-block;
-    width: 20em;
-    line-height: 1.75em;
-    padding: 0 0.25em;
-    margin-bottom: 10px;
-    background: #f5f5f5;
-    border: 1px solid #c0c0c0;
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    background: #ffffff;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 325;
+    color: #333333;
     cursor: pointer;
     /* Overflowing file/dir names show as "First part..." */
     white-space: nowrap;
@@ -69,15 +83,23 @@
 }
 
 .Settings__dialog-controls {
-    float: right;
-    min-width: 0px;
-    width: auto;
-    heigth: auto;
-    color: #DC0451;
-    border-radius: 3px;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #007AC9;
     font-size: 15px;
+    min-width: 30px;
+    padding: 20px;
+    border: 0;
 }
 
-.Settings__beside-input-btn {
-    margin-bottom: 10px;
+.Settings__input-btn {
+    display: block;
+    margin: 10px auto;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 350;
+    letter-spacing: -0.5px;
 }

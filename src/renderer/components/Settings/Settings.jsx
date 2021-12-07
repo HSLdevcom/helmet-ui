@@ -34,7 +34,7 @@ const Settings = ({
                  accept=".exe"
                  onChange={(e) => setEMMEPythonPath(e.target.files[0].path)}
           />
-        <button className="Settings__beside-input-btn"
+        <button className="Settings__input-btn"
                   onClick={(e) => {
                     const [found, pythonPath] = searchEMMEPython();
                     if (found) {
@@ -72,7 +72,7 @@ const Settings = ({
                    })
                  }}
           />
-          <button className="Settings__beside-input-btn"
+          <button className="Settings__input-btn"
                   onClick={(e) => {promptModelSystemDownload()}}
           >
             Lataa eri versio (vaatii internet-yhteyden {'\u{0001F4F6}'})
