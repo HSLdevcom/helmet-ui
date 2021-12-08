@@ -8,7 +8,7 @@ body {
     padding: 0;
     position: relative;
     background: #ffffff;
-    font-size: 8pt;
+    font-size: 18px;
     font-family: gotham_rounded_medium, sans-serif;
 }
 
@@ -16,12 +16,10 @@ button {
     background-color: #ffffff;
     color: #007AC9;
     border: 1px solid #888888;
-    min-width: 120px;
-    height: 30px;
-    padding: 0 20px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 26px;
     border-radius: 37px;
-    outline: none;
-    text-decoration: none;
     font-family: inherit;
     font-size: inherit;
 }
@@ -74,6 +72,7 @@ hr {
 
 .App__open-settings-btn {
     position: absolute;
+    top: 70px;
     right: 0;
     margin-right: 10px;
     margin-top: 10px;
