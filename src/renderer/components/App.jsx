@@ -181,15 +181,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         &nbsp;
         <span className="App__header-version">{`UI v${helmetUIVersion}`}</span>
       </div>
-      <div>
-        <button className="App__open-settings-btn"
-                style={{display: isSettingsOpen ? "none" : "block"}}
-                onClick={(e) => setSettingsOpen(true)}
-                disabled={isProjectRunning}
-        >
-          Projektin asetukset
-        </button>
-      </div>
 
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}
       <div className="App__body">
@@ -201,6 +192,16 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           resultsPath={resultsPath}
           signalProjectRunning={setProjectRunning}
         />
+      </div>
+      
+      <div>
+        <button className="App__open-settings-btn"
+                style={{display: isSettingsOpen ? "none" : "block"}}
+                onClick={(e) => setSettingsOpen(true)}
+                disabled={isProjectRunning}
+        >
+          Projektin asetukset
+        </button>
       </div>
     </div>
   )
