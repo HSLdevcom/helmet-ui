@@ -2,9 +2,19 @@
 }
 
 .Status__readiness {
-    margin: 1em 0;
-    border: 1px solid silver;
-    padding: 4px;
+    width: 579px;
+    height: 31px;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 15px;
+    line-height: 31px;
+    letter-spacing: -0.5px;
+    padding-left: 9px;
 }
 
 .Status__finished-scenario {

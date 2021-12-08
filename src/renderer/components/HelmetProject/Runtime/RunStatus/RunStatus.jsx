@@ -31,7 +31,7 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             </div>
           </div>
           :
-          "Setting up python-shell . . ."
+          <p>Setting up python-shell . . .</p>
         :
         ""
       }
