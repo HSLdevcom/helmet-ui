@@ -79,16 +79,14 @@ const Runtime = ({
       </div>
       
       <div className="Runtime__start-stop-controls">
+        <div className="Runtime__heading">Ajettavana</div>
         <p className="Runtime__start-stop-description">
           {scenarioIDsToRun.length ?
-            <span>
-                Ajettavana:&nbsp;
                 <span className="Runtime__start-stop-scenarios">
                   {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).map((s) => s.name).join(', ')}
                 </span>
-              </span>
             :
-            "Ei ajettavaksi valittuja skenaarioita"
+            <span>Ei ajettavaksi valittuja skenaarioita</span>
           }
         </p>
         <RunStatus
