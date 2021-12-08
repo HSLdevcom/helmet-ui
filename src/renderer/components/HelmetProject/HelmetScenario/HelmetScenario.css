@@ -1,67 +1,130 @@
 .Scenario {
-    padding: 1em 0.75em 0 0.75em;
     margin: 50px 150px 10px 10px;
-    background-color: #EEF1F3;
-    border-radius: 3px;
+    width: 480px;
+    padding: 40px 60px;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .Scenario__section {
-    padding-bottom: 1.25em;
 }
+
+.Scenario__heading {
+    font-style: normal;
+    font-weight: 350;
+    font-size: 22px;
+    line-height: 26px;
+    letter-spacing: -0.6px;
+    color: #333333;
+    order: 0;
+    margin-bottom: 10px;
+}
+
+.Scenario__title {
+    font-style: normal;
+    font-weight: 350;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    color: #333333;
+    order: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .Scenario__section--indentation {
-    padding-left: 22px;
-    padding-top: 0.5em;
+    padding-left: 44px;
+    padding-top: 4px;
 }
 
 .Scenario__close-btn {
-    float: right;
-    min-width: 0px;
-    width: auto;
-    heigth: auto;
-    color: #DC0451;
-    border-radius: 3px;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #007AC9;
     font-size: 15px;
+    min-width: 30px;
+    padding: 20px;
+    border: 0;
 }
 
 /* Labels */
 .Scenario__pseudo-label {
     display: block;
-    line-height: 1.75em;
-    vertical-align: middle;
+    font-style: normal;
+    font-weight: 350;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+    margin-top: 10px;
 }
 .Scenario__pseudo-label--inline {
     display: inline-block;
     vertical-align: middle;
-    padding-right: 0.75em;
-}
-.Scenario__pseudo-label--right {
-    padding-left: 2em;
+    font-style: normal;
+    font-weight: 325;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+    color: #333333;
 }
 .Scenario__pseudo-label--inline input {
     display: block;
     float: left;
 }
 .Scenario__pseudo-label--inline span {
-    display: block;
-    padding-left: 22px;
+    padding-left: 14px;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
 }
-
-/* Titles */
-.Scenario__title {
-    font-weight: bold;
+span.Scenario__inline {
+    font-style: normal;
+    font-weight: 325;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+}
+.Scenario__pseudo-label--right {
+    display: block;
+    width: 156px;
+}
+.Scenario__inline {
+    display: inline-block !important;
 }
 
 /* Inputs */
-.Scenario__name-label {
+.Scenario__pseudo-file-select, .Scenario__name, .Scenario__number {
     display: block;
-    margin: 0 auto;
-    line-height: 1.75em;
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    margin-right: 20px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 325;
+    cursor: pointer;
+    /* Overflowing file/dir names show as "First part..." */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.Scenario__name {
-    display: block;
-    width: 14em;
-    line-height: 1.75em;
+
+.Scenario__number {
+    width: 156px;
 }
+
 .Scenario__name-error {
     display: table;
     margin: 0 auto;
@@ -69,26 +132,6 @@
     font-size: 0.95em;
     font-style: italic;
     line-height: 1.5em;
-}
-.Scenario__number {
-    display: inline-block;
-    width: 5em;
-    line-height: 1.75em;
-}
-
-.Scenario__pseudo-file-select {
-    display: block;
-    width: 14em;
-    line-height: 1.75em;
-    background-color: #ffffff;
-    border: 1px solid #c0c0c0;
-    border-radius: 3px;
-    padding: 0 0.25em;
-    cursor: pointer;
-    /* Overflowing file/dir names show as "First part..." */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .Scenario__hidden-input {

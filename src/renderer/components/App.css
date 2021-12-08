@@ -39,6 +39,16 @@ input {
     padding: 0 0.25em;
 }
 
+input[type="checkbox"] {
+    background: #FFFFFF;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+}
+
 hr {
     border-top: 1px solid black;
     border-bottom: none;
