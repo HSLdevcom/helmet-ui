@@ -49,21 +49,15 @@ const Runtime = ({
                 Valitse ajettavaksi
               </button>
               &nbsp;
-              <button className={"Runtime__scenario-open-config-btn" + (
+              <div className={"Runtime__scenario-open-config" + (
                         openScenarioID === s.id ? " Runtime__scenario-open-config-btn--active" : ""
                       )}
-                      disabled={runningScenarioID}
-                      onClick={(e) => setOpenScenarioID(s.id)}
-              >
-                Muokkaa
-              </button>
+                      onClick={(e) => runningScenarioID ? undefined : setOpenScenarioID(s.id)}
+              ></div>
               &nbsp;
-              <button className={"Runtime__scenario-delete-btn"}
-                      disabled={runningScenarioID}
-                      onClick={(e) => deleteScenario(s)}
-              >
-                Poista
-              </button>
+              <div className={"Runtime__scenario-delete"}
+                      onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
+              ></div>
             </div>
           )
         })}

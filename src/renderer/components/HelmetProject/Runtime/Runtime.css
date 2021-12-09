@@ -42,23 +42,25 @@
 
 .Runtime__scenarios {
     max-height: 160px;
-    width: 785px;
+    width: 700px;
     overflow-y: auto;
 }
 
 .Runtime__scenario {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+    flex-direction: row;
 }
 
 .Runtime__scenario-name {
     display: inline-block;
-    padding: 8px 0;
     width: 250px;
     overflow: hidden;
 }
 
 .Runtime__scenario-activate-btn {
-    margin-right: 14px;
+    margin-right: 96px;
     vertical-align: top;
 }
 .Runtime__scenario-activate-btn--active {
@@ -67,22 +69,23 @@
     border-color: #00985F;
 }
 
-.Runtime__scenario-open-config-btn {
-    margin-right: 14px;
-    white-space: pre;
-    overflow: hidden;
+.Runtime__scenario-open-config {
+    display: inline-block;
+    margin-right: 31px;
     vertical-align: top;
-    text-overflow: ellipsis;
-}
-.Runtime__scenario-open-config-btn--active {
-    background-color: #007AC9;
-    color: #ffffff;
-    border-color: #007AC9;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../Edit.png');
+    background-repeat: no-repeat;
 }
 
-.Runtime__scenario-delete-btn {
-    background: #F4DEEA;
+.Runtime__scenario-delete {
+    display: inline-block;
     vertical-align: top;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../trash.png');
+    background-repeat: no-repeat;
 }
 
 .Runtime__scenarios-footer {
