@@ -9,7 +9,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
   return (
     <div className="Log">
-      <div class="Log__heading">Loki</div>
+      <div className="Log__heading">Loki</div>
 
       <div className="Log__close"
            onClick={(e) => isScenarioRunning ? [] : closeRunLog()}
