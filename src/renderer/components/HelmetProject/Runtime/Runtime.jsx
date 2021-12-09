@@ -12,7 +12,7 @@ const Runtime = ({
     <div className="Runtime">
 
       <div className="Runtime__helmet-project-controls">
-      <div className="Runtime__heading">Projektin skenaarioiden lataaminen</div>
+      <div className="Runtime__heading">Projektin alustaminen</div>
       <p className="Runtime__project-path">
         Helmet-skenaarioiden tallennuspolku: {projectPath}
       </p>
