@@ -53,7 +53,7 @@
     border-color: #007AC9;
 }
 
-.Log__jeejee {
+.Log__overflow {
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;

@@ -44,7 +44,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
         </div>
       </div>
 
-      <div className="Log__jeejee">
+      <div className="Log__overflow">
       <div className="Log__entries">
         {entries.map((entry) => {
           switch (entry.level) {
