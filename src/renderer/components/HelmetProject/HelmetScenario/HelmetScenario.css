@@ -41,16 +41,16 @@
     padding-top: 4px;
 }
 
-.Scenario__close-btn {
+.Scenario__close {
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
-    color: #007AC9;
-    font-size: 15px;
-    min-width: 30px;
-    padding: 20px;
-    border: 0;
+    width: 16px;
+    height: 16px;
+    top: 17px;
+    right: 22px;
+    background-color: #ffffff;
+    background-image: url('../../close-large.png');
+    background-repeat: no-repeat;
 }
 
 /* Labels */

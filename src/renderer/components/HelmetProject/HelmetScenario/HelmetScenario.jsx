@@ -10,13 +10,11 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
   return (
     <div className="Scenario" key={scenario.id}>
 
-      <button className="Scenario__close-btn"
+      <div className="Scenario__close"
               onClick={(e) => {
                 closeScenario();
               }}
-      >
-        X
-      </button>
+      ></div>
 
       <div className="Scenario__section Scenario__heading">
         Skenaarion asetukset

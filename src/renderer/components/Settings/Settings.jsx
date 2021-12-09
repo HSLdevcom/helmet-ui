@@ -19,9 +19,9 @@ const Settings = ({
       <div className="Settings__overlay">{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
-        <button className="Settings__dialog-controls" onClick={(e) => closeSettings()}>
-            X
-        </button>
+
+        <div className="Settings__dialog-controls" onClick={(e) => closeSettings()}></div>
+
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Emme Python v3.7</span>
