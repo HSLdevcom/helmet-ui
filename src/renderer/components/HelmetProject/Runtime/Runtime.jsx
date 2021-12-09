@@ -73,7 +73,7 @@ const Runtime = ({
                 disabled={runningScenarioID}
                 onClick={(e) => handleClickNewScenario()}
         >
-          Uusi Helmet-skenaario
+          <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
         </button>
       </div>
       </div>
