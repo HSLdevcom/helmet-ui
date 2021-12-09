@@ -47,7 +47,7 @@
 
 .Runtime__scenarios {
     max-height: 160px;
-    width: 700px;
+    width: 750px;
     overflow-y: auto;
 }
 
@@ -58,7 +58,7 @@
 .Runtime__scenario-name {
     display: inline-block;
     padding: 8px 0;
-    width: 200px;
+    width: 250px;
     overflow: hidden;
 }
 
