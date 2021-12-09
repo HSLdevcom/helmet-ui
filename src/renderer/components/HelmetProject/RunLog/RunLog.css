@@ -60,7 +60,7 @@
 }
 
 .Log__entries {
-    white-space: pre;
+    white-space: pre-wrap;
     font-style: normal;
     font-weight: 325;
     font-size: 18px;
