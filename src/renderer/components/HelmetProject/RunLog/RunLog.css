@@ -25,17 +25,16 @@
     margin-bottom: 10px;
 }
 
-.Log__close-btn {
+.Log__close {
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
-    margin: 10px auto;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    font-weight: 350;
-    letter-spacing: -0.5px;
+    width: 16px;
+    height: 16px;
+    top: 17px;
+    right: 22px;
+    background-color: #ffffff;
+    background-image: url('../../close-large.png');
+    background-repeat: no-repeat;
 }
 
 .Log__header-controls {

@@ -11,12 +11,9 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
     <div className="Log">
       <div class="Log__heading">Loki</div>
 
-      <button className="Log__close-btn"
-              disabled={isScenarioRunning}
-              onClick={(e) => closeRunLog()}
-      >
-        X
-      </button>
+      <div className="Log__close"
+           onClick={(e) => isScenarioRunning ? [] : closeRunLog()}
+      ></div>
 
       <div className="Log__header">
 
