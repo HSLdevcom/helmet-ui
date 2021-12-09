@@ -16,7 +16,7 @@ const Settings = ({
   return (
     <div className="Settings">
 
-      <div className="Settings__overlay">{/* Dark background overlay */}</div>
+      <div className="Settings__overlay" onClick={(e) => closeSettings()}>{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
 
