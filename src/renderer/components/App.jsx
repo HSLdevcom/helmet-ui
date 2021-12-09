@@ -177,9 +177,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
       {/* UI title bar, app-version, etc. */}
       <div className="App__header">
-        <span className="App__header-title">Helmet 4.0</span>
+        <span className="App__header-title">Helmet 4.1</span>
         &nbsp;
-        <span className="App__header-version">{`UI v${helmetUIVersion}`}</span>
+        <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
       </div>
 
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}

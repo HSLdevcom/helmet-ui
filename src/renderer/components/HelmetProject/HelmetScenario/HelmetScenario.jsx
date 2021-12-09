@@ -176,7 +176,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
+        <span>Tallenna ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
       </label>
       </div>
 
@@ -192,7 +192,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksojen matriisit Emme-projektin Database-kansioon</span>
+        <span>Tallenna ajanjaksojen matriisit Emme-projektin Database-kansioon</span>
       </label>
 
       {/* Number of first matrix ID */}

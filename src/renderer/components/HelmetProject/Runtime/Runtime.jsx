@@ -12,16 +12,16 @@ const Runtime = ({
     <div className="Runtime">
 
       <div className="Runtime__helmet-project-controls">
-      <div className="Runtime__heading">Lis&auml;&auml; HELMET-skenaario(t) ajettavaksi, tai luo uusi HELMET-skenaario</div>
+      <div className="Runtime__heading">Projektin skenaarioiden lataaminen</div>
       <p className="Runtime__project-path">
-        HELMET-skenaarioiden tallennuspolku: {projectPath}
+        Helmet-skenaarioiden tallennuspolku: {projectPath}
       </p>
       <div>
         <button className="Runtime__reload-scenarios-btn"
                 onClick={(e) => reloadScenarios()}
                 disabled={runningScenarioID}
         >
-          Uudelleenlataa HELMET-projektin skenaariot
+          Lataa uudelleen projektin skenaariot
         </button>
       </div>
       </div>
@@ -46,7 +46,7 @@ const Runtime = ({
                       disabled={runningScenarioID}
                       onClick={(e) => handleClickScenarioToActive(s)}
               >
-                Ajettavaksi
+                Valitse ajettavaksi
               </button>
               &nbsp;
               <button className={"Runtime__scenario-open-config-btn" + (
@@ -73,7 +73,7 @@ const Runtime = ({
                 disabled={runningScenarioID}
                 onClick={(e) => handleClickNewScenario()}
         >
-          Uusi skenaario
+          Uusi Helmet-skenaario
         </button>
       </div>
       </div>

@@ -49,7 +49,7 @@ const Settings = ({
           </button>
         </div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">HELMET model-system</span>
+          <span className="Settings__pseudo-label">Helmet-model-system</span>
           {isDownloadingHelmetScripts ?
             <span className="Settings__pseudo-file-select">
               Downloading model-system {dlHelmetScriptsVersion === 'master' ? 'latest' : dlHelmetScriptsVersion}. . .
@@ -75,7 +75,7 @@ const Settings = ({
           <button className="Settings__input-btn"
                   onClick={(e) => {promptModelSystemDownload()}}
           >
-            Lataa eri versio (vaatii internet-yhteyden {'\u{0001F4F6}'})
+            Lataa eri versio internetist&auml;
           </button>
         </div>
         <div className="Settings__dialog-input-group">

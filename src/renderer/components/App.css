@@ -22,6 +22,8 @@ button {
     border-radius: 37px;
     font-family: inherit;
     font-size: inherit;
+    letter-spacing: -0.5px;
+    font-weight: 350;
 }
 
 button:hover {
@@ -97,7 +99,7 @@ hr {
 }
 
 .App__header-version {
-    font-size: 40%;
+    font-size: 60%;
 }
 
 .App__body {
