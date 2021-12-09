@@ -72,12 +72,15 @@ hr {
     height: 100%;
 }
 
-.App__open-settings-btn {
+.App__open-settings {
     position: absolute;
-    top: 70px;
-    right: 0;
-    margin-right: 10px;
-    margin-top: 10px;
+    top: 87px;
+    right: 58px;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+    background-image: url('Settings.png');
+    background-repeat: no-repeat;
 }
 
 .App__header {

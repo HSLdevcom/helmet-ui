@@ -194,15 +194,10 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         />
       </div>
       
-      <div>
-        <button className="App__open-settings-btn"
-                style={{display: isSettingsOpen ? "none" : "block"}}
-                onClick={(e) => setSettingsOpen(true)}
-                disabled={isProjectRunning}
-        >
-          Projektin asetukset
-        </button>
-      </div>
+      <div className="App__open-settings"
+           style={{display: isSettingsOpen | isProjectRunning ? "none" : "block"}}
+           onClick={(e) => setSettingsOpen(true)}
+        ></div>
     </div>
   )
 };
