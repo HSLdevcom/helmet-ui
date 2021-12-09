@@ -12,7 +12,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
       <div className="Log__heading">Loki</div>
 
       <div className="Log__close"
-           onClick={(e) => isScenarioRunning ? [] : closeRunLog()}
+           onClick={(e) => isScenarioRunning ? undefined : closeRunLog()}
       ></div>
 
       <div className="Log__header">
