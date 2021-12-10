@@ -37,17 +37,17 @@ const Runtime = ({
                 {s.name ? s.name : `Unnamed project (${s.id})`}
               </span>
               &nbsp;
-              <button className={"Runtime__scenario-activate-btn" + (
-                        scenarioIDsToRun.includes(s.id) ?
-                          " Runtime__scenario-activate-btn--active"
-                          :
-                          ""
-                      )}
-                      disabled={runningScenarioID}
-                      onClick={(e) => handleClickScenarioToActive(s)}
-              >
-                Valitse ajettavaksi
-              </button>
+              <input className={"Runtime__scenario-activate-checkbox" + (
+                            scenarioIDsToRun.includes(s.id) ?
+                              " Runtime__scenario-activate-checkbox--active"
+                              :
+                              ""
+                          )}
+                     type="checkbox"
+                     checked={scenarioIDsToRun.includes(s.id)}
+                     disabled={runningScenarioID}
+                     onClick={(e) => handleClickScenarioToActive(s)}
+              />
               &nbsp;
               <div className={"Runtime__scenario-open-config" + (
                         openScenarioID === s.id ? " Runtime__scenario-open-config-btn--active" : ""
