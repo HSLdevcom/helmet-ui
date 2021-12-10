@@ -95,7 +95,6 @@
 .Runtime__add-new-scenario-btn {
     background: #007AC9;
     border-color: #007AC9;
-    border-radius: 25px;
     color: #ffffff;
 }
 .Runtime__add-new-scenario-btn:hover {
@@ -103,10 +102,10 @@
 }
 
 .Runtime__add-icon {
-    display: block;
+    display: inline-flex;
+    align-items: center;
     height: 35px;
     padding-left: 45px;
-    line-height: 35px;
     background-color: #007AC9;
     background-image: url(../../add.png);
     background-repeat: no-repeat;

@@ -70,8 +70,5 @@
 }
 
 .CBA__run button {
-    display: block;
     margin-top: 20px;
-    height: 44px;
-    line-height: 44px;
 }

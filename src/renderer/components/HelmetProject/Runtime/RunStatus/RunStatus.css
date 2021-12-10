@@ -2,6 +2,8 @@
 }
 
 .Status__readiness {
+    display: flex;
+    align-items: center;
     width: 579px;
     height: 31px;
     background: #FFFFFF;
@@ -12,7 +14,6 @@
     font-style: normal;
     font-weight: 350;
     font-size: 15px;
-    line-height: 31px;
     letter-spacing: -0.5px;
     padding-left: 9px;
 }

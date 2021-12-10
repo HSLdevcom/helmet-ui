@@ -13,13 +13,14 @@ body {
 }
 
 button {
+    display: flex;
+    align-items: center;
     background-color: #ffffff;
     color: #007AC9;
     border: 1px solid #888888;
     height: 44px;
-    line-height: 44px;
     padding: 0 26px;
-    border-radius: 37px;
+    border-radius: 25px;
     font-family: inherit;
     font-size: inherit;
     letter-spacing: -0.5px;
@@ -84,6 +85,9 @@ hr {
 }
 
 .App__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 70px;
     background-color: #007AC9;
     background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
@@ -92,7 +96,6 @@ hr {
     background-repeat: no-repeat, no-repeat;
     color: #ffffff;
     font-size: 24px;
-    line-height: 70px;
     padding: 0 0 0 85px;
     font-weight: normal;
     letter-spacing: -0.02em;
