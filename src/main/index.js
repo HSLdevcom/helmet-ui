@@ -22,7 +22,7 @@ let mainWindow, entrypointWorkerWindow, cbaWorkerWindow, useMockAssignmentInstea
 async function createUI() {
   // Render main window including UI (index.html linking to all UI components)
   mainWindow = new BrowserWindow({
-    width: 1500,
+    width: 1300,
     height: 1200,
     resizable: false,
     maximizable: false,

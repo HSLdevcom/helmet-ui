@@ -12,10 +12,9 @@
  */
 .Project__selected-details {
     position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0;
-    margin: 130px 20px 0px 820px;
+    top: 130px;
+    right: 20px;
+    left: 635px;
 }
 .HelmetProject__control-group-separator {
 }
