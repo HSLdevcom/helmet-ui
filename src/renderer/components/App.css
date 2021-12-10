@@ -15,6 +15,7 @@ body {
 button {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #ffffff;
     color: #007AC9;
     border: 1px solid #888888;
@@ -87,7 +88,6 @@ hr {
 .App__header {
     display: flex;
     align-items: center;
-    justify-content: center;
     height: 70px;
     background-color: #007AC9;
     background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
