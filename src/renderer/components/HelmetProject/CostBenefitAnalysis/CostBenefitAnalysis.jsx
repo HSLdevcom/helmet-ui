@@ -7,7 +7,7 @@ const CostBenefitAnalysis = ({
 }) => {
   return (
     <div className="CBA">
-      <div className="CBA__heading">Hy&ouml;ty-kustannus-analyysi</div>
+      <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
       <table className="CBA__choices">
         <tbody>
           <tr>
@@ -109,7 +109,7 @@ const CostBenefitAnalysis = ({
         </tbody>
       </table>
       <div className="CBA__run">
-        <button onClick={(e) => {runCbaScript()}}>Aja H/K analyysi</button>
+        <button onClick={(e) => {runCbaScript()}}>Aja hy&ouml;ty-kustannusanalyysi</button>
       </div>
     </div>
   );

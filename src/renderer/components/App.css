@@ -8,22 +8,24 @@ body {
     padding: 0;
     position: relative;
     background: #ffffff;
-    font-size: 8pt;
+    font-size: 18px;
     font-family: gotham_rounded_medium, sans-serif;
 }
 
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #ffffff;
     color: #007AC9;
     border: 1px solid #888888;
-    min-width: 120px;
-    height: 30px;
-    padding: 0 20px;
-    border-radius: 37px;
-    outline: none;
-    text-decoration: none;
+    height: 44px;
+    padding: 0 26px;
+    border-radius: 25px;
     font-family: inherit;
     font-size: inherit;
+    letter-spacing: -0.5px;
+    font-weight: 350;
 }
 
 button:hover {
@@ -37,6 +39,16 @@ input {
     border: 1px solid #c0c0c0;
     border-radius: 3px;
     padding: 0 0.25em;
+}
+
+input[type="checkbox"] {
+    background: #FFFFFF;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    margin: 0;
 }
 
 hr {
@@ -62,31 +74,38 @@ hr {
     height: 100%;
 }
 
-.App__open-settings-btn {
+.App__open-settings {
     position: absolute;
-    right: 0;
-    margin-right: 10px;
-    margin-top: 10px;
+    top: 87px;
+    right: 58px;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+    background-image: url('Settings.png');
+    background-repeat: no-repeat;
 }
 
 .App__header {
-    height: 50px;
+    display: flex;
+    align-items: center;
+    height: 70px;
     background-color: #007AC9;
     background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
-    background-size: auto, 102px 41px;
-    background-position: 10px, 97%;
+    background-size: 41px 41px, 102px 41px;
+    background-position: left 15px center, right 15px center;
     background-repeat: no-repeat, no-repeat;
     color: #ffffff;
-    font-size: 20pt;
-    padding: 30px 0 0 75px;
+    font-size: 24px;
+    padding: 0 0 0 85px;
     font-weight: normal;
+    letter-spacing: -0.02em;
 }
 
 .App__header-title {
 }
 
 .App__header-version {
-    font-size: 40%;
+    font-size: 60%;
 }
 
 .App__body {

@@ -1,46 +1,74 @@
 .Log {
-    padding: 1em 0.75em 0 0.75em;
-    margin: 50px 10px 10px 10px;
-    background-color: #EEF1F3;
-    border-radius: 3px;
+    background-color: #ffffff;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 40px;
+    height: 850px;
+}
+
+.Log__heading {
+    font-style: normal;
+    font-weight: 350;
+    font-size: 22px;
+    line-height: 26px;
+    letter-spacing: -0.6px;
+    color: #333333;
+    margin-bottom: 10px;
 }
 
 .Log__header {
     text-align: right;
+    margin-bottom: 10px;
 }
 
-.Log__close-btn {
-    min-width: 0px;
-    width: auto;
-    heigth: auto;
-    color: #DC0451;
-    border-radius: 3px;
-    font-size: 15px;
+.Log__close {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 17px;
+    right: 22px;
+    background-color: #ffffff;
+    background-image: url('../../close-large.png');
+    background-repeat: no-repeat;
 }
 
 .Log__header-controls {
-    display: table;
-    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 .Log__header-control {
-    margin: 4px;
+    margin-right: 10px;
+    width: 100%;
 }
 .Log__header-control--on {
     background-color: #007AC9;
     color: #ffffff;
-    border: none;
+    border-color: #007AC9;
+}
+
+.Log__overflow {
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .Log__entries {
-    max-height: 33em;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    white-space: pre;
+    white-space: pre-wrap;
+    font-style: normal;
+    font-weight: 325;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
 }
 
 .Log__entry {
-    color: #007AC9
+    color: #333333;
 }
 
 .Log__entry--ui {

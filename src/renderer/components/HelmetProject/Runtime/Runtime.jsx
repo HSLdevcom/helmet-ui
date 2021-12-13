@@ -10,19 +10,24 @@ const Runtime = ({
 }) => {
   return (
     <div className="Runtime">
-      <div className="Runtime__heading">Lis&auml;&auml; HELMET-skenaario(t) ajettavaksi, tai luo uusi HELMET-skenaario</div>
+
+      <div className="Runtime__helmet-project-controls">
+      <div className="Runtime__heading">Projektin alustaminen</div>
       <p className="Runtime__project-path">
-        HELMET-skenaarioiden tallennuspolku: {projectPath}
+        Helmet-skenaarioiden tallennuspolku: {projectPath}
       </p>
       <div>
         <button className="Runtime__reload-scenarios-btn"
                 onClick={(e) => reloadScenarios()}
                 disabled={runningScenarioID}
         >
-          Uudelleenlataa HELMET-projektin skenaariot
+          Lataa uudelleen projektin skenaariot
         </button>
       </div>
+      </div>
 
+      <div className="Runtime__scenarios-controls">
+      <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s) => {
@@ -32,33 +37,27 @@ const Runtime = ({
                 {s.name ? s.name : `Unnamed project (${s.id})`}
               </span>
               &nbsp;
-              <button className={"Runtime__scenario-activate-btn" + (
-                        scenarioIDsToRun.includes(s.id) ?
-                          " Runtime__scenario-activate-btn--active"
-                          :
-                          ""
-                      )}
-                      disabled={runningScenarioID}
-                      onClick={(e) => handleClickScenarioToActive(s)}
-              >
-                Ajettavaksi
-              </button>
+              <input className={"Runtime__scenario-activate-checkbox" + (
+                            scenarioIDsToRun.includes(s.id) ?
+                              " Runtime__scenario-activate-checkbox--active"
+                              :
+                              ""
+                          )}
+                     type="checkbox"
+                     checked={scenarioIDsToRun.includes(s.id)}
+                     disabled={runningScenarioID}
+                     onClick={(e) => handleClickScenarioToActive(s)}
+              />
               &nbsp;
-              <button className={"Runtime__scenario-open-config-btn" + (
+              <div className={"Runtime__scenario-open-config" + (
                         openScenarioID === s.id ? " Runtime__scenario-open-config-btn--active" : ""
                       )}
-                      disabled={runningScenarioID}
-                      onClick={(e) => setOpenScenarioID(s.id)}
-              >
-                Muokkaa
-              </button>
+                      onClick={(e) => runningScenarioID ? undefined : setOpenScenarioID(s.id)}
+              ></div>
               &nbsp;
-              <button className={"Runtime__scenario-delete-btn"}
-                      disabled={runningScenarioID}
-                      onClick={(e) => deleteScenario(s)}
-              >
-                Poista
-              </button>
+              <div className={"Runtime__scenario-delete"}
+                      onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
+              ></div>
             </div>
           )
         })}
@@ -68,21 +67,20 @@ const Runtime = ({
                 disabled={runningScenarioID}
                 onClick={(e) => handleClickNewScenario()}
         >
-          Uusi skenaario
+          <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
         </button>
       </div>
-      <hr className="Runtime__control-group-separator"/>
+      </div>
+      
       <div className="Runtime__start-stop-controls">
+        <div className="Runtime__heading">Ajettavana</div>
         <p className="Runtime__start-stop-description">
           {scenarioIDsToRun.length ?
-            <span>
-                Ajettavana:&nbsp;
                 <span className="Runtime__start-stop-scenarios">
                   {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).map((s) => s.name).join(', ')}
                 </span>
-              </span>
             :
-            "Ei ajettavaksi valittuja skenaarioita"
+            <span>Ei ajettavaksi valittuja skenaarioita</span>
           }
         </p>
         <RunStatus

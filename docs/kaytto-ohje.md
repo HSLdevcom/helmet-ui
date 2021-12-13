@@ -77,7 +77,7 @@ Mallin ajoa varten tulee määritellä seuraavat asetukset.
 
 - Suorituskelpoinen Emme Python 
   - Tämän **on oltava** Emmen mukana tullut ’python.exe’, jotta tietyt edellytykset täyttyvät.
-  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.5.0\Python27\python.exe`
+  - esim. `C:\Program Files\INRO\Emme\Emme 4\Emme-4.5.0\Python37\python.exe`
 - GitHubin [Helmet 4.1 Model System](https://github.com/HSLdevcom/helmet-model-system)-sivuston kansio ’Scripts’
   - Kansiossa ovat järjestelmän käyttämät Python-ohjelmat.
   - Version päivitys voidaan tehdä klikkaamalla "Lataa eri versio...". Nämä eivät korvaa skriptien vanhoja versioita, 
@@ -87,13 +87,15 @@ Mallin ajoa varten tulee määritellä seuraavat asetukset.
   - Tänne talletetaan Helmet-skenaarioiden (malliajojen) määrittelyt (.json)
   - Tämä **ei** siis viittaa Emmen projektitiedostoon (.emp)
 - Lähtödatan sisältävä kansio
-  - Tässä ovat omissa alakansioissaan pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2016)
+  - Tässä ovat omissa alakansioissaan pohjakysyntämatriisit ja nykytilanteen syöttötiedot (2018)
   - Kansion sisällön saa HSL:ltä (ks. [lähtötietotiedostojen ohje](mallin_lahtotietotiedostot.md))
 - Tulosten tallennuspolku
   - Tänne talletetaan ennusteajojen tulokset
 
 Näiden asetusten lisäksi on kehittäjille tarkoitettuja asetuksia helmet-model-system -kansion tiedostossa `dev-config.json`.
 Näihin ei ole tavalliselle käyttäjälle yleensä syytä koskea, mutta joissain tapauksissa hyödyllinen asetusmahdollisuus ei ole vielä implementoitu käyttöliittymään.
+Lisää tietoja `dev-config.json`-tiedoston asetuksista löytyy 
+[tästä](https://github.com/HSLdevcom/helmet-model-system/tree/olusanya/Scripts#configuring-the-model-run-with-dev-configjson).
 
 ### Malliajon määrittely
 
@@ -117,7 +119,7 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
 7.  Valinta, poistetaanko sijoittelun strategiatiedostot malliajon jälkeen.
 8.  Valinta, tallennetaanko eri ajanjaksot erillisiin Emme-skenaarioihin.
 9.  Valinta, tallennetaanko mm. joukkoliikenteen matka-ajan osamatriisit (in-vehicle time, first
-    waiting time, jne.) talteen. Malliajoon ja hankearviointiin tarpeelliset matriisit tallennetaan
+    waiting time, jne.). Malliajoon ja hankearviointiin tarpeelliset matriisit tallennetaan
     aina .omx-muodossa riippumatta tästä valinnasta.
     - Mikäli halutaan useiden Helmet-skenaarioiden kaikki Emme-matriisit talteen samaan
       Emme-projektiin (.emx-tiedostoihin), voidaan lisäksi ennen jokaista malliajoa määrittää
