@@ -10,22 +10,22 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
   return (
     <div className="Scenario" key={scenario.id}>
 
-      <button className="Scenario__close-btn"
+      <div className="Scenario__close"
               onClick={(e) => {
                 closeScenario();
               }}
-      >
-        X
-      </button>
+      ></div>
 
-      <div className="Scenario__section Scenario__title">
-        Perustiedot
+      <div className="Scenario__section Scenario__heading">
+        Skenaarion asetukset
       </div>
 
       {/* Name field (updates the filename live as well) */}
       <div className="Scenario__section">
-        <span className="Scenario__name-label">Skenaarion nimi</span>
-        <input className="Scenario__name"
+        <label className="Scenario__pseudo-label"
+               htmlFor="scenario-name">Skenaarion nimi</label>
+        <input id="scenario-name"
+               className="Scenario__name"
                type="text"
                placeholder="esim. 2030_v1"
                value={scenario.name}
@@ -101,7 +101,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         <label className="Scenario__pseudo-label"
                htmlFor="iterations">Iteraatioiden enimm&auml;ism&auml;&auml;r&auml;</label>
         <input id="iterations"
-               className="Scenario__number"
+               className="Scenario__number Scenario__inline"
                type="number"
                min="1"
                max="99"
@@ -114,7 +114,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         />
 
         {/* Choice whether to delete strategy files at the end of a model run */}
-        <label className="Scenario__pseudo-label Scenario__pseudo-label--inline Scenario__pseudo-label--right"
+        <label className="Scenario__pseudo-label  Scenario__inline Scenario__pseudo-label--inline Scenario__pseudo-label--right"
                htmlFor="end-assignment-only">
           <input id="end-assignment-only"
                  type="checkbox"
@@ -174,7 +174,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
+        <span>Tallenna ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
       </label>
       </div>
 
@@ -190,7 +190,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                    updateScenario({...scenario, save_matrices_in_emme: e.target.checked});
                  }}
           />
-        <span>Tallenna eri ajanjaksojen matriisit Emme-projektin Database-kansioon</span>
+        <span>Tallenna ajanjaksojen matriisit Emme-projektin Database-kansioon</span>
       </label>
 
       {/* Number of first matrix ID */}
@@ -199,7 +199,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                style={{color: scenario.save_matrices_in_emme == false ? "#666666" : "inherit"}}
                htmlFor="first-matrix-id">Matriisit tallennetaan numeroille</label>
         <input id="first-matrix-id"
-               className="Scenario__number"
+               className="Scenario__number Scenario__inline"
                type="number"
                min="1"
                max="999"
@@ -211,7 +211,8 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                  updateScenario({...scenario, first_matrix_id: e.target.value});
                }}
         />
-        <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}>&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
+        <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}
+              className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
       </div>
     </div>

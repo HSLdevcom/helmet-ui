@@ -16,12 +16,12 @@ const Settings = ({
   return (
     <div className="Settings">
 
-      <div className="Settings__overlay">{/* Dark background overlay */}</div>
+      <div className="Settings__overlay" onClick={(e) => closeSettings()}>{/* Dark background overlay */}</div>
 
       <div className="Settings__dialog">
-        <button className="Settings__dialog-controls" onClick={(e) => closeSettings()}>
-            X
-        </button>
+
+        <div className="Settings__dialog-controls" onClick={(e) => closeSettings()}></div>
+
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Emme Python v3.7</span>
@@ -34,7 +34,7 @@ const Settings = ({
                  accept=".exe"
                  onChange={(e) => setEMMEPythonPath(e.target.files[0].path)}
           />
-        <button className="Settings__beside-input-btn"
+        <button className="Settings__input-btn"
                   onClick={(e) => {
                     const [found, pythonPath] = searchEMMEPython();
                     if (found) {
@@ -49,7 +49,7 @@ const Settings = ({
           </button>
         </div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">HELMET model-system</span>
+          <span className="Settings__pseudo-label">Helmet-model-system</span>
           {isDownloadingHelmetScripts ?
             <span className="Settings__pseudo-file-select">
               Downloading model-system {dlHelmetScriptsVersion === 'master' ? 'latest' : dlHelmetScriptsVersion}. . .
@@ -72,10 +72,10 @@ const Settings = ({
                    })
                  }}
           />
-          <button className="Settings__beside-input-btn"
+          <button className="Settings__input-btn"
                   onClick={(e) => {promptModelSystemDownload()}}
           >
-            Lataa eri versio (vaatii internet-yhteyden {'\u{0001F4F6}'})
+            Lataa eri versio internetist&auml;
           </button>
         </div>
         <div className="Settings__dialog-input-group">

@@ -350,7 +350,6 @@ const HelmetProject = ({
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
         />
-        <hr className="HelmetProject__control-group-separator"/>
         <CostBenefitAnalysis
           cbaOptions={cbaOptions}
           setCbaOptions={setCbaOptions}
