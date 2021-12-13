@@ -2,11 +2,13 @@
 
 [![Build Status](https://travis-ci.com/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.com/HSLdevcom/helmet-ui)
 
-Desktop user interface for [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) and [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
+Desktop user interface for [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system) and
+[EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
 
 ## Development
 
-This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/) and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
+This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/)
+and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
 
 ### Requirements
 
@@ -19,14 +21,16 @@ On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-pr
 
 ### Setup
 
-Due to tight integration with EMME, the application is mainly targeted for Windows but can be developed on Mac and Linux as well. However, the final testing should always happen on Windows with Emme.
+Due to tight integration with EMME, the application is mainly targeted for Windows but can be developed on Mac and Linux as well.
+However, the final testing should always happen on Windows with Emme.
 
 ```
 $ git clone <this repository>
 $ npm install
 ```
 
-See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing. EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affecting the automatic resolving of Python binary.
+See [End-User Enviroment](#end-user-environment) for preparing the Windows environment for testing.
+EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affecting the automatic resolving of Python binary.
 
 ### Running and building
 
@@ -36,19 +40,25 @@ See also: [Electronforge.io](https://www.electronforge.io/)
 
 ### Version Control
 
-[Git](https://git-scm.com/) is used as the primary tool for version control and `master` branch is the main development line, aka. bleeding edge. All changes should be made in dedicated feature/bugfix branches, followed by a [pull request](https://help.github.com/en/articles/creating-a-pull-request) and a peer-review. Then, after all checks have passed, the branch may be merged in `master`.
+[Git](https://git-scm.com/) is used as the primary tool for version control and `master` branch is the main development line, aka. bleeding edge.
+All changes should be made in dedicated feature/bugfix branches, followed by a [pull request](https://help.github.com/en/articles/creating-a-pull-request) and a peer-review.
+Then, after all checks have passed, the branch may be merged in `master`.
 
 ### Continuous Integration
 
-The application is built automatically by [Travis CI](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master) when changes are pushed in master branch or pull requests are opened.
+The application is built automatically by [Travis CI](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master)
+when changes are pushed in master branch or pull requests are opened.
 
-[Releases](https://github.com/HSLdevcom/helmet-ui/releases) are deployed automatically when changes are pushed in the `release` branch, which should be updated with `master` only to make new releases.
+[Releases](https://github.com/HSLdevcom/helmet-ui/releases) are deployed automatically when changes are pushed in the `release` branch,
+which should be updated with `master` only to make new releases.
 
 ### Publishing Releases
 
-The Electron Forge's [Github publisher](https://www.electronforge.io/config/publishers/github) is used to upload files and draft a new release, thus avoiding the need to upload and tag releases manually.
+The Electron Forge's [Github publisher](https://www.electronforge.io/config/publishers/github) is used to upload files and draft a new release,
+thus avoiding the need to upload and tag releases manually.
 
-The resulting draft must be reviewed, edited and approved in Github to make it publically available to everyone. This allows testing the package and making final fixes to it before making it public.
+The resulting draft must be reviewed, edited and approved in Github to make it publically available to everyone.
+This allows testing the package and making final fixes to it before making it public.
 
 1. Test and bring all the desired changes in the `master` branch.
 1. Remove if there's word `SNAPSHOT` in `version` field of [package.json](./package.json), and update version as per semver practises.
@@ -74,63 +84,66 @@ _Notice: you cannot create drafts with an existing version number (i.e. release 
 
 Before using Helmet UI, the following requirements must be met:
 
-  1. [Emme 4.4.X](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
+  1. [Emme 4.5.X](https://www.inrosoftware.com/en/products/emme/) is installed, with active license/dongle.
   1. `%EMMEPATH%\programs` is set in user's `PATH` environment variable.
-  1. _[optionally]_ [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up _(or let UI download it)_
+  1. _[optionally]_ [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system) is downloaded and set up _(or let UI download it)_
 
 The Helmet UI installer can be downloaded from [releases](https://github.com/HSLdevcom/helmet-ui/releases), where the exe packages is found under the **Assets** of each release.
 
-:warning: **The release packages are not signed at the moment so Windows will complain about it and prevents the installer from running. This can be overridden in either of two ways:**
+:warning: **The release packages are not downloaded by many so Windows will complain about it and prevents the installer from running.
+This can be overridden in either of two ways:**
 
 - Simply by selecting "More info" ("Lisätiedot") and then clicking "Run anyway". (This option will probably work only if you have admin rights)
 - By right-clicking the downloaded .exe-file, selecting Properties and ticking the box "Unblock".
 
 ![Unblock](docs/unblock.png)
 
-The application installs itself in the user's `%HOMEPATH%/AppData` folder. The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`. The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
+The application installs itself in the user's `%HOMEPATH%/AppData` folder.
+The app itself is located under `AppData\Local`, while settings are persisted in `AppData\Roaming`.
+The settings should survive as-is when updating to newer version, assuming the new version is backwards compatible with the old settings.
 
-On first start, the application attempts to find Emme installation on the workstation and download the latest version of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) scripts. The application will also run `pip install`. The EMME Python path setup may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way. If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder.
+On first start, the application attempts to find Emme installation on the workstation and download the latest version of
+[Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system) scripts.
+The application will also run `pip install`.
+The EMME Python path setup may fail if `EMMEPATH` environment variable is not set or the application is installed in an unusual way.
+If this is the case, you must set the location of Python executable manually in the setting dialog (Asetukset), along with the location of Scripts folder.
 
 ### Settings
 
 - Emme Python executable
   - This **must** be the `python.exe` shipped with Emme to meet some special dependencies.
-  - e.g. `C:\Program Files\INRO\Emme-4.4.2\Python27\python.exe`
-- The `Scripts` folder of [Helmet 4.0 Model System](https://github.com/HSLdevcom/helmet-model-system)
+  - e.g. `C:\Program Files\INRO\Emme-4.5.0\Python37\python.exe`
+- The `Scripts` folder of [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system)
   - This is the Python backend doing most of the work.
-  - This can be updated to a fresh/updated version by clicking "Lataa eri versio...". This will not overwrite your old (tweaked) scripts, it will always save the scripts in a new directory.
+  - This can be updated to a fresh/updated version by clicking "Lataa eri versio...".
+    This will not overwrite your old (tweaked) scripts, it will always save the scripts in a new directory.
   - It can also be set to an existing folder on your computer.
 - Project directory
   - This is where your model run specifications (.json) will be saved.
 - Base data directory
-  - This is where base demand matrices and base year (2016) data are located
+  - This is where base demand matrices and base year (2018) data are located
 - Result data directory
   - This is where you want your model run results to be saved
 
 ### Model run setup
 
+**Need to update this!**
 For each HELMET scenario you want to run, you must also specify the following:
 
 1. Scenario/run name
-1. Emme project file (`.emp`)
-1. The number of the Emme scenario where the bike network is located (usually 19), this scenario must be followed by the walk scenario and three time-dependent car and transit scenarios (aht, pt, iht).
-1. Folder containing the input data.
+2. Emme project file (`.emp`)
+3. The number of the Emme scenario where the bike network is located (usually 19),
+   this scenario must be followed by the walk scenario and three time-dependent car and transit scenarios (aht, pt, iht).
+4. Folder containing the input data.
     - e.g. `c:\Helmet\helmet-model-system\Scenario_input_data\2030`
-1. Whether or not you have a pre-calculated transit cost matrix (located in the results folder for this scenario)
-1. Number of iterations to be executed
+5. Whether or not you have a pre-calculated transit cost matrix (located in the results folder for this scenario)
+6. Number of iterations to be executed
 
 This is the download link that can be handed to users, along with an advice to download the latest version, i.e. the first one on the list.
 
 - https://github.com/HSLdevcom/helmet-ui/releases
 
-The package to be downloaded is named `Helmet.4.0.UI-x.y.z.Setup.exe`, where the `x.y.z` corresponds to the application version.
-
-## TODO & Known Problems
-
-As of 2020-03-17:
-
-1. The application is not [signed](https://electronjs.org/docs/tutorial/code-signing), causing the anti-virus software and Windows to consider it suspicious.
-    - Fix: aqcuire a certificate and add it to the [build process](https://www.electronforge.io/config/makers/squirrel.windows) to enable signing
+The package to be downloaded is named `Helmet.4.1.UI-x.y.z.Setup.exe`, where the `x.y.z` corresponds to the application version.
 
 ## Version history
 
