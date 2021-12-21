@@ -36,16 +36,22 @@ Kutakin projektia varten kannattaa luoda yksi yhteinen Emme-projektipankki, joho
 3. Noudata [erillistä ohjetta](sijopankki.md), jossa kerrotaan mm. sopivista dimensioista (solmujen, linkkien ym. maksimimäärät). 
    Ne vaikuttavat em. `emmebank`-tiedoston kokoon. Aja sisään verkot ja linjastot ohjeen mukaan.
 
-### Helmet asennus
+### Helmet-asennus
 
-Helmet käyttöliittymän asennusohjelma voidaan ladata kansiosta [releases](https://github.com/HSLdevcom/helmet-ui/releases), 
-josta kunkin version exe-paketit löytyvät oman väliotsikkonsa alta. Ladattavan paketin nimeksi tulee `Helmet.4.1.UI-x.y.z.Setup.exe`, 
-missä `x.y.z` on sovellusversion numero. Suositellaan uusimman version (luettelon ensimmäisenä) lataamista.
+Helmet-käyttöliittymän asennustiedosto ladataan [releases-sivulta](https://github.com/HSLdevcom/helmet-ui/releases).
+Asennustiedosto on nimeltään `Helmet.4.1-x.y.z.Setup.exe`, jossa `x.y.x` on käyttöliittymän
+versionumero. Suosittelemme uusimman version eli sivulla ylimpänä olevan version lataamista.
 
-:warning: **Tällä hetkellä sovellus on niin harvoin asennettu, että Windows huomauttaa siitä ja estää asennuksen suorituksen. 
-Tämä voidaan ohittaa kahdella tavalla:**
-- Valitse "More info" ("Lisätietoja") ja klikkaa "Run anyway" ("Suorita joka tapauksessa"). (Tämä vaihtoehto ei aina toimi)
-- Klikkaa ladattua .exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti ruutuun "Unblock" ("Salli").
+:warning: **Sovellus on niin harvoin asennettu, että Windows tai selain voi huomauttaa siitä ja
+estää asennuksen suorituksen. Tämä voidaan ohittaa eri tavoin, joista voit joutua käyttämään
+useampaa yhtä aikaa:**
+
+- Ladatessasi tiedostoa, klikkaa "Säilytä silti" mikäli selain ei tallenna tiedostoa
+  automaattisesti.
+- Kun avaat asennustiedoston, klikkaa varoitukseen "More info" ("Lisätietoja") ja klikkaa "Run
+  anyway" ("Suorita joka tapauksessa").
+- Klikkaa ladattua .exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti
+  ruutuun "Unblock" ("Salli").
 
 ![Unblock](unblock.png)
  
@@ -53,8 +59,11 @@ Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinaine
 kansiossa `AppData\Roaming`. 
 Jos käyttäjällä jostain syystä ei ole pääsyä `AppData`-kansioon, vaihtoehto on sovelluksen lataaminen zip-tiedostona ja purku haluamaan kansioon.
 
-Päivitettäessä uuteen versioon asetusten pitäisi säilyä muuttumattomina edellyttäen, että uusi versio 
-on taakse päin yhteensopiva vanhojen asetusten kanssa.
+:exclamation: Projektiasetukset nollautuvat, kun käyttöliittymän päivittää vanhemmasta versiosta
+versioon 4.1 (mm. Kaivoksela-, Tikkurila-versiot). Jos et muista, mitkä vanhat asetukset
+olivatkaan, voit tarkistaa ne polusta
+`C:\Users\KÄYTTÄJÄTUNNUS\AppData\Roaming\Helmet 4\config.json`. Tiedosto aukeaa esimerkiksi
+Notepadilla. Tiedostossa olevat polut syötetään käyttöliittymän projektiasetuksiin.
 
 Kun sovellus käynnistetään ensimmäistä kertaa, se yrittää löytää työasemalta Emme-asennuksen ja ladata 
 [Helmet 4.1 -liikenne-ennustejärjestelmän (model system)](https://github.com/HSLdevcom/helmet-model-system) 
