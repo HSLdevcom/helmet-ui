@@ -2,7 +2,7 @@
 sort: 2
 ---
 
-# Uuden HELMET 4.1 sij19 -sijoittelupankin perustaminen ”tyhjästä”
+# Sijoittelupankin perustaminen
 
 ## Luo uusi Emme-projekti haluamaasi kansioon
 - File - New - Project…
