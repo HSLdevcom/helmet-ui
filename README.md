@@ -13,7 +13,7 @@ and [Electron API](https://www.electronjs.org/docs/api) available within app)_, 
 ### Requirements
 
 - Git client
-- Node.js 14 LTS & NPM
+- Node.js 16 LTS & NPM
 - EMME 4.x.x _(Windows-only)_
 - _[optionally]_ [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system) _(otherwise downloaded and auto-installed by the UI)_
 
