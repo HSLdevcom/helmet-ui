@@ -2,7 +2,7 @@
 sort: 1
 ---
 
-# Ohjeet Helmet 4.1 -liikenne-ennustejärjestelmän käyttöönottoon
+# Helmet 4.1 -liikenne-ennustejärjestelmän käyttöönotto
 
 Tässä ohjeessa kuvataan [Helmet 4.1-liikenne-ennustejärjestelmän](https://github.com/HSLdevcom/helmet-model-system) käyttöliittymää. 
 Järjestelmä käyttää INROn [Emme–ohjelmistoa](https://www.inrosoftware.com/en/products/emme/).
