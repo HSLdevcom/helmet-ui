@@ -42,18 +42,19 @@
 <!-- ReactDOM init point -->
 <script type="text/babel">
   import React from 'react';
-  import ReactDOM from 'react-dom';
+  import ReactDOM from 'react-dom/client';
   import {searchEMMEPython} from './search_emme_pythonpath';
   import {version} from '../../package';
   import versions from '../versions';
 
-  ReactDOM.render(
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+
+  root.render(
     <App
       helmetUIVersion={version}
       versions={versions} // 3rd party dependencies' versions (EMME & EMME's custom python interpreter)
       searchEMMEPython={searchEMMEPython}
-    />,
-    document.getElementById('root'),
+    />
   );
 </script>
 </body>

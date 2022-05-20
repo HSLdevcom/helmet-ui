@@ -2,6 +2,7 @@
   "name": "helmet-ui",
   "productName": "Helmet 4.1",
   "version": "4.1.1",
+  "private": true,
   "description": "Helmet 4 Model System UI",
   "main": "src/main/index.js",
   "scripts": {
@@ -18,27 +19,27 @@
   },
   "type": "commonjs",
   "dependencies": {
-    "@electron/remote": "^2.0.1",
+    "@electron/remote": "^2.0.8",
     "babel-standalone": "^6.26.0",
     "decompress": "^4.2.1",
-    "del": "^6.0.0",
-    "electron-dl": "^3.3.0",
+    "del": "^6.1.0",
+    "electron-dl": "^3.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.1",
-    "nugget": "^2.0.1",
+    "nugget": "^2.0.2",
     "python-shell": "^3.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "uuid": "^8.3.2",
     "vex-js": "^4.1.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.61",
-    "@electron-forge/maker-deb": "6.0.0-beta.61",
-    "@electron-forge/maker-rpm": "6.0.0-beta.61",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.61",
-    "@electron-forge/maker-zip": "6.0.0-beta.61",
-    "@electron-forge/publisher-github": "6.0.0-beta.61",
-    "electron": "16.0.2"
+    "@electron-forge/cli": "6.0.0-beta.63",
+    "@electron-forge/maker-deb": "6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.63",
+    "@electron-forge/maker-zip": "6.0.0-beta.63",
+    "@electron-forge/publisher-github": "6.0.0-beta.63",
+    "electron": "18.2.4"
   }
 }
