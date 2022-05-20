@@ -2,7 +2,9 @@
 
 ![master](https://github.com/HSLdevcom/helmet-ui/actions/workflows/node.js.yml/badge.svg?branch=master)
 
-Helmet UI is a desktop user interface for [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system). **Read [the documentation in Finnish](https://hsldevcom.github.io/helmet-ui/) to learn how to use Helmet UI and Helmet 4 Model System.** If you wish to develop the UI, continue below.
+Helmet UI is a desktop user interface for [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system). 
+**Read [the documentation in Finnish](https://hsldevcom.github.io/helmet-ui/) to learn how to use Helmet UI and Helmet 4 Model System.**
+ If you wish to develop the UI, continue below.
 
 ## Development requirements
 
