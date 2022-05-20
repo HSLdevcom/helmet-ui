@@ -1,5 +1,5 @@
 ---
-sort: 3
+sort: 2
 ---
 
 # Uuden HELMET 4.1 sij19 -sijoittelupankin perustaminen ”tyhjästä”
