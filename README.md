@@ -1,6 +1,6 @@
 # Helmet UI
 
-[![Build Status](https://travis-ci.com/HSLdevcom/helmet-ui.svg?branch=master)](https://travis-ci.com/HSLdevcom/helmet-ui)
+![master](https://github.com/HSLdevcom/helmet-ui/actions/workflows/node.js.yml/badge.svg?branch=master)
 
 Desktop user interface for [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system) and
 [EMME - Multimodal Transport Planning Software](https://www.inrosoftware.com/en/products/emme/).
@@ -46,7 +46,7 @@ Then, after all checks have passed, the branch may be merged in `master`.
 
 ### Continuous Integration
 
-The application is built automatically by [Travis CI](https://travis-ci.org/HSLdevcom/helmet-ui.svg?branch=master)
+The application is built automatically by [GitHub Actions](https://github.com/HSLdevcom/helmet-ui/actions)
 when changes are pushed in master branch or pull requests are opened.
 
 [Releases](https://github.com/HSLdevcom/helmet-ui/releases) are deployed automatically when changes are pushed in the `release` branch,
@@ -67,7 +67,7 @@ This allows testing the package and making final fixes to it before making it pu
 1. Merge `master` to `release` and push to remote
     - `$ git merge master`
     - `$ git push`
-1. Wait for [Travis](https://travis-ci.org/HSLdevcom/helmet-ui) to build the application.
+1. Wait for [GitHub Actions](https://github.com/HSLdevcom/helmet-ui/actions) to build the application.
 1. Go to [releases page](https://github.com/HSLdevcom/helmet-ui/releases) page and **Edit** the newly created draft.
     1. Ensure the release name corresponds to version number
     1. Write a brief description (new features, changes, fixes etc)
