@@ -9,7 +9,9 @@ Kunkin Helmet-skenaarion (malliajon) tulokset tallentuvat kyseisen Helmet-skenaa
 Näihin kansioihin tallentuu kahdentyyppisiä tiedostoja matriiseja ja tekstitiedostoja, joita on kuvattu tässä ohjeessa tarkemmin.
 
 Näiden lisäksi sijoittelutulokset jäävät talteen Emme-pankkiin.
-Lisää tietoja sijoittelun tuloksista ja niiden analysoinnista löytyy Emmen dokumentaatiosta. Huom! Jos ajat samassa Emme-pankissa useita Helmet-skenaarioita, tarkat matriisitulokset jäävät Emmeen talteen vain, jos config-tiedostoon on määritelty matriiseille omat tallennuspaikat (ks. [ohjeet](kaytto-ohje.md)).
+Lisää tietoja sijoittelun tuloksista ja niiden analysoinnista löytyy Emmen dokumentaatiosta. 
+Huom! Jos ajat samassa Emme-pankissa useita Helmet-skenaarioita, tarkat matriisitulokset jäävät Emmeen talteen vain, 
+jos config-tiedostoon on määritelty matriiseille omat tallennuspaikat (ks. [ohjeet](kaytto-ohje.md)).
 
 Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityksestä saat
 [malliraportista](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
@@ -40,6 +42,13 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | hwp   | koti - työ          |
 | hop   | koti - muu          |
 | oop   | muu kiertomatka     |
+
+#### Sijoitteluluokat
+
+| Koodi   | Kiertomatkan tyyppi                         |
+|---------|---------------------------------------------|
+| work    | kotiperäiset työ-, koulu- ja opiskelumatkat |
+| leisure | muut matkat                                 |
 
 #### Kulkutavat
 
@@ -100,8 +109,8 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | transit_kms.txt                              | Koko vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuovoille |
 | trip_lengths.txt                             | Koko vuorokauden kiertomatkatuotokset tyyppeittäin, kulkutavoittain ja etäisyysluokittain | Etäisyysluokka perustuu henkilöauton ajoetäisyyteen kilometreissa. |
 | trips_areas.txt                              | Suuralueiden koko vuorokauden (meno+paluu)matkatuotokset kulkutavoittain | :exclamation: Uusi versiossa 4.0.5 |
-| vehicle_kms_areas.txt                        | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
-| vehicle_kms_vdfs.txt                         | Kulkumuotojen etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin vehicle_kms.txt |
+| vehicle_kms_areas.txt                        | Sijoitteluluokkien (sekä joukkoliikenteen liityntäkävely erikseen) ja bussien etäisyyssuoritteet (km) koko vuorokaudelle suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
+| vehicle_kms_vdfs.txt                         | Sijoitteluluokkien (sekä joukkoliikenteen liityntäkävely erikseen) ja  etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin vehicle_kms.txt |
 | vehicle_kms_vdfs_areas.txt                   | Kokonaisetäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin ja suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
 | workforce_accessibility.txt                  | Työ-koti-mallin logsum-muuttuja sijoittelualueittain muunnettu henkilömääräksi | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 
