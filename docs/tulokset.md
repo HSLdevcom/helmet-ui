@@ -43,13 +43,6 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | hop   | koti - muu          |
 | oop   | muu kiertomatka     |
 
-#### Sijoitteluluokat
-
-| Koodi   | Kiertomatkan tyyppi                         |
-|---------|---------------------------------------------|
-| work    | kotiperäiset työ-, koulu- ja opiskelumatkat |
-| leisure | muut matkat                                 |
-
 #### Kulkutavat
 
 | Koodi | Kulkutapa      |
@@ -58,6 +51,27 @@ Lisää tietoja kysyntämallien toiminnallisuuksista ja niiden tulosten merkityk
 | t     | joukkoliikenne |
 | b     | polkupyörä     |
 | w     | jalankulku     |
+
+#### Sijoitteluluokat
+
+| Koodi   | Kiertomatkan tyyppi                         |
+|---------|---------------------------------------------|
+| work    | kotiperäiset työ-, koulu- ja opiskelumatkat |
+| leisure | muut matkat                                 |
+
+| Nimi          | Vastine suomeksi                   | Sijoitteluyksikkö |
+|---------------|------------------------------------|-------------------|
+| transit       | joukkoliikenne ml. liityntä        | henkilö           |
+| aux_transit   | joukkoliikenteen liityntä erikseen | henkilö           |
+| bike          | polkupyörä                         | henkilö           |
+| car           | henkilöauto                        | ajoneuvo          |
+| van           | pakettiauto                        | ajoneuvo          |
+| truck         | kuorma-auto                        | ajoneuvo          |
+| trailer_truck | yhdistelmäajoneuvo                 | ajoneuvo          |
+| bus [1]       | linja-auto                         | ajoneuvo          |
+
+[1] Busseja ei varsinaisesti sijoitella, koska ne liikkuvat ennalta määriteltyjä reittejä pitkin,
+mutta ne ovat autosijoittelussa taustaliikenteenä.
 
 #### Väylätyypit
 
