@@ -1,5 +1,5 @@
 ---
-sort: 5
+sort: 4
 ---
 
 # Mallin lähtötietotiedostot ja niiden muokkaaminen
@@ -71,3 +71,25 @@ Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä
 
 Lisätietoja mallin käyttämisestä [täällä](mallitoiden_yleisohje.md).
 Taustatietoa verkkokuvausten muodostamisesta ja historiasta löydät raportista [Helsingin seudun työssäkäyntialueen  liikenne-ennustejärjestelmän tarjontamallit 2017](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2019/helsingin-seudun-tyossakayntialueen-liikenne-ennustejarjestelman-tarjontamallit-6-2019.pdf).
+
+## Lähtötietojen vaikutus ennustemallin eri osiin
+
+* Autonomistus alueittain
+  * Kerros- ja pientalojen osuudet
+  * Matka-aikasuhteet
+* Matkamäärä alueittain
+  * Asukasmäärä ikäryhmittäin
+  * Autonomistus
+* Kulkutavan valinta
+  * Alueparien väliset matka-ajat autolla ja joukkoliikenteellä
+  * Alueparien väliset etäisyydet polkupyörällä ja autolla
+  * Alueparien väliset matkakustannukset: joukkoliikennelipun hinta, autoiun muuttuvat kustannukset (polttoaine, renkaat) ja mahdollinen ruuhkamaksu/tietulli
+  * Autonomistus alueittain
+* Matkakohteiden valinta
+  * Saavutettavuus (matka-aika, etäiyys ja matkakustannus määräpaikkaan eri kulkutavoilla)
+  * Työpaikkamäärä määräpaikassa
+  * Oppilaspaikkojen määrä määräpaikassa
+* Reitin valinta
+  * Auto- ja joukkoliikennelinkin matka-aika
+  * Pyörälinkin pituus
+  * Autolinkin matkakustannus
