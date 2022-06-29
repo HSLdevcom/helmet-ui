@@ -101,7 +101,7 @@ const Settings = ({
                  type="text"
                  onClick={()=>{
                    dialog.showOpenDialog({
-                     defaultPath: projectPath ? projectPath : path.resolve('/'),
+                     defaultPath: projectPath ? projectPath : homedir,
                      properties: ['openDirectory']
                    }).then((e)=>{
                      if (!e.canceled) {
