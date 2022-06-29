@@ -22,7 +22,7 @@ const CostBenefitAnalysis = ({
                      type="text"
                      onClick={()=>{
                        dialog.showOpenDialog({
-                         defaultPath: cbaOptions.baseline_scenario_path ? cbaOptions.baseline_scenario_path : resultsPath,
+                         defaultPath: resultsPath,
                          properties: ['openDirectory']
                        }).then((e)=>{
                          if (!e.canceled) {
@@ -46,7 +46,7 @@ const CostBenefitAnalysis = ({
                      type="text"
                      onClick={()=>{
                        dialog.showOpenDialog({
-                        defaultPath: cbaOptions.projected_scenario_path ? cbaOptions.projected_scenario_path : resultsPath,
+                        defaultPath: resultsPath,
                          properties: ['openDirectory']
                        }).then((e)=>{
                          if (!e.canceled) {
@@ -72,7 +72,7 @@ const CostBenefitAnalysis = ({
                      type="text"
                      onClick={()=>{
                        dialog.showOpenDialog({
-                        defaultPath: cbaOptions.baseline_scenario_2_path ? cbaOptions.baseline_scenario_2_path : resultsPath,
+                        defaultPath: resultsPath,
                          properties: ['openDirectory']
                        }).then((e)=>{
                          if (!e.canceled) {
@@ -96,7 +96,7 @@ const CostBenefitAnalysis = ({
                      type="text"
                      onClick={()=>{
                        dialog.showOpenDialog({
-                        defaultPath: cbaOptions.projected_scenario_2_path ? cbaOptions.projected_scenario_2_path : resultsPath,
+                        defaultPath: resultsPath,
                          properties: ['openDirectory']
                        }).then((e)=>{
                          if (!e.canceled) {
