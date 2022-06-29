@@ -3,7 +3,7 @@ import path from 'path';
 import { isNull } from 'util';
 const {dialog} = require('@electron/remote');
 
-const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherNames}) => {
+const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames}) => {
 
   const [nameError, setNameError] = useState("");
 
@@ -50,10 +50,20 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
         </label>
         <input className="Scenario__hidden-input"
                id="emme-project-file-select"
-               type="file"
-               accept=".emp"
-               onChange={(e) => {
-                 updateScenario({...scenario, emme_project_file_path: e.target.files[0].path});
+               type="text"
+               onClick={()=>{
+                 dialog.showOpenDialog({
+                   defaultPath: scenario.emme_project_file_path ? scenario.emme_project_file_path : projectPath,
+                   filters: [
+                     { name: 'Emme Project file', extensions: ['emp'] },
+                     { name: 'All Files', extensions: ['*'] }
+                   ],
+                   properties: ['openFile']
+                 }).then((e)=>{
+                   if (!e.canceled) {
+                     updateScenario({...scenario, emme_project_file_path: e.filePaths[0]});
+                   }
+                 })
                }}
         />
       </div>
@@ -86,6 +96,7 @@ const HelmetScenario = ({scenario, updateScenario, closeScenario, existingOtherN
                type="text"
                onClick={()=>{
                  dialog.showOpenDialog({
+                   defaultPath: scenario.forecast_data_folder_path ? scenario.forecast_data_folder_path : projectPath,
                    properties: ['openDirectory']
                  }).then((e)=>{
                    if (!e.canceled) {
