@@ -30,9 +30,21 @@ const Settings = ({
           </label>
           <input className="Settings__hidden-input"
                  id="hidden-input-emme-python-path"
-                 type="file"
-                 accept=".exe"
-                 onChange={(e) => setEMMEPythonPath(e.target.files[0].path)}
+                 type="text"
+                 onClick={()=>{
+                   dialog.showOpenDialog({
+                     defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
+                     filters: [
+                       { name: 'Executable', extensions: ['exe'] },
+                       { name: 'All Files', extensions: ['*'] }
+                     ],
+                     properties: ['openFile']
+                   }).then((e)=>{
+                     if (!e.canceled) {
+                       setEMMEPythonPath(e.filePaths[0]);
+                     }
+                   })
+                 }}
           />
         <button className="Settings__input-btn"
                   onClick={(e) => {
@@ -64,6 +76,7 @@ const Settings = ({
                  type="text"
                  onClick={()=>{
                    dialog.showOpenDialog({
+                     defaultPath: helmetScriptsPath ? helmetScriptsPath : projectPath,
                      properties: ['openDirectory']
                    }).then((e)=>{
                      if (!e.canceled) {
@@ -88,6 +101,7 @@ const Settings = ({
                  type="text"
                  onClick={()=>{
                    dialog.showOpenDialog({
+                     defaultPath: projectPath ? projectPath : homedir,
                      properties: ['openDirectory']
                    }).then((e)=>{
                      if (!e.canceled) {
@@ -107,6 +121,7 @@ const Settings = ({
                  type="text"
                  onClick={()=>{
                    dialog.showOpenDialog({
+                     defaultPath: basedataPath ? basedataPath : projectPath,
                      properties: ['openDirectory']
                    }).then((e)=>{
                      if (!e.canceled) {
@@ -126,6 +141,7 @@ const Settings = ({
                  type="text"
                  onClick={()=>{
                    dialog.showOpenDialog({
+                     defaultPath: resultsPath ? resultsPath : projectPath,
                      properties: ['openDirectory']
                    }).then((e)=>{
                      if (!e.canceled) {
