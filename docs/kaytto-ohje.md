@@ -51,7 +51,7 @@ useampaa yhtä aikaa:**
 - Klikkaa ladattua .exe-tiedostoa hiiren kakkospainikkeella, valitse Ominaisuudet ja laita rasti
   ruutuun "Unblock" ("Salli").
 
-![Unblock](unblock.png)
+![Unblock](images/unblock.png)
  
 Sovellus asentuu käyttäjän koneelle kansioon `%HOMEPATH%/AppData`. Varsinainen sovellus on kansiossa `AppData\Local`, ja sen asetukset 
 kansiossa `AppData\Roaming`. 
