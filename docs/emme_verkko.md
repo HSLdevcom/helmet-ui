@@ -125,3 +125,153 @@ Tietoja käytetään pysähtymistietoskriptissä.
 | Janakkala	| 165	| Mäntsälä	| 505	| Tuusula	| 858
 | Järvenpää	| 186	| Nurmijärvi	| 543	| Vantaa	| 92
 | Karkkila	| 224	| Orimattila	| 560	| Vihti	| 927
+
+## Kulkumuodot ja joukkoliikenteen ajoneuvotyypit
+
+Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehicles):
+- Pääkulkumuodon (auto) h on oltava linkillä sallittu, jos halutaan määrittää esim. kääntymiskieltoja.
+  Verkon koodauksessa kannattaa aina sallia kulkumuoto h.
+  Pääkulkumuoto poistuu automaattisesti linkeiltä sijoittelun yhteydessä:
+  - Autosijoittelussa h on sallittu vain autolinkeillä (c)
+  - Polkupyöräsijoittelussa h on sallittu vain pyörälinkeillä (f)
+- Bussiliikenteessä on erotettu erilaisen pysähtymiskäyttäytymisen linjat:
+  HSL:n alueella runko-linjat tavallisista bussilinjoista ja VALLU-linjoissa pikavuorot tavallisista vuoroista.
+-	Tavaraliikenteessä on kolme erilaista kulkumuotoa.
+
+*Taulukko 6. Kulkumuotojen (modes) kuvaus*
+
+| kulkumuoto (mode)	| kuvaus |
+|-------------------|--------|
+| h	| pääkulkumuoto
+| c	| auto
+| b	| HSL:n bussi
+| g	| HSL:n runkolinja
+| d	| muu bussi (kaukoliikenne, VALLU-rekisteristä)
+| e	| pikavuoro (kaukoliikenne, VALLU-rekisteristä)
+| m	| metro
+| r	| lähijuna
+| j	| kaukojuna
+| t	| ratikka
+| p	| pikaratikka
+| w	| vesiliikenne joukkoliikennemuotona (”water”) (varaus) 
+| v	| pakettiauto (”van”)
+| k	| kuorma-autot ilman perävaunua
+| y	| perävaunulliset kuorma-autot (”yhdistelmä”)
+| a	| kävely sis. vaihtokävely 
+| s	| syöttökävely, ulkosyöttö (vain konnektoreilla) 
+| f	| polkupyörä (”fillari”) (kadut, erilliset pyörätiet ja syöttölinkit)
+
+ *Taulukko 7. Joukkoliikenteen ajoneuvotyypit (vehicles), niitä vastaavat kulkumuodot ja kuvaus*
+ 
+| ajoneuvotyyppi (vehicle) | kulkumuoto (mode) | kuvaus |
+|--------------------------|-------------------|--------|
+| 1	| d	| vakiovuoro
+| 2	| e	| pikavuoro
+| 3	| b	| HSL-bussi
+| 4	| m	| metro
+| 5	| r	| lähijuna
+| 6	| j	| kaukojuna
+| 7	| t	| ratikka
+| 8	| g	| HSL-runkobussi
+| 9	| w	| lautta
+| 10	| p	| pikaratikka
+
+## Linkit
+
+### Linkkien ominaisuudet
+
+*Taulukko 8. Linkkien ominaisuudet*
+
+| kenttä | huomioita |
+|--------|-----------|
+| type | | ks. taulukko 9
+| length | linkin pituus kilometreinä
+|	lanes	| kaistamäärä, bussikaista sisältyy ilmoitettuun kaistamäärään
+|	modes	| |
+|	vdf	| autoliikenteen sijoittelufunktion nro, muilla kuin autolinkeillä vdf = 0
+| ul1	|	autoverkko: linkin yhden kaistan kapasiteetti
+|     | raitiovaunuverkko: aamu-, päivä- ja iltaliikenteen nopeus 
+|     | juna- ja metroverkko: ei käytössä (0)
+|     | kävely- ja pyöräilylinkit: ei käytössä (0)
+| ul2	| autoverkko: linkin vapaa nopeus
+|     | raideliikenne: ei käytössä (0)
+|     | kävely- ja pyöräilylinkit: ei käytössä (0)
+| ul3	| autoverkko: autoliikenteen linkeille sijoitellaan aluksi raskas liikenne, ja tulokset tallennetaan linkkiattribuuttiin ul3 (oltava link user datassa eikä extra-attribuutissa, jotta tietoa voidaan käyttää sijoittelufunktioissa)
+|     | raideliikenne: ei käytössä (0)
+|     | kävely- ja pyöräilylinkit: ei käytössä (0)
+| @pyoratieluokka	|	pyöräliikenneverkko: Pyörätien laatuluokka (taulukko 11)
+
+#### Linkkityypit ja väyläluokat
+
+Sijoitteluskripti muuttaa linkien funktio-, nopeus- ja kapasiteettiattribuutit (vdf, ul1, ul2) type-attribuutin perusteella.
+Kaikille katu- ja tieverkon linkeille ei ole saatu tuotettua taulukko 10:n mukaista linkkityyppiä.
+Näiden linkkien tyypiksi on koodattu 191-195
+(sekä 291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja jotka eivät noudata taulukkoa 10),
+ja niiden ul1-, ja ul2-attribuutit säilyvät sijoittelun aikana.
+
+Sijoitteluskripti muuttaa linkin vdf-attribuutin nollaksi, jos type ei ole taulukko 9 mukaan.
+
+Bussikaista otetaan huomioon sijoittelufunktioissa, jolloin henkilöautoilta vähennetään yksi kaista bussikaistan voimassaoloaikana.
+Bussien nopeus bussikaistalla määritetään vapaan nopeuden ja bussien viiveparametrien perusteella.
+Bussien nopeus bussikaduilla ja -rampeilla (linkkityypit 6xx), joilla henkilöautoliikenteen nopeutta ei ole, määräytyy kuten bussikaistallisilla linkeillä.
+Ne on koodattu kuin aina voimassa olevat bussikaistat, ja funktiomakrot käsittelevät niitä sellaisina.
+
+*Taulukko 9. Linkkityypit (link type)*
+
+| linkkityyppi (link type) | selitys |
+|--------------------------|---------|
+| 1	| poistunut käytöstä (oli käytössä vanhalla verkolla, ei saa koodata)
+| 2	| ratikka
+| 3	| metro
+| 4	| junat
+| 5	| pikaratikka
+| 6	| ratikkahybridi (varaus)
+| 70	| kävely ja pyöräily sis. vaihtokävely (pois lukien syötöt eli kumpikaan pää ei ole sentroidi, moottoriajoneuvoliikenne ei ole sallittua)
+| | **syöttölinkit erikoissentroideihin (84-86 vielä varauksia)**
+| 84	| liityntäpysäköinti (vain konnektoreita liipys-solmuihin)
+| 85	| kauppakeskus (vain konnektoreita kauppakeskus-sentroideihin)
+| 86	| urheilulaitos (vain konnektoreita urheilulaitos-sentroideihin)
+| 87	| satama (vain konnektoreita satama-sentroideihin)
+| 88	| lentoasema (vain konnektoreita lentoasema-sentroideihin)
+| | **syöttölinkit tavallisiin sentroideihin ja ulkosyöttöihin**
+| 98	| ulkosyöttölinkki
+| 99	| syöttölinkki
+| | **katu- ja tieverkon linkit (pl. vain kevyen liikenteen käytössä olevat linkit), ks. seuraava taulukko**
+| 121–142	| jalankulku, pyöräily, kaikki autot, bussit, ei bussikaistaa
+| 221–242	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain ruuhka-aikoina
+| 321–342	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista koko päivän 
+| 421–442	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain aamuruuhkassa (varaus)
+| 521–542	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain iltaruuhkassa (varaus)
+| 621–642	| joukkoliikenneväylä busseille (henkilöautoilu kielletty) (bussikadut, bussirampit yms.)
+| x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5.
+| 999	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää)
+
+Taulukko 10. Sijoittelufunktioiden jako väylätyyppeihin
+
+| | Väyläluokka	| Tarkennus	| Sijoittelufunktio | Nopeusrajoitus | Vapaa nopeus (km/h, ul2) | Kapasiteetti (S, ul1)	| Linkkityyppi: ei bussi-kaistaa, bussikaista ruuhka-aikana, bussikaista koko päivän,	varaukset: 421–442, 521–542, bussiväylä |
+|-|-|-|-|-|-|-|-|
+| 21 | Moottoritiet | moottoritie | fd1 (fd6) | 120 | 113 | 2100 | 121	221	321	421 521	621
+| 22 | | moottoritie, kaistoja=>3 |           | 120	| 113	| 1900 * | 122	222	322	422 522	622
+| 22 | |	moottoritie		100	97	2000	123	223	323	4/523	623
+| 22 | |	moottoritie, kaistoja=>3		100	97	1800 *	124	224	324	4/524	624
+| 22 | |	moottoritie		80	81	2000	125	225	325	4/525	625
+| 22 | |	moottoritie, kaistoja=>3		80	81	1800 *)	126	226	326	4/526	626
+Maantiet / Useampikaistaiset kaupunkiväylät eritasoliittymin	maantie, 2 kaistaa	fd2 (fd7)	100	97	1900	127	227	327	4/527	627
+	maantie, kaistoja=>3		100	97	1800 *)	128	228	328	4/528	628
+	maantie, 2 kaistaa		80	81	1850	129	229	329	4/529	629
+	maantie, kaistoja=>3		80	81	1800 *)	130	230	330	4/530	630
+	maantie, 2 kaistaa		70	73	1600	131	231	331	4/531	631
+	maantie, 2 kaistaa		60	63 **)	1600	132	232	332	4/532	632
+Useampikaistaiset pääkadut tasoliittymin valoilla	usea kaista, valot	fd3 (fd8)	70	61	1450	133	233	333	4/533	633
+	usea kaista, valot		60	54	1250	134	234	334	4/534	634
+Pääkadut	esik,pääk, ei valoja	fd4 (fd9)	50	48	1150	135	235	335	4/535	635
+	esik.pääk,valot/
+kesk.ei valoja		50	44	1000	136	236	336	4/536	636
+	esik. pääkatu, valot tai keskusta,.ei valoja		40	41	1000	137	237	337	4/537	637
+Kokooja-/tonttikadut	kesk.pääkatu, valot	fd5 (fd10)	50	41	900	138	238	338	4/538	638
+	kesk.kokooja		40	36	750	139	239	339	4/539	639
+	keskusta, hidas 
+pääkatu		40	36	900	140	240	340	4/540	640
+	pienet tonttikadut		30	30	600	141	241	341	4/541	641
+	keskusta, pienet kadut		30	23	500	142	242	342	4/542	642
+
