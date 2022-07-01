@@ -21,7 +21,7 @@ Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa 
 
 Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
 
-![Helmet-mallijärjestelmän rakenne](Helmet-mallijarjestelma.png)
+![Helmet-mallijärjestelmän rakenne](images/Helmet-mallijarjestelma.png)
 
 Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
@@ -38,7 +38,7 @@ Laajemmin aihetta on kuvattu
 Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten,
 että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
 
-![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
+![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](images/Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
 
 ### Aluejako
 

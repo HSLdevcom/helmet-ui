@@ -10,24 +10,24 @@ Tässä on kuvattu muutamia esimerkkejä erilaisista visualisoinneista, joita ma
 
 **Metron kuormitus**
 
-![Metron kuormitus](Visualisointi_metron_kuormitus.png)
+![Metron kuormitus](images/Visualisointi_metron_kuormitus.png)
 
 **Joukkoliikenteen matkustajamäärän muutos**
 
-![Joukkoliikenteen matkustajamäärän muutos](Visualisointi_matkustajamaaramuutos.png)
+![Joukkoliikenteen matkustajamäärän muutos](images/Visualisointi_matkustajamaaramuutos.png)
 
 **Joukkoliikenteen vuoromäärän muutos**
 
-![Joukkoliikenteen vuoromäärän muutos](Visualisointi_vuoromaaramuutos.png)
+![Joukkoliikenteen vuoromäärän muutos](images/Visualisointi_vuoromaaramuutos.png)
 
 **Joukkoliikenteen matka-ajan muutos**
 
-![Joukkoliikenteen matka-ajan muutos](Visualisointi_matka-ajan_muutos.png)
+![Joukkoliikenteen matka-ajan muutos](images/Visualisointi_matka-ajan_muutos.png)
 
 **Joukkoliikenteen palvelutasomuutos**
 
-![Joukkoliikenteen palvelutasomuutos](Visualisointi_palvelutasomuutos.png)
+![Joukkoliikenteen palvelutasomuutos](images/Visualisointi_palvelutasomuutos.png)
 
 **Keskustan saavutettavuusmuutos joukkoliikenteellä**
 
-![Keskustan saavutettavuusmuutos joukkoliikenteellä](Visualisointi_keskustan_saavutettavuusmuutos.png)
+![Keskustan saavutettavuusmuutos joukkoliikenteellä](images/Visualisointi_keskustan_saavutettavuusmuutos.png)
