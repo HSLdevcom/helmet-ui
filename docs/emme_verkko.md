@@ -252,26 +252,24 @@ Taulukko 10. Sijoittelufunktioiden jako väylätyyppeihin
 |-|-|-|-|-|-|-|-|
 | 21 | Moottoritiet | moottoritie | fd1 (fd6) | 120 | 113 | 2100 | 121	221	321	421 521	621
 | 22 | | moottoritie, kaistoja=>3 |           | 120	| 113	| 1900 * | 122	222	322	422 522	622
-| 22 | |	moottoritie		100	97	2000	123	223	323	4/523	623
-| 22 | |	moottoritie, kaistoja=>3		100	97	1800 *	124	224	324	4/524	624
-| 22 | |	moottoritie		80	81	2000	125	225	325	4/525	625
-| 22 | |	moottoritie, kaistoja=>3		80	81	1800 *)	126	226	326	4/526	626
-Maantiet / Useampikaistaiset kaupunkiväylät eritasoliittymin	maantie, 2 kaistaa	fd2 (fd7)	100	97	1900	127	227	327	4/527	627
-	maantie, kaistoja=>3		100	97	1800 *)	128	228	328	4/528	628
+| 23 | |	moottoritie	|           |	100	| 97	| 2000	| 123	223	323	423 523	623
+| 24 | |	moottoritie, kaistoja=>3	| 	| 100	| 97	| 1800 *	| 124	224	324	424 524	624
+| 25 | |	moottoritie	          || 	80	| 81	| 2000	| 125	225	325	425 525	625
+| 26 | |	moottoritie, kaistoja=>3       | | 	80	| 81	| 1800 *	| 126	226	326	426 526	626
+| 27 | Maantiet / Useampikaistaiset kaupunkiväylät eritasoliittymin	maantie, 2 kaistaa	fd2 (fd7)	100	97	1900	127	227	327	4/527	627
+	maantie, kaistoja=>3		100	97	1800 *	128	228	328	4/528	628
 	maantie, 2 kaistaa		80	81	1850	129	229	329	4/529	629
-	maantie, kaistoja=>3		80	81	1800 *)	130	230	330	4/530	630
+	maantie, kaistoja=>3		80	81	1800 *	130	230	330	4/530	630
 	maantie, 2 kaistaa		70	73	1600	131	231	331	4/531	631
-	maantie, 2 kaistaa		60	63 **)	1600	132	232	332	4/532	632
+	maantie, 2 kaistaa		60	63 **	1600	132	232	332	4/532	632
 Useampikaistaiset pääkadut tasoliittymin valoilla	usea kaista, valot	fd3 (fd8)	70	61	1450	133	233	333	4/533	633
 	usea kaista, valot		60	54	1250	134	234	334	4/534	634
 Pääkadut	esik,pääk, ei valoja	fd4 (fd9)	50	48	1150	135	235	335	4/535	635
-	esik.pääk,valot/
-kesk.ei valoja		50	44	1000	136	236	336	4/536	636
+	esik.pääk,valot/kesk.ei valoja		50	44	1000	136	236	336	4/536	636
 	esik. pääkatu, valot tai keskusta,.ei valoja		40	41	1000	137	237	337	4/537	637
 Kokooja-/tonttikadut	kesk.pääkatu, valot	fd5 (fd10)	50	41	900	138	238	338	4/538	638
 	kesk.kokooja		40	36	750	139	239	339	4/539	639
-	keskusta, hidas 
-pääkatu		40	36	900	140	240	340	4/540	640
+	keskusta, hidas pääkatu		40	36	900	140	240	340	4/540	640
 	pienet tonttikadut		30	30	600	141	241	341	4/541	641
 	keskusta, pienet kadut		30	23	500	142	242	342	4/542	642
 
