@@ -2,9 +2,11 @@
 sort: 10
 ---
 
-# Solmut
+# Emme-verkon kuvaus
 
-## Solmunumerot
+## Solmut
+
+### Solmunumerot
 
 Taulukoissa mainitut ”villit solmut” ja ”villit sentroidit” ovat vapaasti käytettävissä olevia numeroita
 eri tahojen omiin tarkasteluihin ja hankkeisiin, joita ei ole tarkoituskaan viedä virallisiin HSL:n verkkoihin.
@@ -15,6 +17,8 @@ Virallisissa verkoissa käytettävät solmunumerot ovat taulukoiden sol-muavaruu
 
 HUOM: HLJ-työn yhteydessä voidaan koodata muutoksia suoraan verkon virallisille solmunume-roille.
 Tästä on sovittava HSL:n yhteyshenkilöiden kanssa erikseen.
+
+*Taulukko 1. Solmuavaruuden jako, sentroidit*
 
 | numeroavaruus	| selitys |	aliavaruudet | selitys ja huomiot |
 |---------------|---------|--------------|--------------------|
@@ -35,6 +39,8 @@ Erikoissentroideista verkolle on lisätty omat sentroidit Helsinki-Vantaan lento
 -	Länsisatama: i = 30 502
 -	Vuosaaren satama: i = 30 503
 
+*Taulukko 2. Solmuavaruuden jako, muut solmut kuin sentroidit*
+
 | numeroavaruus	| selitys |	aliavaruudet | selitys ja huomiot |
 |---------------|---------|--------------|--------------------|
 | 40 000–799 999 | solmut, katu- ja tieverkko (sisältää myös erilliset kevyen liikenteen yhteydet) |	40 000–599 999 | |
@@ -51,3 +57,71 @@ Erikoissentroideista verkolle on lisätty omat sentroidit Helsinki-Vantaan lento
 * Käytännössä tulee eteen tilanteita, joissa (pika)raitiolinja halutaan koodata ajamaan reittiä,
 joka sisältää sekä nykyisenkaltaista raitiotieverkkoa että pikaraitiotieverkkoa.
 Silloin valitaan käytettäväksi jommankumman solmunumerot uusien reittien osalta.
+
+### Solmujen ominaisuudet
+
+Pysäkkityypit on koodattava erityisen huolellisesti, sillä raitiovaunu- ja bussilinjojen pysähtyminen perustuu solmuihin koodattuihin pysäkkityyppeihin.
+Tietoja käytetään pysähtymistietoskriptissä.
+
+*Taulukko 3. Solmujen attribuuttitiedot*
+
+| attribuutti | | selitys |
+|-------------|-|---------|
+| solmuattribuutti | ui1 | väliaikainen tieto, VAPAA |
+| solmuattribuutti | ui2 | solmun tyyppi, ks. taulukko 4 |
+| solmuattribuutti | ui3 | sen kunnan kelakoodi, jossa solmu sijaitsee (ks. taulukko 5) |
+| solmuattribuutti | label | joukkoliikenteen lippuvyöhyke (A, B, C tai D) tai tieto muista kunnista joilla on omat lipputuotteensa: Järvenpää (J), Nurmijärvi (N), Vihti (V), Mäntsälä/Hyvinkää (M), Pornainen (P) |
+
+*Taulukko 4. Solmutyypit (ui2) ja niiden selitykset*
+
+| koodi (ui2) |	kuvaus |
+|-------------|--------|
+| 0	|	muu solmu |
+| | |	
+| 1	|	raitiovaunupysäkki |
+| | |	
+| 2	|	bussipysäkki paikallisliikenne (sis. vakiovuorot)
+| 3	|	bussipysäkki paikallis- ja runkoliikenne
+| 4	|	bussipysäkki paikallis- ja pikavuoroliikenne 
+| 5	|	bussipysäkki paikallis-, runko- ja pikavuoroliikenne
+| 6	|	bussipysäkki muu 
+| 7 |	pikavuoropysäkki
+| 8	| raitiovaunu- ja pikaratikkapysäkki
+| 11	|	bussiterminaali
+| | |	
+| 12	|	varaus ratikka- tai pikaratikkaterminaalille
+| 13	|	metroasema (myös asemavaraus)
+| 14	|	rautatieasema (myös asemavaraus)
+| | |	
+| 20	|	liittymä (ei pysäkki)
+| (21-39)	|	(varalla, jos liittymien tyyppejä tai osia halutaan eritellä tarkemmin)
+| | |	
+| 40		|	liityntäpysäköinti (sentroidi)
+| (41-49)		|	(varalla, jos pysäköintialueiden tyyppejä halutaan eritellä tarkemmin)
+| | |	
+| 50	|	kauppakeskus (sentroidi)
+| 60	|	urheilulaitos (sentroidi)
+| 70	|	satama (sentroidi)
+| 80	|	lentoasema (sentroidi) (huom. lentomatkustajille)
+| | |	
+| 90	|	normaali sentroidi (sijoittelualueita vastaavat)
+| 91	|	ulkosyöttö, autoväylät (sentroidi)
+| 92	|	ulkosyöttö, junaradat (sentroidi)
+
+*Taulukko 5. Mallialueen kuntien kelakoodit (ui3) (vuoden 2019 kuntajako)*
+
+| kunta |	kelakoodi (ui3) |	kunta |	kelakoodi (ui3) |	kunta	| kelakoodi (ui3) |
+|-------|-----------------|-------|-----------------|-------|-----------------|
+| Askola	| 18	| Kauniainen	| 235	| Pornainen	| 611
+| Espoo	| 49	| Kerava	| 245	| Porvoo	| 638
+| Hanko	| 78	| Kirkkonummi	| 257	| Pukkila	| 616
+| Hattula	| 82	| Kärkölä	| 316	| Raasepori	| 710
+| Hausjärvi	| 86	| Lahti	| 398	| Riihimäki	| 694
+| Helsinki	| 91	| Lapinjärvi	| 407	| Salo	| 734
+| Hollola	| 98	| Lohja	| 444	| Sipoo	| 753
+| Hyvinkää	| 106	| Loppi	| 433	| Siuntio	| 755
+| Hämeenlinna	| 109	| Loviisa	| 434	| Somero	| 761
+| Inkoo	| 149	| Myrskylä	| 504	| Tammela	| 834
+| Janakkala	| 165	| Mäntsälä	| 505	| Tuusula	| 858
+| Järvenpää	| 186	| Nurmijärvi	| 543	| Vantaa	| 92
+| Karkkila	| 224	| Orimattila	| 560	| Vihti	| 927
