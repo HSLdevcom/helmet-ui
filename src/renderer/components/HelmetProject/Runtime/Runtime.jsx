@@ -77,7 +77,7 @@ const Runtime = ({
         <p className="Runtime__start-stop-description">
           {scenarioIDsToRun.length ?
                 <span className="Runtime__start-stop-scenarios">
-                  {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).map((s) => s.name).join(', ')}
+                  {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id)).map((s) => s.name).join(', ')}
                 </span>
             :
             <span>Ei ajettavaksi valittuja skenaarioita</span>
