@@ -11,7 +11,8 @@ module.exports = {
     // Previously, buildIdentidier was either 'prod' or 'beta'. Now, it is always 'prod'.
     buildIdentifier: 'prod',
     packagerConfig: {
-        appBundleId: fromBuildIdentifier({ prod: 'fi.hsl.helmet.ui', beta: 'fi.hsl.beta.helmet.ui' })
+        appBundleId: fromBuildIdentifier({ prod: 'fi.hsl.helmet.ui', beta: 'fi.hsl.beta.helmet.ui' }),
+        icon: "./appicons/icons/win/icon.ico"
     },
     makers: [
         {
@@ -19,7 +20,7 @@ module.exports = {
             config: {
                 name: "helmet",
                 authors: "Helsingin Seudun Liikenne -kuntayhtyma",
-                iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
+                // iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
                 // loadingGif: '',
                 // setupIcon: 'helmet.ico',
                 certificateFile: "helmet_cs4.pfx",
