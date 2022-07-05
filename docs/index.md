@@ -10,68 +10,6 @@ HSL ja muut tahot käyttävät Helmet-mallia myös monissa muissa töissä, kute
 Mallin avulla saadaan tietoa suunnitteluratkaisuihin ja valintoihin jo suunnitteluprosessin aikana, ja sen avulla arvioidaan suunnittelun vaikutuksia ”etukäteen”.
 Malli tuo esiin esimerkiksi linjastouunnitelman tai liikennehankkeen vaikutukset/vaikutuksia kulkumuotojakaumaan,
 matka-aikaan, saavutettavuuteen, matkamääriin ja liikennesuoritteisiin.
-Lisätietoa ja esimerkkejä mallilla tuotettavista tarkasteluista [täällä](esimerkkeja_tuloksista.md).
-
-## Helmet-järjestelmän käyttö
-
-Järjestelmän asennus- ja käyttöohjeet löydät [täältä](kaytto-ohje.md),
-ja tarkempia lähtötietojen käsittelyn ohjeita sekä Helmet-makrojen ohjeet ja latauslinkin [täältä](sijopankki.md).
-Lisätietoa mallijärjestelmän käyttämisestä löydät [täältä](mallitoiden_yleisohje.md).
-Lisätietoa etenkin HSL:n teettämien mallitöiden tilaamisesta löydät [täältä](HSL-mallitoiden_tilaajan_ohje.md).
-
-### Tietopyynnöt
-
-Liikenne-ennusteisiin ja näiden tuloksiin liittyvä tietopyynnöt kannattaa osoittaa Jens Westille ja Mervi Vataselle.
-Pääsääntöisesti tietopyyntöihin pyritään vastaamaan MAL-työn virallisilla ennusteilla, mutta tapauskohtaisesti voidaan toimittaa myös muuta aineistoa. 
-
-HSL:n tarjoamista lähtötiedoista lisätietoa [täällä](HSL_lahtotiedot.md).
-
-## Mallin lähtötiedot
-
-Lähtötietojen määrittäminen on jo itsessään ennustamista. HSL ylläpitää lähtötietoaineistoja MAL-suunnittelun ja joukkoliikennesuunnittelun tueksi.
-Lisätietoja HSL:n tarjoamista aineistoista [täällä](HSL_lahtotiedot.md).
-
-Helmet-mallin lähtötiedoiksi tarvitaan seuraavat tiedot:
-
-**Alueiden maankäyttöä koskevat tiedot:**
-* Asukkaiden kokonaismäärät ja ikäryhmien osuudet
-* Työpaikkojen kokonaismäärät
-* Kaupan työpaikkojen osuus kaikista työpaikoista 
-* Palvelutyöpaikkojen osuus kaikista työpaikoista 
-* Teollisuustyöpaikkojen osuus kaikista työpaikoista 
-* Logistiikan työpaikkojen osuus kaikista työpaikoista 
-* 1., 2. ja 3. asteen oppilaspaikkamäärät
-* Kerros- ja pientalojen osuudet
-
-**Liikennejärjestelmää koskevat tiedot:**
-* Henkilöauton kilometrikustannus (polttoaine, renkaat)
-* Joukkoliikenteen vyöhykehinnat
-* Tie-ja katuverkon ominaisuudet (linkin tieluokka, kaistamäärä, pituus)
-* Joukkoliikennelinjasto (linjatunnus, reitti, keskimääräinen vuoroväli)
-* Työmatkojen pysäköintimaksu alueittain
-* Asiointimatkojen pysäköintimaksut alueittain
-
-### Lähtötietojen vaikutus ennustemallin eri osiin
-
-* Autonomistus alueittain
-  * Kerros- ja pientalojen osuudet
-  * Matka-aikasuhteet
-* Matkamäärä alueittain
-  * Asukasmäärä ikäryhmittäin
-  * Autonomistus
-* Kulkutavan valinta
-  * Alueparien väliset matka-ajat autolla ja joukkoliikenteellä
-  * Alueparien väliset etäisyydet polkupyörällä ja autolla
-  * Alueparien väliset matkakustannukset: joukkoliikennelipun hinta, autoiun muuttuvat kustannukset (polttoaine, renkaat) ja mahdollinen ruuhkamaksu/tietulli
-  * Autonomistus alueittain
-* Matkakohteiden valinta
-  * Saavutettavuus (matka-aika, etäiyys ja matkakustannus määräpaikkaan eri kulkutavoilla)
-  * Työpaikkamäärä määräpaikassa
-  * Oppilaspaikkojen määrä määräpaikassa
-* Reitin valinta
-  * Auto- ja joukkoliikennelinkin matka-aika
-  * Pyörälinkin pituus
-  * Autolinkin matkakustannus 
 
 ## Mallijärjestelmän rakenne
 
@@ -83,7 +21,7 @@ Helmet 4 -mallijärjestelmässä mallin neljä porrasta ennustetaan seuraavassa 
 
 Mallijärjestelmän rakenne on esitetty tarkemmin seuraavassa kuvassa: 
 
-![Helmet-mallijärjestelmän rakenne](Helmet-mallijarjestelma.png)
+![Helmet-mallijärjestelmän rakenne](images/Helmet-mallijarjestelma.png)
 
 Mallijärjestelmän kysyntämalleja kuvataan tarkemmin raportissa [Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf).
 
@@ -100,7 +38,7 @@ Laajemmin aihetta on kuvattu
 Helmet-mallien aiempiin versioihin verrattuna kulkutapa- ja suuntautumismallien rakenne on HS15-alueella käännetty siten,
 että kulkutavanvalinta on nyt ylemmällä tasolla kuin määräpaikan valinta (eli suuntautuminen).
 
-![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
+![Kulkutapa- ja suuntautumismallien rakenne eri Helmet-versioissa](images/Kulkutapa-%20ja%20suuntautumismallien%20rakenne%20eri%20Helmet-versioissa.png)
 
 ### Aluejako
 
@@ -139,38 +77,6 @@ ei kulkutavan valintaan tai suuntautumiseen.
   * Pyöräkaista
   * Sekaliikenne (oletus)
 * Pyöräilyn yhteydet vaikuttavat reitinvalintoihin
-
-### Tulokset verrattuna Helmet 3.1:een
-
-Autoliikenteen liikennemäärät ovat pääväylillä hieman pienempiä kuin Helmet 3.1 versiossa ja vastaavasti poikittaisessa liikenteessä kehäteillä on enemmän kuormitusta.
-Uudet liikennemäärät vastaavat hieman paremmin laskentatietoja, mutta molemmissa malliversiossa vastaavuus on hyvällä tasolla.
-
-Joukkoliikennekulkutapojen väliset painosuhteet muuttuvat siten, että uusi malliversio ennustaa enemmän juna- ja raitiotiematkoja,
-mikä on todennäköisesti seurausta joukkoliikenteen ruuhkasijoittelun käyttöönotosta malliversioiden välillä.
-Muutos on juna- ja raitioliikenteessä oikeansuuntainen suhteessa laskentatietoihin.
-
-Muutoksiin reagoimisen osalta malli toimii vähemmän herkästi suhteessa Helmet 3.1 -malliin.
-Erityisenä huomiona muutoksien osalta aiemman malliversion jalankulkumalli reagoi hyvin voimakkaasti pysäköintimaksujen nostoon,
-koska kustannus oli mallissa mukana suorana matkojen määrää ennustavana muuttujana ja kulkutavan valinta ei ollut liitoksissa muiden kulkutapojen
-valintaan ja olosuhteiden kehitykseen.
-
-### Helmet 4 -tuloksiin liittyviä epävarmuuksia
-
-Mallia laadittaessa sen antamia tuloksia on verrattu monipuolisesti erilaiseen havaintoaineistoon ja pyritty saamaan tulokset vastaamaan mahdollisimman hyvin havaintoja.
-Tuloksiin liittyy silti tiettyjä epävarmuuksia ja rajoitteita, joista on nostettu tähän keskeisimpiä havaintoja.
-Mallin testausta ja testien tuloksia on kuvattu laajemmin raportissa
-[Helsingin seudun työssäkäyntialueen liikenne-ennustejärjestelmän kysyntämallit 2020](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2020/6_2020_helsingin_seudun_tyossakayntialueen_liikenne-ennustejarjestelman_kysyntamallit.pdf) (luvut 12 ja 13).
-
-Nykytilanteen osalta malli toimii hyvin, eikä kysynnän ennustamiseen liittyviä systemaattisia virheitä testauksessa havaittu.
-Malli tuottaa suuntautumisen, autoliikennemäärien ja pyöräliikennemäärien osalta ulkopuolisia havaintoja vastaavia nykytilanteen ennusteita.
-Mallin tulokset eivät poikkea nykytilanteen osalta merkittävästi Helmet 3.1-versiosta.
-
-Joukkoliikenteen osalta havaittiin kuitenkin ongelma, joka on syytä huomioida hanketarkasteluissa.
-Vuorokauden matkustajamääräarviot on aliarvioitu runkoyhteyksillä metrolla, junalla ja raitiovaunuilla, kun taas bussien matkustajamäärät on hieman yliarvioitu.
-Huipputuntien osalta nykyennuste vastaa laskentoja hyvin, joten ongelma on todennäköisesti vuorokausilaajennuskertoimissa,
-jotka eivät nykyisellään huomioi runkoyhteyksien ja muiden yhteyksien erilaisia liikennöintiaikoja.
-
-Helmet 4 -mallin avulla tehtäviä H/K-laskelmia kannattanee hyödyntää vain suurille liikennejärjestelmätason hankkeille.
 
 ## Mallintamisen taustoja
 

@@ -46,7 +46,7 @@ const Runtime = ({
                      type="checkbox"
                      checked={scenarioIDsToRun.includes(s.id)}
                      disabled={runningScenarioID}
-                     onClick={(e) => handleClickScenarioToActive(s)}
+                     onChange={(e) => handleClickScenarioToActive(s)}
               />
               &nbsp;
               <div className={"Runtime__scenario-open-config" + (

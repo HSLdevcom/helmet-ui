@@ -351,6 +351,7 @@ const HelmetProject = ({
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
         />
         <CostBenefitAnalysis
+          resultsPath={resultsPath}
           cbaOptions={cbaOptions}
           setCbaOptions={setCbaOptions}
           runCbaScript={_runCbaScript}
@@ -370,6 +371,7 @@ const HelmetProject = ({
             /* while no scenarios running, and log hidden (log has precedence), allow showing open scenario config */
             openScenarioID !== null ?
               <HelmetScenario
+                projectPath={projectPath}  
                 scenario={scenarios.find((s) => s.id === openScenarioID)}
                 updateScenario={_updateScenario}
                 closeScenario={() => setOpenScenarioID(null)}
