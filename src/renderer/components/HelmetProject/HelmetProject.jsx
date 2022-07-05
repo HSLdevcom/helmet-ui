@@ -166,7 +166,7 @@ const HelmetProject = ({
   };
 
   const _runAllActiveScenarios = (activeScenarioIDs) => {
-    const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id));
+    const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
 
     // Check required global parameters are set
     if (!emmePythonPath) {

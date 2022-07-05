@@ -28,7 +28,6 @@
         sendLoggableEvent(
           `Running Cost-Benefit Analysis between`
           + ` (baseline) "${args.baseline_scenario_path}" and (projected) "${args.projected_scenario_path}"`
-          + ` with evaluation year ${args.evaluation_year}`
         );
         worker = runCBAScriptPythonShell(worker, args, () => onComplete(args));
       });
