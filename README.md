@@ -60,8 +60,7 @@ The resulting draft must be reviewed, edited and approved in Github to make it p
 This allows testing the package and making final fixes to it before making it public.
 
 1. Test and bring all the desired changes in the `master` branch.
-1. Remove if there's word `SNAPSHOT` in `version` field of [package.json](./package.json), and update version as per semver practises.
-    - See also: [Semantic Versioning](https://semver.org/)
+1. Remove if there's word `SNAPSHOT` in `version` field of [package.json](./package.json), and update version as per [semver practises](https://semver.org/).
 1. Switch to `release` branch
 1. Merge `master` to `release` and push to remote
     - `$ git merge master`
@@ -73,6 +72,8 @@ This allows testing the package and making final fixes to it before making it pu
     1. Check/uncheck the pre-release checkbox as needed.
     1. Select `release` branch as the target for tagging
     1. Press **Publish release** when all is good.
-    1. Switch back to `master` branch and update the version number matching the release. This can be updated to indicate a [snapshot](http://codethataint.com/blog/what-are-maven-snapshots/) before next release (e.g. `1.3.0-SNAPSHOT`) while said release (`1.3.0`) is in development, if necessary.
+1. Switch back to `master` branch and update the version number matching the release. This can be updated to indicate a [snapshot](http://codethataint.com/blog/what-are-maven-snapshots/) before next release (e.g. `1.3.0-SNAPSHOT`) while said release (`1.3.0`) is in development, if necessary.
+    1. [`package.json#L4`](https://github.com/HSLdevcom/helmet-ui/blob/15a7c6e5ae020b8048907a7498d0d534a68ce21b/package.json#L4)
+    1. [`package-lock.json#L3`](https://github.com/HSLdevcom/helmet-ui/blob/15a7c6e5ae020b8048907a7498d0d534a68ce21b/package-lock.json#L3) and [`#L9`](https://github.com/HSLdevcom/helmet-ui/blob/15a7c6e5ae020b8048907a7498d0d534a68ce21b/package-lock.json#L9)
 
 _Notice: you cannot create drafts with an existing version number (i.e. release name). Thus, any intermediate drafts must be deleted before pushing final tweaks and fixes for the version about to be released._
