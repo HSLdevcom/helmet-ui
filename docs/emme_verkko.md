@@ -15,14 +15,14 @@ Työn loputtua HSL päivittää tarvittaessa valitun vaihtoehdon osaksi virallis
 HSL:n virallisia verkkoja muokattaessa on pyydettävä HSL:stä solmunumerot, joita tietyn hankkeen koodaamiseen käytetään.
 Virallisissa verkoissa käytettävät solmunumerot ovat taulukoiden sol-muavaruuksissa, joiden kohdalla lukee ”HSL:n hankkeiden” solmut.
 
-HUOM: HLJ-työn yhteydessä voidaan koodata muutoksia suoraan verkon virallisille solmunume-roille.
+HUOM: HLJ-työn yhteydessä voidaan koodata muutoksia suoraan verkon virallisille solmunumeroille.
 Tästä on sovittava HSL:n yhteyshenkilöiden kanssa erikseen.
 
 *Taulukko 1. Solmuavaruuden jako, sentroidit*
 
 | numeroavaruus	| selitys |	aliavaruudet  | selitys ja huomiot |
 |---------------|---------|---------------|--------------------|
-| 1-30 999      | sentroidit, tavalliset (aiemmin 1-38 999) | | kunnittain tuhatluvun (1 tai 2 ensimmäisen numeron) perusteella, ks. tarkemmin kohta "Ennuste- ja sijoittelualueiden numerointi" |
+| 1-30 999      | sentroidit, tavalliset (aiemmin 1-38 999) | | kunnittain tuhatluvun (1 tai 2 ensimmäisen numeron) perusteella, ks. tarkemmin kohta [Sentroidien numerointi](#sentroidien-numerointi) |
 | 31 000–31 999 | sentroidit, ulkosyötöt (aiemmin 39 000 -> 39 999) | 31 000–31 299 (käytössä 31 000–31 036) | ulkosyötöt, autoväylät |
 |               |         | 31 300–31 399 (käytössä 31 300–31 302) | ulkosyötöt, junaradat |
 |               |         | 31 400–31 499 |	ulkosyötöt, lentoasema(t) |
@@ -68,8 +68,8 @@ Tietoja käytetään pysähtymistietoskriptissä.
 | attribuutti      |       | selitys                                                      |
 |------------------|-------|--------------------------------------------------------------|
 | solmuattribuutti | ui1   | väliaikainen tieto, VAPAA                                    |
-| solmuattribuutti | ui2   | solmun tyyppi, ks. taulukko 4                                |
-| solmuattribuutti | ui3   | sen kunnan kelakoodi, jossa solmu sijaitsee (ks. taulukko 5) |
+| solmuattribuutti | ui2   | solmun tyyppi, ks. taulukko 5                                |
+| solmuattribuutti | ui3   | sen kunnan kelakoodi, jossa solmu sijaitsee (ks. taulukko 6) |
 | solmuattribuutti | label | joukkoliikenteen lippuvyöhyke (A, B, C tai D) tai tieto muista kunnista joilla on omat lipputuotteensa: Järvenpää (J), Nurmijärvi (N), Vihti (V), Mäntsälä/Hyvinkää (M), Pornainen (P) |
 
 *Taulukko 4. Solmutyypit (ui2) ja niiden selitykset*
@@ -130,6 +130,8 @@ Tietoja käytetään pysähtymistietoskriptissä.
 
 Sijoittelualueet on numeroitu kunnittain seuraavan taulukon mukaisesti.
 
+*Taulukko 6. Sijoittelualueiden numerointi
+
 | kunta       | numerot       | kunta       | numerot       | kunta       | numerot       |
 |-------------|---------------|-------------|---------------|-------------|---------------|
 | Helsinki    |    100–1 999  | Pornainen   | 15 000–15 499 | Tammela     | 22 500–22 999 |
@@ -158,7 +160,7 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
   HSL:n alueella runko-linjat tavallisista bussilinjoista ja VALLU-linjoissa pikavuorot tavallisista vuoroista.
 -	Tavaraliikenteessä on kolme erilaista kulkumuotoa.
 
-*Taulukko 6. Kulkumuotojen (modes) kuvaus*
+*Taulukko 7. Kulkumuotojen (modes) kuvaus*
 
 | kulkumuoto (mode)	| kuvaus                                                              |
 |-------------------|---------------------------------------------------------------------|
@@ -181,7 +183,7 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 | s	                | syöttökävely, ulkosyöttö (vain konnektoreilla)                      |
 | f	                | polkupyörä (”fillari”) (kadut, erilliset pyörätiet ja syöttölinkit) |
 
- *Taulukko 7. Joukkoliikenteen ajoneuvotyypit (vehicles), niitä vastaavat kulkumuodot ja kuvaus*
+ *Taulukko 8. Joukkoliikenteen ajoneuvotyypit (vehicles), niitä vastaavat kulkumuodot ja kuvaus*
  
 | ajoneuvotyyppi (vehicle) | kulkumuoto (mode) | kuvaus         |
 |--------------------------|-------------------|----------------|
@@ -200,11 +202,11 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 
 ### Linkkien ominaisuudet
 
-*Taulukko 8. Linkkien ominaisuudet*
+*Taulukko 9. Linkkien ominaisuudet*
 
 | kenttä          | huomioita                                                                |
 |-----------------|--------------------------------------------------------------------------|
-| type            | ks. taulukko 9                                                           |
+| type            | ks. taulukko 10                                                          |
 | length          | linkin pituus kilometreinä                                               |
 |	lanes	          | kaistamäärä, bussikaista sisältyy ilmoitettuun kaistamäärään             |
 |	modes         	|                                                                          |
@@ -219,18 +221,18 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 | ul3           	| autoverkko: autoliikenteen linkeille sijoitellaan aluksi raskas liikenne, ja tulokset tallennetaan linkkiattribuuttiin ul3 (oltava link user datassa eikä extra-attribuutissa, jotta tietoa voidaan käyttää sijoittelufunktioissa) |
 |                 | raideliikenne: ei käytössä (0)                                           |
 |                 | kävely- ja pyöräilylinkit: ei käytössä (0)                               |
-| @pyoratieluokka	|	pyöräliikenneverkko: Pyörätien laatuluokka (taulukko 11)                 |
+| @pyoratieluokka	|	pyöräliikenneverkko: Pyörätien laatuluokka (taulukko 12)                 |
 
 ### Linkkityypit, väyläluokat ja sallitut kulkutavat
 
 Sijoitteluskripti muuttaa linkien funktio-, nopeus- ja kapasiteettiattribuutit (vdf, ul1, ul2) type-attribuutin perusteella.
-Kaikille katu- ja tieverkon linkeille ei ole saatu tuotettua taulukko 10:n mukaista linkkityyppiä.
+Kaikille katu- ja tieverkon linkeille ei ole saatu tuotettua taulukko 11:n mukaista linkkityyppiä.
 Näiden linkkien tyypiksi on koodattu 191-195
-(sekä 291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja jotka eivät noudata taulukkoa 10),
+(sekä 291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja jotka eivät noudata taulukkoa 11),
 ja niiden ul1-, ja ul2-attribuutit säilyvät sijoittelun aikana.
 
 Muilla kuin autolinkeillä noudatetaan yleisesti periaatetta vdf = 0, ul1 = 0, ul2 = 0, ul3 = 0, ellei näillä ole jotain erikoismerkitystä (kuten ul1 ratikoilla). 
-Sijoitteluskripti muuttaa linkin vdf-attribuutin nollaksi, jos type ei ole taulukko 9 mukaan.
+Sijoitteluskripti muuttaa linkin vdf-attribuutin nollaksi, jos type ei ole taulukko 10 mukaan.
 
 Bussikaista otetaan huomioon sijoittelufunktioissa, jolloin henkilöautoilta vähennetään yksi kaista bussikaistan voimassaoloaikana.
 Bussien nopeus bussikaistalla määritetään vapaan nopeuden ja bussien viiveparametrien perusteella.
@@ -246,7 +248,7 @@ Muutamissa paikoissa on erikseen estetty pyöräily, jos se ei ole todellisuudes
 Pyöräily on sallittua moottoritiemäisten väylien linkeillä molempiin suuntiin samoin kuin kävely,
 jos moottoritien rinnalla tai läheisyydessä kulkee kävely- ja pyörätie.
 
-*Taulukko 9. Linkkityypit (link type)*
+*Taulukko 10. Linkkityypit (link type)*
 
 | linkkityyppi (link type) | selitys                                                                      | modes                                   |
 |--------------------------|------------------------------------------------------------------------------|-----------------------------------------|
@@ -276,7 +278,7 @@ jos moottoritien rinnalla tai läheisyydessä kulkee kävely- ja pyörätie.
 | x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5. | |
 | 999    	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää) |                                |
 
-*Taulukko 10. Sijoittelufunktioiden jako väylätyyppeihin*
+*Taulukko 11. Sijoittelufunktioiden jako väylätyyppeihin*
 
 | | Väyläluokka	| Tarkennus	| Sijoittelu- funktio (suluissa bussi- kaista- linkkien funktio) | Nopeus- rajoitus | Vapaa nopeus (km/h, ul2) | Kapasi- teetti (S, ul1) | Linkkityyppi: ei bussi-kaistaa, bussikaista ruuhka-aikana, bussikaista koko päivän, bussikaista vain aamuruuhkassa, bussikaista vain iltaruuhkassa, bussiväylä |
 |----|--------------------------|----------------------------------------------|------------|-----|---------|----------|-------------------------|
@@ -326,7 +328,7 @@ Baanan määritelmä on tässä seuraava: (1) ei juuri tasoristeyk-siä eikä mu
 Jos moottoritien varressa on pyörätie, sen luokka on yleensä 3 (erillinen pyörätie).
 Pyörätiet käyttävät autoverkon solmuja.
 
-*Taulukko 11. Pyörätieluokkien vaikutus*
+*Taulukko 12. Pyörätieluokkien vaikutus*
 
 |                                     |	@pyoratieluokka | Linkkityypit | Miellyttävyys |
 |-------------------------------------|-----------------|--------------|---------------|
