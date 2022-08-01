@@ -68,8 +68,8 @@ Tietoja käytetään pysähtymistietoskriptissä.
 | attribuutti      |       | selitys                                                      |
 |------------------|-------|--------------------------------------------------------------|
 | solmuattribuutti | ui1   | väliaikainen tieto, VAPAA                                    |
-| solmuattribuutti | ui2   | solmun tyyppi, ks. taulukko 5                                |
-| solmuattribuutti | ui3   | sen kunnan kelakoodi, jossa solmu sijaitsee (ks. taulukko 6) |
+| solmuattribuutti | ui2   | solmun tyyppi, ks. taulukko 4                                |
+| solmuattribuutti | ui3   | sen kunnan kelakoodi, jossa solmu sijaitsee (ks. taulukko 5) |
 | solmuattribuutti | label | joukkoliikenteen lippuvyöhyke (A, B, C tai D) tai tieto muista kunnista joilla on omat lipputuotteensa: Järvenpää (J), Nurmijärvi (N), Vihti (V), Mäntsälä/Hyvinkää (M), Pornainen (P) |
 
 *Taulukko 4. Solmutyypit (ui2) ja niiden selitykset*
@@ -376,6 +376,17 @@ Kiertoliittymät kuvataan yhdellä solmulla.
 Poikkeuksen muodostavat moottoritiemäiset, eri tasos-sa olevat kiertoliittymät, jotka voidaan tarvittaessa kuvata useammalla solmulla.
 Esimerkki useammalla solmulla koodatusta moottoritiemäisestä kiertoliittymästä: Lentoasemantien, Virkatien ja Äyritien liittymä Vantaalla.
 
+### Kääntymiskiellot
+
+Moottoriteillä on kääntymiskiellolla estetty autoilta poistumisrampilta suoraan liittymisrampille ja takaisin moottoritielle ajaminen
+(katkoviivat seuraavassa kuvassa).
+Tämä ei kuitenkaan estä bussi-linjojen koodaamista suoraan ramppeja pitkin (punainen viiva seuraavassa kuvassa),
+niin että ne pääsevät usein rampeilla sijaiseville pysäkeille.
+
+![image](https://user-images.githubusercontent.com/9825361/182141677-3730e618-65c2-41c0-b1a2-178c33f10fa6.png)
+
+*Kuva 1. Moottoritien ramppien hyödyntäminen suoraan ajamiseen on estetty autoilta (katkoviivat).*
+
 ### Syöttö- ja vaihtolinkit
 
 Syöttölinkkejä sijoittelualueita kuvaavista solmuista verkoille on kahdenlaisia: ”autosyöttölinkkejä” (joilla myös kävely ja pyöräily on sallittu)
@@ -430,6 +441,8 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
     Käytetään tarjonnaltaan vilkkaissa liittymissä, tärkeimmissä vaihtopaikoissa tai kun vaihtoyhteyksiä muuten halutaan kuvata erityisen realistisesti, 
     sekä silloin, kun kolmen solmun kuvausta ei voida käyttää linjojen kääntymisen geometrian takia.
 
+
+
 Verkolle on koodattu ainakin seuraavien runkolinjojen pysäkit:
 - Nykyinen runkolinja 550 (Itäkeskus–Westendinasema; perustuu nykytilanteeseen,
   paitsi Tapiolassa ”tavoitetilanteeseen” Tapiolan bussiterminaalin valmistumisen jälkeen)
@@ -445,6 +458,11 @@ Moottoritiemäisillä väylillä, kun bussipysäkit ovat rampeilla, on busseilta
 jotta bussilinjat varmasti kulkevat pysäkkien kautta (kuva 5).
 Tämä yhtenäistää samalla myös VALLU-linjojen pysähtymiskäyttäytymisen: mallissa kaikki linjat pysähtyvät samoilla pysäkeillä (paitsi pikavuorot
 vain pikavuoropysäkeillä), vaikka todellisuudessa kaikki kaukoliikenteen bussit eivät pysähdy kaikilla pysäkeillä.
+
+![image](https://user-images.githubusercontent.com/9825361/182148215-e3274db4-9404-4e1f-ab03-dc478120fcbd.png)
+
+*Kuva 5. Bussikulkutavat moottoritiemäisillä väylillä. Punaisilla linkeillä bussikulkutavat on kielletty, ja sinisillä linkeillä autokulkutavat on kielletty.
+Vihreät linkit ovat kävely- ja pyöräilylinkkejä. Bussi-pysäkit ovat vihreissä solmuissa.*
 
 ## Bussi- ja raitioliikenteen automaattinen pysähtymiskäyttäytyminen
 
