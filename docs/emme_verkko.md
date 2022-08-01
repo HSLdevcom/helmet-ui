@@ -441,7 +441,17 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
     Käytetään tarjonnaltaan vilkkaissa liittymissä, tärkeimmissä vaihtopaikoissa tai kun vaihtoyhteyksiä muuten halutaan kuvata erityisen realistisesti, 
     sekä silloin, kun kolmen solmun kuvausta ei voida käyttää linjojen kääntymisen geometrian takia.
 
+![image](https://user-images.githubusercontent.com/9825361/182149240-5d2fa2f3-00e4-492c-bfbe-3e1aeca9b026.png)
 
+*Kuva 2. Kolmen solmun kuvaus.*
+
+![image](https://user-images.githubusercontent.com/9825361/182149417-1d2e2048-cec2-481f-b131-94197cf1988a.png)
+
+*Kuva 3. ”Tuulimylly”-kuvaus.*
+
+![image](https://user-images.githubusercontent.com/9825361/182149616-634e1447-1a6a-412a-b859-55961317c256.png)
+
+*Kuva 4. Esimerkki kolmen solmun kuvauksesta (vasen kuva) ja ”tuulimyllystä” (oikea kuva).*
 
 Verkolle on koodattu ainakin seuraavien runkolinjojen pysäkit:
 - Nykyinen runkolinja 550 (Itäkeskus–Westendinasema; perustuu nykytilanteeseen,
