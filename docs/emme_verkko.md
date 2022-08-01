@@ -130,48 +130,21 @@ Tietoja käytetään pysähtymistietoskriptissä.
 
 Sijoittelualueet on numeroitu kunnittain seuraavan taulukon mukaisesti.
 
-| kunta       | numerot       |
-|-------------|---------------|
-| Helsinki    |    100–1 999  |
-| Espoo       |  2 000–3 499  |
-| Kauniainen  |  3 500–3 999  |
-| Vantaa      |  4 000–5 999  |
-| Kirkkonummi |  6 000–6 999  |
-| Vihti       |  7 000–7 999  |
-| Nurmijärvi  |  8 000–8 999  |
-| Tuusula     |  9 000–9 999  |
-| Kerava      | 10 000–10 999 |
-| Järvenpää   | 11 000-11 999 |
-| Sipoo       | 12 000–12 999 |
-| Mäntsälä    | 13 000–13 999 |
-| Hyvinkää    | 14 000–14 999 |
-| Pornainen   | 15 000–15 499 |
-| Siuntio     | 15 500–15 499 |
-| Salo        | 16 000–16 499 |
-| Somero      | 16 500–16 999 |
-| Raasepori   | 17 000–17 499 |
-| Hanko       | 17 500–17 499 |
-| Inkoo       | 18 000-18 499 |
-| Karkkila    | 18 500–18 999 |
-| Lohja       | 19 000–19 999 |
-| Hämeenlinna | 20 000–20 999 |
-| Janakkala   | 21 000–21 499 |
-| Hattula     | 21 500–21 999 |
-| Loppi       | 22 000–22 499 |
-| Tammela     | 22 500–22 999 |
-| Riihimäki   | 23 000–23 999 |
-| Hausjärvi   | 24 000–24 499 |
-| Kärkölä     | 24 500–24 999 |
-| Orimattila  | 25 000–25 499 |
-| Hollola     | 25 500–25 999 |
-| Lahti       | 26 000–26 999 |
-| Porvoo      | 27 000–27 999 |
-| Pukkila     | 28 000–28 499 |
-| Askola      | 28 500–28 999 |
-| Myrskylä    | 29 000–29 499 |
-| Lapinjärvi  | 29 500–29 999 |
-| Loviisa     | 30 000–30 999 |
-| Ulkosyötöt  | 31 000-31 999 |
+| kunta       | numerot       | kunta       | numerot       | kunta       | numerot       |
+|-------------|---------------|-------------|---------------|-------------|---------------|
+| Helsinki    |    100–1 999  | Pornainen   | 15 000–15 499 | Tammela     | 22 500–22 999 |
+| Espoo       |  2 000–3 499  | Siuntio     | 15 500–15 499 | Riihimäki   | 23 000–23 999 |
+| Kauniainen  |  3 500–3 999  | Salo        | 16 000–16 499 | Hausjärvi   | 24 000–24 499 |
+| Vantaa      |  4 000–5 999  | Somero      | 16 500–16 999 | Kärkölä     | 24 500–24 999 |
+| Kirkkonummi |  6 000–6 999  | Raasepori   | 17 000–17 499 | Orimattila  | 25 000–25 499 |
+| Vihti       |  7 000–7 999  | Hanko       | 17 500–17 499 | Hollola     | 25 500–25 999 |
+| Nurmijärvi  |  8 000–8 999  | Inkoo       | 18 000-18 499 | Lahti       | 26 000–26 999 |
+| Tuusula     |  9 000–9 999  | Karkkila    | 18 500–18 999 | Porvoo      | 27 000–27 999 |
+| Kerava      | 10 000–10 999 | Lohja       | 19 000–19 999 | Pukkila     | 28 000–28 499 |
+| Järvenpää   | 11 000-11 999 | Hämeenlinna | 20 000–20 999 | Askola      | 28 500–28 999 |
+| Sipoo       | 12 000–12 999 | Janakkala   | 21 000–21 499 | Myrskylä    | 29 000–29 499 |
+| Mäntsälä    | 13 000–13 999 | Hattula     | 21 500–21 999 | Lapinjärvi  | 29 500–29 999 |
+| Hyvinkää    | 14 000–14 999 | Loppi       | 22 000–22 499 | Loviisa     | 30 000–30 999 |
 
 ## Kulkumuodot ja joukkoliikenteen ajoneuvotyypit
 
