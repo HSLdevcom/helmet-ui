@@ -108,6 +108,9 @@ Tietoja käytetään pysähtymistietoskriptissä.
 | 91	        |	ulkosyöttö, autoväylät (sentroidi)                                      |
 | 92	        |	ulkosyöttö, junaradat (sentroidi)                                       |
 
+Bussiterminaalit on kuvattu pääsääntöisesti yhdellä solmulla (ui2=11), jossa kaikki terminaalin bussilinjat pysähtyvät.
+Kampin terminaalissa on kuitenkin kuvattu paikallis- ja kaukoliikenteen terminaalit omina solmuinaan.
+
 *Taulukko 5. Mallialueen kuntien kelakoodit (ui3) (vuoden 2019 kuntajako)*
 
 | kunta       |	kelakoodi (ui3) |	kunta       |	kelakoodi (ui3) |	kunta	    | kelakoodi (ui3) |
@@ -204,24 +207,17 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 
 *Taulukko 9. Linkkien ominaisuudet*
 
-| kenttä          | huomioita                                                                |
-|-----------------|--------------------------------------------------------------------------|
-| type            | ks. taulukko 10                                                          |
-| length          | linkin pituus kilometreinä                                               |
-|	lanes	          | kaistamäärä, bussikaista sisältyy ilmoitettuun kaistamäärään             |
-|	modes         	|                                                                          |
-|	vdf	            | autoliikenteen sijoittelufunktion nro, muilla kuin autolinkeillä vdf = 0 |
-| ul1	            |	autoverkko: linkin yhden kaistan kapasiteetti                            |
-|                 | raitiovaunuverkko: aamu-, päivä- ja iltaliikenteen nopeus                |
-|                 | juna- ja metroverkko: ei käytössä (0)                                    |
-|                 | kävely- ja pyöräilylinkit: ei käytössä (0)                               |
-| ul2	            | autoverkko: linkin vapaa nopeus                                          |
-|                 | raideliikenne: ei käytössä (0)                                           |
-|                 | kävely- ja pyöräilylinkit: ei käytössä (0)                               |
-| ul3           	| autoverkko: autoliikenteen linkeille sijoitellaan aluksi raskas liikenne, ja tulokset tallennetaan linkkiattribuuttiin ul3 (oltava link user datassa eikä extra-attribuutissa, jotta tietoa voidaan käyttää sijoittelufunktioissa) |
-|                 | raideliikenne: ei käytössä (0)                                           |
-|                 | kävely- ja pyöräilylinkit: ei käytössä (0)                               |
-| @pyoratieluokka	|	pyöräliikenneverkko: Pyörätien laatuluokka (taulukko 12)                 |
+| kenttä          | autoliikenne                                                 | raideliikenne   | kävely- ja pyöräilylinkit           |
+|-----------------|--------------------------------------------------------------|-----------------|-------------------------------------|
+| type            | ks. taulukko 10                                              | ks. taulukko 10 | ks. taulukko 10                     |
+| length          |                                                              |                 |                                     |
+|	lanes	          | kaistamäärä, bussikaista sisältyy ilmoitettuun kaistamäärään | 1               | 1                                   |
+|	modes         	| cvkybgde                                                     | tp, m, rj       | af                                  |
+|	vdf	            | sijoittelufunktion nro                                       | ei käytössä (0) | ei käytössä (0)                     |
+| ul1	| linkin yhden kaistan kapasiteetti | raitiovaunuverkko: aamu-, päivä- ja iltaliikenteen nopeus, juna- ja metroverkko: ei käytössä (0) | ei käytössä (0) |
+| ul2	            | linkin vapaa nopeus                                          | ei käytössä (0) | ei käytössä (0)                     |
+| ul3           	| autoliikenteen linkeille sijoitellaan aluksi raskas liikenne, ja tulokset tallennetaan linkkiattribuuttiin ul3 (oltava link user datassa eikä extra-attribuutissa, jotta tietoa voidaan käyttää sijoittelufunktioissa)         | ei käytössä (0) | ei käytössä (0)                     |
+| @pyoratieluokka	|                                                              |                 | pyörätien laatuluokka (taulukko 12) |
 
 ### Linkkityypit, väyläluokat ja sallitut kulkutavat
 
@@ -544,11 +540,6 @@ Raitiotieverkko on kuvattu autoliikenteestä erillisillä linkeillä.
 Linkkien tyyppi on 2. Nopeus raitiotieverkolla määräytyy linkkiattribuuttiin ul1 koodattujen nopeuksien perusteella.
 Raitiotieverkolla rai-tiovaunupysäkit merkitään solmutyypillä ui2 = 1, ja muut solmut solmutyypillä ui2 = 0.
 Tällöin linjo-jen pysähtymiset kuvautuvat automaattisesti oikein pysähtymistietomakrolla.
-
-## Terminaalit
-
-Bussiterminaalit on kuvattu pääsääntöisesti yhdellä solmulla (ui2=11), jossa kaikki terminaalin bussilinjat pysähtyvät.
-Kampin terminaalissa on kuitenkin kuvattu paikallis- ja kaukoliikenteen terminaalit omina solmuinaan.
 
 ## Joukkoliikennelinjastot
 
