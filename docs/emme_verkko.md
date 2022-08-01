@@ -218,33 +218,33 @@ Ne on koodattu kuin aina voimassa olevat bussikaistat, ja funktiomakrot käsitte
 
 *Taulukko 9. Linkkityypit (link type)*
 
-| linkkityyppi (link type) | selitys                                                                                                                |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------|
-| 1	      | poistunut käytöstä (oli käytössä vanhalla verkolla, ei saa koodata)                                                                     |
-| 2	      | ratikka                                                                                                                                 |
-| 3	      | metro                                                                                                                                   |
-| 4	      | junat                                                                                                                                   |
-| 5	      | pikaratikka                                                                                                                             |
-| 6	      | ratikkahybridi (varaus)                                                                                                                 |
+| linkkityyppi (link type) | selitys                                                                      | modes                                   |
+|--------------------------|------------------------------------------------------------------------------|-----------------------------------------|
+| 1	      | poistunut käytöstä (oli käytössä vanhalla verkolla, ei saa koodata)                           |                                         |
+| 2	      | ratikka                                                                                       | t, ta, taf                              |
+| 3	      | metro                                                                                         | m                                       |
+| 4	      | junat                                                                                         | rj                                      |
+| 5	      | pikaratikka                                                                                   | p, pa, paf                              |
+| 6	      | ratikkahybridi (varaus)                                                                       | tp, tpa, tpaf                           |
 | 70	    | kävely ja pyöräily sis. vaihtokävely (pois lukien syötöt eli kumpikaan pää ei ole sentroidi, moottoriajoneuvoliikenne ei ole sallittua) |
-|         | **syöttölinkit erikoissentroideihin (84-86 vielä varauksia)**                                                                           |
-| 84    	| liityntäpysäköinti (vain konnektoreita liipys-solmuihin)                                                                                |
-| 85    	| kauppakeskus (vain konnektoreita kauppakeskus-sentroideihin)                                                                            |
-| 86	    | urheilulaitos (vain konnektoreita urheilulaitos-sentroideihin)                                                                          |
-| 87	    | satama (vain konnektoreita satama-sentroideihin)                                                                                        |
-| 88	    | lentoasema (vain konnektoreita lentoasema-sentroideihin)                                                                                |
-|         | **syöttölinkit tavallisiin sentroideihin ja ulkosyöttöihin**                                                                            |
-| 98    	| ulkosyöttölinkki                                                                                                                        |
-| 99    	| syöttölinkki                                                                                                                            |
-|         | **katu- ja tieverkon linkit (pl. vain kevyen liikenteen käytössä olevat linkit), ks. seuraava taulukko**                                |
-| 121–142	| jalankulku, pyöräily, kaikki autot, bussit, ei bussikaistaa                                                                             |
-| 221–242	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain ruuhka-aikoina                                                             |
-| 321–342	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista koko päivän                                                                     |
-| 421–442	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain aamuruuhkassa (varaus)                                                     |
-| 521–542	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain iltaruuhkassa (varaus)                                                     |
-| 621–642	| joukkoliikenneväylä busseille (henkilöautoilu kielletty) (bussikadut, bussirampit yms.)                                                 |
-| x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5. |
-| 999    	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää)                                  |
+|         | **syöttölinkit erikoissentroideihin (84-86 vielä varauksia)**                                 |                                         |
+| 84    	| liityntäpysäköinti (vain konnektoreita liipy-solmuihin)                                       | cvkyaf, af                              |
+| 85    	| kauppakeskus (vain konnektoreita kauppakeskus-sentroideihin)                                  | cvkyaf, af                              |
+| 86	    | urheilulaitos (vain konnektoreita urheilulaitos-sentroideihin)                                | cvkyaf, af                              |
+| 87	    | satama (vain konnektoreita satama-sentroideihin)                                              | cvkyaf, af                              |
+| 88	    | lentoasema (vain konnektoreita lentoasema-sentroideihin)                                      | cvkyaf, af                              |
+|         | **syöttölinkit tavallisiin sentroideihin ja ulkosyöttöihin**                                  | cvkyaf, af                              |
+| 98    	| ulkosyöttölinkki                                                                              | cvkyasf, asf                            |
+| 99    	| syöttölinkki                                                                                  | cvkyaf, af                              |
+|         | **katu- ja tieverkon linkit (pl. vain kevyen liikenteen käytössä olevat linkit), ks. seuraava taulukko** |                              |
+| 121–142	| jalankulku, pyöräily, kaikki autot, bussit, ei bussikaistaa                                   | cvkybgdeaf, cvkybgde, cvkbgdeaf, cvkyaf |
+| 221–242	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain ruuhka-aikoina                   | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
+| 321–342	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista koko päivän                           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
+| 421–442	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain aamuruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
+| 521–542	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain iltaruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
+| 621–642	| joukkoliikenneväylä busseille (henkilöautoilu kielletty) (bussikadut, bussirampit yms.)       | bgde, bgdeaf                            |
+| x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5. | |
+| 999    	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää) |                                |
 
 Taulukko 10. Sijoittelufunktioiden jako väylätyyppeihin
 
@@ -286,7 +286,58 @@ jos autoliikenteen käytössä on vähintään kolme kaistaa ko. aikajakson aika
 Muilla kuin autolinkeillä noudatetaan yleisesti periaatetta vdf = 0, ul1 = 0, ul2 = 0, ul3 = 0, ellei näillä ole jotain erikoismerkitystä (kuten ul1 ratikoilla). 
 
 Kävely ja pyöräily on lähtökohtaisesti sallittua autolinkeillä ja kiellettyä raideliikenteen linkeillä.
-Ratikka- ja pikaratikkalinkeille voi koodata kävelyn/pyöräilyn (”taf”, ”paf”, ”tpaf”), jos ei ole rinnakkais-ta ajoneuvolinkkiä, jolle kävelyn voisi koodata.
-Metro- ja junaradoilla kävelyä/pyöräilyä ei kuiten-kaan voi sallia (eli ”maf”, ”rjaf” eivät ole sallittuja).
-Autolinkkejä, joilla kävely ja pyöräily eivät ole sallittuja, voi koodata poikkeustapauksissa, kuten tunnelit (esimerkiksi Kampin terminaalissa). (taulukko 13)
+Ratikka- ja pikaratikkalinkeille voi koodata kävelyn/pyöräilyn (”taf”, ”paf”, ”tpaf”), jos ei ole rinnakkaista ajoneuvolinkkiä, jolle kävelyn voisi koodata.
+Metro- ja junaradoilla kävelyä/pyöräilyä ei kuitenkaan voi sallia (eli ”maf”, ”rjaf” eivät ole sallittuja).
+Autolinkkejä, joilla kävely ja pyöräily eivät ole sallittuja, voi koodata poikkeustapauksissa, kuten tunnelit (esimerkiksi Kampin terminaalissa).
+
+#### Pyörätieluokat
+
+Pyöräliikenneverkossa, kaikille linkeille on määritelty pyörätieluokka (0-4) extra atribuuttiin @pyoratieluokka.
+Pyörätien miellyttävyyteen vaikuttaa sekä määritelty pyörätieluokka että linkki-tyyppi seuraavan taulukon mukaan.
+Baanan määritelmä on tässä seuraava: (1) ei juuri tasoristeyk-siä eikä muita esteitä (esim. bussipysäkkejä), 
+(2) oma tarpeeksi leveä tila selvästi eroteltu jalanku-lusta, (3) tasainen, asfaltoitu pinta, ei jyrkkiä mäkiä.
+Jos moottoritien varressa on pyörätie, sen luokka on yleensä 3 (erillinen pyörätie).
+Pyörätiet käyttävät autoverkon solmuja.
+
+Taulukko 11. Pyörätieluokkien vaikutus
+
+|                                     |	@pyoratieluokka | Linkkityypit | Miellyttävyys |
+|-------------------------------------|-----------------|--------------|---------------|
+| Baana	                              | 4	              |              | 19            |
+| Erillinen pyörätie	                | 3		            |              | 17            |
+| Pyörätie kadun varressa, maantie	  | 2	              | 27-32	       | 17            |
+| Pyörätie kadun varressa, pääkatu	  | 2	              | 33-37	       | 16            |
+| Pyörätie kadun varressa, pieni katu	| 2	              | 38-42	       | 15            |
+| Pyöräkaista	                        | 1		            |              | 15            |
+| Sekaliikenne, maantie	              | 0	              | 27-32	       | 12            |
+| Sekaliikenne, pääkatu	              | 0	              | 33-40	       | 10            |
+| Sekaliikenne, pieni katu	          | 0	              | 41-42	       | 12            |
+
+### Kaksiajorataiset kadut
+
+Kaksiajorataiset tiet ja kadut kuvataan verkossa jatkossa siten, että kummankin ajoradan linkeillä käytetään samoja solmupareja.
+Poikkeuksen tähän muodostavat moottoritiet, kehätiet ja muut moottoritiemäiset (esim. eritasoliittymin varustetut) väylät.
+
+### Eritasoliittymät ja moottoritiemäiset väylät
+
+Eritasoliittymien ja moottoritiemäisten väylien ajoradat kuvataan erillisinä.
+”Tavoitteena on ylläpitää kuvausta, joka vastaa mahdollisimman hyvin fyysistä todellisuutta tai eritasoliittymistä laadittuja suunnitelmia.
+Liittymät, joista suunnitelmia ei ole tehty, voidaan kuvata yksinkertaistettuina (esimerkiksi ns. salmiakkikuvaus).”
+
+Seuraavat väylät on verkossa kuvattu kaksiajorataisina:
+- Sisääntulotiet / moottoritiet
+  - Länsiväylä (kt51): 2-ajoratainen kuvaus Kirkkonummelta Ruoholahteen (Purokummuntie–Porkkalankatu)
+  - Turunväylä (vt1): 2-ajoratainen kuvaus verkon ulkoreunalta Huopalahdentielle
+  - Vihdintie (mt 120): 2-ajoratainen kuvaus Kehä III:lta Vihdintien ympyrään (Pitäjänmäen ympyrään) – (Tiilipojanlenkki–Pitäjänmäentie)
+  - Hämeenlinnanväylä (vt3): 2-ajoratainen kuvaus verkon ulkoreunalta Hakamäentielle
+  - Tuusulanväylä (kt45): 2-ajoratainen kuvaus Tuusulasta (Vanhan Tuusulantien liittymästä) Pohjolankadulle
+  - Lahdenväylä (vt4): 2-ajoratainen kuvaus verkon ulkoreunalta Koskelantielle
+  - Porvoonväylä (vt7): 2-ajoratainen kuvaus verkon ulkoreunalta Lahdenväylälle
+  - Itäväylä: 2-ajoratainen kuvaus Itäkeskuksesta Kehä I:n liittymästä Kalasatamaan.
+- Kehätiet
+  - Kehä I: 2-ajoratainen kuvaus koko matkan Länsiväylältä (Karhusaarensolmusta) Itäkes-kukseen (Itäväylän liittymään)
+  - Kehä II: 2-ajoratainen kuvaus koko matkan Länsiväylältä (Matinsolmusta) Turuntielle (tie 110)
+  - Kehä III: 2-ajoratainen kuvaus Mankinsolmusta (Kauklahdenväylältä) Vuosaaren sata-maan.
+- Moottoritiemäiset väylät
+  - Lentoasemantie Kehä III:lta pohjoiseen (Virkatie – Helsinki-Vantaan lentoasema), koska sen kaikki liittymät tuolla välillä ovat eritasoliittymiä.
 
