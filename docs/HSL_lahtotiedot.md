@@ -10,7 +10,7 @@ Tässä on kuvattu yleisesti HSL:n ylläpitämiä lähtötietoaineistoja. Ohjeit
 
 ## Ennusteskenaarioiden syöttötiedot (maankäyttö, kustannukset ym)
 
-HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Jens West. 
+HSL:n virallisia kysyntämallin lähtötietoja ylläpitää Johanna Piipponen. 
 
 **Lähtötietoja tuotetaan MAL-suunnittelun yhteydessä n. neljän vuoden välein seuraaville skenaarioille:**
 * Nykytilakuvaus
