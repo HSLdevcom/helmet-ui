@@ -1,8 +1,12 @@
 ---
-sort: 10
+sort: 3
 ---
 
 # Emme-verkon kuvaus
+
+Tässä kerrotaan millä periaatteilla Emmen liikenneverkko ja joukkoliikennelinjasto on luotu.
+Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
+Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä erikseen HSL:n yhteyshenkilöiden kanssa.
 
 ## Solmut
 
