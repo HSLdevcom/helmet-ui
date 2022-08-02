@@ -2,7 +2,7 @@
 sort: 3
 ---
 
-# Käyttöohje
+# Mallijärjestelmän käyttöohje
 
 On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. 
 Näin saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. 
