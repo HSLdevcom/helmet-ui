@@ -246,33 +246,33 @@ jos moottoritien rinnalla tai läheisyydessä kulkee kävely- ja pyörätie.
 
 *Taulukko 10. Linkkityypit (link type)*
 
-| linkkityyppi (link type) | selitys                                                                      | modes                                   |
-|--------------------------|------------------------------------------------------------------------------|-----------------------------------------|
-| 1	      | poistunut käytöstä (oli käytössä vanhalla verkolla, ei saa koodata)                           |                                         |
-| 2	      | ratikka                                                                                       | t, ta, taf                              |
-| 3	      | metro                                                                                         | m                                       |
-| 4	      | junat                                                                                         | rj                                      |
-| 5	      | pikaratikka                                                                                   | p, pa, paf                              |
-| 6	      | ratikkahybridi (varaus)                                                                       | tp, tpa, tpaf                           |
-| 70	    | kävely ja pyöräily sis. vaihtokävely (pois lukien syötöt eli kumpikaan pää ei ole sentroidi, moottoriajoneuvoliikenne ei ole sallittua) |
-|         | **syöttölinkit erikoissentroideihin (84-86 vielä varauksia)**                                 |                                         |
-| 84    	| liityntäpysäköinti (vain konnektoreita liipy-solmuihin)                                       | cvkyaf, af                              |
-| 85    	| kauppakeskus (vain konnektoreita kauppakeskus-sentroideihin)                                  | cvkyaf, af                              |
-| 86	    | urheilulaitos (vain konnektoreita urheilulaitos-sentroideihin)                                | cvkyaf, af                              |
-| 87	    | satama (vain konnektoreita satama-sentroideihin)                                              | cvkyaf, af                              |
-| 88	    | lentoasema (vain konnektoreita lentoasema-sentroideihin)                                      | cvkyaf, af                              |
-|         | **syöttölinkit tavallisiin sentroideihin ja ulkosyöttöihin**                                  | cvkyaf, af                              |
-| 98    	| ulkosyöttölinkki                                                                              | cvkyasf, asf                            |
-| 99    	| syöttölinkki                                                                                  | cvkyaf, af                              |
-|         | **katu- ja tieverkon linkit (pl. vain kevyen liikenteen käytössä olevat linkit), ks. seuraava taulukko** |                              |
-| 121–142	| jalankulku, pyöräily, kaikki autot, bussit, ei bussikaistaa                                   | cvkybgdeaf, cvkybgde, cvkbgdeaf, cvkyaf |
-| 221–242	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain ruuhka-aikoina                   | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
-| 321–342	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista koko päivän                           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
-| 421–442	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain aamuruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
-| 521–542	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain iltaruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf         |
-| 621–642	| joukkoliikenneväylä busseille (henkilöautoilu kielletty) (bussikadut, bussirampit yms.)       | bgde, bgdeaf                            |
-| x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5. | |
-| 999    	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää) |                                |
+| linkkityyppi (link type) | selitys                                                                      | modes                                        |
+|--------------------------|------------------------------------------------------------------------------|----------------------------------------------|
+| 1	      | poistunut käytöstä (oli käytössä vanhalla verkolla, ei saa koodata)                           |                                              |
+| 2	      | ratikka                                                                                       | t, ta, taf                                   |
+| 3	      | metro                                                                                         | m                                            |
+| 4	      | junat                                                                                         | rj                                           |
+| 5	      | pikaratikka                                                                                   | p, pa, paf                                   |
+| 6	      | ratikkahybridi (varaus)                                                                       | tp, tpa, tpaf                                |
+| 70	    | kävely ja pyöräily sis. vaihtokävely (pois lukien syötöt eli kumpikaan pää ei ole sentroidi, moottoriajoneuvoliikenne ei ole sallittua) | af |
+|         | **syöttölinkit erikoissentroideihin (84-86 vielä varauksia)**                                 |                                              |
+| 84    	| liityntäpysäköinti (vain konnektoreita liipy-solmuihin)                                       | cvkyaf, af                                   |
+| 85    	| kauppakeskus (vain konnektoreita kauppakeskus-sentroideihin)                                  | cvkyaf, af                                   |
+| 86	    | urheilulaitos (vain konnektoreita urheilulaitos-sentroideihin)                                | cvkyaf, af                                   |
+| 87	    | satama (vain konnektoreita satama-sentroideihin)                                              | cvkyaf, af                                   |
+| 88	    | lentoasema (vain konnektoreita lentoasema-sentroideihin)                                      | cvkyaf, af                                   |
+|         | **syöttölinkit tavallisiin sentroideihin ja ulkosyöttöihin**                                  | cvkyaf, af                                   |
+| 98    	| ulkosyöttölinkki                                                                              | cvkyasf, asf                                 |
+| 99    	| syöttölinkki                                                                                  | cvkyaf, af                                   |
+|         | **katu- ja tieverkon linkit (pl. vain kevyen liikenteen käytössä olevat linkit), ks. seuraava taulukko** |                                   |
+| 121–142	| jalankulku, pyöräily, kaikki autot, bussit, ei bussikaistaa                                   | cvkybgdeaf, cvkybgde, cvkbgdeaf, cvkyaf      |
+| 221–242	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain ruuhka-aikoina                   | cvkybgdeaf, cvkybgde, cvkbgdeaf              |
+| 321–342	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista koko päivän                           | cvkybgdeaf, cvkybgde, cvkbgdeaf              |
+| 421–442	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain aamuruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf              |
+| 521–542	| jalankulku, pyöräily, kaikki autot, bussit, bussikaista vain iltaruuhkassa (varaus)           | cvkybgdeaf, cvkybgde, cvkbgdeaf              |
+| 621–642	| joukkoliikenneväylä busseille (henkilöautoilu kielletty) (bussikadut, bussirampit yms.)       | bgde, bgdeaf                                 |
+| x9v–x9v (esim. 191–195, 199) | linkit ja bussikadut, joilla on taulukosta poikkeavat ul1- ja ul2-arvot verkolla (x = sataluku kuten edellä). Käytetään viivytysfunktiota v=1–5. | cvkybgdeaf, cvkybgde, cvkbgdeaf, cvkyaf |
+| 999    	| vanhan verkon ”poikkeava linkki”, jonka dokumentaatio puuttuu (tätä linkkityyppiä ei saa koodata enää) |                                     |
 
 *Taulukko 11. Sijoittelufunktioiden jako väylätyyppeihin*
 
