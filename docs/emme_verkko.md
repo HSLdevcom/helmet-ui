@@ -403,11 +403,19 @@ Keskustan huoltotunneli on kuvattu verkolle kulkumuotoyhdistelmällä cvk.
 Teknisistä syistä (oltava aina primary class) myös autokulkutapa c on sallittava.
 Vapaaksi nopeudeksi verkolle on koodattu 15 km/h, jotta tunneliin ei menisi liikaa autoja.
 
+![image](https://user-images.githubusercontent.com/9825361/182296127-5ca7b35e-076d-4b96-bc92-e3f49e4b6ce5.png)
+*Kuva 2. Helsingin raskaan liikenteen rajoitusalue. Mustalla viivalla merkittyjä aluetta reunustavia katuja pitkin saa ajaa.*
+
 Verkolle rajoitusalue on kuvattu asettamalla rajoituksia y-kulkumuodolle, eli käytännössä poistamalla y-kulkumuoto osalta linkkejä.
-Rajoitusaluetta (Kuva 6) ei voi kuvata kieltämällä y-kulkumuotoa kokonaan rajoitusalueella, koska myös y-kulkumuodolla on oltava reitti jokaiseen sentroidiin,
-joten y-kulkutapa on sallittu pääkaduilla sekä siten että jokaiseen sentroidiin pääsee jotain reittiä (Kuva 7).
-Jotta keskustan läpiajo ei ole mahdollista (Kuva 7:ssa punaisen viivan yli), itäisiä alueita lähestytään idästä ja läntisiä alueita lännestä
-(joillekin alueille voi päästä molemmista suunnista).  
+Rajoitusaluetta (kuva 2) ei voi kuvata kieltämällä y-kulkumuotoa kokonaan rajoitusalueella, koska myös y-kulkumuodolla on oltava reitti jokaiseen sentroidiin,
+joten y-kulkutapa on sallittu pääkaduilla sekä siten että jokaiseen sentroidiin pääsee jotain reittiä (kuva 3).
+Jotta keskustan läpiajo ei ole mahdollista (kuva 3:ssa punaisen viivan yli), itäisiä alueita lähestytään idästä ja läntisiä alueita lännestä
+(joillekin alueille voi päästä molemmista suunnista).
+
+![image](https://user-images.githubusercontent.com/9825361/182296187-4efb2ebb-e07f-47f9-9a6f-37945f2035fe.png)
+*Kuva 3. Helsingin keskustan raskaan liikenteen rajoitusalue Emmessä.
+Y-kulkumuoto on sallittu vihreillä ja oransseilla linkeillä.
+Oranssit linkit ovat syöttölinkkejä, joilla autokulkumuodot on sallittu.*
 
 ## Bussipysäkkien ja muun bussi-infran kuvaus
 
@@ -427,7 +435,7 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
   - Yhden solmun kuvaus: kaikki liittymien läheisyydessä olevat pysäkit kuvataan liittymäsolmuun.
     Käytetään HSL-alueen ulkopuolella sekä tarpeen mukaan vastaavilla harvaan asutuilla alueilla myös HSL-alueella.
   - Kolmen solmun kuvaus: Liittymä kuvataan maksimissaan viidellä solmulla, joista kaksi on pysäkkejä.
-    Pysäkkisolmut valitaan sen mukaan, miten bussilinjat liittymässä ajavat, niin että jokainen linja pysähtyy täsmälleen yhdellä pysäkillä (Kuva 2).
+    Pysäkkisolmut valitaan sen mukaan, miten bussilinjat liittymässä ajavat, niin että jokainen linja pysähtyy täsmälleen yhdellä pysäkillä (kuva 4).
     Käytetään pääsääntöi-sesti HSL-alueen liittymissä.
   - Viiden solmun kuvaus: Viiden solmun kuvaus, jossa risteämiskohta on ainoa solmu, joka ei ole pysäkki,
     ei ole mahdollinen automaattisen pysähtymiskäyttäytymisen kanssa, koska silloin bussit pysähtyisivät liittymässä aina kahdessa solmussa:
@@ -439,25 +447,25 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
 
 ![image](https://user-images.githubusercontent.com/9825361/182149240-5d2fa2f3-00e4-492c-bfbe-3e1aeca9b026.png)
 
-*Kuva 2. Kolmen solmun kuvaus.*
+*Kuva 4. Kolmen solmun kuvaus.*
 
 ![image](https://user-images.githubusercontent.com/9825361/182149417-1d2e2048-cec2-481f-b131-94197cf1988a.png)
 
-*Kuva 3. ”Tuulimylly”-kuvaus.*
+*Kuva 5. ”Tuulimylly”-kuvaus.*
 
 ![image](https://user-images.githubusercontent.com/9825361/182149616-634e1447-1a6a-412a-b859-55961317c256.png)
 
-*Kuva 4. Esimerkki kolmen solmun kuvauksesta (vasen kuva) ja ”tuulimyllystä” (oikea kuva).*
+*Kuva 6. Esimerkki kolmen solmun kuvauksesta (vasen kuva) ja ”tuulimyllystä” (oikea kuva).*
 
-**Moottoritiemäiset bussirampit** on koodattu siten, että niillä on autokulkutavat kielletty (Kuva 5, siniset linkit).
+**Moottoritiemäiset bussirampit** on koodattu siten, että niillä on autokulkutavat kielletty (kuva 7, siniset linkit).
 Moottoritiemäisillä väylillä, kun bussipysäkit ovat rampeilla, on busseilta kielletty ajaminen suoraan moottoritietä pitkin,
-jotta bussilinjat varmasti kulkevat pysäkkien kautta (kuva 5).
+jotta bussilinjat varmasti kulkevat pysäkkien kautta (kuva 7).
 Tämä yhtenäistää samalla myös VALLU-linjojen pysähtymiskäyttäytymisen: mallissa kaikki linjat pysähtyvät samoilla pysäkeillä (paitsi pikavuorot
 vain pikavuoropysäkeillä), vaikka todellisuudessa kaikki kaukoliikenteen bussit eivät pysähdy kaikilla pysäkeillä.
 
 ![image](https://user-images.githubusercontent.com/9825361/182148215-e3274db4-9404-4e1f-ab03-dc478120fcbd.png)
 
-*Kuva 5. Bussikulkutavat moottoritiemäisillä väylillä. Punaisilla linkeillä bussikulkutavat on kielletty, ja sinisillä linkeillä autokulkutavat on kielletty.
+*Kuva 7. Bussikulkutavat moottoritiemäisillä väylillä. Punaisilla linkeillä bussikulkutavat on kielletty, ja sinisillä linkeillä autokulkutavat on kielletty.
 Vihreät linkit ovat kävely- ja pyöräilylinkkejä. Bussi-pysäkit ovat vihreissä solmuissa.*
 
 ## Bussi- ja raitioliikenteen automaattinen pysähtymiskäyttäytyminen
