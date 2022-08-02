@@ -1,5 +1,5 @@
 ---
-sort: 7
+sort: 8
 ---
 
 # Ohje HSL:n mallitöiden tilaamiseen
