@@ -13,7 +13,7 @@ eri tahojen omiin tarkasteluihin ja hankkeisiin, joita ei ole tarkoituskaan vied
 Työn loputtua HSL päivittää tarvittaessa valitun vaihtoehdon osaksi virallisia kuvauksia.
 
 HSL:n virallisia verkkoja muokattaessa on pyydettävä HSL:stä solmunumerot, joita tietyn hankkeen koodaamiseen käytetään.
-Virallisissa verkoissa käytettävät solmunumerot ovat taulukoiden sol-muavaruuksissa, joiden kohdalla lukee ”HSL:n hankkeiden” solmut.
+Virallisissa verkoissa käytettävät solmunumerot ovat taulukoiden solmuavaruuksissa, joiden kohdalla lukee ”HSL:n hankkeiden” solmut.
 
 HUOM: HLJ-työn yhteydessä voidaan koodata muutoksia suoraan verkon virallisille solmunumeroille.
 Tästä on sovittava HSL:n yhteyshenkilöiden kanssa erikseen.
@@ -178,7 +178,7 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 | j	                | kaukojuna                                                           |
 | t	                | ratikka                                                             |
 | p	                | pikaratikka                                                         |
-| w	                | vesiliikenne joukkoliikennemuotona (”water”) (varaus)               |
+| w	                | vesiliikenne joukkoliikennemuotona (”water”)                        |
 | v	                | pakettiauto (”van”)                                                 |
 | k	                | kuorma-autot ilman perävaunua                                       |
 | y	                | perävaunulliset kuorma-autot (”yhdistelmä”)                         |
@@ -212,7 +212,7 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 | type            | ks. taulukko 10                                              | ks. taulukko 10 | ks. taulukko 10                     |
 | length          |                                                              |                 |                                     |
 |	lanes	          | kaistamäärä, bussikaista sisältyy ilmoitettuun kaistamäärään | 1               | 1                                   |
-|	modes         	| cvkybgde                                                     | tp, m, rj       | af                                  |
+|	modes         	| hcvkybgde                                                    | tp, m, rj       | af                                  |
 |	vdf	            | sijoittelufunktion nro                                       | ei käytössä (0) | ei käytössä (0)                     |
 | ul1	| linkin yhden kaistan kapasiteetti | raitiovaunuverkko: aamu-, päivä- ja iltaliikenteen nopeus, juna- ja metroverkko: ei käytössä (0) | ei käytössä (0) |
 | ul2	            | linkin vapaa nopeus                                          | ei käytössä (0) | ei käytössä (0)                     |
@@ -449,16 +449,6 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
 
 *Kuva 4. Esimerkki kolmen solmun kuvauksesta (vasen kuva) ja ”tuulimyllystä” (oikea kuva).*
 
-Verkolle on koodattu ainakin seuraavien runkolinjojen pysäkit:
-- Nykyinen runkolinja 550 (Itäkeskus–Westendinasema; perustuu nykytilanteeseen,
-  paitsi Tapiolassa ”tavoitetilanteeseen” Tapiolan bussiterminaalin valmistumisen jälkeen)
-- Nykyinen runkolinja 560 (Rastila M–Malmi–Myyrmäki; perustuu nykytilanteeseen) sekä tuleva jatke Matinkylään
-- Tuleva runkolinja 500 (Herttoniemi–Pasila–Munkkivuori; perustuu HSL:n karttaan)
-- Tuleva runkolinja 510 (Pasila–Westendinasema, koodattu siltä osin kuin reitti ei ole päällek-käinen linjojen 550 ja 500 kanssa
-  eli välille Munkkiniemenaukio–Otaniemi; perustuu raporttiin Runkolinja 510, HSL:n julkaisija 9/2016)
-- Tuleva runkolinja 570 (Mellunmäki–Tikkurila–Aviapolis; perustuu vuoden 2015 raporttiin Van-taan runkolinja 570)
-- Tuleva runkoilinja 530 (MatinkyläM-Jorvi).
-
 **Moottoritiemäiset bussirampit** on koodattu siten, että niillä on autokulkutavat kielletty (Kuva 5, siniset linkit).
 Moottoritiemäisillä väylillä, kun bussipysäkit ovat rampeilla, on busseilta kielletty ajaminen suoraan moottoritietä pitkin,
 jotta bussilinjat varmasti kulkevat pysäkkien kautta (kuva 5).
@@ -596,7 +586,8 @@ Muilla kuin HSL-alueen linjoilla (ns. VALLU-linjoilla) linjatunnus on generoitu 
     muulloin juokseva numero, alkaen numerosta 1000
   - T = mahdollinen kirjaintunnus, jolloin numero annetaan 3 merkillä.
 - Paikallisliikenteet: ZZxxxS tai ZZxxTS, missä 
-  - ZZ = HY (Hyvinkään paikallisliikenne), RM (Riihimäen paikallisliikenne) tai JA (Järvenpään paikallisliikenne)
+  - ZZ = HY (Hyvinkään paikallisliikenne), RM (Riihimäen paikallisliikenne), JA (Järvenpään paikallisliikenne),
+    HA (Hämeenlinnan paikallisliikenne), LA (Lahden paikallisliikenne) tai OR (Orimattilan paikallisliikenne)
   - xxx = paikallisliikenteen linjanumero, esim. 001 tai 011
   - T = mahdollinen kirjaintunnus.
 
