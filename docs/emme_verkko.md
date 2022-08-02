@@ -404,6 +404,7 @@ Teknisistä syistä (oltava aina primary class) myös autokulkutapa c on sallitt
 Vapaaksi nopeudeksi verkolle on koodattu 15 km/h, jotta tunneliin ei menisi liikaa autoja.
 
 ![image](https://user-images.githubusercontent.com/9825361/182296127-5ca7b35e-076d-4b96-bc92-e3f49e4b6ce5.png)
+
 *Kuva 2. Helsingin raskaan liikenteen rajoitusalue. Mustalla viivalla merkittyjä aluetta reunustavia katuja pitkin saa ajaa.*
 
 Verkolle rajoitusalue on kuvattu asettamalla rajoituksia y-kulkumuodolle, eli käytännössä poistamalla y-kulkumuoto osalta linkkejä.
@@ -413,6 +414,7 @@ Jotta keskustan läpiajo ei ole mahdollista (kuva 3:ssa punaisen viivan yli), it
 (joillekin alueille voi päästä molemmista suunnista).
 
 ![image](https://user-images.githubusercontent.com/9825361/182296187-4efb2ebb-e07f-47f9-9a6f-37945f2035fe.png)
+
 *Kuva 3. Helsingin keskustan raskaan liikenteen rajoitusalue Emmessä.
 Y-kulkumuoto on sallittu vihreillä ja oransseilla linkeillä.
 Oranssit linkit ovat syöttölinkkejä, joilla autokulkumuodot on sallittu.*
