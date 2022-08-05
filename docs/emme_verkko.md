@@ -322,9 +322,9 @@ Jos aamun nopeus on alle 10 km/h, nopeus kirjoitetaan muodossa `abbcc`.
 ### Pyörätieluokat
 
 Pyöräliikenneverkossa, kaikille linkeille on määritelty pyörätieluokka (0-4) extra atribuuttiin @pyoratieluokka.
-Pyörätien miellyttävyyteen vaikuttaa sekä määritelty pyörätieluokka että linkki-tyyppi seuraavan taulukon mukaan.
-Baanan määritelmä on tässä seuraava: (1) ei juuri tasoristeyk-siä eikä muita esteitä (esim. bussipysäkkejä), 
-(2) oma tarpeeksi leveä tila selvästi eroteltu jalanku-lusta, (3) tasainen, asfaltoitu pinta, ei jyrkkiä mäkiä.
+Pyörätien miellyttävyyteen vaikuttaa sekä määritelty pyörätieluokka että linkkityyppi seuraavan taulukon mukaan.
+Baanan määritelmä on tässä seuraava: (1) ei juuri tasoristeyksiä eikä muita esteitä (esim. bussipysäkkejä), 
+(2) oma tarpeeksi leveä tila selvästi eroteltu jalankulusta, (3) tasainen, asfaltoitu pinta, ei jyrkkiä mäkiä.
 Jos moottoritien varressa on pyörätie, sen luokka on yleensä 3 (erillinen pyörätie).
 Pyörätiet käyttävät autoverkon solmuja.
 
