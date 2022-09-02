@@ -309,7 +309,7 @@ jos moottoritien rinnalla tai läheisyydessä kulkee kävely- ja pyörätie.
 *) Alun perin 2200, mutta verkolla on käytetty johdonmukaisesti kapasiteettia 2100, Trafixin mukaan siksi,
 että 2200 on epärealistisen suuri kapasiteetti normaaleissa olosuhteissa, ja tekee moottoriteistä liian houkuttelevia vaihtoehtoja.
 
-**) Helmet 3.1:ssä linkin kapasiteettia kasvatettu 1700:sta arvoon 1800 ajon/h (paitsi linkkityypillä x22 ar-voon 1900 ajon/h),
+**) Helmet 3.1+:ssa linkin kapasiteettia kasvatettu 1700:sta arvoon 1800 ajon/h (paitsi linkkityypillä x22 arvoon 1900 ajon/h),
 jos autoliikenteen käytössä on vähintään kolme kaistaa ko. aikajakson aikana.
 
 ***) Helmet 3.1+:ssa linkin vapaata nopeutta kasvatettu 54:stä arvoon 63 km/h.
