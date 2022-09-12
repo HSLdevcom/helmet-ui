@@ -1,8 +1,8 @@
 ---
-sort: 3
+sort: 4
 ---
 
-# Käyttöohje
+# Mallijärjestelmän käyttöohje
 
 On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. 
 Näin saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. 
@@ -11,7 +11,7 @@ Myös työn huolellinen dokumentointi on tärkeää, sillä se auttaa aineistoje
 Mallin käyttämiä lähtötietoja on kuvattu [täällä](mallin_lahtotietotiedostot.md). 
 HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen.
 Näistä löydät yleistietoa [täältä](HSL_lahtotiedot.md).
-Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
+Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Johanna Piipponen).
 Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
 Mallin asennusohjeet löydät [täältä](kaytto-ohje.md), ja Emme-pankin perustamisen ohjeet [täältä](sijopankki.md).
