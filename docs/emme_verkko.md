@@ -10,6 +10,10 @@ Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä
 
 ## Ohjeen muutoshistoria
 
+- 2022-09-12: Ohje siirretty nettiin; tarkennettu kulkumuoto `h`:n
+  ohjeistusta; linkkien `type` ylikirjoittaa `vdf`-, `ul1`- ja
+  `ul2`-attribuutit.
+  [(HSLdevcom/helmet-ui#145)](https://github.com/HSLdevcom/helmet-ui/pull/145)
 - 2021-08-12: Kulkumuoto h
 - 2021-02-10: Lisätty: Pyörätiet käyttävät autoverkon solmuja.
 - 2021-01-28: Lisätty Pikaratikkapysäkki ui2 =8
