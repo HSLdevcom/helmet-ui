@@ -8,6 +8,14 @@ Tässä kerrotaan millä periaatteilla Emmen liikenneverkko ja joukkoliikennelin
 Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
 Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä erikseen HSL:n yhteyshenkilöiden kanssa.
 
+## Ohjeen muutoshistoria
+
+- 2021-08-12: Kulkumuoto h
+- 2021-02-10: Lisätty: Pyörätiet käyttävät autoverkon solmuja.
+- 2021-01-28: Lisätty Pikaratikkapysäkki ui2 =8
+- 2020-12-28: Täsmennetty ohjetta syöttölinkeistä. Syöttölinkit koodattava aina bussiverkkoon /kävelyverkkoon ja siitä vaihtolinkillä raideliikenteeseen. Lisätietoja luku 6.6.
+- 2020-08-05: Korjattu ja täydennetty
+
 ## Solmut
 
 ### Solmunumerot
