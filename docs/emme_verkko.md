@@ -10,6 +10,9 @@ Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä
 
 ## Ohjeen muutoshistoria
 
+- 2022-09-29: Korjattu kolme kuvaa, joista puuttui merkintöjä; lisätty
+  muutoshistoria tämän ohjeen yhteyteen
+  ([HSLdevcom/helmet-ui#152](https://github.com/HSLdevcom/helmet-ui/pull/152))
 - 2022-09-12: Ohje siirretty nettiin; tarkennettu kulkumuoto `h`:n
   ohjeistusta; linkkien `type` ylikirjoittaa `vdf`-, `ul1`- ja
   `ul2`-attribuutit.
