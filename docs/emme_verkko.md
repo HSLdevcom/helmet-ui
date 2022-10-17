@@ -8,6 +8,21 @@ Tässä kerrotaan millä periaatteilla Emmen liikenneverkko ja joukkoliikennelin
 Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
 Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä erikseen HSL:n yhteyshenkilöiden kanssa.
 
+## Ohjeen muutoshistoria
+
+- 2022-09-29: Korjattu kolme kuvaa, joista puuttui merkintöjä; lisätty
+  muutoshistoria tämän ohjeen yhteyteen
+  ([HSLdevcom/helmet-ui#152](https://github.com/HSLdevcom/helmet-ui/pull/152))
+- 2022-09-12: Ohje siirretty nettiin; tarkennettu kulkumuoto `h`:n
+  ohjeistusta; linkkien `type` ylikirjoittaa `vdf`-, `ul1`- ja
+  `ul2`-attribuutit.
+  ([HSLdevcom/helmet-ui#145](https://github.com/HSLdevcom/helmet-ui/pull/145))
+- 2021-08-12: Kulkumuoto h
+- 2021-02-10: Lisätty: Pyörätiet käyttävät autoverkon solmuja.
+- 2021-01-28: Lisätty Pikaratikkapysäkki ui2 =8
+- 2020-12-28: Täsmennetty ohjetta syöttölinkeistä. Syöttölinkit koodattava aina bussiverkkoon /kävelyverkkoon ja siitä vaihtolinkillä raideliikenteeseen. Lisätietoja luku 6.6.
+- 2020-08-05: Korjattu ja täydennetty
+
 ## Solmut
 
 ### Solmunumerot
@@ -384,7 +399,7 @@ Moottoriteillä on kääntymiskiellolla estetty autoilta poistumisrampilta suora
 Tämä ei kuitenkaan estä bussi-linjojen koodaamista suoraan ramppeja pitkin (punainen viiva seuraavassa kuvassa),
 niin että ne pääsevät usein rampeilla sijaiseville pysäkeille.
 
-![image](https://user-images.githubusercontent.com/9825361/182141677-3730e618-65c2-41c0-b1a2-178c33f10fa6.png)
+![image](images/emme_kaantymiskiellot.png)
 
 *Kuva 1. Moottoritien ramppien hyödyntäminen suoraan ajamiseen on estetty autoilta (katkoviivat).*
 
@@ -408,7 +423,7 @@ Keskustan huoltotunneli on kuvattu verkolle kulkumuotoyhdistelmällä cvk.
 Teknisistä syistä (oltava aina primary class) myös autokulkutapa c on sallittava.
 Vapaaksi nopeudeksi verkolle on koodattu 15 km/h, jotta tunneliin ei menisi liikaa autoja.
 
-![image](https://user-images.githubusercontent.com/9825361/182296127-5ca7b35e-076d-4b96-bc92-e3f49e4b6ce5.png)
+![image](images/emme_raskaan-liikenteen-rajoitusalue_kartta.png)
 
 *Kuva 2. Helsingin raskaan liikenteen rajoitusalue. Mustalla viivalla merkittyjä aluetta reunustavia katuja pitkin saa ajaa.*
 
@@ -418,7 +433,7 @@ joten y-kulkutapa on sallittu pääkaduilla sekä siten että jokaiseen sentroid
 Jotta keskustan läpiajo ei ole mahdollista (kuva 3:ssa punaisen viivan yli), itäisiä alueita lähestytään idästä ja läntisiä alueita lännestä
 (joillekin alueille voi päästä molemmista suunnista).
 
-![image](https://user-images.githubusercontent.com/9825361/182296187-4efb2ebb-e07f-47f9-9a6f-37945f2035fe.png)
+![image](images/emme_raskaan-liikenteen-rajoitusalue_emme.png)
 
 *Kuva 3. Helsingin keskustan raskaan liikenteen rajoitusalue Emmessä.
 Y-kulkumuoto on sallittu vihreillä ja oransseilla linkeillä.
@@ -452,15 +467,15 @@ Verkon koodauksessa noudatetaan bussipysäkkien osalta seuraavia periaatteita:
     Käytetään tarjonnaltaan vilkkaissa liittymissä, tärkeimmissä vaihtopaikoissa tai kun vaihtoyhteyksiä muuten halutaan kuvata erityisen realistisesti, 
     sekä silloin, kun kolmen solmun kuvausta ei voida käyttää linjojen kääntymisen geometrian takia.
 
-![image](https://user-images.githubusercontent.com/9825361/182149240-5d2fa2f3-00e4-492c-bfbe-3e1aeca9b026.png)
+![image](images/emme_kolmesolmua.png)
 
 *Kuva 4. Kolmen solmun kuvaus.*
 
-![image](https://user-images.githubusercontent.com/9825361/182149417-1d2e2048-cec2-481f-b131-94197cf1988a.png)
+![image](images/emme_tuulimylly.png)
 
 *Kuva 5. ”Tuulimylly”-kuvaus.*
 
-![image](https://user-images.githubusercontent.com/9825361/182149616-634e1447-1a6a-412a-b859-55961317c256.png)
+![image](images/emme_liittyma_kolme-solmua_tuulimylly.png)
 
 *Kuva 6. Esimerkki kolmen solmun kuvauksesta (vasen kuva) ja ”tuulimyllystä” (oikea kuva).*
 
@@ -470,7 +485,7 @@ jotta bussilinjat varmasti kulkevat pysäkkien kautta (kuva 7).
 Tämä yhtenäistää samalla myös VALLU-linjojen pysähtymiskäyttäytymisen: mallissa kaikki linjat pysähtyvät samoilla pysäkeillä (paitsi pikavuorot
 vain pikavuoropysäkeillä), vaikka todellisuudessa kaikki kaukoliikenteen bussit eivät pysähdy kaikilla pysäkeillä.
 
-![image](https://user-images.githubusercontent.com/9825361/182148215-e3274db4-9404-4e1f-ab03-dc478120fcbd.png)
+![image](images/emme_bussikulkutavat-moottoritiemaisilla-vaylilla.png)
 
 *Kuva 7. Bussikulkutavat moottoritiemäisillä väylillä. Punaisilla linkeillä bussikulkutavat on kielletty, ja sinisillä linkeillä autokulkutavat on kielletty.
 Vihreät linkit ovat kävely- ja pyöräilylinkkejä. Bussi-pysäkit ovat vihreissä solmuissa.*
