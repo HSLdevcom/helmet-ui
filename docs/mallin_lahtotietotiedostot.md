@@ -22,7 +22,7 @@ Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansio
 
 * **cco** = autoilun kilometrikustannus
 * **edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
-* **ext** = ulkoinen liikenne eli työsäkäyntialueen tienpäät
+* **ext** = ulkoinen liikenne eli työsäkäyntialueen tienpäät (kasvukerroin verrattuna nykytilaan)
 * **lnd** = kunkin ennustealueen rakennetun maa-alan osuus sekä erillistalojen osuus rakennuskannasta
 * **pop** = kunkin ennustealueen kokonaisväkiluku sekä eri ikäryhmien osuudet
 * **prk** = kunkin ennustealueen työpaikan ja asiointimatkojen pysäköintikustannukset
