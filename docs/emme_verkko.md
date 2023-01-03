@@ -591,7 +591,9 @@ Nopeuden määräytymisperusteet on selostettu tarkemmin [liikennemalliraportin]
 Junille ja metroille määritetään segmenttikohtaiset matka-ajat linjoja koodattaessa, ja raitio- ja pikaraitiolinjojen nopeudet koodataan linkkiattribuuttiin ul1. 
 
 Bussien nopeuden määrittävä us2-kerroin lasketaan [skriptillä](https://github.com/HSLdevcom/helmet-model-system/blob/4939e0505b8bde26f53116c89c31ff747cf74c45/Scripts/assignment/assignment_period.py#L292).
-Samalla tehdään oikeiden joukkoliikennefunktioiden valinta kaikille kulkumuodoille.
+Samalla tehdään oikeiden joukkoliikennefunktioiden valinta kaikille kulkumuodoille. Skriptin
+toimintaa on selostettu tarkemmin [liikennemalliraportin](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2019/helsingin-seudun-tyossakayntialueen-liikenne-ennustejarjestelman-tarjontamallit-6-2019.pdf)
+sivulla 91 (7.5.2 Joukkoliikenteen viivytysfunktiot).
 
 ### Linjatunnus
 
