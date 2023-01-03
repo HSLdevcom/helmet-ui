@@ -10,6 +10,8 @@ Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä
 
 ## Ohjeen muutoshistoria
 
+- 2022-01-03: Lisätty tarkennuksia type-attribuutin koodaukseen ja
+  us2-kertoimen laskentaan. ([HSLdevcom/helmet-ui#156](https://github.com/HSLdevcom/helmet-ui/pull/156))
 - 2022-09-29: Korjattu kolme kuvaa, joista puuttui merkintöjä; lisätty
   muutoshistoria tämän ohjeen yhteyteen
   ([HSLdevcom/helmet-ui#152](https://github.com/HSLdevcom/helmet-ui/pull/152))
