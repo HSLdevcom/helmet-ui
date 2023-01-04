@@ -248,8 +248,8 @@ ul2) type-attribuutin perusteella eli niitä ei tarvitse koodata erikseen. Tiedo
 attribuuteista sijoittelun jälkeen. Kaikille katu- ja tieverkon linkeille ei kuitenkaan ole saatu
 tuotettua taulukko 11:n mukaista linkkityyppiä. Näiden linkkien tyypiksi on koodattu 191-195 (sekä
 291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja
-jotka eivät noudata taulukkoa 11), ja niiden alkuperäiset vdf-, ul1-, ja ul2-attribuutit säilyvät
-sijoittelun aikana.
+jotka eivät noudata taulukkoa 11), ja niiden alkuperäiset ul1- ja ul2-attribuutit säilyvät
+sijoittelun aikana. Niiden vdf-attribuutti päätellään kuten taulukossa 10 kerrotaan.
 
 Muilla kuin autolinkeillä noudatetaan yleisesti periaatetta vdf = 0, ul1 = 0, ul2 = 0, ul3 = 0, ellei näillä ole jotain erikoismerkitystä (kuten ul1 ratikoilla). 
 Sijoitteluskripti muuttaa linkin vdf-attribuutin nollaksi, jos type ei ole taulukko 10 mukaan.
