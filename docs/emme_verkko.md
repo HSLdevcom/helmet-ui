@@ -10,6 +10,8 @@ Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä
 
 ## Ohjeen muutoshistoria
 
+- 2022-01-03: Lisätty tarkennuksia type-attribuutin koodaukseen ja
+  us2-kertoimen laskentaan. ([HSLdevcom/helmet-ui#156](https://github.com/HSLdevcom/helmet-ui/pull/156))
 - 2022-09-29: Korjattu kolme kuvaa, joista puuttui merkintöjä; lisätty
   muutoshistoria tämän ohjeen yhteyteen
   ([HSLdevcom/helmet-ui#152](https://github.com/HSLdevcom/helmet-ui/pull/152))
@@ -241,11 +243,13 @@ Verkolla käytetyt kulkumuodot (modes) ja joukkoliikenteen ajoneuvotyypit (vehic
 
 ### Linkkityypit, väyläluokat ja sallitut kulkutavat
 
-Sijoitteluskripti muuttaa linkien funktio-, nopeus- ja kapasiteettiattribuutit (vdf, ul1, ul2) type-attribuutin perusteella.
-Kaikille katu- ja tieverkon linkeille ei ole saatu tuotettua taulukko 11:n mukaista linkkityyppiä.
-Näiden linkkien tyypiksi on koodattu 191-195
-(sekä 291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja jotka eivät noudata taulukkoa 11),
-ja niiden ul1-, ja ul2-attribuutit säilyvät sijoittelun aikana.
+Sijoitteluskripti ylikirjoittaa linkien funktio-, nopeus- ja kapasiteettiattribuutit (vdf, ul1,
+ul2) type-attribuutin perusteella eli niitä ei tarvitse koodata erikseen. Tiedot löytyvät
+attribuuteista sijoittelun jälkeen. Kaikille katu- ja tieverkon linkeille ei kuitenkaan ole saatu
+tuotettua taulukko 11:n mukaista linkkityyppiä. Näiden linkkien tyypiksi on koodattu 191-195 (sekä
+291-295, 391-395, ... linkeille, joilla on bussikaista tai jotka ovat joukkoliikennekatuja, ja
+jotka eivät noudata taulukkoa 11), ja niiden alkuperäiset ul1- ja ul2-attribuutit säilyvät
+sijoittelun aikana. Niiden vdf-attribuutti päätellään kuten taulukossa 10 kerrotaan.
 
 Muilla kuin autolinkeillä noudatetaan yleisesti periaatetta vdf = 0, ul1 = 0, ul2 = 0, ul3 = 0, ellei näillä ole jotain erikoismerkitystä (kuten ul1 ratikoilla). 
 Sijoitteluskripti muuttaa linkin vdf-attribuutin nollaksi, jos type ei ole taulukko 10 mukaan.
@@ -589,7 +593,9 @@ Nopeuden määräytymisperusteet on selostettu tarkemmin [liikennemalliraportin]
 Junille ja metroille määritetään segmenttikohtaiset matka-ajat linjoja koodattaessa, ja raitio- ja pikaraitiolinjojen nopeudet koodataan linkkiattribuuttiin ul1. 
 
 Bussien nopeuden määrittävä us2-kerroin lasketaan [skriptillä](https://github.com/HSLdevcom/helmet-model-system/blob/4939e0505b8bde26f53116c89c31ff747cf74c45/Scripts/assignment/assignment_period.py#L292).
-Samalla tehdään oikeiden joukkoliikennefunktioiden valinta kaikille kulkumuodoille.
+Samalla tehdään oikeiden joukkoliikennefunktioiden valinta kaikille kulkumuodoille. Skriptin
+toimintaa on selostettu tarkemmin [liikennemalliraportin](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2019/helsingin-seudun-tyossakayntialueen-liikenne-ennustejarjestelman-tarjontamallit-6-2019.pdf)
+sivulla 91 (7.5.2 Joukkoliikenteen viivytysfunktiot).
 
 ### Linjatunnus
 
