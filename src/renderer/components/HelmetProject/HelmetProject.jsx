@@ -126,7 +126,7 @@ const HelmetProject = ({
       first_matrix_id: 100,
       use_fixed_transit_cost: false,
       end_assignment_only: false,
-      iterations: 10,
+      iterations: 15,
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
