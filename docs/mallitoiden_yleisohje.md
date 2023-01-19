@@ -64,10 +64,11 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
     - esim. `C:\Helmet\Scenario_input_data\2030`
     - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
       Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
-5.	Suoritettavien iteraatiokierrosten enimmäismäärä (yleensä 10)
+5.	Suoritettavien iteraatiokierrosten enimmäismäärä (yleensä 15)
     - Voit myös tehdä pelkän loppusijoittelun, jolloin iteraatioita ei ajeta. Pelkän
       loppusijoittelun tekeminen vaatii, että kysyntämatriisit omx-muodossa aiemmasta malliajosta
       löytyvät skenaarion tuloskansiosta.
+    - Kaikkia iteraatiokierroksia ei ajeta, mikäli kysyntä konvergoituu aiemmin
 6.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua 
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`).
 7.  Valinta, poistetaanko sijoittelun strategiatiedostot malliajon jälkeen.
