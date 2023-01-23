@@ -1,5 +1,5 @@
 ---
-sort: 4
+sort: 5
 ---
 
 # Mallin lähtötietotiedostot ja niiden muokkaaminen
@@ -22,7 +22,7 @@ Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansio
 
 * **cco** = autoilun kilometrikustannus
 * **edu** = kunkin ennustealueen oppilaspaikkamäärät peruskoulussa, toisella asteella ja korkeakouluissa
-* **ext** = ulkoinen liikenne eli työsäkäyntialueen tienpäät
+* **ext** = ulkoinen liikenne eli työsäkäyntialueen tienpäät (kasvukerroin verrattuna nykytilaan)
 * **lnd** = kunkin ennustealueen rakennetun maa-alan osuus sekä erillistalojen osuus rakennuskannasta
 * **pop** = kunkin ennustealueen kokonaisväkiluku sekä eri ikäryhmien osuudet
 * **prk** = kunkin ennustealueen työpaikan ja asiointimatkojen pysäköintikustannukset
@@ -65,9 +65,8 @@ Moduuli ajaa myös sisään seuraavat kaikille skenaarioille yhteiset tiedot:
 
 Lähtötietoja voi muokata joko suoraan lähtötietotiedostoihin tai Emme-ohjelmiston (Modeller, Network Editor, Prompt) kautta.
 
-Verkkokuvausperiaatteita on kuvattu tarkemmin raportissa Helsingin seudun liikenteen Emme-verkon kuvaus, joka on saatavilla mallin käyttäjien EXT-Helmet -Teams-ryhmässä. 
+Verkkokuvausperiaatteita on kuvattu tarkemmin [täällä](emme_verkko.md).
 Noudatathan näitä periaatteita verkonkuvauksia koodatessa, jotta varmistutaan tulosten oikeellisuudesta ja aineistojen yhteiskäyttöisyydestä.
-Jos teet merkittäviä muutoksia, esim. lisäät uuden kulkumuodon, sovi tästä erikseen HSL:n yhteyshenkilöiden kanssa.
 
 Lisätietoja mallin käyttämisestä [täällä](mallitoiden_yleisohje.md).
 Taustatietoa verkkokuvausten muodostamisesta ja historiasta löydät raportista [Helsingin seudun työssäkäyntialueen  liikenne-ennustejärjestelmän tarjontamallit 2017](https://hslfi.azureedge.net/globalassets/julkaisuarkisto/2019/helsingin-seudun-tyossakayntialueen-liikenne-ennustejarjestelman-tarjontamallit-6-2019.pdf).

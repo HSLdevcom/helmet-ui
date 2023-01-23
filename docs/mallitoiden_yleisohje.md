@@ -1,8 +1,8 @@
 ---
-sort: 3
+sort: 4
 ---
 
-# Käyttöohje
+# Mallijärjestelmän käyttöohje
 
 On tärkeää, että mallia käytetään ja muokataan yhtenäisillä periaatteilla. 
 Näin saadaan mahdollisimman luotettavia tuloksia, ja mahdollistetaan aineistojen  hyödyntäminen myös muissa projekteissa. 
@@ -11,7 +11,7 @@ Myös työn huolellinen dokumentointi on tärkeää, sillä se auttaa aineistoje
 Mallin käyttämiä lähtötietoja on kuvattu [täällä](mallin_lahtotietotiedostot.md). 
 HSL:n lähtötietoaineistot (mm. maankäytöt ja verkkojen tiedot) saat ladattua zip-pakettina, kun olet täyttänyt aineistojen luovutuksen hakemuslomakkeen.
 Näistä löydät yleistietoa [täältä](HSL_lahtotiedot.md).
-Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Jens West).
+Hakemuslomake löytyy Teams-ryhmästä EXT-Helmet, jonne saat käyttöoikeuden HSL:n Liikennejärjestelmäryhmästä (Johanna Piipponen).
 Kutakin projektia varten tulee hakea uudet aineistot, jotta aineistojen käyttöä voidaan seurata sekä varmistutaan, että lähtötiedot ovat aina ajan tasalla.
 
 Mallin asennusohjeet löydät [täältä](kaytto-ohje.md), ja Emme-pankin perustamisen ohjeet [täältä](sijopankki.md).
@@ -64,10 +64,11 @@ Jokaista ajettavaa HELMET-skenaariota kohden on tehtävä seuraavat määrittely
     - esim. `C:\Helmet\Scenario_input_data\2030`
     - Kansiossa on oltava *yksi* kappale kustakin tiedostotyypista .cco, .edu, .ext, .lnd, .pop, .prk, .tco, .trk sekä .wrk. 
       Tiedostojen nimillä ei ole merkitystä, ja ne voivat poiketa toisistaan (kansiossa voi esim. olla 2023.pop ja 2023_b.wrk).
-5.	Suoritettavien iteraatiokierrosten enimmäismäärä (yleensä 10)
+5.	Suoritettavien iteraatiokierrosten enimmäismäärä (yleensä 15)
     - Voit myös tehdä pelkän loppusijoittelun, jolloin iteraatioita ei ajeta. Pelkän
       loppusijoittelun tekeminen vaatii, että kysyntämatriisit omx-muodossa aiemmasta malliajosta
       löytyvät skenaarion tuloskansiosta.
+    - Kaikkia iteraatiokierroksia ei ajeta, mikäli kysyntä konvergoituu aiemmin
 6.	Valinta, lasketaanko joukkoliikenteen kustannusmatriisi vai käytetäänkö aiemmin laskettua 
    (sijaitsee tämän skenaarion tuloskansiossa `Tulosten tallennuspolku\Skenaario nimi`).
 7.  Valinta, poistetaanko sijoittelun strategiatiedostot malliajon jälkeen.
