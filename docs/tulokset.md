@@ -99,28 +99,28 @@ mutta ne ovat autosijoittelussa taustaliikenteenä.
 
 | Tiedoston nimi                               | Selite | Tarkempi kuvaus |
 |----------------------------------------------|--------|-----------------|
-| accessibility.txt                            | Kysyntämallin logsum-muuttujat sijoittelualueittain, joita voidaan tulkita saavutettavuusmittareiksi | Logsumit ovat kiertomatkatyyppi- ja kulkutapakohtaisia. Kulkutapamalleista saadaan yhdistetyt logsumit kaikille kulkutavoille. |
+| accessibility.txt                            | Kysyntämallin logsum-muuttujat sijoittelualueittain | Logsumit ovat kiertomatkatyyppi- ja kulkutapakohtaisia. Kulkutapamalleista saadaan yhdistetyt logsumit kaikille kulkutavoille. Logsumit voidaan tulkita saavutettavuusmittareiksi. |
 | aggregated_demand.txt aggregated_demand.xlsx | Suuraluetasolle aggregoidut koko vuorokauden kysyntämatriisit |
-| attraction.txt                               | Alueiden kiertomatka-attraktiot, eli kuinka monessa kiertomatkassa kyseinen alue on päämäärä |
+| attraction.txt                               | Kiertomatka-attraktio kiertomatkatyypeittäin ja sijoittelualueittain | Kertoo, kuinka monessa kiertomatkassa kyseinen alue on päämäärä |
 | car_accessibility.txt                        | Kysyntämallin logsum-muuttuja-aggregointi autokulkutavalla sijoittelualueittain | :exclamation: Uusi versiossa 4.0.5 |
-| car_density.txt                              | Sijoittelualueiden autotiheysluvut (auto/asukas) |
-| car_density_areas.txt                        | Suuralueiden autotiheysluvut (auto/asukas) |
-| car_density_municipalities.txt               | Kuntien autotiheysluvut (auto/asukas) |
-| car_use.txt                                  | Sijoittelualueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_use_areas.txt                            | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_use_municipalities.txt                   | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
-| impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
+| car_density.txt                              | Autotiheys (auto/asukas) sijoittelualueittain |
+| car_density_areas.txt                        | Autotiheys (auto/asukas) suuralueittain |
+| car_density_municipalities.txt               | Autotiheys (auto/asukas) kunnittain |
+| car_use.txt                                  | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä sijoittelalueittain |
+| car_use_areas.txt                            | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä suuralueittain |
+| car_use_municipalities.txt                   | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä kunnittain |
+| generation.txt                               | Vuorokauden kiertomatkatuotos kiertomatkatyypeittäin sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
+| impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa sijoittelualueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
 | noise_areas.txt                              | Suuralueiden melualueiden pinta-alat ja väestömäärät | :exclamation: Uusi versiossa 4.0.4 |
-| origins_demand.txt                           | Sijoittelualueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain |
-| origins_demand_areas.txt                     | Suuralueiden koko vuorokauden kiertomatkatuotokset kulkutavoittain |
+| origins_demand.txt                           | Vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
+| origins_demand_areas.txt                     | Vuorokauden kiertomatkatuotokset kulkutavoittain ja suuralueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
-| savu.txt                                     | Sijoittelualueiden SAVU-vyöhykejäsenyydet | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
-| sustainable_accessibility.txt                | Kysyntämallin logsum-muuttujat ilman autokulkutapaa sijoittelualueittain | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
+| savu.txt                                     | SAVU-vyöhyke, jolle sijoittelualue kuuluu | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
+| sustainable_accessibility.txt                | Kysyntämallin logsum-muuttujat ilman autokulkutapaa sijoittelualueittain ja kiertomatkatyypeittäin | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 | tour_combinations.txt<br />tour_combinations.xlsx | Koko vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt |
-| transit_kms.txt                              | Koko vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuovoille |
+| transit_kms.txt                              | Vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuvoille |
 | trip_lengths.txt                             | Koko vuorokauden kiertomatkatuotokset tyyppeittäin, kulkutavoittain ja etäisyysluokittain | Etäisyysluokka perustuu henkilöauton ajoetäisyyteen kilometreissa. |
 | trips_areas.txt                              | Suuralueiden koko vuorokauden (meno+paluu)matkatuotokset kulkutavoittain | :exclamation: Uusi versiossa 4.0.5 |
 | vehicle_kms_areas.txt                        | Sijoitteluluokkien (sekä joukkoliikenteen liityntäkävely erikseen) ja bussien etäisyyssuoritteet (km) koko vuorokaudelle suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
