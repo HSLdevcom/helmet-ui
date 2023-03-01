@@ -107,8 +107,8 @@ mutta ne ovat autosijoittelussa taustaliikenteenä.
 | car_density_areas.txt                        | Suuralueiden autotiheysluvut (auto/asukas) |
 | car_density_municipalities.txt               | Kuntien autotiheysluvut (auto/asukas) |
 | car_use.txt                                  | Sijoittelualueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_density_areas.txt                        | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
-| car_density_municipalities.txt               | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
+| car_use_areas.txt                            | Suuralueiden henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
+| car_use_municipalities.txt                   | Kuntien henkilöauton pääasialliset käyttäjät (HAP) osuuksina väestöstä |
 | generation.txt                               | Koko vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin ja sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa alueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
