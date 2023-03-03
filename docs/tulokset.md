@@ -119,7 +119,7 @@ mutta ne ovat autosijoittelussa taustaliikenteenä.
 | origins_demand_areas.txt                     | Vuorokauden kiertomatkatuotokset kulkutavoittain ja suuralueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
-| result_summary.txt                           | Yhteenveto mallialueen tuloksista: työpaikkojen kasautuminen, työvoimasaavutettavuus, sijoiteltu kysyntä (meno-paluumatkoja), ajoneuvokilometrit, saavutettavuus, kulkutapajakauma  | Kävely ei sisälly kysyntään, koska sitä ei sijoitella<br />:exclamation: Uusi versiossa 4.1.0 |
+| result_summary.txt                           | Yhteenveto mallialueen tuloksista: työpaikkojen kasautuminen, työvoimasaavutettavuus, sijoiteltu kysyntä (meno-paluumatkoja), etäisyyssuoritteet, saavutettavuus, kulkutapajakauma  | Kävely ei sisälly kysyntään, koska sitä ei sijoitella<br />:exclamation: Uusi versiossa 4.1.0 |
 | savu.txt                                     | SAVU-vyöhyke, jolle sijoittelualue kuuluu | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 | sustainable_accessibility.txt                | Kysyntämallin logsum-muuttujat ilman autokulkutapaa sijoittelualueittain ja kiertomatkatyypeittäin | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 | tour_combinations.txt<br />tour_combinations.xlsx | Vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt |
