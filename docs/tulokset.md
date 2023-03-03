@@ -109,24 +109,29 @@ mutta ne ovat autosijoittelussa taustaliikenteenä.
 | car_use.txt                                  | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä sijoittelalueittain |
 | car_use_areas.txt                            | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä suuralueittain |
 | car_use_municipalities.txt                   | Henkilöauton pääasiallisten käyttäjien (HAP) osuus väestöstä kunnittain |
+| demand_convergence.txt                       | Kysyntämallin konvergoituminen car_work-kysyntämatriisista laskettuna | :exclamation: Uusi versiossa 4.1.0 |
 | generation.txt                               | Vuorokauden kiertomatkatuotos kiertomatkatyypeittäin sijoittelualueittain | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin tours.txt |
 | impedance_ratio.txt                          | Joukkoliikenteen ja henkilöautoliikenteen matka-aika- ja matkakustannussuhteet aamuruuhkassa sijoittelualueittain | Eri matkakohteiden matka-ajat ja -kustannukset on painotettu työmatkojen määrillä kulkutavoittain. Lukuja käytetään autonomistusmallin muuttujina. |
+| link_lengths.txt                             | Väylätyyppien yhteenlaskettu pituus (km) verkolla | :exclamation: Uusi versiossa 4.1.0 |
 | mode_share.txt                               | Kokonaiskulkutapajakaumat kiertomatkatyyppeittäin |
 | noise_areas.txt                              | Suuralueiden melualueiden pinta-alat ja väestömäärät | :exclamation: Uusi versiossa 4.0.4 |
 | origins_demand.txt                           | Vuorokauden kiertomatkatuotokset kulkutavoittain ja sijoittelualueittain |
 | origins_demand_areas.txt                     | Vuorokauden kiertomatkatuotokset kulkutavoittain ja suuralueittain |
 | origins_shares.txt                           | Kokonaiskulkutapajakaumat sijoittelualueittain |
 | own_zone_demand.txt                          | Sijoittelualueiden sisäisten kiertomatkojen (joiden alkupiste ja loppupiste ovat samalla sijoittelualueella) määrät suuralueittain |
+| result_summary.txt                           | Yhteenveto mallialueen tuloksista: työpaikkojen kasautuminen, työvoimasaavutettavuus, sijoiteltu kysyntä (meno-paluumatkoja), ajoneuvokilometrit, saavutettavuus, kulkutapajakauma  | Kävely ei sisälly kysyntään, koska sitä ei sijoitella<br />:exclamation: Uusi versiossa 4.1.0 |
 | savu.txt                                     | SAVU-vyöhyke, jolle sijoittelualue kuuluu | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 | sustainable_accessibility.txt                | Kysyntämallin logsum-muuttujat ilman autokulkutapaa sijoittelualueittain ja kiertomatkatyypeittäin | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
 | tour_combinations.txt<br />tour_combinations.xlsx | Vuorokauden kiertomatkayhdistelmien tuotosluvut ikäryhmittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikaisemmin generation.txt |
 | transit_kms.txt                              | Vuorokauden etäisyys- ja ajo-aikasuoritteet (km, min) joukkoliikenteen ajoneuvoille |
+| transit_stations.txt                         | Juna- ja metroasemien lukumäärä | :exclamation: Uusi versiossa 4.0.4 |
 | trip_lengths.txt                             | Vuorokauden kiertomatkatuotokset kiertomatkatyyppeittäin, kulkutavoittain ja etäisyysluokittain | Etäisyysluokka perustuu henkilöauton ajoetäisyyteen kilometreissa. |
 | trips_areas.txt                              | Vuorokauden (meno+paluu)matkatuotokset kulkutavoittain ja suuralueittain | :exclamation: Uusi versiossa 4.0.5 |
 | vehicle_kms_areas.txt                        | Sijoitteluluokkien (sekä joukkoliikenteen liityntäkävely erikseen) ja bussien etäisyyssuoritteet (km) koko vuorokaudelle suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
 | vehicle_kms_vdfs.txt                         | Sijoitteluluokkien (sekä joukkoliikenteen liityntäkävely erikseen) ja bussien etäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin | :exclamation: Nimi muutettu versiossa 4.0.4, aikasemmin vehicle_kms.txt |
 | vehicle_kms_vdfs_areas.txt                   | Kokonaisetäisyyssuoritteet (km) koko vuorokaudelle väylätyypeittäin ja suuralueittain | :exclamation: Uusi versiossa 4.0.4 |
-| workforce_accessibility.txt                  | Työ-koti-mallin logsum-muuttuja sijoittelualueittain muunnettu henkilömääräksi | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5 |
+| workplace_accessibility.txt                  | Työpaikkojen kasautuminen (hw, koti-työ-mallin logsum-muuttuja muunnettu henkilömääräksi) ja työvoimasaavutettavuus (wh, työ-koti-mallin logsum-muuttuja muunnettu henkilömääräksi) sijoittelualueittain | :exclamation: Uusi versiossa 4.0.4, määrittely muutettu versiossa 4.0.5, nimi muutettu versiossa 4.1.0, aikaisemmin workforce_accessibility.txt |
+| workplace_accessibility_areas.txt            | Työpaikkojen kasautuminen (hw, koti-työ-mallin logsum-muuttuja muunnettu henkilömääräksi) ja työvoimasaavutettavuus (wh, työ-koti-mallin logsum-muuttuja muunnettu henkilömääräksi) suuralueittain | :exclamation: Uusi versiossa 4.1.0 |
 
 ## Tuloskansion matriisitiedostojen kuvaukset
 
