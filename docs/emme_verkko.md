@@ -300,7 +300,7 @@ jos moottoritien rinnalla tai läheisyydessä kulkee kävely- ja pyörätie.
 
 *Taulukko 11. Sijoittelufunktioiden jako väylätyyppeihin*
 
-| | Väyläluokka | Tarkennus | Sijoittelu- funktio (suluissa bussi- kaista- linkkien funktio) | Nopeus- rajoitus | Vapaa nopeus (km/h, ul2) | Kapasi- teetti (S, ul1) | Linkkityyppi: ei bussi-kaistaa, bussikaista ruuhka-aikana, bussikaista koko päivän, bussikaista vain aamuruuhkassa, bussikaista vain iltaruuhkassa, bussiväylä |
+| Väyläluokan tunnus | Väyläluokka | Tarkennus | Sijoittelu- funktio (suluissa bussi- kaista- linkkien funktio) | Nopeus- rajoitus | Vapaa nopeus (km/h, ul2) | Kapasi- teetti (S, ul1) | Linkkityyppi: ei bussi-kaistaa, bussikaista ruuhka-aikana, bussikaista koko päivän, bussikaista vain aamuruuhkassa, bussikaista vain iltaruuhkassa, bussiväylä |
 |----|--------------------------|----------------------------------------------|------------|-----|---------|----------|-------------------------|
 | 21 | Moottoritiet             | moottoritie                                  | fd1 (fd6)  | 120 | 113     | 2100 *   | 121 221 321 421 521 621 |
 | 22 |                          | moottoritie, kaistoja=>3                     |            | 120 | 113     | 1900 **  | 122 222 322 422 522 622 |
