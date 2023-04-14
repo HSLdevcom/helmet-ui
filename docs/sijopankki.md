@@ -38,7 +38,7 @@ Alla on lueteltu HELMET-sijoittelupankin (lisenssikoko vähintään 9) dimensiot
 | Transit lines or routes                                                   | 2 000     |                                                     |
 | Transit line segments                                                     | 200 000   |                                                     |
 | Turn table entries                                                        | 10 000    |                                                     |
-| Full matrices                                                             | 100       | 300+ (jos matriisit Emmessä talteen)                |
+| Full matrices                                                             | 100       | 400+ (jos matriisit Emmessä talteen)                |
 | Origin matrices                                                           | 10        |                                                     |
 | Destination matrices                                                      | 10        |                                                     |
 | Words for extra attributes                                                | 9 700 000 | 3 100 000 (jos ajanjaksot erillisiin skenaarioihin) |
