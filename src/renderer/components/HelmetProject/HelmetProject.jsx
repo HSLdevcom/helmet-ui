@@ -31,6 +31,8 @@ const HelmetProject = ({
   const [statusState, setStatusState] = useState(null);
   const [statusLogfilePath, setStatusLogfilePath] = useState(null);
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState([]); // [{name: .., logfile: ..}]
+  const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
+  const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
 
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
@@ -287,6 +289,7 @@ const HelmetProject = ({
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
     if (args.status) {
+      console.log(args);
       setStatusIterationsTotal(args.status['total']);
       setStatusIterationsCurrent(args.status['current']);
       setStatusIterationsCompleted(args.status['completed']);
@@ -299,6 +302,11 @@ const HelmetProject = ({
           name: args.status.name,
           logfile: args.status.log
         }))
+        setStatusRunFinishTime(args.time);
+      }
+
+      if (args.status.state === 'starting') {
+        setStatusRunStartTime(args.time);
       }
     }
   };
@@ -349,6 +357,8 @@ const HelmetProject = ({
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
+          statusRunStartTime={statusRunStartTime}
+          statusRunFinishTime={statusRunFinishTime}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}

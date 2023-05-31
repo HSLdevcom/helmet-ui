@@ -1,24 +1,29 @@
 import React from 'react';
+import { Scatter } from 'react-chartjs-2';
+import dayjs from 'dayjs';
+var duration = require('dayjs/plugin/duration');
+var relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
 
-const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles}) => {
+const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime}) => {
+
+  const scatterPlotData = {
+    datasets: [{
+      data: {
+        x: Array.from({ length: statusIterationsCompleted }),
+
+      }
+    }
+    ]
+  }
 
   return (
     <div className="Status">
       {isScenarioRunning ?
         statusIterationsTotal ?
           <div>
-            <div className="Status__readiness"
-                 style={{
-                   background: (
-                     `linear-gradient(`
-                     + `to right, `
-                     + `#99cfff 0%, `
-                     + `#99cfff ${Math.round(statusIterationsCompleted / statusIterationsTotal * 100)}%, `
-                     + `transparent ${Math.round(statusIterationsCompleted / statusIterationsTotal * 100)}%, `
-                     + `transparent 100%)`
-                   )
-                 }}
-            >
+            <div className="Status__readiness">
               Valmiina
               &nbsp;
               <strong>{statusIterationsCompleted}</strong>
@@ -45,6 +50,8 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
           >
             lokit
           </a>
+          &nbsp;
+          Ajoaika: { dayjs.duration(dayjs(statusRunFinishTime).diff(dayjs(statusRunStartTime))).format('HH[h]:mm[m]:ss[s]') }
         </p>
       })}
     </div>
