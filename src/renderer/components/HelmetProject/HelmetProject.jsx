@@ -33,6 +33,7 @@ const HelmetProject = ({
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState([]); // [{name: .., logfile: ..}]
   const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
   const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
+  const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
@@ -285,11 +286,15 @@ const HelmetProject = ({
       });
   };
 
+  const parseDemandConvergenceLogMessage = (message) => {
+    const stringMsgArray = message.split(' ');
+    return parseFloat(stringMsgArray[stringMsgArray.length - 1]);
+  };
+
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
     if (args.status) {
-      console.log(args);
       setStatusIterationsTotal(args.status['total']);
       setStatusIterationsCurrent(args.status['current']);
       setStatusIterationsCompleted(args.status['completed']);
@@ -307,6 +312,14 @@ const HelmetProject = ({
 
       if (args.status.state === 'starting') {
         setStatusRunStartTime(args.time);
+        setStatusRunFinishTime(args.time); 
+        setDemandConvergenceArray([]);
+      }
+    }
+    if(args.level === 'INFO') {
+      if(args.message.includes('Demand model convergence in')) {
+        const currentDemandConvergenceValue = parseDemandConvergenceLogMessage(args.message);
+        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, { iteration: statusIterationsCurrent, value: currentDemandConvergenceValue} ]);
       }
     }
   };
@@ -359,6 +372,7 @@ const HelmetProject = ({
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
           statusRunStartTime={statusRunStartTime}
           statusRunFinishTime={statusRunFinishTime}
+          demandConvergenceArray={demandConvergenceArray}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}
