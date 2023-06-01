@@ -1,12 +1,12 @@
 import React from 'react';
-import { Chart as ChartJS, LinearScale, LineElement, PointElement, CategoryScale } from "chart.js";
+import { Chart as ChartJS, LinearScale, LineElement, PointElement, CategoryScale, Tooltip } from "chart.js";
 import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
 var duration = require('dayjs/plugin/duration');
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
-ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement);
+ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip);
 
 
 const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, demandConvergenceArray}) => {
@@ -25,26 +25,29 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
         legend: {
           display: true
         }
-      }
+      },
+      tooltips: {
+        callbacks: {
+            label: (tooltipItem, data) => {
+              return "testi"
+            }
+        }
+    }
     }
   }
 
   return (
     <div className="Status">
-      {isScenarioRunning ?
+      {
         statusIterationsTotal ?
           <div>
             <div className="Status__readiness">
-              Valmiina
-              &nbsp;
-              <Line data={graphData} />
+              <Line className="runtime-chart" data={graphData} />
               &nbsp;
             </div>
           </div>
           :
-          <p>Setting up python-shell . . .</p>
-        :
-        ""
+          ""
       }
       {statusReadyScenariosLogfiles.map((readyScenario) => {
         return (
@@ -61,7 +64,6 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             &nbsp;
             Ajoaika: { dayjs.duration(dayjs(statusRunFinishTime).diff(dayjs(statusRunStartTime))).format('HH[h]:mm[m]:ss[s]') }
           </p>
-          <Line data={graphData} />
         </div>)
       })}
     </div>

@@ -288,7 +288,7 @@ const HelmetProject = ({
 
   const parseDemandConvergenceLogMessage = (message) => {
     const stringMsgArray = message.split(' ');
-    return parseFloat(stringMsgArray[stringMsgArray.length - 1]);
+    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
   };
 
   // Electron IPC event listeners
@@ -318,8 +318,8 @@ const HelmetProject = ({
     }
     if(args.level === 'INFO') {
       if(args.message.includes('Demand model convergence in')) {
-        const currentDemandConvergenceValue = parseDemandConvergenceLogMessage(args.message);
-        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, { iteration: statusIterationsCurrent, value: currentDemandConvergenceValue} ]);
+        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(args.message);
+        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, currentDemandConvergenceValueAndIteration ]);
       }
     }
   };
