@@ -302,7 +302,7 @@ const HelmetProject = ({
       setStatusState(args.status['state']);
       setStatusLogfilePath(args.status['log']);
 
-      if (args.status.state === 'finished') {
+      if (args.status.state === SCENARIO_STATUS_STATE.FINISHED) {
         setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
           name: args.status.name,
           logfile: args.status.log
@@ -310,10 +310,11 @@ const HelmetProject = ({
         setStatusRunFinishTime(args.time);
       }
 
-      if (args.status.state === 'starting') {
+      if (args.status.state === SCENARIO_STATUS_STATE.STARTING) {
         setStatusRunStartTime(args.time);
         setStatusRunFinishTime(args.time); 
         setDemandConvergenceArray([]);
+        setStatusIterationsTotal(0);
       }
     }
     if(args.level === 'INFO') {
@@ -372,6 +373,7 @@ const HelmetProject = ({
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
           statusRunStartTime={statusRunStartTime}
           statusRunFinishTime={statusRunFinishTime}
+          statusState={statusState}
           demandConvergenceArray={demandConvergenceArray}
         />
         <CostBenefitAnalysis

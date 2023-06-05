@@ -9,13 +9,13 @@ dayjs.extend(relativeTime);
 ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip);
 
 
-const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, demandConvergenceArray}) => {
+const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray}) => {
 
   const graphData = {
     labels: demandConvergenceArray.map(listing => listing.iteration),
     datasets: [{
-      label: 'Konvergenssi',
-      data: demandConvergenceArray.map(listing => listing.value),
+      label: 'Rel_Gap (%)',
+      data: demandConvergenceArray.map(listing => (listing.value * 100).toFixed(4)),
       backgroundColor: '#007AC9',
       borderColor: '#007AC9'
     }
@@ -25,29 +25,27 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
         legend: {
           display: true
         }
-      },
-      tooltips: {
-        callbacks: {
-            label: (tooltipItem, data) => {
-              return "testi"
-            }
-        }
-    }
+      }
     }
   }
 
   return (
     <div className="Status">
       {
-        statusIterationsTotal ?
+        (statusState === SCENARIO_STATUS_STATE.RUNNING || statusState === SCENARIO_STATUS_STATE.FINISHED) &&
           <div>
             <div className="Status__readiness">
               <Line className="runtime-chart" data={graphData} />
               &nbsp;
             </div>
           </div>
-          :
-          ""
+      }
+      { (statusState === SCENARIO_STATUS_STATE.PREPARING || statusState === SCENARIO_STATUS_STATE.STARTING) &&
+          (
+            <div className="Status__readiness">
+              <p> Starting python shell...</p>
+            </div>
+          )
       }
       {statusReadyScenariosLogfiles.map((readyScenario) => {
         return (
