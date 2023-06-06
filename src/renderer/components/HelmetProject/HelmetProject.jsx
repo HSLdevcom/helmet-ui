@@ -127,6 +127,14 @@ const HelmetProject = ({
       use_fixed_transit_cost: false,
       end_assignment_only: false,
       iterations: 15,
+      overrideProjectSettingsForScenario: false,
+      overriddenProjectSettings: {
+        emmePythonPath: null,
+        helmetScriptsPath: null,
+        projectPath: null,
+        basedataPath: null,
+        resultsPath: null,
+      },
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
@@ -376,6 +384,13 @@ const HelmetProject = ({
                 updateScenario={_updateScenario}
                 closeScenario={() => setOpenScenarioID(null)}
                 existingOtherNames={scenarios.filter(s => s.id !== openScenarioID).map(s => s.name)}
+                inheritedGlobalProjectSettings={{
+                  emmePythonPath,
+                  helmetScriptsPath,
+                  projectPath,
+                  basedataPath,
+                  resultsPath
+                }}
               />
               :
               ""

@@ -3,7 +3,7 @@ import path from 'path';
 import { isNull } from 'util';
 const {dialog} = require('@electron/remote');
 
-const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames}) => {
+const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}) => {
 
   const [nameError, setNameError] = useState("");
 
@@ -225,6 +225,45 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
         <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}
               className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
+
+      {/* Choice whether to delete strategy files at the end of a model run */}
+      <div className="Scenario__section">
+      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
+          <input id="open-project-override-settings"
+                 type="checkbox"
+                 checked={scenario.overrideProjectSettingsForScenario}
+                 onChange={(e) => {
+                   updateScenario({...scenario, overrideProjectSettingsForScenario: e.target.checked});
+                 }}
+          />
+        <span>Yliaja projektiasetuksia</span>
+      </label>
+      </div>
+      {
+        scenario.overrideProjectSettingsForScenario && 
+          <div className="Scenario__section">
+          <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={'Emme python path'}>
+              {scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath}
+            </label>
+              <input id="override-emme-python-path"
+                    type="text"
+                    placeholder={inheritedGlobalProjectSettings.helmetScriptsPath}
+                    onClick={()=>{
+                      dialog.showOpenDialog({
+                        defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
+                        properties: ['openDirectory']
+                      }).then((e)=>{
+                        if (!e.canceled) {
+                          updateScenario({...scenario, overriddenProjectSettings: {...overriddenProjectSettings, emmePythonPath: e.filePaths[0]} });
+                        }
+                      })
+                    }}
+              />
+            <span>Helmet-model-system</span>
+          </label>
+          </div>
+      }
       </div>
     </div>
   )
