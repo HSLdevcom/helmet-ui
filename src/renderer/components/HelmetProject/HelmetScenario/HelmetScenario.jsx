@@ -242,13 +242,15 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
       {
         scenario.overrideProjectSettingsForScenario && 
           <div className="Scenario__section">
-          <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={'Emme python path'}>
+          <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+          <span>EMME Python path</span>
+          <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="hidden-input-helmet-scripts-path" title={'Emme python path'}>
               {scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath}
             </label>
               <input id="override-emme-python-path"
                     type="text"
-                    placeholder={inheritedGlobalProjectSettings.helmetScriptsPath}
+                    hidden={true}
+                    placeholder={inheritedGlobalProjectSettings.emmePythonPath}
                     onClick={()=>{
                       dialog.showOpenDialog({
                         defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
@@ -260,7 +262,6 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                       })
                     }}
               />
-            <span>Helmet-model-system</span>
           </label>
           </div>
       }

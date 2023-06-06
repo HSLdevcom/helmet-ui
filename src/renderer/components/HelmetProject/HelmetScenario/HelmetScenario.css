@@ -138,3 +138,15 @@ span.Scenario__inline {
 .Scenario__radio-input {
     margin-right: 2em;
 }
+
+#override-emme-python-path {
+    visibility: hidden;
+}
+
+.override-setting {
+    margin-left: 5rem;
+}
+
+.override-file-select-input {
+    width: 95%;
+}
