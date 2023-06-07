@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import path from 'path';
-import { isNull } from 'util';
 const {dialog} = require('@electron/remote');
 
 const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}) => {
@@ -241,28 +240,131 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
       </div>
       {
         scenario.overrideProjectSettingsForScenario && 
-          <div className="Scenario__section">
-          <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-          <span>EMME Python path</span>
-          <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="hidden-input-helmet-scripts-path" title={'Emme python path'}>
-              {scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath}
-            </label>
-              <input id="override-emme-python-path"
-                    type="text"
-                    hidden={true}
-                    placeholder={inheritedGlobalProjectSettings.emmePythonPath}
-                    onClick={()=>{
-                      dialog.showOpenDialog({
-                        defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
-                        properties: ['openDirectory']
-                      }).then((e)=>{
-                        if (!e.canceled) {
-                          updateScenario({...scenario, overriddenProjectSettings: {...overriddenProjectSettings, emmePythonPath: e.filePaths[0]} });
-                        }
-                      })
-                    }}
-              />
-          </label>
+          <div>
+            <div className="Scenario__section">
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+                <span>EMME Python polku</span>
+                <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="override-emme-python-path" title={'Emme python path'}>
+                  {scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath}
+                </label>
+                <input id="override-emme-python-path"
+                        className="override-input"
+                        type="text"
+                        hidden={true}
+                        placeholder={inheritedGlobalProjectSettings.emmePythonPath}
+                        onClick={()=>{
+                          dialog.showOpenDialog({
+                            defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
+                            filters: [
+                              { name: 'Executable', extensions: ['exe'] },
+                              { name: 'All Files', extensions: ['*'] }
+                            ],
+                            properties: ['openFile']
+                          }).then((e)=>{
+                            if (!e.canceled) {
+                              updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, emmePythonPath: e.filePaths[0]} });
+                            }
+                          })
+                        }}
+                />
+              </label>
+            </div>
+            <div className="Scenario__section">
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+                <span>Helmet-model-system</span>
+                <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="override-helmet-scripts-path" title={'Helmet-model-system'}>
+                  {scenario.overriddenProjectSettings.helmetScriptsPath ? scenario.overriddenProjectSettings.helmetScriptsPath : inheritedGlobalProjectSettings.helmetScriptsPath}
+                </label>
+                <input id="override-helmet-scripts-path"
+                        className="override-input"
+                        type="text"
+                        hidden={true}
+                        placeholder={inheritedGlobalProjectSettings.helmetScriptsPath}
+                        onClick={()=>{
+                          dialog.showOpenDialog({
+                            defaultPath: scenario.overriddenProjectSettings.helmetScriptsPath ? scenario.overriddenProjectSettings.helmetScriptsPath : inheritedGlobalProjectSettings.helmetScriptsPath,
+                            properties: ['openDirectory']
+                          }).then((e)=>{
+                            if (!e.canceled) {
+                              updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, helmetScriptsPath: e.filePaths[0]} });
+                            }
+                          })
+                        }}
+                />
+              </label>
+            </div>
+            <div className="Scenario__section">
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+                <span>Projektikansion polku</span>
+                <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="override-project-folder-path" title={'Project path'}>
+                  {scenario.overriddenProjectSettings.projectPath ? scenario.overriddenProjectSettings.projectPath : inheritedGlobalProjectSettings.projectPath}
+                </label>
+                <input id="override-project-folder-path"
+                        className="override-input"
+                        type="text"
+                        hidden={true}
+                        placeholder={inheritedGlobalProjectSettings.projectPath}
+                        onClick={()=>{
+                          dialog.showOpenDialog({
+                            defaultPath: scenario.overriddenProjectSettings.projectPath ? scenario.overriddenProjectSettings.projectPath : inheritedGlobalProjectSettings.projectPath,
+                            properties: ['openDirectory']
+                          }).then((e)=>{
+                            if (!e.canceled) {
+                              updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, projectPath: e.filePaths[0]} });
+                            }
+                          })
+                        }}
+                />
+              </label>
+            </div>
+            <div className="Scenario__section">
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+                <span>Lähtödatakansion polku</span>
+                <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="override-base-data-path" title={'Base data path'}>
+                  {scenario.overriddenProjectSettings.basedataPath ? scenario.overriddenProjectSettings.basedataPath : inheritedGlobalProjectSettings.basedataPath}
+                </label>
+                <input id="override-base-data-path"
+                        className="override-input"
+                        type="text"
+                        hidden={true}
+                        placeholder={inheritedGlobalProjectSettings.basedataPath}
+                        onClick={()=>{
+                          dialog.showOpenDialog({
+                            defaultPath: scenario.overriddenProjectSettings.basedataPath ? scenario.overriddenProjectSettings.basedataPath : inheritedGlobalProjectSettings.basedataPath,
+                            properties: ['openDirectory']
+                          }).then((e)=>{
+                            if (!e.canceled) {
+                              updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, basedataPath: e.filePaths[0]} });
+                            }
+                          })
+                        }}
+                />
+              </label>
+            </div>
+            <div className="Scenario__section">
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
+                <span>Tulosten tallennuspolku</span>
+                <label className="Settings__pseudo-file-select override-file-select-input" htmlFor="override-results-folder-path" title={'Results path'}>
+                  {scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath}
+                </label>
+                <input id="override-results-folder-path"
+                        className="override-input"
+                        type="text"
+                        hidden={true}
+                        placeholder={scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath}
+                        onClick={()=>{
+                          dialog.showOpenDialog({
+                            defaultPath: scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath,
+                            properties: ['openDirectory']
+                          }).then((e)=>{
+                            if (!e.canceled) {
+                              updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, resultsPath: e.filePaths[0]} });
+                            }
+                          })
+                        }}
+                />
+              </label>
+            </div>
           </div>
       }
       </div>

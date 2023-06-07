@@ -139,7 +139,7 @@ span.Scenario__inline {
     margin-right: 2em;
 }
 
-#override-emme-python-path {
+.override-input {
     visibility: hidden;
 }
 
@@ -148,5 +148,5 @@ span.Scenario__inline {
 }
 
 .override-file-select-input {
-    width: 95%;
+    width: 500px;
 }

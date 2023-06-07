@@ -232,6 +232,18 @@ const HelmetProject = ({
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
         // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system)
+
+        if (s.overrideProjectSettingsForScenario) { //If settings are overrided then check for them in the scenario object. Reverts to default settings if the override is not set
+          return {
+            ...s,
+            emme_python_path: s.overriddenProjectSettings.emmePythonPath ? s.overriddenProjectSettings.emmePythonPath : emmePythonPath,
+            helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath ? s.overriddenProjectSettings.helmetScriptsPath : helmetScriptsPath,
+            base_data_folder_path: s.overriddenProjectSettings.basedataPath ? s.overriddenProjectSettings.basedataPath : basedataPath,
+            results_data_folder_path: s.overriddenProjectSettings.resultsPath ? s.overriddenProjectSettings.resultsPath : resultsPath,
+            log_level: 'DEBUG',
+          }
+        }
+
         return {
           ...s,
           emme_python_path: emmePythonPath,
