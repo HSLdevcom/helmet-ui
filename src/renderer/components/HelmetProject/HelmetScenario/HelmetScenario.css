@@ -150,3 +150,21 @@ span.Scenario__inline {
 .override-file-select-input {
     width: 500px;
 }
+
+.override-is-default {
+    background-color: #767373;
+}
+
+.inline-element {
+    display: inline !important;
+}
+
+.override-reset-button {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+}
+
+.override-reset-icon {
+    margin-bottom: -10px;
+}

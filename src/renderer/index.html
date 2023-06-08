@@ -11,12 +11,12 @@
     <!-- Babel (standalone ver.) transpiler -->
     <script src="../../node_modules/babel-standalone/babel.min.js"></script>
     <!-- React components -->
+    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetProject.css">
     <script type="text/babel" src="components/App.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/App.css">
     <script type="text/babel" src="components/Settings/Settings.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/Settings/Settings.css">
     <script type="text/babel" src="components/HelmetProject/HelmetProject.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetProject.css">
     <script type="text/babel" src="components/HelmetProject/HelmetScenario/HelmetScenario.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetScenario/HelmetScenario.css">
     <script type="text/babel" src="components/HelmetProject/Runtime/Runtime.jsx"></script>
@@ -34,6 +34,7 @@
         window.useMockAssignment = function() {aliasIpcRenderer.send('message-from-ui-to-disable-emme')};
         window.useEmmeAssignment = function () {aliasIpcRenderer.send('message-from-ui-to-enable-emme')};
     </script>
+    <script type="text/babel" src="./icons/ResetIcon.jsx"></script>
 </head>
 <body>
 
