@@ -163,8 +163,13 @@ span.Scenario__inline {
     width: fit-content;
     height: fit-content;
     border: none;
+    margin-left: 30px;
 }
 
 .override-reset-icon {
-    margin-bottom: -10px;
+    margin-bottom: -15px;
+}
+
+.override-setting-toggle {
+    margin-bottom: 20px;
 }
