@@ -113,8 +113,7 @@ hr {
 }
 
 .header-documentation-link {
-    margin-left: auto;
-    margin-right: 15%;
+    margin-left: 2rem;
 }
 
 .header-documentation-link:hover {
