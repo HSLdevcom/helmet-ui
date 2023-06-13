@@ -225,23 +225,9 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
         <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}
               className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
-
-      {/* Choice whether to delete strategy files at the end of a model run */}
-      <div className="Scenario__section">
-      <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
-          <input id="open-project-override-settings"
-                 type="checkbox"
-                 checked={scenario.overrideProjectSettingsForScenario}
-                 onChange={(e) => {
-                   updateScenario({...scenario, overrideProjectSettingsForScenario: e.target.checked});
-                 }}
-          />
-        <span className="override-setting-toggle">Yliaja projektiasetuksia</span>
-      </label>
-      </div>
-      {
-        scenario.overrideProjectSettingsForScenario && 
+      <hr class="override-setting-divider"/>
           <div>
+            <h4>Skenaariokohtaiset yliajot</h4>
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
                 <span className="inline-element">EMME Python polku</span>
@@ -407,7 +393,6 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
               </label>
             </div>
           </div>
-      }
       </div>
     </div>
   )

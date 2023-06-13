@@ -152,7 +152,8 @@ span.Scenario__inline {
 }
 
 .override-is-default {
-    background-color: #767373;
+    font-style: italic;
+    color: gray;
 }
 
 .inline-element {
@@ -172,4 +173,8 @@ span.Scenario__inline {
 
 .override-setting-toggle {
     margin-bottom: 20px;
+}
+
+.override-setting-divider {
+    margin-top: 20px;
 }
