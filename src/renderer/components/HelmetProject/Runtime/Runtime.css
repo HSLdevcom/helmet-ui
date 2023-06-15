@@ -83,6 +83,7 @@
 .Runtime__scenario-delete {
     display: inline-block;
     vertical-align: top;
+    margin-right: 31px;
     width: 24px;
     height: 24px;
     background-image: url('../../trash.png');
@@ -90,7 +91,6 @@
 }
 
 .Runtime__scenario-clone {
-    margin-left: 15px;
     margin-bottom: -5px;
     display: inline-block;
     vertical-align: top;
