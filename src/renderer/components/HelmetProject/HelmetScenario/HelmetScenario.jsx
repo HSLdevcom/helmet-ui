@@ -230,7 +230,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             <h4>Skenaariokohtaiset yliajot</h4>
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-                <span className="inline-element">EMME Python polku</span>
+                <span className="inline-element override-setting">EMME Python polku</span>
                 { scenario.overriddenProjectSettings.emmePythonPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
@@ -265,8 +265,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
               </label>
             </div>
             <div className="Scenario__section">
-              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-                <span className="inline-element">Helmet-model-system</span>
+              <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
+                <span className="inline-element override-setting">Helmet-model-system</span>
                 { scenario.overriddenProjectSettings.helmetScriptsPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
@@ -298,7 +298,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             </div>
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-                <span className="inline-element">Projektikansion polku</span>
+                <span className="inline-element override-setting">Projektikansion polku</span>
                 { scenario.overriddenProjectSettings.projectPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
@@ -330,7 +330,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             </div>
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-                <span className="inline-element">Lähtödatakansion polku</span>
+                <span className="inline-element override-setting">Lähtödatakansion polku</span>
                 { scenario.overriddenProjectSettings.basedataPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
@@ -362,7 +362,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             </div>
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
-                <span className="inline-element">Tulosten tallennuspolku</span>
+                <span className="inline-element override-setting">Tulosten tallennuspolku</span>
                 { scenario.overriddenProjectSettings.resultsPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();

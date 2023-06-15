@@ -144,7 +144,7 @@ span.Scenario__inline {
 }
 
 .override-setting {
-    margin-left: 5rem;
+    padding-left: 0px !important;
 }
 
 .override-file-select-input {
