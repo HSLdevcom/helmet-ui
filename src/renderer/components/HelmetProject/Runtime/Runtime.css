@@ -42,7 +42,7 @@
 
 .Runtime__scenarios {
     max-height: 160px;
-    width: 580px;
+    width: 700px;
     overflow-y: auto;
 }
 
@@ -87,6 +87,16 @@
     height: 24px;
     background-image: url('../../trash.png');
     background-repeat: no-repeat;
+}
+
+.Runtime__scenario-clone {
+    margin-left: 15px;
+    margin-bottom: -5px;
+    display: inline-block;
+    vertical-align: top;
+    width: 24px;
+    height: 24px;
+    color: #007AC9;
 }
 
 .Runtime__scenarios-footer {

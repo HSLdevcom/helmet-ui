@@ -165,6 +165,16 @@ const HelmetProject = ({
     }
   };
 
+  const duplicateScenario = (scenario) => {
+    var duplicatedScenario = structuredClone(scenario);
+    //Change ID and rename the scenario to avoid conflicts.
+    duplicatedScenario.id = uuidv4();
+    duplicatedScenario.name += `(${duplicatedScenario.id.split('-')[0]})`;
+    setScenarios(scenarios.concat(duplicatedScenario));
+    configStores.current[duplicatedScenario.id] = new Store({cwd: projectPath, name: duplicatedScenario.name});
+    configStores.current[duplicatedScenario.id].set(duplicatedScenario);
+  }
+
   const _runAllActiveScenarios = (activeScenarioIDs) => {
     const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
 
@@ -349,6 +359,7 @@ const HelmetProject = ({
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
+          duplicateScenario={duplicateScenario}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}

@@ -6,7 +6,7 @@ const Runtime = ({
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
   statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles,
-  handleClickStartStop,
+  handleClickStartStop, duplicateScenario
 }) => {
   return (
     <div className="Runtime">
@@ -58,6 +58,12 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
+              &nbsp;
+              <div className={"Runtime__scenario-clone"}
+                      onClick={(e) => duplicateScenario(s)}
+              >
+              <CopyIcon/>
+              </div>
             </div>
           )
         })}
