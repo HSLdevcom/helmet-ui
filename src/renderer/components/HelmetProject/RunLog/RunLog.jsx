@@ -4,6 +4,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
   const [showUIEVENT, setShowUIEVENT] = useState(true);
   const [showINFO, setShowINFO] = useState(true);
+  const [showWARN, setShowWARN] = useState(true);
   const [showERROR, setShowERROR] = useState(true);
   const [showDEBUG, setShowDEBUG] = useState(false);
 
@@ -32,6 +33,11 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
                   onClick={(e) => setShowERROR(prevState => !prevState)}
           >
             ERROR
+          </button>
+          <button className={"Log__header-control" + (showWARN ? " Log__header-control--on" : "")}
+                  onClick={(e) => setShowWARN(prevState => !prevState)}
+          >
+            WARNING
           </button>
           <button className={"Log__header-control" + (showDEBUG ? " Log__header-control--on" : "")}
                   onClick={(e) => setShowDEBUG(prevState => !prevState)}
@@ -76,6 +82,14 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
             case "DEBUG":
               return showDEBUG ?
+                <div className={"Log__entry"} key={entry.id}>
+                  {`[${entry.level}] ${entry.message}`}
+                </div>
+                :
+                "";
+                
+            case "WARN":
+              return showWARN ?
                 <div className={"Log__entry"} key={entry.id}>
                   {`[${entry.level}] ${entry.message}`}
                 </div>
