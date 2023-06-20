@@ -127,6 +127,13 @@ const HelmetProject = ({
       use_fixed_transit_cost: false,
       end_assignment_only: false,
       iterations: 15,
+      overriddenProjectSettings: {
+        emmePythonPath: null,
+        helmetScriptsPath: null,
+        projectPath: null,
+        basedataPath: null,
+        resultsPath: null,
+      },
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
@@ -223,13 +230,14 @@ const HelmetProject = ({
     ipcRenderer.send(
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
-        // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system)
+        // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system
+
         return {
           ...s,
-          emme_python_path: emmePythonPath,
-          helmet_scripts_path: helmetScriptsPath,
-          base_data_folder_path: basedataPath,
-          results_data_folder_path: resultsPath,
+          emme_python_path: s.overriddenProjectSettings.emmePythonPath !== null && s.overriddenProjectSettings.emmePythonPath !== emmePythonPath ? s.overriddenProjectSettings.emmePythonPath : emmePythonPath,
+          helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath !== null && s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath ? s.overriddenProjectSettings.helmetScriptsPath : helmetScriptsPath,
+          base_data_folder_path: s.overriddenProjectSettings.basedataPath !== null && s.overriddenProjectSettings.basedataPath !== basedataPath ? s.overriddenProjectSettings.basedataPath : basedataPath,
+          results_data_folder_path: s.overriddenProjectSettings.resultsPath !== null && s.overriddenProjectSettings.resultsPath !== resultsPath ? s.overriddenProjectSettings.resultsPath : resultsPath,
           log_level: 'DEBUG',
         }
       })
@@ -376,6 +384,13 @@ const HelmetProject = ({
                 updateScenario={_updateScenario}
                 closeScenario={() => setOpenScenarioID(null)}
                 existingOtherNames={scenarios.filter(s => s.id !== openScenarioID).map(s => s.name)}
+                inheritedGlobalProjectSettings={{
+                  emmePythonPath,
+                  helmetScriptsPath,
+                  projectPath,
+                  basedataPath,
+                  resultsPath
+                }}
               />
               :
               ""
