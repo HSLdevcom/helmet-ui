@@ -31,6 +31,9 @@ const HelmetProject = ({
   const [statusState, setStatusState] = useState(null);
   const [statusLogfilePath, setStatusLogfilePath] = useState(null);
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState([]); // [{name: .., logfile: ..}]
+  const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
+  const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
+  const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
@@ -291,6 +294,11 @@ const HelmetProject = ({
       });
   };
 
+  const parseDemandConvergenceLogMessage = (message) => {
+    const stringMsgArray = message.split(' ');
+    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+  };
+
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
@@ -302,11 +310,25 @@ const HelmetProject = ({
       setStatusState(args.status['state']);
       setStatusLogfilePath(args.status['log']);
 
-      if (args.status.state === 'finished') {
+      if (args.status.state === SCENARIO_STATUS_STATE.FINISHED) {
         setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
           name: args.status.name,
           logfile: args.status.log
         }))
+        setStatusRunFinishTime(args.time);
+      }
+
+      if (args.status.state === SCENARIO_STATUS_STATE.STARTING) {
+        setStatusRunStartTime(args.time);
+        setStatusRunFinishTime(args.time); 
+        setDemandConvergenceArray([]);
+        setStatusIterationsTotal(0);
+      }
+    }
+    if(args.level === 'INFO') {
+      if(args.message.includes('Demand model convergence in')) {
+        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(args.message);
+        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, currentDemandConvergenceValueAndIteration ]);
       }
     }
   };
@@ -357,6 +379,10 @@ const HelmetProject = ({
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
+          statusRunStartTime={statusRunStartTime}
+          statusRunFinishTime={statusRunFinishTime}
+          statusState={statusState}
+          demandConvergenceArray={demandConvergenceArray}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}

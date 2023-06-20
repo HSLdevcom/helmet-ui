@@ -6,7 +6,7 @@ const Runtime = ({
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
   statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles,
-  handleClickStartStop,
+  handleClickStartStop, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray,
 }) => {
   return (
     <div className="Runtime">
@@ -88,6 +88,10 @@ const Runtime = ({
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
+          statusRunStartTime={statusRunStartTime}
+          statusRunFinishTime={statusRunFinishTime}
+          statusState={statusState}
+          demandConvergenceArray={demandConvergenceArray}
         />
         <button className="Runtime__start-stop-btn"
                 disabled={scenarioIDsToRun.length === 0}

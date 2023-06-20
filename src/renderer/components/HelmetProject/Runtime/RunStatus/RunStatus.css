@@ -4,8 +4,8 @@
 .Status__readiness {
     display: flex;
     align-items: center;
-    width: 579px;
-    height: 31px;
+    width: 600px;
+    height: 300px;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-sizing: border-box;
@@ -16,6 +16,10 @@
     font-size: 15px;
     letter-spacing: -0.5px;
     padding-left: 9px;
+}
+
+.runtime-chart {
+    width: 800px;
 }
 
 .Status__finished-scenario {
