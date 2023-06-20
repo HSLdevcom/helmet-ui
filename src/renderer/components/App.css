@@ -88,6 +88,7 @@ hr {
 .App__header {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     height: 70px;
     background-color: #007AC9;
     background-image: url('pylvasdiagrammi_valkoinen.png'), url('hsl_logo_valkoinen.png');
@@ -109,4 +110,13 @@ hr {
 }
 
 .App__body {
+}
+
+.header-documentation-link {
+    margin-top: .4rem;
+    margin-left: 2rem;
+}
+
+.header-documentation-link:hover {
+    cursor: pointer;
 }
