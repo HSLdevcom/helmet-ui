@@ -26,4 +26,13 @@
 }
 
 .Status__finished-scenario-logfile-link {
+    background-color: #007AC9;
+    display: inline;
+    color: white;
+    width: 8rem;
+}
+
+.Status__finished-scenario-logfile-link:hover {
+    background-color: #0068ab !important;
+    color: white !important;
 }
