@@ -22,8 +22,8 @@
     "@electron/remote": "^2.0.8",
     "babel-standalone": "^6.26.0",
     "chart.js": "^4.3.0",
-    "dayjs": "^1.11.7",
     "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "decompress": "^4.2.1",
     "del": "^6.1.0",
     "electron-dl": "^3.3.1",
@@ -34,6 +34,7 @@
     "react": "^18.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.1.0",
+    "react-tooltip": "^5.15.0",
     "uuid": "^9.0.0",
     "vex-js": "^4.1.0"
   },
