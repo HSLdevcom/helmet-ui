@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
+const _ = require('lodash');
 
 const Runtime = ({
   projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID, deleteScenario,
@@ -10,6 +11,20 @@ const Runtime = ({
   statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles,
   handleClickStartStop, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray,
 }) => {
+
+  const visibleTooltipProperties = [
+      'emme_project_file_path',
+      'first_scenario_id',
+      'forecast_data_folder_path',
+      'save_matrices_in_emme',
+      'end_assignment_only',
+      'overriddenProjectSettings'
+  ];
+
+  const areGlobalSettingsOverridden = (settings) => {
+    return _.filter(settings, settingValue => settingValue != null).length > 0;
+  }
+
   return (
     <div className="Runtime">
 
@@ -35,23 +50,29 @@ const Runtime = ({
         {scenarios.map((s) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
+            const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
+              return visibleTooltipProperties.includes(settingKey);
+            })
             return (
               <div>
                 {
-                  Object.entries(scenario).map((property) => {
+                  Object.entries(filteredScenarioSettings).map((property) => {
                     
                     if(property[0] === 'overriddenProjectSettings') {
-                      return (
+
+                      return areGlobalSettingsOverridden(property[1]) 
+                       ?
                         <div>
                           <h3>Overridden settings:</h3>
                           { 
                             Object.entries(property[1]).map(overrideSetting => {
                               return (
-                              <p style={{ marginLeft: "1rem" }}>{overrideSetting.toString().replace(',', ' : ')}</p>
+                              <p style={{ marginLeft: "1rem", overflow: "hidden" }}>{overrideSetting.toString().replace(',', ' : ')}</p>
                             )})
                           }
                         </div>
-                      )
+
+                      : ""; // Return empty if global settings are all default
                     }
 
                     return(
