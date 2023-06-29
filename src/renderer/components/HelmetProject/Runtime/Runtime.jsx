@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
+import { TimeSeriesScale } from 'chart.js';
 const _ = require('lodash');
 
 const Runtime = ({
@@ -23,6 +24,17 @@ const Runtime = ({
 
   const areGlobalSettingsOverridden = (settings) => {
     return _.filter(settings, settingValue => settingValue != null).length > 0;
+  }
+
+  const getPropertyForDisplayString = (settingProperty) => {
+    const [key, value] = settingProperty
+
+    if(typeof value === 'string') {
+      const trimmedStringValue = value.length > 30 ? "..." + value.substring(value.length-30) : value;
+      return `${key} : ${trimmedStringValue}`
+    }
+
+    return `${key} : ${value}`
   }
 
   return (
@@ -66,17 +78,17 @@ const Runtime = ({
                           <h3>Overridden settings:</h3>
                           { 
                             Object.entries(property[1]).map(overrideSetting => {
-                              return (
-                              <p style={{ marginLeft: "1rem", overflow: "hidden" }}>{overrideSetting.toString().replace(',', ' : ')}</p>
-                            )})
+                              return overrideSetting[1] != null 
+                              ? <p style={{ marginLeft: "1rem", overflow: "hidden" }}>{getPropertyForDisplayString(overrideSetting)}</p>
+                              : ""
+                            })
                           }
                         </div>
-
                       : ""; // Return empty if global settings are all default
                     }
 
                     return(
-                      <p>{property.toString().replace(',', ' : ')}</p>
+                      <p>{getPropertyForDisplayString(property)}</p>
                     )})}
               </div>
             )
@@ -114,7 +126,7 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
-              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem" }}/>
+              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem" }}/>
             </div>
           )
         })}
