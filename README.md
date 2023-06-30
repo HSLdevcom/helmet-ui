@@ -37,6 +37,12 @@ EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affe
 
 See also: [Electronforge.io](https://www.electronforge.io/)
 
+## Testing
+
+Helmet UI should be tested both with mock run and Emme run before proceeding to the releases. 
+Testing instructions:
+Create separate folder for testing, build and run UI. Testing on the Emme machine also possible with the binary from `npm run make`. 
+
 ## Version control
 
 [Git](https://git-scm.com/) is used as the primary tool for version control and `master` branch is the main development line, aka. bleeding edge.
