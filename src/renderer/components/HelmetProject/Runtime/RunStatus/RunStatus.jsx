@@ -42,6 +42,9 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             }
           }
         }
+        },
+      animation: {
+        duration: 0
       }
     },
   }
@@ -75,14 +78,13 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             </div>
           )
       }
-      {statusReadyScenariosLogfiles.map((readyScenario) => {
-        return (
+      { statusReadyScenariosLogfiles !== null && !isScenarioRunning &&
         <div> 
-          <p className="Status__finished-scenario" key={readyScenario.name}>
-            {readyScenario.name} valmis
+          <p className="Status__finished-scenario" key={statusReadyScenariosLogfiles.name}>
+            {statusReadyScenariosLogfiles.name} valmis
             &nbsp;
             <a className="Status__finished-scenario-logfile-link"
-              href={readyScenario.logfile}
+              href={statusReadyScenariosLogfiles.logfile}
               target="_blank"
             >
               lokit
@@ -90,8 +92,8 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             &nbsp;
             Ajoaika: { dayjs.duration(dayjs(statusRunFinishTime).diff(dayjs(statusRunStartTime))).format('HH[h]:mm[m]:ss[s]') }
           </p>
-        </div>)
-      })}
+        </div>
+      }
     </div>
   );
 };
