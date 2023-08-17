@@ -313,7 +313,8 @@ const HelmetProject = ({
       if (args.status.state === SCENARIO_STATUS_STATE.FINISHED) {
         setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
           name: args.status.name,
-          logfile: args.status.log
+          logfile: args.status.log,
+          resultsPath: args.status.log.match(new RegExp('((?:[^/]*/)*)(.*)'))
         }))
         setStatusRunFinishTime(args.time);
       }
