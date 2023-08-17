@@ -31,6 +31,9 @@ const HelmetProject = ({
   const [statusState, setStatusState] = useState(null);
   const [statusLogfilePath, setStatusLogfilePath] = useState(null);
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState([]); // [{name: .., logfile: ..}]
+  const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
+  const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
+  const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
@@ -127,6 +130,13 @@ const HelmetProject = ({
       use_fixed_transit_cost: false,
       end_assignment_only: false,
       iterations: 15,
+      overriddenProjectSettings: {
+        emmePythonPath: null,
+        helmetScriptsPath: null,
+        projectPath: null,
+        basedataPath: null,
+        resultsPath: null,
+      },
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
@@ -233,13 +243,14 @@ const HelmetProject = ({
     ipcRenderer.send(
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
-        // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system)
+        // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system
+
         return {
           ...s,
-          emme_python_path: emmePythonPath,
-          helmet_scripts_path: helmetScriptsPath,
-          base_data_folder_path: basedataPath,
-          results_data_folder_path: resultsPath,
+          emme_python_path: s.overriddenProjectSettings.emmePythonPath !== null && s.overriddenProjectSettings.emmePythonPath !== emmePythonPath ? s.overriddenProjectSettings.emmePythonPath : emmePythonPath,
+          helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath !== null && s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath ? s.overriddenProjectSettings.helmetScriptsPath : helmetScriptsPath,
+          base_data_folder_path: s.overriddenProjectSettings.basedataPath !== null && s.overriddenProjectSettings.basedataPath !== basedataPath ? s.overriddenProjectSettings.basedataPath : basedataPath,
+          results_data_folder_path: s.overriddenProjectSettings.resultsPath !== null && s.overriddenProjectSettings.resultsPath !== resultsPath ? s.overriddenProjectSettings.resultsPath : resultsPath,
           log_level: 'DEBUG',
         }
       })
@@ -293,6 +304,11 @@ const HelmetProject = ({
       });
   };
 
+  const parseDemandConvergenceLogMessage = (message) => {
+    const stringMsgArray = message.split(' ');
+    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+  };
+
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
@@ -304,11 +320,26 @@ const HelmetProject = ({
       setStatusState(args.status['state']);
       setStatusLogfilePath(args.status['log']);
 
-      if (args.status.state === 'finished') {
+      if (args.status.state === SCENARIO_STATUS_STATE.FINISHED) {
         setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
           name: args.status.name,
-          logfile: args.status.log
+          logfile: args.status.log,
+          resultsPath: args.status.log.match(new RegExp('((?:[^/]*/)*)(.*)'))
         }))
+        setStatusRunFinishTime(args.time);
+      }
+
+      if (args.status.state === SCENARIO_STATUS_STATE.STARTING) {
+        setStatusRunStartTime(args.time);
+        setStatusRunFinishTime(args.time); 
+        setDemandConvergenceArray([]);
+        setStatusIterationsTotal(0);
+      }
+    }
+    if(args.level === 'INFO') {
+      if(args.message.includes('Demand model convergence in')) {
+        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(args.message);
+        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, currentDemandConvergenceValueAndIteration ]);
       }
     }
   };
@@ -356,10 +387,14 @@ const HelmetProject = ({
           handleClickScenarioToActive={_handleClickScenarioToActive}
           handleClickNewScenario={_handleClickNewScenario}
           handleClickStartStop={_handleClickStartStop}
+          duplicateScenario={duplicateScenario}
           statusIterationsTotal={statusIterationsTotal}
           statusIterationsCompleted={statusIterationsCompleted}
           statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
-          duplicateScenario={duplicateScenario}
+          statusRunStartTime={statusRunStartTime}
+          statusRunFinishTime={statusRunFinishTime}
+          statusState={statusState}
+          demandConvergenceArray={demandConvergenceArray}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}
@@ -387,6 +422,13 @@ const HelmetProject = ({
                 updateScenario={_updateScenario}
                 closeScenario={() => setOpenScenarioID(null)}
                 existingOtherNames={scenarios.filter(s => s.id !== openScenarioID).map(s => s.name)}
+                inheritedGlobalProjectSettings={{
+                  emmePythonPath,
+                  helmetScriptsPath,
+                  projectPath,
+                  basedataPath,
+                  resultsPath
+                }}
               />
               :
               ""

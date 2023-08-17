@@ -4,8 +4,8 @@
 .Status__readiness {
     display: flex;
     align-items: center;
-    width: 579px;
-    height: 31px;
+    width: 600px;
+    height: 300px;
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-sizing: border-box;
@@ -18,8 +18,21 @@
     padding-left: 9px;
 }
 
+.runtime-chart {
+    width: 800px;
+}
+
 .Status__finished-scenario {
 }
 
 .Status__finished-scenario-logfile-link {
+    background-color: #007AC9;
+    display: inline;
+    color: white;
+    width: 8rem;
+}
+
+.Status__finished-scenario-logfile-link:hover {
+    background-color: #0068ab !important;
+    color: white !important;
 }

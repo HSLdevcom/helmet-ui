@@ -138,3 +138,43 @@ span.Scenario__inline {
 .Scenario__radio-input {
     margin-right: 2em;
 }
+
+.override-input {
+    visibility: hidden;
+}
+
+.override-setting {
+    padding-left: 0px !important;
+}
+
+.override-file-select-input {
+    width: 500px;
+}
+
+.override-is-default {
+    font-style: italic;
+    color: gray;
+}
+
+.inline-element {
+    display: inline !important;
+}
+
+.override-reset-button {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    margin-left: 30px;
+}
+
+.override-reset-icon {
+    margin-bottom: -15px;
+}
+
+.override-setting-toggle {
+    margin-bottom: 20px;
+}
+
+.override-setting-divider {
+    margin-top: 20px;
+}

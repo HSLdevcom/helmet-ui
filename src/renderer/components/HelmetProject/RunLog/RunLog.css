@@ -39,12 +39,14 @@
 
 .Log__header-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-content: center;
+    width: 100%;
 }
 
 .Log__header-control {
-    margin-right: 10px;
-    width: 100%;
+    max-width: 25%;
+    margin: .25rem;
 }
 .Log__header-control--on {
     background-color: #007AC9;
