@@ -22,6 +22,7 @@ const HelmetProject = ({
   const [runningScenarioIDsQueued, setRunningScenarioIDsQueued] = useState([]); // queued ("remaining") HELMET Scenarios
   const [logContents, setLogContents] = useState([]); // project runtime log-contents
   const [isLogOpened, setLogOpened] = useState(false); // whether runtime log is open
+  const [logArgs, setLogArgs] = useState({});
 
   // Runtime status
   const [statusIterationsTotal, setStatusIterationsTotal] = useState(null);
@@ -42,12 +43,13 @@ const HelmetProject = ({
   const configStores = useRef({});
 
   const _handleClickScenarioToActive = (scenario) => {
-    scenarioIDsToRun.includes(scenario.id) ?
+    if(scenarioIDsToRun.includes(scenario.id)) {
       // If scenario exists in scenarios to run, remove it
       setScenarioIDsToRun(scenarioIDsToRun.filter((id) => id !== scenario.id))
-      :
+    } else {
       // Else add it
       setScenarioIDsToRun(scenarioIDsToRun.concat(scenario.id));
+    }
   };
 
   const _handleClickNewScenario = () => {
@@ -104,7 +106,16 @@ const HelmetProject = ({
         }
       }
     });
-    setScenarios(foundScenarios);
+
+    //If scenarios don't have runstatus properties (ie. are older scenarios), adding them here to prevent wonky behaviour
+    const decoratedFoundScenarios = foundScenarios.map(scenario => {
+      if(scenario.runStatus === undefined) {
+        return addRunStatusProperties(scenario);
+      }
+      return scenario;
+    })
+
+    setScenarios(decoratedFoundScenarios);
     // Reset state of project related properties
     setOpenScenarioID(null);
     setScenarioIDsToRun([]);
@@ -113,6 +124,24 @@ const HelmetProject = ({
     setLogContents([]);
     setLogOpened(false);
   };
+
+  const addRunStatusProperties = (scenario) => {
+    return {
+      ...scenario,
+      runStatus: {
+        statusIterationsTotal: null,
+        statusIterationsCurrent: 0,
+        statusIterationsCompleted: 0,
+        statusIterationsFailed: 0,
+        statusState: null,
+        statusLogfilePath: null,
+        statusReadyScenariosLogfiles: [],
+        statusRunStartTime: null,
+        statusRunFinishTime: null,
+        demandConvergenceArray: []
+      }
+    }
+  }
 
   const _createScenario = (newScenarioName) => {
     // Generate new (unique) ID for new scenario
@@ -137,6 +166,18 @@ const HelmetProject = ({
         basedataPath: null,
         resultsPath: null,
       },
+      runStatus: {
+        statusIterationsTotal: null,
+        statusIterationsCurrent: 0,
+        statusIterationsCompleted: 0,
+        statusIterationsFailed: 0,
+        statusState: null,
+        statusLogfilePath: null,
+        statusReadyScenariosLogfiles: null,
+        statusRunStartTime: null,
+        statusRunFinishTime: null,
+        demandConvergenceArray: []
+      }
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
@@ -174,6 +215,16 @@ const HelmetProject = ({
       window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
   };
+
+  const duplicateScenario = (scenario) => {
+    var duplicatedScenario = structuredClone(scenario);
+    //Change ID and rename the scenario to avoid conflicts.
+    duplicatedScenario.id = uuidv4();
+    duplicatedScenario.name += `(${duplicatedScenario.id.split('-')[0]})`;
+    setScenarios(scenarios.concat(duplicatedScenario));
+    configStores.current[duplicatedScenario.id] = new Store({cwd: projectPath, name: duplicatedScenario.name});
+    configStores.current[duplicatedScenario.id].set(duplicatedScenario);
+  }
 
   const _runAllActiveScenarios = (activeScenarioIDs) => {
     const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
@@ -302,36 +353,9 @@ const HelmetProject = ({
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);
-    if (args.status) {
-      setStatusIterationsTotal(args.status['total']);
-      setStatusIterationsCurrent(args.status['current']);
-      setStatusIterationsCompleted(args.status['completed']);
-      setStatusIterationsFailed(args.status['failed']);
-      setStatusState(args.status['state']);
-      setStatusLogfilePath(args.status['log']);
-
-      if (args.status.state === SCENARIO_STATUS_STATE.FINISHED) {
-        setStatusReadyScenariosLogfiles(statusReadyScenariosLogfiles.concat({
-          name: args.status.name,
-          logfile: args.status.log
-        }))
-        setStatusRunFinishTime(args.time);
-      }
-
-      if (args.status.state === SCENARIO_STATUS_STATE.STARTING) {
-        setStatusRunStartTime(args.time);
-        setStatusRunFinishTime(args.time); 
-        setDemandConvergenceArray([]);
-        setStatusIterationsTotal(0);
-      }
-    }
-    if(args.level === 'INFO') {
-      if(args.message.includes('Demand model convergence in')) {
-        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(args.message);
-        setDemandConvergenceArray(demandConvergenceArray => [...demandConvergenceArray, currentDemandConvergenceValueAndIteration ]);
-      }
-    }
+    setLogArgs(args);
   };
+
   const onScenarioComplete = (event, args) => {
     setRunningScenarioID(args.next.id);
     setRunningScenarioIDsQueued(runningScenarioIDsQueued.filter((id) => id !== args.completed.id));
@@ -376,13 +400,8 @@ const HelmetProject = ({
           handleClickScenarioToActive={_handleClickScenarioToActive}
           handleClickNewScenario={_handleClickNewScenario}
           handleClickStartStop={_handleClickStartStop}
-          statusIterationsTotal={statusIterationsTotal}
-          statusIterationsCompleted={statusIterationsCompleted}
-          statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
-          statusRunStartTime={statusRunStartTime}
-          statusRunFinishTime={statusRunFinishTime}
-          statusState={statusState}
-          demandConvergenceArray={demandConvergenceArray}
+          logArgs={logArgs}
+          duplicateScenario={duplicateScenario}
         />
         <CostBenefitAnalysis
           resultsPath={resultsPath}

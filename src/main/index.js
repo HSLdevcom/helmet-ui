@@ -157,7 +157,7 @@ ipcMain.on('loggable-event-from-worker', (event, args) => {
     // utils.log
     event_args = JSON.parse(event_string);
   } catch (error) {
-    // numpy warnings
+    // numpy warnings and other non-log messages
     event_args = {
       "level": "EXCEPTION",
       "message": event_string,
@@ -167,10 +167,10 @@ ipcMain.on('loggable-event-from-worker', (event, args) => {
   mainWindow.webContents.send('loggable-event', event_args);
 });
 
-// Log worker-errors (by PythonShell, not stderr) in main console
-ipcMain.on('process-error-from-worker', (event, args) => {
-  mainWindow.webContents.send('loggable-event', {
-    "level": "ERROR",
-    "message": (typeof args === "string") ? args : JSON.stringify(args)
-  });
-});
+// // Log worker-errors (by PythonShell, not stderr) in main console
+// ipcMain.on('process-error-from-worker', (event, args) => {
+//   mainWindow.webContents.send('loggable-event', {
+//     "level": "ERROR",
+//     "message": (typeof args === "string") ? args : JSON.stringify(args)
+//   });
+// });
