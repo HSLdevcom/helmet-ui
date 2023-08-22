@@ -2,6 +2,7 @@ import React from 'react';
 import { Chart as ChartJS, LinearScale, LineElement, PointElement, CategoryScale, Tooltip, Legend, Title } from "chart.js";
 import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
+const { shell } = require('electron');
 var duration = require('dayjs/plugin/duration');
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(duration);
@@ -9,7 +10,7 @@ dayjs.extend(relativeTime);
 ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip, Legend, Title);
 
 
-const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray}) => {
+const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
 
   const graphConfig = {
     options: {
@@ -92,8 +93,14 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
               href={statusReadyScenariosLogfiles.logfile}
               target="_blank"
             >
-              lokit
-            </a>
+              Lokit
+            </button>
+            &nbsp;
+            <button className="Status__finished-scenario-logfile-link"
+              onClick={() => readyScenario.resultsPath[1] != undefined ? shell.openPath(readyScenario.resultsPath[1]) : ''}
+            >
+              Tulokset
+            </button>
             &nbsp;
             Ajoaika: { formatRunStatusTime(statusRunFinishTime, statusRunStartTime) }
           </p>

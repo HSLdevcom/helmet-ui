@@ -5,7 +5,7 @@ const Runtime = ({
   setOpenScenarioID,
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
-  handleClickStartStop, logArgs
+  handleClickStartStop, logArgs, duplicateScenario
 }) => {
 
   const parseDemandConvergenceLogMessage = (message) => {
@@ -133,6 +133,12 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
+              &nbsp;
+              <div className={"Runtime__scenario-clone"}
+                      onClick={(e) => duplicateScenario(s)}
+              >
+              <CopyIcon/>
+              </div>
             </div>
           )
         })}
