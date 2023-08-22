@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
-import { TimeSeriesScale } from 'chart.js';
 const _ = require('lodash');
 
 const Runtime = ({
@@ -34,11 +33,20 @@ const Runtime = ({
     }
 
     return `${key} : ${value}`
+  };
 
   const parseDemandConvergenceLogMessage = (message) => {
     const stringMsgArray = message.split(' ');
     return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
   };
+
+  const activeScenarios = scenarios.filter((scenario) => scenarioIDsToRun.includes(scenario.id))
+  const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
+
+  const getResultsPathFromLogfilePath = (logfilePath) => {
+    console.log(logfilePath.replace(/\/[^\/]+$/, ''));
+    return logfilePath.replace(/\/[^\/]+$/, '');
+  }
 
   //Parse log contents into the currently running scenario so we can show each one individually
   const parseLogArgs = (runStatus, logArgs) => {
@@ -51,7 +59,7 @@ const Runtime = ({
       runStatus.statusLogfilePath = logArgs.status['log'];
 
     if (logArgs.status.state === SCENARIO_STATUS_STATE.FINISHED) {
-      runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log }
+      runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log, resultsPath: getResultsPathFromLogfilePath(logArgs.status.log) }
       runStatus.statusRunFinishTime = logArgs.time;
     }
 
@@ -69,9 +77,6 @@ const Runtime = ({
       }
     }
   }
-
-  const activeScenarios = scenarios.filter((scenario) => scenarioIDsToRun.includes(scenario.id))
-  const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
 
   if(runningScenario.length > 0) {
   const runStatus = runningScenario[0].runStatus;

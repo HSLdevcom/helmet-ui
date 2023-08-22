@@ -345,11 +345,6 @@ const HelmetProject = ({
       });
   };
 
-  const parseDemandConvergenceLogMessage = (message) => {
-    const stringMsgArray = message.split(' ');
-    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
-  };
-
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
     setLogContents(previousLog => [...previousLog, args]);

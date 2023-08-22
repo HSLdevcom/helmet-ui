@@ -89,15 +89,14 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
           <p className="Status__finished-scenario" key={statusReadyScenariosLogfiles.name}>
             {statusReadyScenariosLogfiles.name} valmis
             &nbsp;
-            <a className="Status__finished-scenario-logfile-link"
-              href={statusReadyScenariosLogfiles.logfile}
-              target="_blank"
+            <button className="Status__finished-scenario-logfile-link"
+              onClick={() => statusReadyScenariosLogfiles.logfile !== undefined ? shell.openPath(statusReadyScenariosLogfiles.logfile): ''}
             >
               Lokit
             </button>
             &nbsp;
             <button className="Status__finished-scenario-logfile-link"
-              onClick={() => readyScenario.resultsPath[1] != undefined ? shell.openPath(readyScenario.resultsPath[1]) : ''}
+              onClick={() => statusReadyScenariosLogfiles.resultsPath[1] !== undefined ? shell.openPath(statusReadyScenariosLogfiles.resultsPath) : ''}
             >
               Tulokset
             </button>
