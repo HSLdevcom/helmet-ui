@@ -29,7 +29,8 @@
     background-color: #007AC9;
     display: inline;
     color: white;
-    width: 8rem;
+    width: 6rem;
+    padding: 0;
 }
 
 .Status__finished-scenario-logfile-link:hover {
