@@ -1,4 +1,8 @@
 import React from 'react';
+import { Tooltip } from 'react-tooltip'
+import { renderToStaticMarkup } from 'react-dom/server';
+import { TimeSeriesScale } from 'chart.js';
+const _ = require('lodash');
 
 const Runtime = ({
   projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID, deleteScenario,
@@ -7,6 +11,29 @@ const Runtime = ({
   handleClickScenarioToActive, handleClickNewScenario,
   handleClickStartStop, logArgs, duplicateScenario
 }) => {
+
+  const visibleTooltipProperties = [
+      'emme_project_file_path',
+      'first_scenario_id',
+      'forecast_data_folder_path',
+      'save_matrices_in_emme',
+      'end_assignment_only',
+      'overriddenProjectSettings'
+  ];
+
+  const areGlobalSettingsOverridden = (settings) => {
+    return _.filter(settings, settingValue => settingValue != null).length > 0;
+  }
+
+  const getPropertyForDisplayString = (settingProperty) => {
+    const [key, value] = settingProperty
+
+    if(typeof value === 'string') {
+      const trimmedStringValue = value.length > 30 ? "..." + value.substring(value.length-30) : value;
+      return `${key} : ${trimmedStringValue}`
+    }
+
+    return `${key} : ${value}`
 
   const parseDemandConvergenceLogMessage = (message) => {
     const stringMsgArray = message.split(' ');
@@ -106,8 +133,48 @@ const Runtime = ({
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s) => {
+          // Component for the tooltip showing scenario settings
+          const tooltipContent = (scenario) => {
+            const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
+              return visibleTooltipProperties.includes(settingKey);
+            })
+            return (
+              <div>
+                {
+                  Object.entries(filteredScenarioSettings).map((property) => {
+                    
+                    if(property[0] === 'overriddenProjectSettings') {
+
+                      return areGlobalSettingsOverridden(property[1]) 
+                       ?
+                        <div>
+                          <h3>Overridden settings:</h3>
+                          { 
+                            Object.entries(property[1]).map(overrideSetting => {
+                              return overrideSetting[1] != null 
+                              ? <p style={{ marginLeft: "1rem", overflow: "hidden" }}>{getPropertyForDisplayString(overrideSetting)}</p>
+                              : ""
+                            })
+                          }
+                        </div>
+                      : ""; // Return empty if global settings are all default
+                    }
+
+                    return(
+                      <p>{getPropertyForDisplayString(property)}</p>
+                    )})}
+              </div>
+            )
+          }
+
           return (
-            <div className="Runtime__scenario" key={s.id}>
+            <div className="Runtime__scenario" key={s.id} 
+              data-tooltip-id="scenario-tooltip" 
+              data-tooltip-place="right" 
+              data-tooltip-html={renderToStaticMarkup(tooltipContent(s))}
+              data-tooltip-delay-show={200}
+              data-tooltip-hidden={openScenarioID !== null}
+            >
               <span className="Runtime__scenario-name">
                 {s.name ? s.name : `Unnamed project (${s.id})`}
               </span>
@@ -133,12 +200,15 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
+              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem" }}/>
+
               &nbsp;
               <div className={"Runtime__scenario-clone"}
                       onClick={(e) => duplicateScenario(s)}
               >
               <CopyIcon/>
               </div>
+
             </div>
           )
         })}

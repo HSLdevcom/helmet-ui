@@ -29,11 +29,13 @@
     "electron-dl": "^3.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.1",
+    "lodash": "^4.17.21",
     "nugget": "^2.0.2",
     "python-shell": "^3.0.1",
     "react": "^18.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.1.0",
+    "react-tooltip": "^5.15.0",
     "uuid": "^9.0.0",
     "vex-js": "^4.1.0"
   },
