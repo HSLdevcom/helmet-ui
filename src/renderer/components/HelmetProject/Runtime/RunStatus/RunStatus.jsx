@@ -60,6 +60,11 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
     ],
   }
 
+  const formatRunStatusTime = (runFinishTime, runStartTime) => {
+    const formattedTime = dayjs.duration(dayjs(runFinishTime).diff(dayjs(runStartTime))).format('HH[h]:mm[m]:ss[s]');
+    return formattedTime !== 'NaNh:NaNm:NaNs' ? formattedTime : '-'
+  }
+
   return (
     <div className="Status">
       {
@@ -78,7 +83,7 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             </div>
           )
       }
-      { statusReadyScenariosLogfiles !== null && !isScenarioRunning &&
+      { statusReadyScenariosLogfiles !== null && !isScenarioRunning && statusReadyScenariosLogfiles.name &&
         <div> 
           <p className="Status__finished-scenario" key={statusReadyScenariosLogfiles.name}>
             {statusReadyScenariosLogfiles.name} valmis
@@ -90,7 +95,7 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
               lokit
             </a>
             &nbsp;
-            Ajoaika: { dayjs.duration(dayjs(statusRunFinishTime).diff(dayjs(statusRunStartTime))).format('HH[h]:mm[m]:ss[s]') }
+            Ajoaika: { formatRunStatusTime(statusRunFinishTime, statusRunStartTime) }
           </p>
         </div>
       }
