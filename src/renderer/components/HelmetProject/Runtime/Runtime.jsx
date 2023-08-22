@@ -99,7 +99,8 @@ const Runtime = ({
               data-tooltip-id="scenario-tooltip" 
               data-tooltip-place="right" 
               data-tooltip-html={renderToStaticMarkup(tooltipContent(s))}
-              data-tooltip-delay-show={1000}
+              data-tooltip-delay-show={200}
+              data-tooltip-hidden={openScenarioID !== null}
             >
               <span className="Runtime__scenario-name">
                 {s.name ? s.name : `Unnamed project (${s.id})`}
