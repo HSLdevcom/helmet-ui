@@ -5,9 +5,84 @@ const Runtime = ({
   setOpenScenarioID,
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
-  statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles,
-  handleClickStartStop, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray, duplicateScenario
+  handleClickStartStop, logArgs, duplicateScenario
 }) => {
+
+  const parseDemandConvergenceLogMessage = (message) => {
+    const stringMsgArray = message.split(' ');
+    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+  };
+
+  //Parse log contents into the currently running scenario so we can show each one individually
+  const parseLogArgs = (runStatus, logArgs) => {
+    if (logArgs.status) {
+      runStatus.statusIterationsTotal = logArgs.status['total'];
+      runStatus.statusIterationsCurrent = logArgs.status['current'];
+      runStatus.statusIterationsCompleted = logArgs.status['completed'];
+      runStatus.statusIterationsFailed = logArgs.status['failed'];
+      runStatus.statusState = logArgs.status['state'];
+      runStatus.statusLogfilePath = logArgs.status['log'];
+
+    if (logArgs.status.state === SCENARIO_STATUS_STATE.FINISHED) {
+      runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log }
+      runStatus.statusRunFinishTime = logArgs.time;
+    }
+
+    if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
+      runStatus.statusRunStartTime = logArgs.time;
+      runStatus.statusRunFinishTime = logArgs.time; 
+      runStatus.demandConvergenceArray = [];
+      runStatus.statusIterationsTotal = 0;
+    }
+  }
+  if(logArgs.level === 'INFO') {
+    if(logArgs.message.includes('Demand model convergence in')) {
+      const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
+      runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
+      }
+    }
+  }
+
+  const activeScenarios = scenarios.filter((scenario) => scenarioIDsToRun.includes(scenario.id))
+  const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
+
+  if(runningScenario.length > 0) {
+  const runStatus = runningScenario[0].runStatus;
+  parseLogArgs(runStatus, logArgs);
+  }
+
+  const renderableScenarios = activeScenarios.map(activeScenario => {
+        if (activeScenario.id === runningScenario.id) {
+          return runningScenario;
+        }
+        return activeScenario;
+      })
+
+  const RunStatusList = () => {
+    if(renderableScenarios.length > 0) {
+      return (
+        <div>
+          { 
+           renderableScenarios.map(scenarioToRender => {
+            return (
+              <RunStatus
+                isScenarioRunning={scenarioToRender.id === runningScenarioID}
+                statusIterationsTotal={scenarioToRender.runStatus.statusIterationsTotal}
+                statusIterationsCompleted={scenarioToRender.runStatus.statusIterationsCompleted}
+                statusReadyScenariosLogfiles={scenarioToRender.runStatus.statusReadyScenariosLogfiles}
+                statusRunStartTime={scenarioToRender.runStatus.statusRunStartTime}
+                statusRunFinishTime={scenarioToRender.runStatus.statusRunFinishTime}
+                statusState={scenarioToRender.runStatus.statusState}
+                demandConvergenceArray={scenarioToRender.runStatus.demandConvergenceArray}
+              />)
+           })
+          }
+        </div>
+      )
+    }
+    return <div/>
+  }
+
   return (
     <div className="Runtime">
 
@@ -89,22 +164,13 @@ const Runtime = ({
             <span>Ei ajettavaksi valittuja skenaarioita</span>
           }
         </p>
-        <RunStatus
-          isScenarioRunning={runningScenarioID}
-          statusIterationsTotal={statusIterationsTotal}
-          statusIterationsCompleted={statusIterationsCompleted}
-          statusReadyScenariosLogfiles={statusReadyScenariosLogfiles}
-          statusRunStartTime={statusRunStartTime}
-          statusRunFinishTime={statusRunFinishTime}
-          statusState={statusState}
-          demandConvergenceArray={demandConvergenceArray}
-        />
         <button className="Runtime__start-stop-btn"
                 disabled={scenarioIDsToRun.length === 0}
                 onClick={(e) => handleClickStartStop()}
         >
           {!runningScenarioID ? `K\u00e4ynnist\u00e4 (${scenarioIDsToRun.length}) skenaariota` : `Keskeyt\u00e4 loput skenaariot`}
         </button>
+          <RunStatusList />
       </div>
     </div>
   );

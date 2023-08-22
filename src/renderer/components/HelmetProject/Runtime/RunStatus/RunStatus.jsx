@@ -43,6 +43,9 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             }
           }
         }
+        },
+      animation: {
+        duration: 0
       }
     },
   }
@@ -56,6 +59,11 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
       borderColor: '#007AC9'
     }
     ],
+  }
+
+  const formatRunStatusTime = (runFinishTime, runStartTime) => {
+    const formattedTime = dayjs.duration(dayjs(runFinishTime).diff(dayjs(runStartTime))).format('HH[h]:mm[m]:ss[s]');
+    return formattedTime !== 'NaNh:NaNm:NaNs' ? formattedTime : '-'
   }
 
   return (
@@ -76,14 +84,14 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
             </div>
           )
       }
-      {statusReadyScenariosLogfiles.map((readyScenario) => {
-        return (
+      { statusReadyScenariosLogfiles !== null && !isScenarioRunning && statusReadyScenariosLogfiles.name &&
         <div> 
-          <p className="Status__finished-scenario" key={readyScenario.name}>
-            {readyScenario.name} valmis
+          <p className="Status__finished-scenario" key={statusReadyScenariosLogfiles.name}>
+            {statusReadyScenariosLogfiles.name} valmis
             &nbsp;
-            <button className="Status__finished-scenario-logfile-link"
-              onClick={() => shell.openPath(readyScenario.logfile)}
+            <a className="Status__finished-scenario-logfile-link"
+              href={statusReadyScenariosLogfiles.logfile}
+              target="_blank"
             >
               Lokit
             </button>
@@ -94,10 +102,10 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
               Tulokset
             </button>
             &nbsp;
-            Ajoaika: { dayjs.duration(dayjs(statusRunFinishTime).diff(dayjs(statusRunStartTime))).format('HH[h]:mm[m]:ss[s]') }
+            Ajoaika: { formatRunStatusTime(statusRunFinishTime, statusRunStartTime) }
           </p>
-        </div>)
-      })}
+        </div>
+      }
     </div>
   );
 };
