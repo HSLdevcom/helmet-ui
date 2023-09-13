@@ -175,10 +175,9 @@ const Runtime = ({
           return (
             <div className="Runtime__scenario" key={s.id} 
               data-tooltip-id="scenario-tooltip" 
-              data-tooltip-place="right" 
+              data-tooltip-place="bottom" 
               data-tooltip-html={renderToStaticMarkup(tooltipContent(s))}
               data-tooltip-delay-show={200}
-              data-tooltip-hidden={openScenarioID !== null}
             >
               <span className="Runtime__scenario-name">
                 {s.name ? s.name : `Unnamed project (${s.id})`}
@@ -205,7 +204,7 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
-              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem" }}/>
+              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem", marginLeft: "-50px" }}/>
 
               &nbsp;
               <div className={"Runtime__scenario-clone"}
