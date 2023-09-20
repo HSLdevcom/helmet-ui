@@ -14,9 +14,16 @@ const Runtime = ({
   const visibleTooltipProperties = [
       'emme_project_file_path',
       'first_scenario_id',
+      'first_matrix_id',
       'forecast_data_folder_path',
       'save_matrices_in_emme',
       'end_assignment_only',
+      'delete_strategy_files',
+      'id',
+      'name',
+      'iterations',
+      'separate_emme_scenarios',
+      'use_fixed_transit_cost',
       'overriddenProjectSettings'
   ];
 
@@ -140,6 +147,7 @@ const Runtime = ({
         {scenarios.map((s) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
+            console.log(scenario);
             const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
               return visibleTooltipProperties.includes(settingKey);
             })
