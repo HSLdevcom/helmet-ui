@@ -1,11 +1,22 @@
 import React, {useState} from 'react';
 import path from 'path';
+import _ from 'lodash';
 const {dialog} = require('@electron/remote');
 const classNames = require('classnames');
 
 const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}) => {
 
   const [nameError, setNameError] = useState("");
+
+  const hasOverriddenSettings = (scenario) => {
+    const overriddenSetting = _.find(scenario.overriddenProjectSettings, (setting) => {
+      return setting;
+    })
+    return overriddenSetting !== undefined ? true : false;
+  }
+
+  //Open override settings by default if atleast one of the settings is overridden
+  const [showOverrides, setShowOverrides] = useState(hasOverriddenSettings(scenario));
 
   return (
     <div className="Scenario" key={scenario.id}>
@@ -227,8 +238,10 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
       </div>
       <hr class="override-setting-divider"/>
           <div>
-            <h4>Skenaariokohtaiset yliajot</h4>
-            <div className="Scenario__section">
+            <h4 className="inline-element">Skenaariokohtaiset yliajot</h4> <div onClick={() => setShowOverrides(!showOverrides)} className="override-dropdown-icon inline-block-element"> { showOverrides ? <ArrowUp/> : <ArrowDown/> } </div>
+            { showOverrides && 
+              <div>
+                <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
                 <span className="inline-element override-setting">EMME Python polku</span>
                 { scenario.overriddenProjectSettings.emmePythonPath && 
@@ -392,6 +405,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                 />
               </label>
             </div>
+              </div> 
+            }
           </div>
       </div>
     </div>

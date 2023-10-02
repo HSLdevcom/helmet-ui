@@ -152,12 +152,15 @@ span.Scenario__inline {
 }
 
 .override-is-default {
-    font-style: italic;
     color: gray;
 }
 
 .inline-element {
     display: inline !important;
+}
+
+.inline-block-element {
+    display: inline-block;
 }
 
 .override-reset-button {
@@ -177,4 +180,11 @@ span.Scenario__inline {
 
 .override-setting-divider {
     margin-top: 20px;
+}
+
+.override-dropdown-icon {
+    margin-left: 1rem;
+    margin-bottom: -1rem;
+    width: 2rem;
+    height: 2rem;
 }
