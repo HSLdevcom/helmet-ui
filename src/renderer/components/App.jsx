@@ -3,7 +3,7 @@ import Store from 'electron-store';
 import fs from "fs";
 
 const homedir = require('os').homedir();
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, shell} = require('electron');
 const {execSync} = require('child_process');
 const path = require('path');
 
@@ -180,6 +180,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <span className="App__header-title">Helmet 4.1</span>
         &nbsp;
         <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
+        <a className="header-documentation-link" target="_blank" onClick={() => shell.openExternal("https://hsldevcom.github.io/helmet-docs/")}> <DocumentationIcon/> </a>
       </div>
 
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}

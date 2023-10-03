@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 
 const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
-  const [showUIEVENT, setShowUIEVENT] = useState(true);
   const [showINFO, setShowINFO] = useState(true);
+  const [showWARN, setShowWARN] = useState(true);
   const [showERROR, setShowERROR] = useState(true);
   const [showDEBUG, setShowDEBUG] = useState(false);
 
@@ -18,11 +18,6 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
       <div className="Log__header">
 
         <div className="Log__header-controls">
-          <button className={"Log__header-control" + (showUIEVENT ? " Log__header-control--on" : "")}
-                  onClick={(e) => setShowUIEVENT(prevState => !prevState)}
-          >
-            UI-event
-          </button>
           <button className={"Log__header-control" + (showINFO ? " Log__header-control--on" : "")}
                   onClick={(e) => setShowINFO(prevState => !prevState)}
           >
@@ -32,6 +27,11 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
                   onClick={(e) => setShowERROR(prevState => !prevState)}
           >
             ERROR
+          </button>
+          <button className={"Log__header-control" + (showWARN ? " Log__header-control--on" : "")}
+                  onClick={(e) => setShowWARN(prevState => !prevState)}
+          >
+            WARNING
           </button>
           <button className={"Log__header-control" + (showDEBUG ? " Log__header-control--on" : "")}
                   onClick={(e) => setShowDEBUG(prevState => !prevState)}
@@ -46,14 +46,14 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
         {entries.map((entry) => {
           switch (entry.level) {
             case "UI-event":
-              return showUIEVENT ?
+              return showINFO ?
                 <div className={"Log__entry Log__entry--ui"} key={entry.id}>
                   {`[${entry.level}] ${entry.message}`}
                 </div>
                 :
                 "";
 
-            case "INFO":
+            case "INFO" || "UI-event":
               const d = new Date(entry.time);
               const timestamp = `${('00'+d.getHours()).slice(-2)}:${('00'+d.getMinutes()).slice(-2)}`;
               return showINFO ?
@@ -76,6 +76,14 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
 
             case "DEBUG":
               return showDEBUG ?
+                <div className={"Log__entry"} key={entry.id}>
+                  {`[${entry.level}] ${entry.message}`}
+                </div>
+                :
+                "";
+                
+            case "WARN":
+              return showWARN ?
                 <div className={"Log__entry"} key={entry.id}>
                   {`[${entry.level}] ${entry.message}`}
                 </div>
