@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Store from "electron-store";
 import fs from "fs";
 import path from "path";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const {ipcRenderer} = require('electron');
 
@@ -383,27 +384,42 @@ const HelmetProject = ({
 
       {/* Panel for primary view and controls */}
       <div className="Project__runtime">
-        <Runtime
-          projectPath={projectPath}
-          reloadScenarios={() => _loadProjectScenarios(projectPath)}
-          scenarios={scenarios}
-          scenarioIDsToRun={scenarioIDsToRun}
-          runningScenarioID={runningScenarioID}
-          openScenarioID={openScenarioID}
-          setOpenScenarioID={setOpenScenarioID}
-          deleteScenario={(scenario) => {_deleteScenario(scenario)}}
-          handleClickScenarioToActive={_handleClickScenarioToActive}
-          handleClickNewScenario={_handleClickNewScenario}
-          handleClickStartStop={_handleClickStartStop}
-          logArgs={logArgs}
-          duplicateScenario={duplicateScenario}
-        />
-        <CostBenefitAnalysis
-          resultsPath={resultsPath}
-          cbaOptions={cbaOptions}
-          setCbaOptions={setCbaOptions}
-          runCbaScript={_runCbaScript}
-        />
+        <Tabs className="tab-container">
+          <TabList className="tab-list">
+            <Tab selectedClassName="selected-tab" className="tab-list-item">
+              <h4 className="tab-item-name">Scenarios</h4>
+            </Tab>
+            <Tab selectedClassName="selected-tab" className="tab-list-item">
+              <h4 className="tab-item-name">CBA</h4>
+            </Tab>
+          </TabList>
+
+          <TabPanel>
+            <Runtime
+              projectPath={projectPath}
+              reloadScenarios={() => _loadProjectScenarios(projectPath)}
+              scenarios={scenarios}
+              scenarioIDsToRun={scenarioIDsToRun}
+              runningScenarioID={runningScenarioID}
+              openScenarioID={openScenarioID}
+              setOpenScenarioID={setOpenScenarioID}
+              deleteScenario={(scenario) => {_deleteScenario(scenario)}}
+              handleClickScenarioToActive={_handleClickScenarioToActive}
+              handleClickNewScenario={_handleClickNewScenario}
+              handleClickStartStop={_handleClickStartStop}
+              logArgs={logArgs}
+              duplicateScenario={duplicateScenario}
+            />
+          </TabPanel>
+          <TabPanel>
+            <CostBenefitAnalysis
+              resultsPath={resultsPath}
+              cbaOptions={cbaOptions}
+              setCbaOptions={setCbaOptions}
+              runCbaScript={_runCbaScript}
+            />
+          </TabPanel>
+        </Tabs>
       </div>
 
       {/* Panel for secondary view(s) and controls */}
