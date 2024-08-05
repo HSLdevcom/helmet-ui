@@ -177,7 +177,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
       {/* UI title bar, app-version, etc. */}
       <div className="App__header">
-        <span className="App__header-title">Helmet 4.1</span>
+        <span className="App__header-title">Helmet 5.0-alpha</span>
         &nbsp;
         <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
         <a className="header-documentation-link" target="_blank" onClick={() => shell.openExternal("https://hsldevcom.github.io/helmet-docs/")}> <DocumentationIcon/> </a>
