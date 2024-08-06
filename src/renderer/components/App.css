@@ -83,6 +83,9 @@ hr {
     background-color: #ffffff;
     background-image: url('Settings.png');
     background-repeat: no-repeat;
+    background-position: center;
+    padding: 0.5rem;
+    border-radius: 1rem;
 }
 
 .App__header {

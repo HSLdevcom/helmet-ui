@@ -15,6 +15,7 @@
     display: flex;
     justify-content: flex-start;
     list-style: none;
+    list-style-position: inside;
     width: 100%;
     height: 5rem;
     background-color: #F4F4F5;
@@ -22,20 +23,24 @@
 
 .tab-list-item {
     width: 12rem;
-    height: 2rem;
+    height: 100%;
     display: flex;
     align-content: center;
     justify-content: center;
-    color: lightgray;
+    color: #333333;
+    border-radius: 1rem 1rem 0 0;
+    background-color: white;
+    opacity: 0.65;
+    margin-left: 5px;
 }
 
 .tab-item-name {
-    margin-top: 2rem;
+    padding-top: 2rem;
 }
 
 .selected-tab {
     background-color: white;
     height: 100%;
     color: #333333;
-    border-radius: 1rem 1rem 0 0;
+    opacity: 1;
 }

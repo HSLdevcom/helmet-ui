@@ -386,11 +386,11 @@ const HelmetProject = ({
       <div className="Project__runtime">
         <Tabs className="tab-container">
           <TabList className="tab-list">
-            <Tab selectedClassName="selected-tab" className="tab-list-item">
-              <h4 className="tab-item-name">Scenarios</h4>
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
+              Scenarios
             </Tab>
-            <Tab selectedClassName="selected-tab" className="tab-list-item">
-              <h4 className="tab-item-name">CBA</h4>
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
+              CBA
             </Tab>
           </TabList>
 
