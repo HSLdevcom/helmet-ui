@@ -387,7 +387,7 @@ const HelmetProject = ({
         <Tabs className="tab-container">
           <TabList className="tab-list">
             <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
-              Scenarios
+              Skenaariot
             </Tab>
             <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
               CBA
