@@ -10,6 +10,7 @@ body {
     background-color: #F4F4F5;
     font-size: 18px;
     font-family: gotham_rounded_medium, sans-serif;
+    overflow-x: hidden;
 }
 
 button {
