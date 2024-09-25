@@ -394,7 +394,7 @@ const HelmetProject = ({
             </Tab>
           </TabList>
 
-          <TabPanel>
+          <TabPanel className="runtime-tab">
             <Runtime
               projectPath={projectPath}
               reloadScenarios={() => _loadProjectScenarios(projectPath)}

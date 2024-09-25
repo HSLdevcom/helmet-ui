@@ -3,7 +3,7 @@
     box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
-    margin-top: 3rem;
+    margin-top: 1rem;
 }
 
 .CBA__heading {
@@ -63,9 +63,6 @@
 .CBA__radio-label {
     margin: 0;
     padding: 0;
-}
-
-.CBA__run {
 }
 
 .CBA__run button {
