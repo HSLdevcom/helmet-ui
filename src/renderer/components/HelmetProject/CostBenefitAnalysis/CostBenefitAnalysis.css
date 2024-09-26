@@ -1,10 +1,9 @@
 .CBA {
-    background: #F4F4F5;
-    border-top: 1px solid #CCCCCC;
-    border-bottom: 1px solid #CCCCCC;
+    background: #FFFFFF;
     box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
+    margin-top: 1rem;
 }
 
 .CBA__heading {
@@ -64,9 +63,6 @@
 .CBA__radio-label {
     margin: 0;
     padding: 0;
-}
-
-.CBA__run {
 }
 
 .CBA__run button {

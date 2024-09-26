@@ -7,9 +7,10 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    background: #ffffff;
+    background-color: #F4F4F5;
     font-size: 18px;
     font-family: gotham_rounded_medium, sans-serif;
+    overflow-x: hidden;
 }
 
 button {
@@ -83,6 +84,9 @@ hr {
     background-color: #ffffff;
     background-image: url('Settings.png');
     background-repeat: no-repeat;
+    background-position: center;
+    padding: 0.5rem;
+    border-radius: 1rem;
 }
 
 .App__header {
@@ -102,14 +106,12 @@ hr {
     letter-spacing: -0.02em;
 }
 
-.App__header-title {
-}
-
 .App__header-version {
     font-size: 60%;
 }
 
 .App__body {
+    height: 920px;
 }
 
 .header-documentation-link {
