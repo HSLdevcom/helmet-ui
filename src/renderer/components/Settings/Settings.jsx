@@ -1,11 +1,23 @@
 import React from 'react';
 import path from "path";
 const {dialog} = require('@electron/remote');
-import {searchEMMEPython} from './search_emme_pythonpath';
 import versions from '../versions';
+import { listEMMEPythonPaths } from './search_emme_pythonpath';
+
+const EnvironmentOption = ({
+  envPath, isSelected, setPath, removePath,
+}) => {
+  return (
+    <div className="Settings__environment_option">
+      <p>{envPath}</p>
+      <button className="Settings__env_option_btn" disabled={isSelected} onClick={() => setPath(envPath)}>Valitse</button>
+      <button className="Settings__env_option_btn" onClick={() => removePath(envPath)}>Poista</button>
+    </div>
+  )
+}
 
 const Settings = ({
-  emmePythonPath, setEMMEPythonPath,
+  emmePythonPath, emmePythonEnvs, setEMMEPythonPath, setEMMEPythonEnvs, removeFromEMMEPythonEnvs,
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   basedataPath, setBasedataPath,
@@ -24,7 +36,12 @@ const Settings = ({
 
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Emme Python v3.7</span>
+          <span className="Settings__pseudo-label">Valittu Python-ympäristö: {emmePythonPath}</span>
+          <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
+          { emmePythonEnvs.map(env => { return <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
+             setPath={setEMMEPythonPath} 
+             removePath={removeFromEMMEPythonEnvs} />}) }
+          <br/>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
             {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
           </label>
@@ -46,18 +63,18 @@ const Settings = ({
                    })
                  }}
           />
+
         <button className="Settings__input-btn"
                   onClick={(e) => {
-                    const [found, pythonPath] = searchEMMEPython();
+                    const [found, pythonPaths] = listEMMEPythonPaths();
                     if (found) {
-                      if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
-                        setEMMEPythonPath(pythonPath);
-                      }
+                      alert(`Python-ympäristöjä löytyi. Valitse listasta oikea EMME Python-ympäristö ja ota sen jälkeen käyttöön ${pythonPaths}`)
+                      setEMMEPythonEnvs(pythonPaths);
                     } else {
                       alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nSyötä Pythonin polku manuaalisesti.`);
                     }}}
           >
-            Hae Python automaattisesti
+            Etsi Python-ympäristöjä
           </button>
         </div>
         <div className="Settings__dialog-input-group">

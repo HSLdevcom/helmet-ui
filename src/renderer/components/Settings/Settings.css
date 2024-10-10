@@ -99,3 +99,31 @@
     height: 40px;
     font-size: 16px;
 }
+
+.Settings__environment_option {
+    display: flex;
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 325;
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: inherit;
+    min-height: 2rem;
+    align-items: center;
+    justify-items: center;
+    flex-wrap: wrap;
+}
+
+.Settings__env_option_btn {
+    width: 4rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    margin-left: 1.5rem;
+}
