@@ -63,7 +63,6 @@ const listEMMEPythonPaths = () => {
     `\\Program Files (x86)\\${commonEmmePath}\\${pythonPathPostfix}`,
     `\\${commonEmmePath}\\${pythonPathPostfix}`,
     `usr/bin/python${pythonVersion.major}`, // mainly for developers on Mac & Linux
-    `Users/erkki/pyyttoni/testi/testikansio/testiloremipsum2.34.5`,
   ];
   const allPathCombinations = drives.reduce(
     (accumulator, d) => {

@@ -108,7 +108,7 @@
     background: #ffffff;
     box-sizing: border-box;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 325;
     color: #333333;
     white-space: nowrap;
@@ -123,7 +123,18 @@
 
 .Settings__env_option_btn {
     width: 4rem;
-    height: 2.5rem;
+    height: 2rem;
     border-radius: 5px;
     margin-left: 1.5rem;
+    font-size: 12px;
+}
+
+.Settings__env_btn_disabled {
+    color: #888888;
+}
+
+.Settings__env_option_divider {
+    width: 100%;
+    height: 1rem;
+    border-bottom: 1px solid #CCCCCC;
 }

@@ -44,6 +44,15 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
   }
 
+  const _addToEMMEPythonEnvs = (path) => {
+    const pythonEnvs = emmePythonEnvs.slice();
+    const foundPath = pythonEnvs.indexOf(path);
+    if (foundPath === -1) {
+      pythonEnvs.push(path);
+      _setEMMEPythonEnvs(pythonEnvs);
+    }
+  }
+
   const _setHelmetScriptsPath = (newPath) => {
     // Cannot use state variable since it'd be undefined at times
     const pythonPath = globalSettingsStore.current.get('emme_python_path');
@@ -185,6 +194,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
           setEMMEPythonEnvs={_setEMMEPythonEnvs}
+          addToEMMEPythonEnvs={_addToEMMEPythonEnvs}
           removeFromEMMEPythonEnvs={_removeFromEMMEPythonEnvs}
           setHelmetScriptsPath={_setHelmetScriptsPath}
           setProjectPath={_setProjectPath}

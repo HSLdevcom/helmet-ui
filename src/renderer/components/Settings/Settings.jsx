@@ -3,6 +3,7 @@ import path from "path";
 const {dialog} = require('@electron/remote');
 import versions from '../versions';
 import { listEMMEPythonPaths } from './search_emme_pythonpath';
+import classNames from 'classnames';
 
 const EnvironmentOption = ({
   envPath, isSelected, setPath, removePath,
@@ -10,14 +11,16 @@ const EnvironmentOption = ({
   return (
     <div className="Settings__environment_option">
       <p>{envPath}</p>
-      <button className="Settings__env_option_btn" disabled={isSelected} onClick={() => setPath(envPath)}>Valitse</button>
+      <button className={classNames('Settings__env_option_btn', { 'Settings__env_btn_disabled': isSelected})} disabled={isSelected} onClick={() => setPath(envPath)}>{isSelected ? 'Käytössä' : 'Valitse'}</button>
       <button className="Settings__env_option_btn" onClick={() => removePath(envPath)}>Poista</button>
     </div>
   )
 }
 
+const PathOptionDivider = () => <div className='Settings__env_option_divider' />
+
 const Settings = ({
-  emmePythonPath, emmePythonEnvs, setEMMEPythonPath, setEMMEPythonEnvs, removeFromEMMEPythonEnvs,
+  emmePythonPath, emmePythonEnvs, setEMMEPythonPath, setEMMEPythonEnvs, addToEMMEPythonEnvs, removeFromEMMEPythonEnvs,
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   basedataPath, setBasedataPath,
@@ -36,34 +39,32 @@ const Settings = ({
 
         <div className="Settings__dialog-heading">Projektin asetukset</div>
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Valittu Python-ympäristö: {emmePythonPath}</span>
           <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
-          { emmePythonEnvs.map(env => { return <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
+          { emmePythonEnvs.map((env, index) => { return (
+            <div>
+              <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
              setPath={setEMMEPythonPath} 
-             removePath={removeFromEMMEPythonEnvs} />}) }
-          <br/>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
-            {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
-          </label>
-          <input className="Settings__hidden-input"
-                 id="hidden-input-emme-python-path"
-                 type="text"
-                 onClick={()=>{
-                   dialog.showOpenDialog({
-                     defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
-                     filters: [
-                       { name: 'Executable', extensions: ['exe'] },
-                       { name: 'All Files', extensions: ['*'] }
-                     ],
-                     properties: ['openFile']
-                   }).then((e)=>{
-                     if (!e.canceled) {
-                       setEMMEPythonPath(e.filePaths[0]);
-                     }
-                   })
-                 }}
-          />
-
+             removePath={removeFromEMMEPythonEnvs}/>
+             { index < emmePythonEnvs.length && <PathOptionDivider/> }
+            </div>)})}
+        <button className="Settings__input-btn"
+                  onClick={()=>{
+                    dialog.showOpenDialog({
+                      defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
+                      filters: [
+                        { name: 'Executable', extensions: ['exe'] },
+                        { name: 'All Files', extensions: ['*'] }
+                      ],
+                      properties: ['openFile']
+                    }).then((e)=>{
+                      if (!e.canceled) {
+                        addToEMMEPythonEnvs(e.filePaths[0]);
+                      }
+                    })
+                  }}
+          >
+            Lisää Python-ympäristö
+          </button>
         <button className="Settings__input-btn"
                   onClick={(e) => {
                     const [found, pythonPaths] = listEMMEPythonPaths();
@@ -77,6 +78,7 @@ const Settings = ({
             Etsi Python-ympäristöjä
           </button>
         </div>
+        <br/>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet-model-system</span>
           {isDownloadingHelmetScripts ?
