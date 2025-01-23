@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import path from "path";
 const {dialog} = require('@electron/remote');
-import versions from '../versions';
+const versions = require('../versions');
 import { listEMMEPythonPaths } from './search_emme_pythonpath';
 import classNames from 'classnames';
 
@@ -10,12 +10,45 @@ const EnvironmentOption = ({
 }) => {
   return (
     <div className="Settings__environment_option">
-      <p>{envPath}</p>
-      <button className={classNames('Settings__env_option_btn', { 'Settings__env_btn_disabled': isSelected})} disabled={isSelected} onClick={() => setPath(envPath)}>{isSelected ? 'Käytössä' : 'Valitse'}</button>
-      <button className="Settings__env_option_btn" onClick={() => removePath(envPath)}>Poista</button>
+      <p className='Settings__env_option_text'>{envPath}</p>
+      <button className={classNames('Settings__env_option_btn', { 'Settings__btn_disabled': isSelected})} disabled={isSelected} onClick={() => setPath(envPath)}>{isSelected ? 'Käytössä' : 'Valitse'}</button>
+      <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>Poista</button>
     </div>
   )
 }
+
+const EmmeVersionEdit = ({
+  emmeVersion, setEmmeVersion, closeEditing
+}) => {
+
+  const [savingDisabled, setSavingDisabled] = useState(true);
+  const [newEmmeVersion, setNewEmmeVersion] = useState('');
+  const VERSION_NUMBER_REGEX = RegExp(/^(\d+\.)?(\d+\.)?(\*|\d+)$/);
+  const validateVersionNumber = (e) => {
+    const regExpResults = e.target.value.match(VERSION_NUMBER_REGEX);
+    return regExpResults !== null;
+  }
+
+  return (
+    <div className='Settings__emme_input'>
+      <span className="Settings__pseudo-label">Syötä uusi EMME versio: </span>
+      <input type='text' defaultValue={emmeVersion} placeholder='esim. 4.5.0' onChange={(e) => {
+        
+        setNewEmmeVersion(e.target.value);
+        const validationPasses = validateVersionNumber(e);
+        setSavingDisabled(!validationPasses);
+      }}></input>
+      <button className={classNames('Settings__emme_edit_save_btn', { 'Settings__btn_disabled': savingDisabled})}
+       disabled={savingDisabled} 
+       onClick={() => {
+          closeEditing();
+          setEmmeVersion(newEmmeVersion);
+        }}>
+        Tallenna
+      </button>
+    </div>
+  )
+};
 
 const PathOptionDivider = () => <div className='Settings__env_option_divider' />
 
@@ -26,8 +59,11 @@ const Settings = ({
   basedataPath, setBasedataPath,
   resultsPath, setResultsPath,
   closeSettings,
-  promptModelSystemDownload,
+  promptModelSystemDownload, emmeVersion, setEmmeVersion,
 }) => {
+
+  const [showEmmeDialog, setShowEmmeDialog] = useState(false);
+
   return (
     <div className="Settings">
 
@@ -38,6 +74,20 @@ const Settings = ({
         <div className="Settings__dialog-controls" onClick={(e) => closeSettings()}></div>
 
         <div className="Settings__dialog-heading">Projektin asetukset</div>
+
+        <div className="Settings__emme_version_group">
+        <span className="Settings__pseudo-label">{`EMME-versio: ${emmeVersion}`}</span>
+        <button className='Settings__emme_edit_btn'
+          onClick={() => {
+            setShowEmmeDialog(!showEmmeDialog);
+          }}
+        >
+          {showEmmeDialog ? 'Peruuta' : 'Muokkaa'}
+        </button>
+        </div>
+        { showEmmeDialog && <EmmeVersionEdit emmeVersion={emmeVersion}
+         setEmmeVersion={setEmmeVersion}
+         closeEditing={() => setShowEmmeDialog(false)} /> }
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
           { emmePythonEnvs && (emmePythonEnvs.map((env, index) => { return (
@@ -47,7 +97,7 @@ const Settings = ({
              removePath={removeFromEMMEPythonEnvs}/>
              { index < emmePythonEnvs.length && <PathOptionDivider/> }
             </div>)}))}
-        <button className="Settings__input-btn"
+        <button className="Settings__python-env-input-btn"
                   onClick={()=>{
                     dialog.showOpenDialog({
                       defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
@@ -65,9 +115,9 @@ const Settings = ({
           >
             Lisää Python-ympäristö
           </button>
-        <button className="Settings__input-btn"
+        <button className="Settings__python-env-input-btn"
                   onClick={(e) => {
-                    const [found, pythonPaths] = listEMMEPythonPaths();
+                    const [found, pythonPaths] = listEMMEPythonPaths(emmeVersion);
                     if (found) {
                       alert(`Python-ympäristöjä löytyi. Valitse listasta oikea EMME Python-ympäristö ja ota sen jälkeen käyttöön ${pythonPaths}`)
                       setEMMEPythonEnvs(pythonPaths);

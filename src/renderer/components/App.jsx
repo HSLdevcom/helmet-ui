@@ -15,6 +15,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [isProjectRunning, setProjectRunning] = useState(false); // whether currently selected Project is running
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
   const [emmePythonEnvs, setEmmePythonEnvs] = useState([]); // List of all discovered python executables
+  const [emmeVersion, setEmmeVersion] = useState(undefined);
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
   const [basedataPath, setBasedataPath] = useState(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
@@ -51,6 +52,11 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       pythonEnvs.push(path);
       _setEMMEPythonEnvs(pythonEnvs);
     }
+  }
+
+  const _setEMMEVersion = (newVersion) => {
+    setEmmeVersion(newVersion);
+    globalSettingsStore.current.set('emme_version', newVersion);
   }
 
   const _setHelmetScriptsPath = (newPath) => {
@@ -145,12 +151,20 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     const existingBasedataPath = globalSettingsStore.current.get('basedata_path');
     const existingResultsPath = globalSettingsStore.current.get('resultdata_path');
     const existingPythonEnvs = globalSettingsStore.current.get('emme_python_envs');
+    const existingEmmeVersion = globalSettingsStore.current.get('emme_version');
     setEmmePythonPath(existingEmmePythonPath);
     setHelmetScriptsPath(existingHelmetScriptsPath);
     setProjectPath(existingProjectPath);
     setBasedataPath(existingBasedataPath);
     setResultsPath(existingResultsPath);
     setEmmePythonEnvs(existingPythonEnvs);
+
+    //If Emme version is uninitialized, fetch version from config file
+    if(existingEmmeVersion === undefined) {
+      _setEMMEVersion(versions.emme_system);
+    } else {
+      _setEMMEVersion(existingEmmeVersion);
+    }
 
     // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath) {
@@ -201,6 +215,8 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           setBasedataPath={_setBasedataPath}
           setResultsPath={_setResultsPath}
           promptModelSystemDownload={_promptModelSystemDownload}
+          emmeVersion={emmeVersion}
+          setEmmeVersion={_setEMMEVersion}
         />
       </div>
 

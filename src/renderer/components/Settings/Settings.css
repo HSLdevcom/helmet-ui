@@ -100,11 +100,20 @@
     font-size: 16px;
 }
 
+.Settings__python-env-input-btn {
+    margin: 10px auto 0 auto;
+    height: 40px;
+    width: 300px;
+    font-size: 16px;
+}
+
+.Settings__env_option_remove {
+    color: #c92c00;
+}
+
 .Settings__environment_option {
     display: flex;
     width: 100%;
-    padding: 10px 12px;
-    margin-top: 4px;
     background: #ffffff;
     box-sizing: border-box;
     border-radius: 5px;
@@ -121,20 +130,56 @@
     flex-wrap: wrap;
 }
 
-.Settings__env_option_btn {
-    width: 4rem;
-    height: 2rem;
-    border-radius: 5px;
-    margin-left: 1.5rem;
-    font-size: 12px;
+.Settings__env_option_text {
+    width: 100%;
 }
 
-.Settings__env_btn_disabled {
+.Settings__emme_version_group {
+    display: flex;
+    width: 100%;
+}
+
+.Settings__emme_edit_btn {
+    height: 2rem;
+    margin-left: .5rem;
+    font-size: 12px;
+    border: none;
+    margin-top: 6px;
+}
+
+.Settings__emme_edit_save_btn {
+    width: 4rem;
+    height: 2rem;
+    font-size: 12px;
+    border: none;
+    margin-top: 6px;
+}
+
+.Settings__emme_input {
+    width: 100%;
+    height: 5rem;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.Settings__env_option_btn {
+    width: 4rem;
+    height: 1rem;
+    margin-left: 1.5rem;
+    margin-bottom: 5px;
+    font-size: 12px;
+    border: none;
+}
+
+.Settings__btn_disabled {
+    color: #888888;
+}
+
+.Settings__btn_disabled:hover {
     color: #888888;
 }
 
 .Settings__env_option_divider {
     width: 100%;
-    height: 1rem;
     border-bottom: 1px solid #CCCCCC;
 }

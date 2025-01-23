@@ -51,7 +51,6 @@ const Runtime = ({
   const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
 
   const getResultsPathFromLogfilePath = (logfilePath) => {
-    console.log(logfilePath.replace(/\/[^\/]+$/, ''));
     return logfilePath.replace(/\/[^\/]+$/, '');
   }
 
@@ -147,7 +146,6 @@ const Runtime = ({
         {scenarios.map((s) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
-            console.log(scenario);
             const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
               return visibleTooltipProperties.includes(settingKey);
             })
