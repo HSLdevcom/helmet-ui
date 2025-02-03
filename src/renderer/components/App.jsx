@@ -157,7 +157,12 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     setProjectPath(existingProjectPath);
     setBasedataPath(existingBasedataPath);
     setResultsPath(existingResultsPath);
-    setEmmePythonEnvs(existingPythonEnvs);
+
+    if(Array.isArray(existingPythonEnvs)) {
+      setEmmePythonEnvs(existingPythonEnvs);
+    } else {
+      setEmmePythonEnvs([]);
+    }
 
     //If Emme version is uninitialized, fetch version from config file
     if(existingEmmeVersion === undefined) {

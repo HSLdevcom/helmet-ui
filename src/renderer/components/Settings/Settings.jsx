@@ -90,7 +90,7 @@ const Settings = ({
          closeEditing={() => setShowEmmeDialog(false)} /> }
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
-          { emmePythonEnvs && (emmePythonEnvs.map((env, index) => { return (
+          { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
             <div>
               <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
              setPath={setEMMEPythonPath} 
