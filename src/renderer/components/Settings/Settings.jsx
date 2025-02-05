@@ -17,39 +17,6 @@ const EnvironmentOption = ({
   )
 }
 
-const EmmeVersionEdit = ({
-  emmeVersion, setEmmeVersion, closeEditing
-}) => {
-
-  const [savingDisabled, setSavingDisabled] = useState(true);
-  const [newEmmeVersion, setNewEmmeVersion] = useState('');
-  const VERSION_NUMBER_REGEX = RegExp(/^(\d+\.)?(\d+\.)?(\*|\d+)$/);
-  const validateVersionNumber = (e) => {
-    const regExpResults = e.target.value.match(VERSION_NUMBER_REGEX);
-    return regExpResults !== null;
-  }
-
-  return (
-    <div className='Settings__emme_input'>
-      <span className="Settings__pseudo-label">Syötä uusi EMME versio: </span>
-      <input type='text' defaultValue={emmeVersion} placeholder='esim. 4.5.0' onChange={(e) => {
-        
-        setNewEmmeVersion(e.target.value);
-        const validationPasses = validateVersionNumber(e);
-        setSavingDisabled(!validationPasses);
-      }}></input>
-      <button className={classNames('Settings__emme_edit_save_btn', { 'Settings__btn_disabled': savingDisabled})}
-       disabled={savingDisabled} 
-       onClick={() => {
-          closeEditing();
-          setEmmeVersion(newEmmeVersion);
-        }}>
-        Tallenna
-      </button>
-    </div>
-  )
-};
-
 const PathOptionDivider = () => <div className='Settings__env_option_divider' />
 
 const Settings = ({
@@ -59,10 +26,8 @@ const Settings = ({
   basedataPath, setBasedataPath,
   resultsPath, setResultsPath,
   closeSettings,
-  promptModelSystemDownload, emmeVersion, setEmmeVersion,
+  promptModelSystemDownload,
 }) => {
-
-  const [showEmmeDialog, setShowEmmeDialog] = useState(false);
 
   return (
     <div className="Settings">
@@ -75,19 +40,6 @@ const Settings = ({
 
         <div className="Settings__dialog-heading">Projektin asetukset</div>
 
-        <div className="Settings__emme_version_group">
-        <span className="Settings__pseudo-label">{`EMME-versio: ${emmeVersion}`}</span>
-        <button className='Settings__emme_edit_btn'
-          onClick={() => {
-            setShowEmmeDialog(!showEmmeDialog);
-          }}
-        >
-          {showEmmeDialog ? 'Peruuta' : 'Muokkaa'}
-        </button>
-        </div>
-        { showEmmeDialog && <EmmeVersionEdit emmeVersion={emmeVersion}
-         setEmmeVersion={setEmmeVersion}
-         closeEditing={() => setShowEmmeDialog(false)} /> }
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
           { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
@@ -117,12 +69,12 @@ const Settings = ({
           </button>
         <button className="Settings__python-env-input-btn"
                   onClick={(e) => {
-                    const [found, pythonPaths] = listEMMEPythonPaths(emmeVersion);
+                    const [found, pythonPaths] = listEMMEPythonPaths();
                     if (found) {
-                      alert(`Python-ympäristöjä löytyi. Valitse listasta oikea EMME Python-ympäristö ja ota sen jälkeen käyttöön ${pythonPaths}`)
+                      alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`)
                       setEMMEPythonEnvs(pythonPaths);
                     } else {
-                      alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nSyötä Pythonin polku manuaalisesti.`);
+                      alert(`Python-asennukset ${versions.emme_major_versions.toString()} eivät löytyneet oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
                     }}}
           >
             Etsi Python-ympäristöjä

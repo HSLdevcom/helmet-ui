@@ -15,7 +15,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [isProjectRunning, setProjectRunning] = useState(false); // whether currently selected Project is running
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
   const [emmePythonEnvs, setEmmePythonEnvs] = useState([]); // List of all discovered python executables
-  const [emmeVersion, setEmmeVersion] = useState(undefined);
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
   const [basedataPath, setBasedataPath] = useState(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
@@ -52,11 +51,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       pythonEnvs.push(path);
       _setEMMEPythonEnvs(pythonEnvs);
     }
-  }
-
-  const _setEMMEVersion = (newVersion) => {
-    setEmmeVersion(newVersion);
-    globalSettingsStore.current.set('emme_version', newVersion);
   }
 
   const _setHelmetScriptsPath = (newPath) => {
@@ -164,13 +158,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       setEmmePythonEnvs([]);
     }
 
-    //If Emme version is uninitialized, fetch version from config file
-    if(existingEmmeVersion === undefined) {
-      _setEMMEVersion(versions.emme_system);
-    } else {
-      _setEMMEVersion(existingEmmeVersion);
-    }
-
     // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath) {
       _setProjectPath(homedir);
@@ -220,8 +207,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           setBasedataPath={_setBasedataPath}
           setResultsPath={_setResultsPath}
           promptModelSystemDownload={_promptModelSystemDownload}
-          emmeVersion={emmeVersion}
-          setEmmeVersion={_setEMMEVersion}
         />
       </div>
 
