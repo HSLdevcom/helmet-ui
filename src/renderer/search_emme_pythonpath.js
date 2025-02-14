@@ -42,21 +42,30 @@ const searchEMMEPython = () => {
   }
 };
 
-const listEMMEPythonPaths = () => {
-  // Set Windows' python exe path postfix (e.g. Python27\python.exe)
-  const p = getVersion(versions.emme_python);
-  const pythonPathPostfix = `Python${p.major}${p.minor}\\python.exe`;
-  // Search from environment variable "EMMEPATH"
-  const envEmmePath = process.env.EMMEPATH || '';
-  const envEmmePythonPath = path.join(envEmmePath, pythonPathPostfix);
-  if (envEmmePath && fs.existsSync(envEmmePythonPath)) {
+const checkEmmePythonEnv = () => {
+   // Set Windows' python exe path postfix (e.g. Python27\python.exe)
+   const p = getVersion(versions.emme_python);
+   const pythonPathPostfix = `Python${p.major}${p.minor}\\python.exe`;
+   // Search from environment variable "EMMEPATH"
+   const envEmmePath = process.env.EMMEPATH || '';
+   const envEmmePythonPath = path.join(envEmmePath, pythonPathPostfix);
+   if (envEmmePath && fs.existsSync(envEmmePythonPath)) {
     return [true, envEmmePythonPath];
-  }
+   } else {
+    return [false, null];
+   }
+}
 
-  // Not found based on EMMEPATH, try guessing some common locations on Windows
+const listEMMEPythonPaths = () => {
   const pythonVersion = getVersion(versions.emme_python);
 
   const commonEmmePaths = []
+  const pythonInstallations = []
+
+  // Check if Windows python exe exists in environment variables
+  const [hasPythonEnvInstallation, pythonEnvInstallation] = checkEmmePythonEnv();
+  if(hasPythonEnvInstallation) { pythonInstallations.push(pythonEnvInstallation) };
+
   versions.emme_major_versions.forEach(majorVersion => { commonEmmePaths.push(`INRO\\Emme\\Emme ${majorVersion}`) })
 
   const drives = ['C:', 'D:', 'E:', 'F:', 'G:', 'H:', 'I:', 'J:', '/'];
@@ -75,7 +84,6 @@ const listEMMEPythonPaths = () => {
       // Combine each (d)rive to all (p)aths, and merge results via reduce
       return accumulator.concat(paths.map((p) => `${d}${p}`));
     }, []);
-  const pythonInstallations = []
   allPathCombinations.forEach((pathCombination) => {
     const foundPythonEnv = hasPythonEnv(pathCombination);
     if (foundPythonEnv !== null) {
@@ -133,7 +141,6 @@ function hasPythonEnv(basePath) {
       }
     })
   }
-  console.log(exePaths);
   return exePaths;
 }
 

@@ -133,6 +133,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       if (found) {
         if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
+          globalSettingsStore.current.set('emme_python_envs', [pythonPath])
         }
       } else {
         alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
