@@ -72,7 +72,7 @@ const Settings = ({
                     const [found, pythonPaths] = listEMMEPythonPaths();
                     if (found) {
                       alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
-                      console.log(pythonPaths);
+                      console.log(Array.isArray(pythonPaths));
                       setEMMEPythonEnvs(pythonPaths);
                     } else {
                       alert(`Python-asennukset ${versions.emme_major_versions.toString()} eivät löytyneet oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);

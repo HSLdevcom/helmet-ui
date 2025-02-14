@@ -69,7 +69,6 @@ const listEMMEPythonPaths = () => {
     )
   })
   paths.push(`usr/bin/python${pythonVersion.major}`); // mainly for developers on Mac & Linux
-  paths.push(`Users/erkki/testi`);
 
   const allPathCombinations = drives.reduce(
     (accumulator, d) => {
@@ -134,6 +133,7 @@ function hasPythonEnv(basePath) {
       }
     })
   }
+  console.log(exePaths);
   return exePaths;
 }
 
