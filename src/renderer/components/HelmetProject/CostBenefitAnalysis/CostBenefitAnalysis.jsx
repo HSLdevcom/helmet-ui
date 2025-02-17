@@ -8,6 +8,9 @@ const CostBenefitAnalysis = ({
   return (
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
+      <div className="CBA_instructions-container">
+        <p>*INSTRUCTIONS ON HOW TO PERFORM CBA ANALYSIS*</p>
+      </div>
       <table className="CBA__choices">
         <tbody>
           <tr>

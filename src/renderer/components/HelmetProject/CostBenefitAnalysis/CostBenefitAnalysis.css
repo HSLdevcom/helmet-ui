@@ -68,3 +68,7 @@
 .CBA__run button {
     margin-top: 20px;
 }
+
+.CBA_instructions-container {
+    height: 10rem;
+}
