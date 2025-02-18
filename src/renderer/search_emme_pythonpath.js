@@ -119,6 +119,8 @@ function hasPythonEnv(basePath) {
       if(path.startsWith("Emme ")) {
         const majorVersionFolderPath = `${basePath}${getDirSeparator()}${path}`;
         const majorVersionFolderPathFiles = fs.readdirSync(majorVersionFolderPath);
+
+        console.log(majorVersionFolderPathFiles);
         
         // Filter away every folder except possible Emme installation folders
         const subVersionFolders = majorVersionFolderPathFiles.filter(file => file.startsWith("Emme-"));
@@ -126,6 +128,8 @@ function hasPythonEnv(basePath) {
           // Go through the subdirectory and look for a python executable, should be in Emme-x.xx.xx.xx/Python/python.exe on Windows machines.
           const emmeFolderFilesPath = majorVersionFolderPath.concat(getDirSeparator(), subVersionFolder);
           const emmeFolderFiles = fs.readdirSync(emmeFolderFilesPath);
+          console.log(emmeFolderFilesPath);
+          console.log(emmeFolderFiles);
           emmeFolderFiles.forEach(folderPath => {
             if(folderPath.startsWith("Python")) {
               const pythonFolderPath = emmeFolderFilesPath.concat(getDirSeparator(), folderPath);
