@@ -72,9 +72,9 @@ const listEMMEPythonPaths = () => {
   const paths = []
   commonEmmePaths.forEach(commonEmmePath => {
     paths.push(
-      `\\Program Files\\${commonEmmePath}`,
-      `\\Program Files (x86)\\${commonEmmePath}`,
-      `\\${commonEmmePath}`,
+      `Program Files\\${commonEmmePath}`,
+      `Program Files (x86)\\${commonEmmePath}`,
+      `${commonEmmePath}`,
     )
   })
   paths.push(`usr/bin/python${pythonVersion.major}`); // mainly for developers on Mac & Linux
@@ -83,7 +83,7 @@ const listEMMEPythonPaths = () => {
   const allPathCombinations = drives.reduce(
     (accumulator, d) => {
       // Combine each (d)rive to all (p)aths, and merge results via reduce
-      return accumulator.concat(paths.map((p) => `${d}${p}`));
+      return accumulator.concat(paths.map((p) => path.join(d,p)));
     }, []);
   allPathCombinations.forEach((pathCombination) => {
     const foundPythonEnv = hasPythonEnv(pathCombination);
@@ -112,48 +112,46 @@ function getVersion(semver) {
 }
 
 function hasPythonEnv(basePath) {
-  const pathExists = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory();
+  const pathExists = fs.existsSync(basePath);
   console.log(basePath);
   console.log(pathExists);
   let exePaths = [];
   if (pathExists) {
-    const subPaths = fs.readdirSync(basePath)
-    subPaths.forEach(path => {
-      if(path.startsWith("Emme ")) {
-        const majorVersionFolderPath = `${basePath}${getDirSeparator()}${path}`;
-        const majorVersionFolderPathFiles = fs.readdirSync(majorVersionFolderPath);
-
-        console.log(majorVersionFolderPathFiles);
-        
-        // Filter away every folder except possible Emme installation folders
-        const subVersionFolders = majorVersionFolderPathFiles.filter(file => file.startsWith("Emme-"));
-        subVersionFolders.forEach(subVersionFolder => {
-          // Go through the subdirectory and look for a python executable, should be in Emme-x.xx.xx.xx/Python/python.exe on Windows machines.
-          const emmeFolderFilesPath = majorVersionFolderPath.concat(getDirSeparator(), subVersionFolder);
-          const emmeFolderFiles = fs.readdirSync(emmeFolderFilesPath);
-          console.log(emmeFolderFilesPath);
-          console.log(emmeFolderFiles);
-          emmeFolderFiles.forEach(folderPath => {
-            if(folderPath.startsWith("Python")) {
-              const pythonFolderPath = emmeFolderFilesPath.concat(getDirSeparator(), folderPath);
-              const pythonPathFiles = fs.readdirSync(pythonFolderPath);
-              pythonPathFiles.forEach(fileName => {
-                if(fileName === 'python.exe') {
-                  exePaths.push(pythonFolderPath.concat(getDirSeparator(), fileName));
-                }
-              })
-            }
+    try {
+      const subPaths = fs.readdirSync(basePath)
+      subPaths.forEach(subPath => {
+        if(subPath.startsWith("Emme ")) {
+          const majorVersionFolderPath = path.join(basePath, subPath);
+          const majorVersionFolderPathFiles = fs.readdirSync(majorVersionFolderPath);
+  
+          console.log(majorVersionFolderPathFiles);
+          
+          // Filter away every folder except possible Emme installation folders
+          const subVersionFolders = majorVersionFolderPathFiles.filter(file => file.startsWith("Emme-"));
+          subVersionFolders.forEach(subVersionFolder => {
+            // Go through the subdirectory and look for a python executable, should be in Emme-x.xx.xx.xx/Python/python.exe on Windows machines.
+            const emmeFolderFilesPath = path.join(majorVersionFolderPath, subVersionFolder);
+            const emmeFolderFiles = fs.readdirSync(emmeFolderFilesPath);
+            emmeFolderFiles.forEach(emmeFolderPath => {
+              if(emmeFolderPath.startsWith("Python")) {
+                const pythonFolderPath = path.join(emmeFolderFilesPath, emmeFolderPath);
+                const pythonPathFiles = fs.readdirSync(pythonFolderPath);
+                pythonPathFiles.forEach(fileName => {
+                  if(fileName === 'python.exe') {
+                    exePaths.push(path.join(pythonFolderPath, fileName));
+                  }
+                })
+              }
+            })
           })
-        })
-      }
-    })
+        }
+      })
+    }
+    catch(e) {
+      console.log(`Error traversing path ${basePath}`);
+    }
   }
   return exePaths;
-}
-
-function getDirSeparator() {
-  const isRunningOnWindows = os.platform() === 'win32';
-  return isRunningOnWindows ? '\\' : '/'
 }
 
 module.exports = {
