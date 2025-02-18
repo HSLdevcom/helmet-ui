@@ -113,12 +113,11 @@ function getVersion(semver) {
 
 function hasPythonEnv(basePath) {
   const pathExists = fs.existsSync(basePath);
-  console.log(basePath);
-  console.log(pathExists);
   let exePaths = [];
   if (pathExists) {
     try {
       const subPaths = fs.readdirSync(basePath)
+      console.log(subPaths);
       subPaths.forEach(subPath => {
         if(subPath.startsWith("Emme ")) {
           const majorVersionFolderPath = path.join(basePath, subPath);
