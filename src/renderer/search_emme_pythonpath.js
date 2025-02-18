@@ -78,6 +78,7 @@ const listEMMEPythonPaths = () => {
     )
   })
   paths.push(`usr/bin/python${pythonVersion.major}`); // mainly for developers on Mac & Linux
+  paths.push('users/erkki/testi');
 
   const allPathCombinations = drives.reduce(
     (accumulator, d) => {
@@ -112,6 +113,8 @@ function getVersion(semver) {
 
 function hasPythonEnv(basePath) {
   const pathExists = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory();
+  console.log(basePath);
+  console.log(pathExists);
   let exePaths = [];
   if (pathExists) {
     const subPaths = fs.readdirSync(basePath)
