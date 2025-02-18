@@ -120,17 +120,14 @@ function hasPythonEnv(basePath) {
         if(subPath.startsWith("Emme")) {
           const emmeVersionFolder = path.join(basePath, subPath);
           const emmeVersionFolderContents = fs.readdirSync(emmeVersionFolder);
-  
-          console.log(emmeVersionFolderPathFiles);
-          console.log(emmeVersionFolderContents);
-          
           emmeVersionFolderContents.forEach(emmeFolderPath => {
             if(emmeFolderPath.startsWith("Python")) {
               const pythonFolderPath = path.join(emmeVersionFolder, emmeFolderPath);
               const pythonPathFiles = fs.readdirSync(pythonFolderPath);
               pythonPathFiles.forEach(fileName => {
                 if(fileName === 'python.exe') {
-                  exePaths.push(path.join(pythonFolderPath, fileName));
+                  const pythonExecutablePath = path.join(pythonFolderPath, fileName);
+                  exePaths.push(pythonExecutablePath);
                 }
               })
             }
@@ -140,6 +137,7 @@ function hasPythonEnv(basePath) {
     }
     catch(e) {
       console.log(`Error traversing path ${basePath}`);
+      console.log(e);
     }
   }
   return exePaths;
