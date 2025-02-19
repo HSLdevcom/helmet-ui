@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const versions = require('../versions');
 const os = require('os');
+const _ = require('lodash');
 
 /**
  * Check and try to set EMME's Python location on Windows, searching from common known paths.
@@ -140,7 +141,11 @@ function hasPythonEnv(basePath) {
       console.log(e);
     }
   }
-  return exePaths;
+  // Filter out duplicates
+  const filteredPaths = _.uniq(exePaths).filter(filteredPath => {
+    return !filteredPath.startsWith('\\');
+  });
+  return filteredPaths;
 }
 
 module.exports = {
