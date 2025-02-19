@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const versions = require('../versions');
-const os = require('os');
 const _ = require('lodash');
 
 /**
