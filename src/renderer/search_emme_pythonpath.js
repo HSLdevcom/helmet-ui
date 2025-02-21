@@ -91,7 +91,11 @@ const listEMMEPythonPaths = () => {
     }
   });
   if (pythonInstallations.length > 0) {
-    return [true, pythonInstallations];
+    // Filter out duplicates
+    const filteredPythons = _.uniq(pythonInstallations).filter(filteredPath => {
+      return !filteredPath.startsWith('\\');
+    });
+    return [true, filteredPythons];
   } else {
     return [false, null];
   }
@@ -140,10 +144,6 @@ function hasPythonEnv(basePath) {
       console.log(e);
     }
   }
-  // Filter out duplicates
-  const filteredPaths = _.uniq(exePaths).filter(filteredPath => {
-    return !filteredPath.startsWith('\\');
-  });
   return filteredPaths;
 }
 
