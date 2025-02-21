@@ -144,7 +144,7 @@ function hasPythonEnv(basePath) {
       console.log(e);
     }
   }
-  return filteredPaths;
+  return exePaths;
 }
 
 module.exports = {
