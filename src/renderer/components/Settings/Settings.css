@@ -131,7 +131,11 @@
 }
 
 .Settings__env_option_text {
-    width: 100%;
+    width: 80%;
+    font-weight: 500;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 .Settings__emme_version_group {
@@ -163,16 +167,16 @@
 }
 
 .Settings__env_option_btn {
-    width: 4rem;
+    width: 1rem;
     height: 1rem;
     margin-left: 1.5rem;
-    margin-bottom: 5px;
     font-size: 12px;
     border: none;
 }
 
-.Settings__btn_disabled {
+.Settings__env_unselected {
     color: #888888;
+    font-weight: 100;
 }
 
 .Settings__btn_disabled:hover {

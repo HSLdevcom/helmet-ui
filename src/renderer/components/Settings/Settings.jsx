@@ -8,11 +8,14 @@ import classNames from 'classnames';
 const EnvironmentOption = ({
   envPath, isSelected, setPath, removePath,
 }) => {
+
+  //Splits the env using OS-spesific delimiter / or \ and then filters out every other substring except the Emme version folder name.
+  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-'));
+
   return (
-    <div className="Settings__environment_option">
-      <p className='Settings__env_option_text'>{envPath}</p>
-      <button className={classNames('Settings__env_option_btn', { 'Settings__btn_disabled': isSelected})} disabled={isSelected} onClick={() => setPath(envPath)}>{isSelected ? 'Käytössä' : 'Valitse'}</button>
-      <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>Poista</button>
+    <div className="Settings__environment_option" key={envPath}>
+      <p className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected})} onClick={() => setPath(envPath)}>{Array.isArray(emmeVersionName) ? emmeVersionName.toString() : envPath}</p>
+      <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>x</button>
     </div>
   )
 }
@@ -43,7 +46,7 @@ const Settings = ({
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
           { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
-            <div>
+            <div key={index}>
               <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
              setPath={setEMMEPythonPath} 
              removePath={removeFromEMMEPythonEnvs}/>
