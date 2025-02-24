@@ -12,12 +12,6 @@
     letter-spacing: -0.02em;
 }
 
-.Runtime__project-path {
-}
-
-.Runtime__reload-scenarios-btn {
-}
-
 /* Scenarios */
 
 .Runtime__scenarios-controls {
@@ -26,6 +20,18 @@
     border-bottom: 1px solid #CCCCCC;
     box-sizing: border-box;
     padding: 20px;
+    height: fit-content;
+    margin-top: 1rem;
+    min-height: 250px;
+    position: relative;
+}
+
+.Runtime__scenarios_controls_drag_handle {
+    cursor: row-resize;
+    height: 20px;
+    background-color: #00985F;
+    position: absolute;
+    z-index: 1;
 }
 
 .Runtime__scenarios-heading {
@@ -38,7 +44,6 @@
 }
 
 .Runtime__scenarios {
-    max-height: 160px;
     width: 700px;
     overflow-y: auto;
 }

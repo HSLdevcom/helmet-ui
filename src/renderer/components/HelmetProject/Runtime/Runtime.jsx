@@ -51,7 +51,6 @@ const Runtime = ({
   const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
 
   const getResultsPathFromLogfilePath = (logfilePath) => {
-    console.log(logfilePath.replace(/\/[^\/]+$/, ''));
     return logfilePath.replace(/\/[^\/]+$/, '');
   }
 
@@ -122,6 +121,26 @@ const Runtime = ({
     return <div/>
   }
 
+  const resizableDiv = document.getElementById("resizableDiv");
+
+  let mousePosition;
+  const resize = (e) => {
+    const yDimension = mousePosition - e.y;
+    mousePosition = e.y;
+    resizableDiv.style.height = (parseInt(getComputedStyle(resizableDiv, '').height) - yDimension) + "px";
+  }
+
+  const onMouseDown = (e) => {
+    if (e.pageY > (e.target.offsetTop + parseInt(getComputedStyle(resizableDiv, '').height)) - 20) {
+      mousePosition = e.y;
+      document.addEventListener("mousemove", resize, false);
+    }
+  }
+
+  const onMouseUp = () => {
+    document.removeEventListener("mousemove", resize, false);
+  }
+
   return (
     <div className="Runtime">
 
@@ -140,14 +159,13 @@ const Runtime = ({
       </div>
       </div>
 
-      <div className="Runtime__scenarios-controls">
+      <div className="Runtime__scenarios-controls" id="resizableDiv" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
-            console.log(scenario);
             const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
               return visibleTooltipProperties.includes(settingKey);
             })
