@@ -44,14 +44,17 @@ const Settings = ({
         <div className="Settings__dialog-heading">Projektin asetukset</div>
 
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Käytettävät Python-ympäristöt:</span>
+          <span className="Settings__pseudo-label">{ emmePythonEnvs.length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
           { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
             <div key={index}>
               <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
-             setPath={setEMMEPythonPath} 
+             setPath={setEMMEPythonPath}
              removePath={removeFromEMMEPythonEnvs}/>
              { index < emmePythonEnvs.length && <PathOptionDivider/> }
             </div>)}))}
+          { emmePythonEnvs.length === 0 &&
+          (<div className="Settings__environment_option_spacer"/>)
+          }
         <button className="Settings__python-env-input-btn"
                   onClick={()=>{
                     dialog.showOpenDialog({
