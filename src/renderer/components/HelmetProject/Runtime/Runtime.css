@@ -28,10 +28,7 @@
 
 .Runtime__scenarios_controls_drag_handle {
     cursor: row-resize;
-    height: 20px;
-    background-color: #00985F;
-    position: absolute;
-    z-index: 1;
+    height: 50px;
 }
 
 .Runtime__scenarios-heading {

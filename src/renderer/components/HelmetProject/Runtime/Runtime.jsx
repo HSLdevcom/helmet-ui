@@ -131,13 +131,17 @@ const Runtime = ({
   }
 
   const onMouseDown = (e) => {
-    if (e.pageY > (e.target.offsetTop + parseInt(getComputedStyle(resizableDiv, '').height)) - 20) {
+    if (e.pageY > (e.target.offsetTop + e.target.offsetHeight)) {
       mousePosition = e.y;
       document.addEventListener("mousemove", resize, false);
     }
   }
 
   const onMouseUp = () => {
+    document.removeEventListener("mousemove", resize, false);
+  }
+
+  const onMouseOut = () => {
     document.removeEventListener("mousemove", resize, false);
   }
 
@@ -159,7 +163,7 @@ const Runtime = ({
       </div>
       </div>
 
-      <div className="Runtime__scenarios-controls" id="resizableDiv" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      <div className="Runtime__scenarios-controls" id="resizableDiv">
       <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
@@ -252,6 +256,7 @@ const Runtime = ({
         </button>
       </div>
       </div>
+      <div className="Runtime__scenarios_controls_drag_handle" onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseOut={onMouseOut} />
       
       <div className="Runtime__start-stop-controls">
         <div className="Runtime__heading">Ajettavana</div>
