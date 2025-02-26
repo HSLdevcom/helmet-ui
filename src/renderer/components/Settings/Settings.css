@@ -136,11 +136,21 @@
 }
 
 .Settings__env_option_text {
-    width: 80%;
+    width: 70%;
     font-weight: 500;
     cursor: pointer;
     text-overflow: ellipsis;
     overflow-x: hidden;
+    margin-left: 1rem;
+}
+
+.Settings__env_selected_logo {
+    width: 25px;
+    height: 25px;
+}
+
+.Settings__logo_hidden {
+    opacity: 0%;
 }
 
 .Settings__emme_version_group {

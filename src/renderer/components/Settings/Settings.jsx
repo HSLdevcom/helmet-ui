@@ -14,6 +14,7 @@ const EnvironmentOption = ({
 
   return (
     <div className="Settings__environment_option" key={envPath}>
+      <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight/></span>
       <p className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected})} onClick={() => setPath(envPath)}>{Array.isArray(emmeVersionName) ? emmeVersionName.toString() : envPath}</p>
       <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>x</button>
     </div>

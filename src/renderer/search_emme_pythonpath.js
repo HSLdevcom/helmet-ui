@@ -74,6 +74,7 @@ const listEMMEPythonPaths = () => {
     paths.push(
       `Program Files\\${commonEmmePath}`,
       `Program Files (x86)\\${commonEmmePath}`,
+      `Program Files (x86)\\Bentley\\OpenPaths`,
       `Program Files\\Bentley\\OpenPaths`,
       `${commonEmmePath}`,
     )
