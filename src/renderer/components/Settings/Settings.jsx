@@ -10,7 +10,7 @@ const EnvironmentOption = ({
 }) => {
 
   //Splits the env using OS-spesific delimiter / or \ and then filters out every other substring except the Emme version folder name.
-  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-'));
+  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-') ? true : subStr.startsWith('EMME'));
 
   return (
     <div className="Settings__environment_option" key={envPath}>

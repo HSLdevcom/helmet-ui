@@ -74,6 +74,7 @@ const listEMMEPythonPaths = () => {
     paths.push(
       `Program Files\\${commonEmmePath}`,
       `Program Files (x86)\\${commonEmmePath}`,
+      `Program Files\\Bentley\\OpenPaths`,
       `${commonEmmePath}`,
     )
   })
@@ -121,7 +122,7 @@ function hasPythonEnv(basePath) {
     try {
       const subPaths = fs.readdirSync(basePath)
       subPaths.forEach(subPath => {
-        if(subPath.startsWith("Emme")) {
+        if(subPath.startsWith("Emme") || subPath.startsWith("EMME")) {
           const emmeVersionFolder = path.join(basePath, subPath);
           const emmeVersionFolderContents = fs.readdirSync(emmeVersionFolder);
           emmeVersionFolderContents.forEach(emmeFolderPath => {
