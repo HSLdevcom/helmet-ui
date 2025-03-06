@@ -53,8 +53,15 @@ const Settings = ({
              removePath={removeFromEMMEPythonEnvs}/>
              { index < emmePythonEnvs.length && <PathOptionDivider/> }
             </div>)}))}
-          { emmePythonEnvs.length === 0 &&
+          { emmePythonEnvs.length === 1 &&
           (<div className="Settings__environment_option_spacer"/>)
+          }
+          {
+            emmePythonEnvs.length === 0 &&
+            (<div>
+                <div className="Settings__environment_option_spacer"/>
+                <div className="Settings__environment_option_spacer"/>
+              </div>)
           }
         <button className="Settings__python-env-input-btn"
                   onClick={()=>{
