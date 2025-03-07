@@ -70,8 +70,13 @@
 }
 
 .CBA_instructions-container {
-    height: 10rem;
-    width: 70%;
+    height: fit-content;
+    margin-bottom: 1rem;
+    width: 65%;
     font-weight: 300;
     word-wrap: break-word;
+}
+
+.CBA_instructions_highlight {
+    color: #007AC9;
 }
