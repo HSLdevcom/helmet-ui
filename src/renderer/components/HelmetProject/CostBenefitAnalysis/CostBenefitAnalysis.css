@@ -71,4 +71,7 @@
 
 .CBA_instructions-container {
     height: 10rem;
+    width: 70%;
+    font-weight: 300;
+    word-wrap: break-word;
 }

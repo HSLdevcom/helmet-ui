@@ -9,7 +9,9 @@ const CostBenefitAnalysis = ({
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
       <div className="CBA_instructions-container">
-        <p>*INSTRUCTIONS ON HOW TO PERFORM CBA ANALYSIS*</p>
+        <p>Hyöty-kustannusanalyysiä varten syötetään vertailuvaihtoehdon (ve0) ja hankevaihtoehdon (ve1) tuloskansio (Tulosten tallennuspolku\Skenaarion nimi).
+           Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto on mahdollista määrittää kahdelle ennustevuodelle.
+           Tulokset tulostuvat Excel-tiedostoon tuloskansiossa.</p>
       </div>
       <table className="CBA__choices">
         <tbody>
