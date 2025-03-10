@@ -42,7 +42,7 @@
 
 .Runtime__scenarios {
     width: 700px;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: 20px;
     height: calc(100% - 95px);
 }
