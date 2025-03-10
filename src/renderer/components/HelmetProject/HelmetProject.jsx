@@ -216,7 +216,7 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      window.location.reload();  // Vex-js dialog input gets stuck otherwise
+      // window.location.reload();  // Testing if the new version works without this hack...
     }
   };
 
