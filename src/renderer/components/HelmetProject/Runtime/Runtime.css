@@ -20,15 +20,15 @@
     border-bottom: 1px solid #CCCCCC;
     box-sizing: border-box;
     padding: 20px;
-    height: fit-content;
+    min-height: 190px;
     margin-top: 1rem;
-    min-height: 250px;
     position: relative;
 }
 
 .Runtime__scenarios_controls_drag_handle {
     cursor: row-resize;
     height: 50px;
+    background-color: #FFFFFF;
 }
 
 .Runtime__scenarios-heading {
@@ -42,7 +42,9 @@
 
 .Runtime__scenarios {
     width: 700px;
-    overflow-y: auto;
+    overflow-y: scroll;
+    scrollbar-width: 20px;
+    height: calc(100% - 95px);
 }
 
 .Runtime__scenario {
@@ -104,6 +106,9 @@
     background: #007AC9;
     border-color: #007AC9;
     color: #ffffff;
+    position: relative;
+    bottom: 16px;
+    z-index: 1;
 }
 .Runtime__add-new-scenario-btn:hover {
     color: #ffffff;
@@ -117,6 +122,10 @@
     background-color: #007AC9;
     background-image: url(../../add.png);
     background-repeat: no-repeat;
+}
+
+.no-select {
+    user-select: none;
 }
 
 /* Start-stop */
