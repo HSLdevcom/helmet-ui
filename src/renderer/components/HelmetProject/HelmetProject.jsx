@@ -78,6 +78,7 @@ const HelmetProject = ({
           }
         }
       });
+      document.getElementsByName("vex")[0].focus();
     };
     promptCreation();
   };
@@ -212,7 +213,7 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      vex.closeAll();
+      
       // window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
   };
@@ -233,27 +234,22 @@ const HelmetProject = ({
     // Check required global parameters are set
     if (!emmePythonPath) {
       alert("Python -sijaintia ei ole asetettu!");
-      vex.closeAll();
       return;
     }
     if (!helmetScriptsPath) {
       alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
-      vex.closeAll();
       return;
     }
     if (!projectPath) {
       alert("Projektin kotikansiota ei ole asetettu, tarkista Asetukset.");
-      vex.closeAll();
       return;
     }
     if (!basedataPath) {
       alert("L\u00E4ht\u00F6datan kansiota ei ole asetettu, tarkista Asetukset.");
-      vex.closeAll();
       return;
     }
     if (!resultsPath) {
       alert("Tulosdatan kansiota ei ole asetettu, tarkista Asetukset.");
-      vex.closeAll();
       return;
     }
 
@@ -274,8 +270,6 @@ const HelmetProject = ({
         return;
       }
     }
-
-    vex.closeAll();
 
     // Perform UI changes to indicate "initializing run of active scenarios"
     setOpenScenarioID(null); // Close any open scenario configuration

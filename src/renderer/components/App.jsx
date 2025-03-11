@@ -110,11 +110,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       if (found) {
         if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
-          vex.closeAll()
         }
       } else {
         alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
-        vex.closeAll()
       }
     }
     // Copy existing global store values to state. Remember: state updates async so refer to existing.
@@ -138,7 +136,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     if (!fs.existsSync(existingProjectPath)) {
       alert(`Projektikansiota ei löydy polusta '${existingProjectPath}'.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
       _setProjectPath(homedir);
-      vex.closeAll();
     }
 
     // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
