@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Store from "electron-store";
 import fs from "fs";
 import path from "path";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const {ipcRenderer} = require('electron');
 
@@ -36,9 +35,6 @@ const HelmetProject = ({
   const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
   const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
   const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
-
-  // User-set scenario list height in the Scenarios tab
-  const [scenarioListHeight, setScenarioListHeight] = useState(null);
 
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
@@ -216,7 +212,8 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      // window.location.reload();  // Testing if the new version works without this hack...
+      vex.closeAll();
+      // window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
   };
 
@@ -236,22 +233,27 @@ const HelmetProject = ({
     // Check required global parameters are set
     if (!emmePythonPath) {
       alert("Python -sijaintia ei ole asetettu!");
+      vex.closeAll();
       return;
     }
     if (!helmetScriptsPath) {
       alert("Helmet Scripts -kansiota ei ole asetettu, tarkista Asetukset.");
+      vex.closeAll();
       return;
     }
     if (!projectPath) {
       alert("Projektin kotikansiota ei ole asetettu, tarkista Asetukset.");
+      vex.closeAll();
       return;
     }
     if (!basedataPath) {
       alert("L\u00E4ht\u00F6datan kansiota ei ole asetettu, tarkista Asetukset.");
+      vex.closeAll();
       return;
     }
     if (!resultsPath) {
       alert("Tulosdatan kansiota ei ole asetettu, tarkista Asetukset.");
+      vex.closeAll();
       return;
     }
 
@@ -272,6 +274,8 @@ const HelmetProject = ({
         return;
       }
     }
+
+    vex.closeAll();
 
     // Perform UI changes to indicate "initializing run of active scenarios"
     setOpenScenarioID(null); // Close any open scenario configuration
@@ -387,44 +391,27 @@ const HelmetProject = ({
 
       {/* Panel for primary view and controls */}
       <div className="Project__runtime">
-        <Tabs className="tab-container">
-          <TabList className="tab-list">
-            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
-              Skenaariot
-            </Tab>
-            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
-              CBA
-            </Tab>
-          </TabList>
-
-          <TabPanel className="runtime-tab">
-            <Runtime
-              projectPath={projectPath}
-              reloadScenarios={() => _loadProjectScenarios(projectPath)}
-              scenarios={scenarios}
-              scenarioIDsToRun={scenarioIDsToRun}
-              runningScenarioID={runningScenarioID}
-              openScenarioID={openScenarioID}
-              setOpenScenarioID={setOpenScenarioID}
-              deleteScenario={(scenario) => {_deleteScenario(scenario)}}
-              handleClickScenarioToActive={_handleClickScenarioToActive}
-              handleClickNewScenario={_handleClickNewScenario}
-              handleClickStartStop={_handleClickStartStop}
-              logArgs={logArgs}
-              duplicateScenario={duplicateScenario}
-              scenarioListHeight={scenarioListHeight}
-              setScenarioListHeight={setScenarioListHeight}
-            />
-          </TabPanel>
-          <TabPanel>
-            <CostBenefitAnalysis
-              resultsPath={resultsPath}
-              cbaOptions={cbaOptions}
-              setCbaOptions={setCbaOptions}
-              runCbaScript={_runCbaScript}
-            />
-          </TabPanel>
-        </Tabs>
+        <Runtime
+          projectPath={projectPath}
+          reloadScenarios={() => _loadProjectScenarios(projectPath)}
+          scenarios={scenarios}
+          scenarioIDsToRun={scenarioIDsToRun}
+          runningScenarioID={runningScenarioID}
+          openScenarioID={openScenarioID}
+          setOpenScenarioID={setOpenScenarioID}
+          deleteScenario={(scenario) => {_deleteScenario(scenario)}}
+          handleClickScenarioToActive={_handleClickScenarioToActive}
+          handleClickNewScenario={_handleClickNewScenario}
+          handleClickStartStop={_handleClickStartStop}
+          logArgs={logArgs}
+          duplicateScenario={duplicateScenario}
+        />
+        <CostBenefitAnalysis
+          resultsPath={resultsPath}
+          cbaOptions={cbaOptions}
+          setCbaOptions={setCbaOptions}
+          runCbaScript={_runCbaScript}
+        />
       </div>
 
       {/* Panel for secondary view(s) and controls */}
