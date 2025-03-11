@@ -54,7 +54,37 @@ const HelmetProject = ({
 
   const _handleClickNewScenario = () => {
     const promptCreation = (previousError) => {
-      vex.dialog.prompt({
+      vex.dialog.open({
+        message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
+        input: `
+          <div class="vex-custom-field-wrapper">
+            <div class="vex-custom-input-wrapper">
+              <input name="scenarioName" type="text" value="" autofocus />
+            </div>
+          </div>
+        `,
+        callback: (inputScenarioName) => {
+          let error = "";
+          // Check for cancel button press
+          if (inputScenarioName === false) {
+            return;
+          }
+          // Check input for initial errors
+          if (inputScenarioName === "") {
+            error = "Nimike on pakollinen, tallennettavaa tiedostonime\u00e4 varten. ";
+          }
+          if (scenarios.map((s) => s.name).includes(inputScenarioName)) {
+            error = "Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin. ";
+          }
+          // Handle recursively any input errors (mandated by the async library since prompt isn't natively supported in Electron)
+          if (error) {
+            promptCreation(error);
+          } else {
+            _createScenario(inputScenarioName);
+          }
+        }
+      });
+      /* vex.dialog.prompt({
         message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
         placeholder: '',
         callback: (inputScenarioName) => {
@@ -77,8 +107,8 @@ const HelmetProject = ({
             _createScenario(inputScenarioName);
           }
         }
-      });
-      document.getElementsByName("vex")[0].focus();
+      }); */
+      // document.getElementsByName("vex")[0].focus();
     };
     promptCreation();
   };
