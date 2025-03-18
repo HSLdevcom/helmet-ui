@@ -96,13 +96,16 @@
 
 .Runtime__scenarios-footer {
     padding-top: 22px;
+    height: 2.5rem;
 }
 
 .Runtime__add-new-scenario-btn {
     background: #007AC9;
     border-color: #007AC9;
     color: #ffffff;
+    height: 2.6rem;
 }
+
 .Runtime__add-new-scenario-btn:hover {
     color: #ffffff;
 }
@@ -127,4 +130,32 @@
 .Runtime__start-stop-scenarios {
     color: #00985F;
     font-weight: bold;
+}
+
+.Runtime__new-scenario-container {
+    display: flex;
+    height: 2.5rem;
+    align-items: center;
+}
+
+.Runtime__new-scenario-input {
+    width: 40%;
+    height: 2.3rem;
+}
+
+.Runtime__new-scenario-input-btn {
+    background: #007AC9;
+    border-color: #007AC9;
+    color: #ffffff;
+    margin-left: .8rem;
+    height: 2rem;
+}
+
+.Runtime__new-scenario-input-btn:hover {
+    color: #ffffff;
+}
+
+.Runtime__hidden-btn {
+    visibility: hidden;
+    height: 0;
 }

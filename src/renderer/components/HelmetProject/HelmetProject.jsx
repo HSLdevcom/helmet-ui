@@ -53,34 +53,25 @@ const HelmetProject = ({
     }
   };
 
-  const _handleClickNewScenario = () => {
-    const promptCreation = (previousError) => {
-      vex.dialog.prompt({
-        message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
-        placeholder: '',
-        callback: (inputScenarioName) => {
-          let error = "";
-          // Check for cancel button press
-          if (inputScenarioName === false) {
-            return;
-          }
-          // Check input for initial errors
-          if (inputScenarioName === "") {
-            error = "Nimike on pakollinen, tallennettavaa tiedostonime\u00e4 varten. ";
-          }
-          if (scenarios.map((s) => s.name).includes(inputScenarioName)) {
-            error = "Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin. ";
-          }
-          // Handle recursively any input errors (mandated by the async library since prompt isn't natively supported in Electron)
-          if (error) {
-            promptCreation(error);
-          } else {
-            _createScenario(inputScenarioName);
-          }
-        }
-      });
-    };
-    promptCreation();
+  const _handleClickNewScenario = (inputScenarioName) => {
+    // Check input for initial errors
+
+    let error = null;
+
+    if (inputScenarioName === "") {
+      error = "Nimike on pakollinen tallennettavaa tiedostonime\u00e4 varten. ";
+    }
+    if (scenarios.map((s) => s.name).includes(inputScenarioName)) {
+      error = "Nimike on jo olemassa ! Valitse toinen nimi tai poista olemassa oleva ensin. ";
+    }
+    // Handle recursively any input errors (mandated by the async library since prompt isn't natively supported in Electron)
+    if (error) {
+      alert(error);
+      return false;
+    } else {
+      _createScenario(inputScenarioName);
+      return true;
+    }
   };
 
   const _handleClickStartStop = () => {
@@ -213,7 +204,7 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      window.location.reload();  // Vex-js dialog input gets stuck otherwise
+      // window.location.reload();  // Vex-js dialog input gets stuck otherwise
     }
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
 const _ = require('lodash');
@@ -10,6 +10,8 @@ const Runtime = ({
   handleClickScenarioToActive, handleClickNewScenario,
   handleClickStartStop, logArgs, duplicateScenario
 }) => {
+
+  const [showNewScenarioPrompt, setShowNewScenarioPrompt] = useState(false);
 
   const visibleTooltipProperties = [
       'emme_project_file_path',
@@ -122,6 +124,26 @@ const Runtime = ({
     return <div/>
   }
 
+  const NewScenarioInput = () => { 
+    const [input, setInput] = useState("")
+    return (
+      <div className="Runtime__new-scenario-container">
+          <input className="Runtime__new-scenario-input" type='text' placeholder='Syötä uuden skenaarion nimi' value={input} onChange={(e) => setInput(e.target.value)} />
+          <button className="Runtime__new-scenario-input-btn" onClick={() => setShowNewScenarioPrompt(!showNewScenarioPrompt)}>
+            <span>Peruuta</span>
+          </button>
+          <button className="Runtime__new-scenario-input-btn" onClick={() => {
+              const isValid = handleClickNewScenario(input);
+              if(isValid) {
+                setShowNewScenarioPrompt(!showNewScenarioPrompt);
+              }
+            }}>
+            <span>Lisää</span>
+          </button>
+      </div>
+    )
+  }
+
   return (
     <div className="Runtime">
 
@@ -147,7 +169,6 @@ const Runtime = ({
         {scenarios.map((s) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
-            console.log(scenario);
             const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
               return visibleTooltipProperties.includes(settingKey);
             })
@@ -226,12 +247,14 @@ const Runtime = ({
         })}
       </div>
       <div className="Runtime__scenarios-footer">
-        <button className="Runtime__add-new-scenario-btn"
+        <button className={classNames("Runtime__add-new-scenario-btn", { 'Runtime__hidden-btn': showNewScenarioPrompt})}
+                hidden={showNewScenarioPrompt}
                 disabled={runningScenarioID}
-                onClick={(e) => handleClickNewScenario()}
+                onClick={() => setShowNewScenarioPrompt(!showNewScenarioPrompt)}
         >
-          <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
+          <span hidden={showNewScenarioPrompt} className="Runtime__add-icon">Uusi Helmet-skenaario</span>
         </button>
+        { showNewScenarioPrompt &&  <NewScenarioInput />}
       </div>
       </div>
       
