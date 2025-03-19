@@ -7,10 +7,10 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    background-color: #F4F4F5;
     font-size: 18px;
     font-family: gotham_rounded_medium, sans-serif;
     overflow-x: hidden;
+    background-color: white;
 }
 
 button {
@@ -76,17 +76,17 @@ hr {
 }
 
 .App__open-settings {
-    position: absolute;
-    top: 87px;
-    right: 58px;
-    width: 24px;
-    height: 24px;
+    width: 42px;
+    height: 42px;
     background-color: #ffffff;
     background-image: url('Settings.png');
     background-repeat: no-repeat;
     background-position: center;
-    padding: 0.5rem;
-    border-radius: 1rem;
+    border-radius: .8rem;
+}
+
+.App__open-settings:hover {
+    cursor: pointer;
 }
 
 .App__header {
@@ -112,13 +112,30 @@ hr {
 
 .App__body {
     height: 920px;
+    margin-top: -20px;
 }
 
 .header-documentation-link {
-    margin-top: .4rem;
-    margin-left: 2rem;
+    margin-right: .8rem;
+    background-color: #ffffff;
+    color: #007AC9;
+    width: 42px;
+    height: 42px;
+    border-radius: .8rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
 }
 
 .header-documentation-link:hover {
     cursor: pointer;
+}
+
+.App__header-button-container {
+    top: 100px;
+    right: 50px;
+    position: absolute;
+    align-self: center;
+    align-items: center;
+    display: flex;
 }
