@@ -51,7 +51,6 @@ const Runtime = ({
   const runningScenario = activeScenarios.filter((scenario) => scenario.id === runningScenarioID);
 
   const getResultsPathFromLogfilePath = (logfilePath) => {
-    console.log(logfilePath.replace(/\/[^\/]+$/, ''));
     return logfilePath.replace(/\/[^\/]+$/, '');
   }
 
@@ -144,28 +143,27 @@ const Runtime = ({
       <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
       <div className="Runtime__scenarios">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
-        {scenarios.map((s) => {
+        {scenarios.map((s, index) => {
           // Component for the tooltip showing scenario settings
           const tooltipContent = (scenario) => {
-            console.log(scenario);
             const filteredScenarioSettings = _.pickBy(scenario, (settingValue, settingKey) => {
               return visibleTooltipProperties.includes(settingKey);
             })
             return (
-              <div>
+              <div key={index}>
                 {
-                  Object.entries(filteredScenarioSettings).map((property) => {
+                  Object.entries(filteredScenarioSettings).map((property, index) => {
                     
                     if(property[0] === 'overriddenProjectSettings') {
 
                       return areGlobalSettingsOverridden(property[1]) 
                        ?
-                        <div>
+                        <div key={index}>
                           <h3>Overridden settings:</h3>
                           { 
-                            Object.entries(property[1]).map(overrideSetting => {
+                            Object.entries(property[1]).map((overrideSetting, index) => {
                               return overrideSetting[1] != null 
-                              ? <p style={{ marginLeft: "1rem", overflow: "hidden" }}>{getPropertyForDisplayString(overrideSetting)}</p>
+                              ? <p key={index} style={{ marginLeft: "1rem", overflow: "hidden" }}>{getPropertyForDisplayString(overrideSetting)}</p>
                               : ""
                             })
                           }
@@ -174,7 +172,7 @@ const Runtime = ({
                     }
 
                     return(
-                      <p>{getPropertyForDisplayString(property)}</p>
+                      <p key={index}>{getPropertyForDisplayString(property)}</p>
                     )})}
               </div>
             )
