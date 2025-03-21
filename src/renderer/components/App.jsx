@@ -215,7 +215,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <span className="App__header-title">Helmet 4.1</span>
         &nbsp;
         <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
-        <a className="header-documentation-link" target="_blank" onClick={() => shell.openExternal("https://hsldevcom.github.io/helmet-docs/")}> <DocumentationIcon/> </a>
       </div>
 
       {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}
@@ -230,10 +229,18 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         />
       </div>
       
-      <div className="App__open-settings"
-           style={{display: isSettingsOpen | isProjectRunning ? "none" : "block"}}
-           onClick={(e) => setSettingsOpen(true)}
-        ></div>
+      <div className="App__header-button-container">
+        <a className="header-documentation-link" title='Dokumentaatio' 
+          target="_blank" 
+          onClick={() => shell.openExternal("https://hsldevcom.github.io/helmet-docs/")}
+          style={{display: isSettingsOpen | isProjectRunning ? "none" : "flex"}}> 
+            <span>?</span>
+        </a>
+        <div className="App__open-settings" title='Asetukset'
+          style={{display: isSettingsOpen | isProjectRunning ? "none" : "block"}}
+          onClick={() => setSettingsOpen(true)}>
+        </div>
+      </div>
     </div>
   )
 };

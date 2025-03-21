@@ -68,3 +68,15 @@
 .CBA__run button {
     margin-top: 20px;
 }
+
+.CBA_instructions-container {
+    height: fit-content;
+    margin-bottom: 1rem;
+    width: 65%;
+    font-weight: 300;
+    word-wrap: break-word;
+}
+
+.CBA_instructions_highlight {
+    color: #007AC9;
+}

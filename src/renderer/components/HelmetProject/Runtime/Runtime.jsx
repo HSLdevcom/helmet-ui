@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
 const _ = require('lodash');
@@ -8,7 +8,7 @@ const Runtime = ({
   setOpenScenarioID,
   reloadScenarios,
   handleClickScenarioToActive, handleClickNewScenario,
-  handleClickStartStop, logArgs, duplicateScenario
+  handleClickStartStop, logArgs, duplicateScenario, scenarioListHeight, setScenarioListHeight
 }) => {
 
   const visibleTooltipProperties = [
@@ -121,6 +121,42 @@ const Runtime = ({
     return <div/>
   }
 
+  useEffect(() => {
+    if (scenarioListHeight) {
+      const resizableDiv = document.getElementById("resizableDiv");
+      resizableDiv.style.height = scenarioListHeight;
+    }
+  });
+
+  let mousePosition;
+  const resize = (e) => {
+    if (e.buttons === 0) {
+      // No mouse button is pressed, release event listener
+      document.body.style = "user-select: auto;"
+      document.removeEventListener("mousemove", resize, false);
+    }
+    const yDimension = mousePosition - e.y;
+    mousePosition = e.y;
+    const resizableDiv = document.getElementById("resizableDiv");
+
+    const newHeight = (parseInt(getComputedStyle(resizableDiv, '').height) - yDimension) + "px";
+    resizableDiv.style.height = newHeight;
+    setScenarioListHeight(newHeight);
+  }
+
+  const onMouseDown = (e) => {
+    if (e.pageY > (e.target.offsetTop + e.target.offsetHeight)) {
+      mousePosition = e.y;
+      document.body.style = "user-select: none;"
+      document.addEventListener("mousemove", resize, false);
+    }
+  }
+
+  const onMouseUp = () => {
+    document.body.style = "user-select: auto;"
+    document.removeEventListener("mousemove", resize, false);
+  }
+
   return (
     <div className="Runtime">
 
@@ -139,9 +175,9 @@ const Runtime = ({
       </div>
       </div>
 
-      <div className="Runtime__scenarios-controls">
+      <div className="Runtime__scenarios-controls" id="resizableDiv">
       <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
-      <div className="Runtime__scenarios">
+      <div className="Runtime__scenarios" id="scenarioList">
         {/* Create table of all scenarios "<Button-To-Add-As-Runnable> <Button-To-Open-Configuration>" */}
         {scenarios.map((s, index) => {
           // Component for the tooltip showing scenario settings
@@ -210,7 +246,7 @@ const Runtime = ({
               <div className={"Runtime__scenario-delete"}
                       onClick={(e) => runningScenarioID ? undefined : deleteScenario(s)}
               ></div>
-              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem", marginLeft: "-50px" }}/>
+              <Tooltip id="scenario-tooltip" style={{ borderRadius: "1rem", maxWidth: "40rem", marginLeft: "-50px", zIndex: 2 }}/>
 
               &nbsp;
               <div className={"Runtime__scenario-clone"}
@@ -232,6 +268,7 @@ const Runtime = ({
         </button>
       </div>
       </div>
+      <div className="Runtime__scenarios_controls_drag_handle" onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
       
       <div className="Runtime__start-stop-controls">
         <div className="Runtime__heading">Ajettavana</div>

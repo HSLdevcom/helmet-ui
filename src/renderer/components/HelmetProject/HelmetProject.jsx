@@ -37,6 +37,9 @@ const HelmetProject = ({
   const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
   const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
+  // User-set scenario list height in the Scenarios tab
+  const [scenarioListHeight, setScenarioListHeight] = useState(null);
+
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
 
@@ -412,6 +415,8 @@ const HelmetProject = ({
               handleClickStartStop={_handleClickStartStop}
               logArgs={logArgs}
               duplicateScenario={duplicateScenario}
+              scenarioListHeight={scenarioListHeight}
+              setScenarioListHeight={setScenarioListHeight}
             />
           </TabPanel>
           <TabPanel>
