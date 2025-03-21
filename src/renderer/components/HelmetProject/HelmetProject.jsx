@@ -54,6 +54,7 @@ const HelmetProject = ({
   };
 
   const _handleClickNewScenario = () => {
+    ipcRenderer.send('focus-fix');
     const promptCreation = (previousError) => {
       vex.dialog.prompt({
         message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
@@ -213,7 +214,9 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      window.location.reload();  // Vex-js dialog input gets stuck otherwise
+      ipcRenderer.send('focus-fix');
+    } else {
+       ipcRenderer.send('focus-fix');
     }
   };
 
