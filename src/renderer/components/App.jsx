@@ -8,13 +8,13 @@ const {execSync} = require('child_process');
 const path = require('path');
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
-
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
   // Global settings
   const [isSettingsOpen, setSettingsOpen] = useState(false); // whether Settings -dialog is open
   const [isProjectRunning, setProjectRunning] = useState(false); // whether currently selected Project is running
   const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
+  const [emmePythonEnvs, setEmmePythonEnvs] = useState([]); // List of all discovered python executables
   const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
   const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
   const [basedataPath, setBasedataPath] = useState(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
@@ -29,6 +29,29 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     setEmmePythonPath(newPath);
     globalSettingsStore.current.set('emme_python_path', newPath);
   };
+
+  const _setEMMEPythonEnvs = (newList) => {
+    setEmmePythonEnvs(newList);
+    globalSettingsStore.current.set('emme_python_envs', newList);
+  }
+
+  const _removeFromEMMEPythonEnvs = (path) => {
+    const pythonEnvs = emmePythonEnvs.slice();
+    const foundPath = pythonEnvs.indexOf(path);
+    if (foundPath > -1) {
+      pythonEnvs.splice(foundPath,1);
+      _setEMMEPythonEnvs(pythonEnvs);
+    }
+  }
+
+  const _addToEMMEPythonEnvs = (path) => {
+    const pythonEnvs = emmePythonEnvs.slice();
+    const foundPath = pythonEnvs.indexOf(path);
+    if (foundPath === -1) {
+      pythonEnvs.push(path);
+      _setEMMEPythonEnvs(pythonEnvs);
+    }
+  }
 
   const _setHelmetScriptsPath = (newPath) => {
     // Cannot use state variable since it'd be undefined at times
@@ -110,6 +133,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       if (found) {
         if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
+          globalSettingsStore.current.set('emme_python_envs', [pythonPath])
         }
       } else {
         alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
@@ -121,11 +145,18 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     const existingProjectPath = globalSettingsStore.current.get('project_path');
     const existingBasedataPath = globalSettingsStore.current.get('basedata_path');
     const existingResultsPath = globalSettingsStore.current.get('resultdata_path');
+    const existingPythonEnvs = globalSettingsStore.current.get('emme_python_envs');
     setEmmePythonPath(existingEmmePythonPath);
     setHelmetScriptsPath(existingHelmetScriptsPath);
     setProjectPath(existingProjectPath);
     setBasedataPath(existingBasedataPath);
     setResultsPath(existingResultsPath);
+
+    if(Array.isArray(existingPythonEnvs)) {
+      setEmmePythonEnvs(existingPythonEnvs);
+    } else {
+      setEmmePythonEnvs([]);
+    }
 
     // If project path is the initial (un-set), set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath) {
@@ -159,6 +190,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       <div className="App__settings" style={{display: isSettingsOpen ? "block" : "none"}}>
         <Settings
           emmePythonPath={emmePythonPath}
+          emmePythonEnvs={emmePythonEnvs}
           helmetScriptsPath={helmetScriptsPath}
           projectPath={projectPath}
           basedataPath={basedataPath}
@@ -167,6 +199,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           isDownloadingHelmetScripts={isDownloadingHelmetScripts}
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
+          setEMMEPythonEnvs={_setEMMEPythonEnvs}
+          addToEMMEPythonEnvs={_addToEMMEPythonEnvs}
+          removeFromEMMEPythonEnvs={_removeFromEMMEPythonEnvs}
           setHelmetScriptsPath={_setHelmetScriptsPath}
           setProjectPath={_setProjectPath}
           setBasedataPath={_setBasedataPath}
