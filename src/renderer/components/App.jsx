@@ -21,6 +21,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
   const [resultsPath, setResultsPath] = useState(undefined); // folder path to Results directory
   const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
   const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState(undefined); // which version is being downloaded
+  const [helmetModelSystemVersion, setHelmetModelSystemVersion] = useState(undefined);
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
   const globalSettingsStore = useRef(new Store());
@@ -123,6 +124,23 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     setDownloadingHelmetScripts(false);
   };
 
+  const getHelmetModelSystemVersion = (helmetModelSystemPath) => {
+    const rootFiles = fs.readdirSync(helmetModelSystemPath);
+    const configFile = rootFiles.find(file => file === 'dev-config.json')
+    if(configFile) {
+      const jsonPath = path.join(helmetModelSystemPath, configFile);
+      const configString = fs.readFileSync(jsonPath, 'utf8');
+      const configuration = JSON.parse(configString);
+      console.log(configuration);
+      if(configuration['HELMET_VERSION']) {
+        return configuration['HELMET_VERSION'];
+      } else {
+        return '';
+      }
+    }
+    return '';
+  };
+
   useEffect(() => {
     // Attach Electron IPC event listeners (to worker => UI events)
     ipcRenderer.on('download-ready', onDownloadReady);
@@ -177,6 +195,14 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       setSettingsOpen(true);
     }
 
+    if(existingHelmetScriptsPath) {
+      const helmetVersion = getHelmetModelSystemVersion(existingHelmetScriptsPath);
+      if (helmetVersion !== '') {
+        const trimmedVersionString = helmetVersion.substring(1);
+        setHelmetModelSystemVersion(trimmedVersionString);
+      }
+    }
+
     return () => {
       // Detach Electron IPC event listeners
       ipcRenderer.removeListener('download-ready', onDownloadReady);
@@ -212,7 +238,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
 
       {/* UI title bar, app-version, etc. */}
       <div className="App__header">
-        <span className="App__header-title">Helmet 4.1</span>
+        <span className="App__header-title">{helmetModelSystemVersion ? `Helmet ${helmetModelSystemVersion}` : ''}</span>
         &nbsp;
         <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
       </div>
