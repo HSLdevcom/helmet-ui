@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import path from "path";
 const {dialog} = require('@electron/remote');
-import {searchEMMEPython} from './search_emme_pythonpath';
-import versions from '../versions';
+const versions = require('../versions');
+import { listEMMEPythonPaths } from './search_emme_pythonpath';
+import classNames from 'classnames';
+
+const EnvironmentOption = ({
+  envPath, isSelected, setPath, removePath,
+}) => {
+
+  //Splits the env using OS-spesific delimiter / or \ and then filters out every other substring except the Emme version folder name.
+  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-') ? true : subStr.startsWith('EMME'));
+
+  return (
+    <div className="Settings__environment_option" key={envPath}>
+      <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight/></span>
+      <p className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected})} onClick={() => setPath(envPath)}>{Array.isArray(emmeVersionName) ? emmeVersionName.toString() : envPath}</p>
+      <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>x</button>
+    </div>
+  )
+}
+
+const PathOptionDivider = () => <div className='Settings__env_option_divider' />
 
 const Settings = ({
-  emmePythonPath, setEMMEPythonPath,
+  emmePythonPath, emmePythonEnvs, setEMMEPythonPath, setEMMEPythonEnvs, addToEMMEPythonEnvs, removeFromEMMEPythonEnvs,
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
   projectPath, setProjectPath,
   basedataPath, setBasedataPath,
@@ -13,6 +32,7 @@ const Settings = ({
   closeSettings,
   promptModelSystemDownload,
 }) => {
+
   return (
     <div className="Settings">
 
@@ -23,43 +43,59 @@ const Settings = ({
         <div className="Settings__dialog-controls" onClick={(e) => closeSettings()}></div>
 
         <div className="Settings__dialog-heading">Projektin asetukset</div>
+
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">Emme Python v3.7</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-emme-python-path" title={emmePythonPath}>
-            {emmePythonPath ? path.basename(emmePythonPath) : "Valitse.."}
-          </label>
-          <input className="Settings__hidden-input"
-                 id="hidden-input-emme-python-path"
-                 type="text"
-                 onClick={()=>{
-                   dialog.showOpenDialog({
-                     defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
-                     filters: [
-                       { name: 'Executable', extensions: ['exe'] },
-                       { name: 'All Files', extensions: ['*'] }
-                     ],
-                     properties: ['openFile']
-                   }).then((e)=>{
-                     if (!e.canceled) {
-                       setEMMEPythonPath(e.filePaths[0]);
-                     }
-                   })
-                 }}
-          />
-        <button className="Settings__input-btn"
-                  onClick={(e) => {
-                    const [found, pythonPath] = searchEMMEPython();
-                    if (found) {
-                      if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
-                        setEMMEPythonPath(pythonPath);
+          <span className="Settings__pseudo-label">{ emmePythonEnvs.length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
+          { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
+            <div key={index}>
+              <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
+             setPath={setEMMEPythonPath}
+             removePath={removeFromEMMEPythonEnvs}/>
+             { index < emmePythonEnvs.length && <PathOptionDivider/> }
+            </div>)}))}
+          { emmePythonEnvs.length === 1 &&
+          (<div className="Settings__environment_option_spacer"/>)
+          }
+          {
+            emmePythonEnvs.length === 0 &&
+            (<div>
+                <div className="Settings__environment_option_spacer"/>
+                <div className="Settings__environment_option_spacer"/>
+              </div>)
+          }
+        <button className="Settings__python-env-input-btn"
+                  onClick={()=>{
+                    dialog.showOpenDialog({
+                      defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
+                      filters: [
+                        { name: 'Executable', extensions: ['exe'] },
+                        { name: 'All Files', extensions: ['*'] }
+                      ],
+                      properties: ['openFile']
+                    }).then((e)=>{
+                      if (!e.canceled) {
+                        addToEMMEPythonEnvs(e.filePaths[0]);
                       }
+                    })
+                  }}
+          >
+            Lisää Python-ympäristö
+          </button>
+        <button className="Settings__python-env-input-btn"
+                  onClick={(e) => {
+                    const [found, pythonPaths] = listEMMEPythonPaths();
+                    if (found) {
+                      alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
+                      console.log(pythonPaths);
+                      setEMMEPythonEnvs(pythonPaths);
                     } else {
-                      alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nSyötä Pythonin polku manuaalisesti.`);
+                      alert(`Python-asennukset ${versions.emme_major_versions.toString()} eivät löytyneet oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
                     }}}
           >
-            Hae Python automaattisesti
+            Etsi Python-ympäristöjä
           </button>
         </div>
+        <br/>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet-model-system</span>
           {isDownloadingHelmetScripts ?

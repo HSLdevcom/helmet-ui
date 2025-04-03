@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Store from "electron-store";
 import fs from "fs";
 import path from "path";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const {ipcRenderer} = require('electron');
 
@@ -36,6 +37,9 @@ const HelmetProject = ({
   const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
   const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
+  // User-set scenario list height in the Scenarios tab
+  const [scenarioListHeight, setScenarioListHeight] = useState(null);
+
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
 
@@ -53,6 +57,7 @@ const HelmetProject = ({
   };
 
   const _handleClickNewScenario = () => {
+    ipcRenderer.send('focus-fix');
     const promptCreation = (previousError) => {
       vex.dialog.prompt({
         message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
@@ -212,7 +217,9 @@ const HelmetProject = ({
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
       fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      window.location.reload();  // Vex-js dialog input gets stuck otherwise
+      ipcRenderer.send('focus-fix');
+    } else {
+       ipcRenderer.send('focus-fix');
     }
   };
 
@@ -383,27 +390,44 @@ const HelmetProject = ({
 
       {/* Panel for primary view and controls */}
       <div className="Project__runtime">
-        <Runtime
-          projectPath={projectPath}
-          reloadScenarios={() => _loadProjectScenarios(projectPath)}
-          scenarios={scenarios}
-          scenarioIDsToRun={scenarioIDsToRun}
-          runningScenarioID={runningScenarioID}
-          openScenarioID={openScenarioID}
-          setOpenScenarioID={setOpenScenarioID}
-          deleteScenario={(scenario) => {_deleteScenario(scenario)}}
-          handleClickScenarioToActive={_handleClickScenarioToActive}
-          handleClickNewScenario={_handleClickNewScenario}
-          handleClickStartStop={_handleClickStartStop}
-          logArgs={logArgs}
-          duplicateScenario={duplicateScenario}
-        />
-        <CostBenefitAnalysis
-          resultsPath={resultsPath}
-          cbaOptions={cbaOptions}
-          setCbaOptions={setCbaOptions}
-          runCbaScript={_runCbaScript}
-        />
+        <Tabs className="tab-container">
+          <TabList className="tab-list">
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
+              Skenaariot
+            </Tab>
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
+              CBA
+            </Tab>
+          </TabList>
+
+          <TabPanel className="runtime-tab">
+            <Runtime
+              projectPath={projectPath}
+              reloadScenarios={() => _loadProjectScenarios(projectPath)}
+              scenarios={scenarios}
+              scenarioIDsToRun={scenarioIDsToRun}
+              runningScenarioID={runningScenarioID}
+              openScenarioID={openScenarioID}
+              setOpenScenarioID={setOpenScenarioID}
+              deleteScenario={(scenario) => {_deleteScenario(scenario)}}
+              handleClickScenarioToActive={_handleClickScenarioToActive}
+              handleClickNewScenario={_handleClickNewScenario}
+              handleClickStartStop={_handleClickStartStop}
+              logArgs={logArgs}
+              duplicateScenario={duplicateScenario}
+              scenarioListHeight={scenarioListHeight}
+              setScenarioListHeight={setScenarioListHeight}
+            />
+          </TabPanel>
+          <TabPanel>
+            <CostBenefitAnalysis
+              resultsPath={resultsPath}
+              cbaOptions={cbaOptions}
+              setCbaOptions={setCbaOptions}
+              runCbaScript={_runCbaScript}
+            />
+          </TabPanel>
+        </Tabs>
       </div>
 
       {/* Panel for secondary view(s) and controls */}

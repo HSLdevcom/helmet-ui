@@ -1,10 +1,9 @@
 .CBA {
-    background: #F4F4F5;
-    border-top: 1px solid #CCCCCC;
-    border-bottom: 1px solid #CCCCCC;
+    background: #FFFFFF;
     box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
+    margin-top: 1rem;
 }
 
 .CBA__heading {
@@ -66,9 +65,18 @@
     padding: 0;
 }
 
-.CBA__run {
-}
-
 .CBA__run button {
     margin-top: 20px;
+}
+
+.CBA_instructions-container {
+    height: fit-content;
+    margin-bottom: 1rem;
+    width: 65%;
+    font-weight: 300;
+    word-wrap: break-word;
+}
+
+.CBA_instructions_highlight {
+    color: #007AC9;
 }

@@ -29,6 +29,7 @@ async function createUI() {
     fullscreen: true,
     fullscreenable: false,
     autoHideMenuBar: true,
+    title: 'Helmet UI',
     webPreferences: {
       devTools: true, // There's no reason to disable these (CTRL+SHIFT+i) https://superuser.com/questions/367662/ctrlshifti-in-windows-7
       nodeIntegration: true,
@@ -43,6 +44,11 @@ async function createUI() {
   // Quit when main window is closed
   mainWindow.on('closed', () => {
     app.quit();
+  });
+
+  // Listen to window title changes only after the app is initialized
+  ipcMain.on('change-title', (_, newWindowTitle) => {
+    mainWindow.setTitle(newWindowTitle);
   });
 }
 
@@ -167,10 +173,8 @@ ipcMain.on('loggable-event-from-worker', (event, args) => {
   mainWindow.webContents.send('loggable-event', event_args);
 });
 
-// // Log worker-errors (by PythonShell, not stderr) in main console
-// ipcMain.on('process-error-from-worker', (event, args) => {
-//   mainWindow.webContents.send('loggable-event', {
-//     "level": "ERROR",
-//     "message": (typeof args === "string") ? args : JSON.stringify(args)
-//   });
-// });
+// This is to fix the inputs not having focus after showing a prompt or alert
+ipcMain.on('focus-fix', () => {
+  mainWindow?.blur();
+  mainWindow?.focus();
+});

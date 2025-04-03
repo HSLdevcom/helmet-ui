@@ -1,6 +1,3 @@
-.Runtime { 
-}
-
 /* Helmet project */
 
 .Runtime__helmet-project-controls {
@@ -15,12 +12,6 @@
     letter-spacing: -0.02em;
 }
 
-.Runtime__project-path {
-}
-
-.Runtime__reload-scenarios-btn {
-}
-
 /* Scenarios */
 
 .Runtime__scenarios-controls {
@@ -29,6 +20,15 @@
     border-bottom: 1px solid #CCCCCC;
     box-sizing: border-box;
     padding: 20px;
+    min-height: 190px;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.Runtime__scenarios_controls_drag_handle {
+    cursor: row-resize;
+    height: 50px;
+    background-color: #FFFFFF;
 }
 
 .Runtime__scenarios-heading {
@@ -41,9 +41,10 @@
 }
 
 .Runtime__scenarios {
-    max-height: 160px;
     width: 700px;
     overflow-y: auto;
+    scrollbar-width: 20px;
+    height: calc(100% - 95px);
 }
 
 .Runtime__scenario {
@@ -66,8 +67,6 @@
     border-radius: 4px !important;
     width: 24px !important;
     height: 24px !important;
-}
-.Runtime__scenario-activate-checkbox--active {
 }
 
 .Runtime__scenario-open-config {
@@ -107,6 +106,9 @@
     background: #007AC9;
     border-color: #007AC9;
     color: #ffffff;
+    position: relative;
+    bottom: 16px;
+    z-index: 1;
 }
 .Runtime__add-new-scenario-btn:hover {
     color: #ffffff;
@@ -122,19 +124,18 @@
     background-repeat: no-repeat;
 }
 
+.no-select {
+    user-select: none;
+}
+
 /* Start-stop */
 
 .Runtime__start-stop-controls {
     padding: 20px;
-}
-
-.Runtime__start-stop-description {
+    background-color: #FFFFFF;
 }
 
 .Runtime__start-stop-scenarios {
     color: #00985F;
     font-weight: bold;
-}
-
-.Runtime__start-stop-btn {
 }

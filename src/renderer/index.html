@@ -2,7 +2,7 @@
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <title>Helmet 4.1</title>
+    <title>Helmet UI</title>
     <!-- HubSpot's vex-js for `prompt()` (not supported otherwise by Electron) -->
     <script src="../../node_modules/vex-js/dist/js/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-os'</script>
@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="components/HelmetProject/RunLog/RunLog.css">
     <script type="text/babel" src="components/HelmetProject/CostBenefitAnalysis/CostBenefitAnalysis.jsx"></script>
     <link rel="stylesheet" type="text/css" href="components/HelmetProject/CostBenefitAnalysis/CostBenefitAnalysis.css">
+    <link rel="stylesheet" type="text/css" href="react-tabs/style/react-tabs.css">
     <script type="text/javascript">
         // ipcRenderer is aliased, so that other <script> tag(s) won't crash on startup in "constant-already-set"
         const {webFrame, ipcRenderer: aliasIpcRenderer} = require('electron');
@@ -37,9 +38,10 @@
     <script type="text/babel" src="./icons/CopyIcon.jsx"></script>
     <script type="text/babel" src="../enums.js"></script>
     <script type="text/babel" src="./icons/ResetIcon.jsx"></script>
-    <script type="text/babel" src="./icons/DocumentationIcon.jsx"></script>
     <script type="text/babel" src="./icons/ArrowDown.jsx"></script>
     <script type="text/babel" src="./icons/ArrowUp.jsx"></script>
+    <script type="text/babel" src="./icons/ArrowRight.jsx"></script>
+    <script src="node_modules/electron-tabs/dist/electron-tabs.js"></script>
 </head>
 <body>
 
