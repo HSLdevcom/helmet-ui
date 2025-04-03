@@ -146,7 +146,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     if (helmetVersion !== '') {
       const trimmedVersionString = helmetVersion.substring(1);
       setHelmetModelSystemVersion(trimmedVersionString);
-      ipcRenderer.send('change-title', `Helmet ${trimmedVersionString}`);
+      ipcRenderer.send('change-title', `Helmet UI | Helmet ${trimmedVersionString}`);
     }
   }
 
@@ -213,14 +213,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       ipcRenderer.removeListener('download-ready', onDownloadReady);
     }
   }, []);
-
-  useEffect(() => {
-    if (helmetModelSystemVersion) {
-      document.title = `Helmet UI | Helmet ${helmetModelSystemVersion}`;
-    } else {
-      document.title = "Helmet UI";
-    }
-  }, [helmetModelSystemVersion]);
 
   return (
     <div className={"App" + (isProjectRunning ? " App--busy" : "")}>
