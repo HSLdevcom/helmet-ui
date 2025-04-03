@@ -209,6 +209,14 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (helmetModelSystemVersion) {
+      document.title = `Helmet UI | Helmet ${helmetModelSystemVersion}`;
+    } else {
+      document.title = "Helmet UI";
+    }
+  }, [helmetModelSystemVersion]);
+
   return (
     <div className={"App" + (isProjectRunning ? " App--busy" : "")}>
 
