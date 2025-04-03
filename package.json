@@ -1,9 +1,9 @@
 {
   "name": "helmet-ui",
-  "productName": "Helmet 4.1",
-  "version": "4.2.1-SNAPSHOT",
+  "productName": "Helmet UI",
+  "version": "11.0.0",
   "private": true,
-  "description": "Helmet 4 Model System UI",
+  "description": "Helmet Model System UI",
   "main": "src/main/index.js",
   "scripts": {
     "start": "electron-forge start",
