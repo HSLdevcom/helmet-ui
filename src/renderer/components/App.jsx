@@ -3,7 +3,7 @@ import Store from 'electron-store';
 import fs from "fs";
 
 const homedir = require('os').homedir();
-const {ipcRenderer, shell} = require('electron');
+const {ipcRenderer, shell, ipcMain} = require('electron');
 const {execSync} = require('child_process');
 const path = require('path');
 
@@ -65,6 +65,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
     setHelmetScriptsPath(newPath);
     globalSettingsStore.current.set('helmet_scripts_path', newPath);
+    updateHelmetModelVersion(newPath);
   };
 
   const _setProjectPath = (newPath) => {
@@ -131,7 +132,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       const jsonPath = path.join(helmetModelSystemPath, configFile);
       const configString = fs.readFileSync(jsonPath, 'utf8');
       const configuration = JSON.parse(configString);
-      console.log(configuration);
       if(configuration['HELMET_VERSION']) {
         return configuration['HELMET_VERSION'];
       } else {
@@ -140,6 +140,15 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
     return '';
   };
+
+  const updateHelmetModelVersion = (helmetScriptsPath) => {
+    const helmetVersion = getHelmetModelSystemVersion(helmetScriptsPath);
+    if (helmetVersion !== '') {
+      const trimmedVersionString = helmetVersion.substring(1);
+      setHelmetModelSystemVersion(trimmedVersionString);
+      ipcRenderer.send('change-title', `Helmet ${trimmedVersionString}`);
+    }
+  }
 
   useEffect(() => {
     // Attach Electron IPC event listeners (to worker => UI events)
@@ -196,11 +205,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
 
     if(existingHelmetScriptsPath) {
-      const helmetVersion = getHelmetModelSystemVersion(existingHelmetScriptsPath);
-      if (helmetVersion !== '') {
-        const trimmedVersionString = helmetVersion.substring(1);
-        setHelmetModelSystemVersion(trimmedVersionString);
-      }
+      updateHelmetModelVersion(existingHelmetScriptsPath);
     }
 
     return () => {
