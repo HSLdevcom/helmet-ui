@@ -89,6 +89,14 @@ hr {
     cursor: pointer;
 }
 
+.App__settings-disabled {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(1);
+    background-color:#d0d0d0;
+    background-blend-mode: darken;
+    cursor: default;
+}
+
 .App__header {
     display: flex;
     align-items: center;
