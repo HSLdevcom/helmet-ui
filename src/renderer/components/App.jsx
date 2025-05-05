@@ -6,6 +6,7 @@ const homedir = require('os').homedir();
 const {ipcRenderer, shell, ipcMain} = require('electron');
 const {execSync} = require('child_process');
 const path = require('path');
+const classNames = require('classnames');
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
@@ -264,12 +265,12 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
         <a className="header-documentation-link" title='Dokumentaatio' 
           target="_blank" 
           onClick={() => shell.openExternal("https://hsldevcom.github.io/helmet-docs/")}
-          style={{display: isSettingsOpen | isProjectRunning ? "none" : "flex"}}> 
+          style={{display: isSettingsOpen ? "none" : "flex"}}> 
             <span>?</span>
         </a>
-        <div className="App__open-settings" title='Asetukset'
-          style={{display: isSettingsOpen | isProjectRunning ? "none" : "block"}}
-          onClick={() => setSettingsOpen(true)}>
+        <div className={classNames("App__open-settings", { 'App__settings-disabled': isProjectRunning })} title='Asetukset'
+          style={{display: isSettingsOpen ? "none" : "block"}}
+          onClick={() => isProjectRunning ? setSettingsOpen(false) : setSettingsOpen(true)}>
         </div>
       </div>
     </div>

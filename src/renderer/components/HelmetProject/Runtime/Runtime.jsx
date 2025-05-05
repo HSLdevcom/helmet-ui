@@ -122,9 +122,11 @@ const Runtime = ({
   }
 
   useEffect(() => {
+    const resizableDiv = document.getElementById("resizableDiv");
     if (scenarioListHeight) {
-      const resizableDiv = document.getElementById("resizableDiv");
       resizableDiv.style.height = scenarioListHeight;
+    } else {
+      resizableDiv.style.height = '300px';
     }
   });
 
