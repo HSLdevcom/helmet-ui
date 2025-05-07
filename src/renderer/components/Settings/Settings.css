@@ -7,6 +7,18 @@
     justify-content: center;
 }
 
+.Settings__waiting-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: wait;
+    z-index:300; /* Above dialog and overlay */
+}
+
+.Settings__waiting-overlay * {
+    pointer-events: none;
+}
+
 .Settings__overlay {
     z-index: 100;
     position: absolute;
@@ -223,4 +235,11 @@
 
 .Settings__download-progress button:hover {
   background-color: #e04e4b;
+}
+
+.Settings__env_option_disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: wait;
+  transition: opacity 0.2s ease;
 }

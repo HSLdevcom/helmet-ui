@@ -7,19 +7,50 @@ const path = window.electronAPI.path;
 const os = window.electronAPI.os;
 const homedir = os.homedir();
 const dialog = window.electronAPI.dialog;
+const { exec } = window.electronAPI.child_process;
 
-const EnvironmentOption = ({
-  envPath, isSelected, setPath, removePath,
-}) => {
+const EnvironmentOption = ({ envPath, isSelected, setPath, removePath }) => {  
+  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-') || subStr.startsWith('EMME'))
 
-  //Splits the env using OS-spesific delimiter / or \ and then filters out every other substring except the Emme version folder name.
-  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-') ? true : subStr.startsWith('EMME'));
+  // Function to set the EMMEPATH environment variable
+  const setEmmePathEnvVariable = async (emmePath) => {
+    if (!emmePath) {
+      console.error("Invalid path provided for EMMEPATH.")
+      return
+    }
+
+    const command = `setx EMMEPATH "${emmePath}"`;
+
+    try {
+      const result = await exec(command)
+      console.log(`EMMEPATH set to: ${emmePath}`)
+      console.log(result)
+    } catch (error) {
+      console.error(`Error setting EMMEPATH: ${error}`)
+    }
+  }
+
+  // Extract the Emme folder path (parent directory of the Python executable)
+  const emmeFolderPath = path.dirname(path.dirname(envPath))
 
   return (
     <div className="Settings__environment_option" key={envPath}>
-      <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight/></span>
-      <p className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected})} onClick={() => setPath(envPath)}>{Array.isArray(emmeVersionName) ? emmeVersionName.toString() : envPath}</p>
-      <button className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')} onClick={() => removePath(envPath)}>x</button>
+      <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight /></span>
+      <p
+        className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected })}
+        onClick={async () => {
+          setPath(envPath) // Select the Python path
+          await setEmmePathEnvVariable(emmeFolderPath); // Set the EMMEPATH variable
+        }}
+      >
+        {Array.isArray(emmeVersionName) ? emmeVersionName.toString() : envPath}
+      </p>
+      <button
+        className={classNames('Settings__env_option_btn', 'Settings__env_option_remove')}
+        onClick={() => removePath(envPath)}
+      >
+        x
+      </button>
     </div>
   )
 }
@@ -32,6 +63,7 @@ const Settings = ({
   projectPath, setProjectPath,
   basedataPath, setBasedataPath,
   resultsPath, setResultsPath,
+  isSettingEnv,
   closeSettings,
   promptModelSystemDownload,
   listEMMEPythonPaths,
@@ -227,6 +259,7 @@ const Settings = ({
                  }}
           />
         </div>
+        {isSettingEnv && <div className="Settings__waiting-overlay"></div>}
       </div>
 
     </div>
