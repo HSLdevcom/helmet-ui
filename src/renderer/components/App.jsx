@@ -162,8 +162,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
           globalSettingsStore.current.set('emme_python_envs', [pythonPath])
         }
-      } else {
-        alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
       }
     }
     // Copy existing global store values to state. Remember: state updates async so refer to existing.
