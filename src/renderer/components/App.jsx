@@ -163,8 +163,6 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
           globalSettingsStore.current.set('emme_python_envs', [pythonPath])
         }
-      } else {
-        alert(`Emme ${versions.emme_system} ja Python ${versions.emme_python} eivät löytyneet oletetusta sijainnista.\n\nMääritä Pythonin sijainti Asetukset-dialogissa.`);
       }
     }
     // Copy existing global store values to state. Remember: state updates async so refer to existing.
@@ -197,11 +195,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
       _setProjectPath(homedir);
     }
 
-    // If HELMET Scripts is the initial (un-set), download latest version and use that. Remember: state updates async so refer to existing.
-    if (!existingHelmetScriptsPath && confirm("Ladataanko model-system automaattisesti? (Vaatii internet-yhteyden \u{0001F4F6})")) {
-      _promptModelSystemDownload();
-    // Else if required paths are un-set, open settings anyway
-    } else if (!existingBasedataPath || !existingResultsPath) {
+    if (!existingBasedataPath || !existingResultsPath) {
       setSettingsOpen(true);
     }
 
