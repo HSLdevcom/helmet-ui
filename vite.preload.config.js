@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 
+import { webcrypto } from "node:crypto";
+if (!globalThis.crypto) globalThis.crypto = webcrypto;
+
+
 export default defineConfig({
   build: {
     outDir: 'dist/main',
