@@ -1,5 +1,5 @@
 const ps = require('python-shell');
-const {ipcRenderer} = require('electron');
+const {ipcRenderer} = window.electronAPI;
 
 module.exports = {
 

@@ -1,6 +1,5 @@
-const ps = require('python-shell');
-const {ipcRenderer} = require('electron');
-const path = require('path');
+const {ipcRenderer, path, ps} = window.electronAPI;
+const PythonShell = ps.PythonShell;
 
 module.exports = {
 
@@ -17,7 +16,7 @@ module.exports = {
     const projected_scenario = runParameters.projected_scenario_path;
     const baseline_scenario_2 = runParameters.baseline_scenario_2_path;
     const projected_scenario_2 = runParameters.projected_scenario_2_path;
-    worker = new ps.PythonShell(
+    worker = new PythonShell(
       `${runParameters.helmet_scripts_path}/cba.py`,
       {
         mode: 'json',

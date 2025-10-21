@@ -1,44 +1,54 @@
 import React, {useState, useEffect, useRef} from 'react';
-import Store from 'electron-store';
-import fs from "fs";
+import Settings from './Settings/Settings';
+import HelmetProject from './HelmetProject/HelmetProject';
+import classNames from 'classnames';
 
-const homedir = require('os').homedir();
-const {ipcRenderer, shell, ipcMain} = require('electron');
-const {execSync} = require('child_process');
-const path = require('path');
-const classNames = require('classnames');
+// Use APIs from window.electronAPI
+const { ipcRenderer, shell, fs, path, os, child_process} = window.electronAPI;
+const homedir = os.homedir();
+
+interface AppProps {
+  helmetUIVersion: string;
+  searchEMMEPython: () => [boolean, string];
+  listEMMEPythonPaths: () => string[];
+}
+
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
-const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
+const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPythonPaths}) => {
+  console.log('window.electronAPI:', window.electronAPI);
 
   // Global settings
-  const [isSettingsOpen, setSettingsOpen] = useState(false); // whether Settings -dialog is open
-  const [isProjectRunning, setProjectRunning] = useState(false); // whether currently selected Project is running
-  const [emmePythonPath, setEmmePythonPath] = useState(undefined); // file path to EMME python executable
-  const [emmePythonEnvs, setEmmePythonEnvs] = useState([]); // List of all discovered python executables
-  const [helmetScriptsPath, setHelmetScriptsPath] = useState(undefined); // folder path to HELMET model system scripts
-  const [projectPath, setProjectPath] = useState(undefined); // folder path to scenario configs, default homedir
-  const [basedataPath, setBasedataPath] = useState(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
-  const [resultsPath, setResultsPath] = useState(undefined); // folder path to Results directory
-  const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState(false); // whether downloading "/Scripts" is in progress
-  const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState(undefined); // which version is being downloaded
-  const [helmetModelSystemVersion, setHelmetModelSystemVersion] = useState(undefined);
+  const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false); // whether Settings -dialog is open
+  const [isProjectRunning, setProjectRunning] = useState<boolean>(false); // whether currently selected Project is running
+  const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState<boolean>(false); // whether downloading "/Scripts" is in progress
+  const [emmePythonPath, setEmmePythonPath] = useState<string|undefined>(undefined); // file path to EMME python executable
+  const [emmePythonEnvs, setEmmePythonEnvs] = useState<string[]|undefined>([]); // List of all discovered python executables
+  const [helmetScriptsPath, setHelmetScriptsPath] = useState<string|undefined>(undefined); // folder path to HELMET model system scripts
+  const [projectPath, setProjectPath] = useState<string|undefined>(undefined); // folder path to scenario configs, default homedir
+  const [basedataPath, setBasedataPath] = useState<string|undefined>(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
+  const [resultsPath, setResultsPath] = useState<string|undefined>(undefined); // folder path to Results directory
+  const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState<string|undefined>(undefined); // which version is being downloaded
+  const [helmetModelSystemVersion, setHelmetModelSystemVersion] = useState<string|undefined>(undefined);
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
-  const globalSettingsStore = useRef(new Store());
+  const globalSettingsStore = useRef({
+    get: (key: string) => window.electronAPI.StoreAPI.get(key),
+    set: (key: string , value: any) => window.electronAPI.StoreAPI.set(key, value),
+  });
 
-  const _setEMMEPythonPath = (newPath) => {
+  const _setEMMEPythonPath = (newPath: string) => {
     setEmmePythonPath(newPath);
     globalSettingsStore.current.set('emme_python_path', newPath);
   };
 
-  const _setEMMEPythonEnvs = (newList) => {
+  const _setEMMEPythonEnvs = (newList: string[]) => {
     setEmmePythonEnvs(newList);
     globalSettingsStore.current.set('emme_python_envs', newList);
   }
 
-  const _removeFromEMMEPythonEnvs = (path) => {
-    const pythonEnvs = emmePythonEnvs.slice();
+  const _removeFromEMMEPythonEnvs = (path: string) => {
+    const pythonEnvs = emmePythonEnvs?.slice() ?? [];
     const foundPath = pythonEnvs.indexOf(path);
     if (foundPath > -1) {
       pythonEnvs.splice(foundPath,1);
@@ -46,8 +56,8 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
   }
 
-  const _addToEMMEPythonEnvs = (path) => {
-    const pythonEnvs = emmePythonEnvs.slice();
+  const _addToEMMEPythonEnvs = (path: string) => {
+    const pythonEnvs = emmePythonEnvs?.slice() ?? [];
     const foundPath = pythonEnvs.indexOf(path);
     if (foundPath === -1) {
       pythonEnvs.push(path);
@@ -55,11 +65,11 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
   }
 
-  const _setHelmetScriptsPath = (newPath) => {
+  const _setHelmetScriptsPath = async (newPath: string) => {
     // Cannot use state variable since it'd be undefined at times
-    const pythonPath = globalSettingsStore.current.get('emme_python_path');
+    const pythonPath: string | undefined = globalSettingsStore.current.get('emme_python_path');
     try {
-      execSync(`"${path.join(path.dirname(pythonPath), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
+      await child_process.exec(`"${path.join(path.dirname(pythonPath!), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
     } catch (e) {
       console.log(e);
       console.log("No requirements file found for HELMET Scripts. Some functionality may not work properly.");
@@ -69,69 +79,79 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     updateHelmetModelVersion(newPath);
   };
 
-  const _setProjectPath = (newPath) => {
+  const _setProjectPath = (newPath: string) => {
     setProjectPath(newPath);
     globalSettingsStore.current.set('project_path', newPath);
   };
 
-  const _setBasedataPath = (newPath) => {
+  const _setBasedataPath = (newPath: string) => {
     setBasedataPath(newPath);
     globalSettingsStore.current.set('basedata_path', newPath);
   };
 
-  const _setResultsPath = (newPath) => {
+  const _setResultsPath = (newPath: string) => {
     setResultsPath(newPath);
     globalSettingsStore.current.set('resultdata_path', newPath);
   };
 
-  const _promptModelSystemDownload = () => {
-    fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
-      .then((response) => {
-        return response.json();
-      })
-      .then((tags) => {
-        vex.dialog.open({
-          message: "Valitse model-system versio:",
-          input: [
-            '<div class="vex-custom-field-wrapper">',
-              '<select name="version">',
-                tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join(''),
-              '</select>',
-            '</div>'
-          ].join(''),
-          callback: (data) => {
-            if (!data) {
-              // Cancelled
-              return;
-            }
-            const now = new Date();
-            setDlHelmetScriptsVersion(data.version);
-            setDownloadingHelmetScripts(true);
-            ipcRenderer.send(
-              'message-from-ui-to-download-helmet-scripts',
-              {
-                version: data.version,
-                destinationDir: homedir,
-                postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
-              }
-            );
+  const _listEMMEPythonPaths = () => {
+    return listEMMEPythonPaths();
+  }
+
+const _promptModelSystemDownload = () => {
+  fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
+    .then((response) => response.json() as Promise<GithubTag[]>) // explicitly type the JSON
+    .then((tags: GithubTag[]) => {
+      // Build the select HTML safely
+      const optionsHtml = tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join('');
+      const inputHtml = [
+        '<div class="vex-custom-field-wrapper">',
+          '<select name="version">',
+            optionsHtml,
+          '</select>',
+        '</div>'
+      ].join('');
+
+      vex.dialog.open({
+        message: "Valitse model-system versio:",
+        input: inputHtml,
+        callback: (data?: { version?: string }) => {    // typed callback param
+          if (!data || !data.version) {
+            // Cancelled or no version selected
+            return;
           }
-        });
+          const now = new Date();
+          setDlHelmetScriptsVersion(data.version);
+          setDownloadingHelmetScripts(true);
+          ipcRenderer.send(
+            'message-from-ui-to-download-helmet-scripts',
+            {
+              version: data.version,
+              destinationDir: homedir,
+              postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
+            }
+          );
+        }
       });
-  };
+    })
+    .catch((err) => {
+      console.error('Failed to fetch tags', err);
+      // Maybe show user-friendly alert here
+    });
+};
 
   // Electron IPC event listeners
-  const onDownloadReady = (event, savePath) => {
-    _setHelmetScriptsPath(savePath, emmePythonPath);
+  const onDownloadReady = (event: any, savePath: string) => {
+    _setHelmetScriptsPath(savePath);
     setDownloadingHelmetScripts(false);
   };
 
-  const getHelmetModelSystemVersion = (helmetModelSystemPath) => {
-    const rootFiles = fs.readdirSync(helmetModelSystemPath);
+  const getHelmetModelSystemVersion = async (helmetScriptsPath: string) => {
+    const rootFiles = await fs.readdir(helmetScriptsPath ?? homedir);
     const configFile = rootFiles.find(file => file === 'dev-config.json')
     if(configFile) {
-      const jsonPath = path.join(helmetModelSystemPath, configFile);
-      const configString = fs.readFileSync(jsonPath, 'utf8');
+      const jsonPath = path.join(helmetScriptsPath, configFile);
+      const configString = await fs.readFile(jsonPath);
       const configuration = JSON.parse(configString);
       if(configuration['HELMET_VERSION']) {
         return configuration['HELMET_VERSION'];
@@ -142,8 +162,9 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     return '';
   };
 
-  const updateHelmetModelVersion = (helmetScriptsPath) => {
-    const helmetVersion = getHelmetModelSystemVersion(helmetScriptsPath);
+  const updateHelmetModelVersion = async (helmetScriptsPath: string) => {
+    console.log("Updating Helmet model system version from path:", helmetScriptsPath);
+    const helmetVersion = await getHelmetModelSystemVersion(helmetScriptsPath);
     if (helmetVersion !== '') {
       const trimmedVersionString = helmetVersion.substring(1);
       setHelmetModelSystemVersion(trimmedVersionString);
@@ -159,7 +180,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     if (!globalSettingsStore.current.get('emme_python_path')) {
       const [found, pythonPath] = searchEMMEPython();
       if (found) {
-        if (confirm(`Python ${versions.emme_python} löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
+        if (confirm(`Python löytyi sijainnista:\n\n${pythonPath}\n\nHaluatko käyttää tätä sijaintia?`)) {
           globalSettingsStore.current.set('emme_python_path', pythonPath);
           globalSettingsStore.current.set('emme_python_envs', [pythonPath])
         }
@@ -190,7 +211,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
 
     // If project path does not exist on set path, set it to homedir. Remember: state updates async so refer to existing.
-    if (!fs.existsSync(existingProjectPath)) {
+    if (!existingProjectPath || !fs.existsSync(existingProjectPath)) {
       alert(`Projektikansiota ei löydy polusta '${existingProjectPath}'.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
       _setProjectPath(homedir);
     }
@@ -200,6 +221,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     }
 
     if(existingHelmetScriptsPath) {
+      console.log("Existing helmet scripts path:", existingHelmetScriptsPath);
       updateHelmetModelVersion(existingHelmetScriptsPath);
     }
 
@@ -226,6 +248,7 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
           setEMMEPythonEnvs={_setEMMEPythonEnvs}
+          listEMMEPythonPaths={_listEMMEPythonPaths}
           addToEMMEPythonEnvs={_addToEMMEPythonEnvs}
           removeFromEMMEPythonEnvs={_removeFromEMMEPythonEnvs}
           setHelmetScriptsPath={_setHelmetScriptsPath}
@@ -270,3 +293,5 @@ const App = ({helmetUIVersion, versions, searchEMMEPython}) => {
     </div>
   )
 };
+
+export default App;

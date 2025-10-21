@@ -1,6 +1,7 @@
 import React from 'react';
-import path from "path";
-const {dialog} = require('@electron/remote');
+
+const dialog = window.electronAPI.dialog;
+const path = window.electronAPI.path;
 
 const CostBenefitAnalysis = ({
   resultsPath, cbaOptions, setCbaOptions, runCbaScript
@@ -124,3 +125,5 @@ const CostBenefitAnalysis = ({
     </div>
   );
 };
+
+export default CostBenefitAnalysis;

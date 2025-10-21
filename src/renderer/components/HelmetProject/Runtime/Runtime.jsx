@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { renderToStaticMarkup } from 'react-dom/server';
-const _ = require('lodash');
+import { CopyIcon } from '../../../icons';
+import RunStatus from './RunStatus/RunStatus.jsx';
+import { SCENARIO_STATUS_STATE } from '../../../../enums.js';
+
+const _ = window.electronAPI._;
 
 const Runtime = ({
   projectPath, scenarios, scenarioIDsToRun, runningScenarioID, openScenarioID, deleteScenario,
@@ -294,3 +298,5 @@ const Runtime = ({
     </div>
   );
 };
+
+export default Runtime;

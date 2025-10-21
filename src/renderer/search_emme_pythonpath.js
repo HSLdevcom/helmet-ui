@@ -1,12 +1,13 @@
-const path = require('path');
-const fs = require('fs');
-const versions = require('../versions');
-const _ = require('lodash');
+import versions from '../versions';
+
+const path = window.electronAPI.path;
+const fs = window.electronAPI.fs;
+const _ = window.electronAPI._;
 
 /**
  * Check and try to set EMME's Python location on Windows, searching from common known paths.
  */
-const searchEMMEPython = () => {
+export function searchEMMEPython(){
 
   // Set Windows' python exe path postfix (e.g. Python27\python.exe)
   const p = getVersion(versions.emme_python);
@@ -56,7 +57,7 @@ const checkEmmePythonEnv = () => {
    }
 }
 
-const listEMMEPythonPaths = () => {
+export function listEMMEPythonPaths(){
   const pythonVersion = getVersion(versions.emme_python);
 
   const commonEmmePaths = []
@@ -149,7 +150,7 @@ function hasPythonEnv(basePath) {
   return exePaths;
 }
 
-module.exports = {
-  searchEMMEPython: searchEMMEPython,
-  listEMMEPythonPaths: listEMMEPythonPaths,
+export default {
+  searchEMMEPython: searchEMMEPython(),
+  listEMMEPythonPaths: listEMMEPythonPaths(),
 };

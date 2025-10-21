@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Store from "electron-store";
-import fs from "fs";
-import path from "path";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Runtime from './Runtime/Runtime.jsx';
+import HelmetScenario from './HelmetScenario/HelmetScenario.jsx';
+import RunLog from './RunLog/RunLog.jsx';
+import CostBenefitAnalysis from './CostBenefitAnalysis/CostBenefitAnalysis.jsx';
 
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, fs, path} = window.electronAPI;
+
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 
@@ -94,34 +96,53 @@ const HelmetProject = ({
       _cancelRunning();
   };
 
-  const _loadProjectScenarios = (projectFilepath) => {
-    // Load all .json files from project dir, and check if their keys match scenarios' keys. Match? -> add to scenarios.
+  const _loadProjectScenarios = async (projectFilepath) => {
     const configPath = projectFilepath;
-    const foundScenarios = [];
-    fs.readdirSync(configPath).forEach((fileName) => {
-      if (fileName.endsWith(".json")) {
-        const obj = JSON.parse(fs.readFileSync(path.join(configPath, fileName), 'utf8'));
-        if ("id" in obj
-          && "name" in obj
-          && "use_fixed_transit_cost" in obj
-          && "iterations" in obj
-        ) {
-          configStores.current[obj.id] = new Store({cwd: configPath, name: fileName.slice(0, -5)});
-          foundScenarios.push(obj);
-        }
-      }
-    });
+    const files = await fs.readdir(configPath);
 
-    //If scenarios don't have runstatus properties (ie. are older scenarios), adding them here to prevent wonky behaviour
-    const decoratedFoundScenarios = foundScenarios.map(scenario => {
-      if(scenario.runStatus === undefined) {
-        return addRunStatusProperties(scenario);
-      }
-      return scenario;
-    })
+    // Filter only .json files
+    const jsonFiles = files.filter(f => f.endsWith(".json"));
 
+    // Read & parse all JSON files in parallel
+    const foundScenarios = (
+      await Promise.all(
+        jsonFiles.map(async (fileName) => {
+          try {
+            const filePath = path.join(configPath, fileName);
+            const content = await fs.readFile(filePath);
+            const obj = JSON.parse(content);
+
+            if (
+              "id" in obj &&
+              "name" in obj &&
+              "use_fixed_transit_cost" in obj &&
+              "iterations" in obj
+            ) {
+              // Initialize scenario-specific Store
+              configStores.current[obj.id] = window.electronAPI.StoreAPI.create({
+                cwd: configPath,
+                name: fileName.slice(0, -5),
+              });
+
+              return obj; // include valid scenario
+            }
+          } catch (err) {
+            console.error(`Failed to load scenario from ${fileName}:`, err);
+          }
+          return null; // skip invalid or failed ones
+        })
+      )
+    ).filter(Boolean); // remove nulls
+
+    // Add runStatus if missing (for backward compatibility with older scenarios)
+    const decoratedFoundScenarios = foundScenarios.map((scenario) =>
+      scenario.runStatus === undefined
+        ? addRunStatusProperties(scenario)
+        : scenario
+    );
+
+    // Update UI state
     setScenarios(decoratedFoundScenarios);
-    // Reset state of project related properties
     setOpenScenarioID(null);
     setScenarioIDsToRun([]);
     setRunningScenarioID(null);
@@ -186,24 +207,23 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
-    configStores.current[newId] = new Store({cwd: projectPath, name: newScenarioName});
-    configStores.current[newId].set(newScenario);
+    window.electronAPI.StoreAPI.set({ cwd: projectPath, name: newScenarioName }, null, newScenario);
     // Then set scenario as open by id (Why id? Having open_scenario as reference causes sub-elements to be bugged because of different object reference)
     setOpenScenarioID(newId);
   };
 
-  const _updateScenario = (newValues) => {
+  const _updateScenario = async (newValues) => {
     // Update newValues to matching .id in this.state.scenarios
     setScenarios(scenarios.map((s) => (s.id === newValues.id ? {...s, ...newValues} : s)));
     // If name changed, rename file and change reference
     if (configStores.current[newValues.id].get('name') !== newValues.name) {
       // If name was set empty - use ID instead
       const newName = newValues.name ? newValues.name : newValues.id;
-      fs.renameSync(
+      await fs.rename(
         configStores.current[newValues.id].path,
         path.join(projectPath, `${newName}.json`)
       );
-      configStores.current[newValues.id] = new Store({
+      configStores.current[newValues.id] = window.electronAPI.StoreAPI.create({
         cwd: projectPath,
         name: newName
       });
@@ -212,11 +232,11 @@ const HelmetProject = ({
     configStores.current[newValues.id].set(newValues);
   };
 
-  const _deleteScenario = (scenario) => {
+  const _deleteScenario = async (scenario) => {
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
-      fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
+      await fs.unlink(path.join(projectPath, `${scenario.name}.json`));
       ipcRenderer.send('focus-fix');
     } else {
        ipcRenderer.send('focus-fix');
@@ -229,7 +249,7 @@ const HelmetProject = ({
     duplicatedScenario.id = uuidv4();
     duplicatedScenario.name += `(${duplicatedScenario.id.split('-')[0]})`;
     setScenarios(scenarios.concat(duplicatedScenario));
-    configStores.current[duplicatedScenario.id] = new Store({cwd: projectPath, name: duplicatedScenario.name});
+    configStores.current[duplicatedScenario.id] = window.electronAPI.StoreAPI.create({cwd: projectPath, name: duplicatedScenario.name});
     configStores.current[duplicatedScenario.id].set(duplicatedScenario);
   }
 
@@ -463,3 +483,5 @@ const HelmetProject = ({
     </div>
   )
 };
+
+export default HelmetProject;

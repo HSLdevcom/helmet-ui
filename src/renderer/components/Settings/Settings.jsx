@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import path from "path";
-const {dialog} = require('@electron/remote');
-const versions = require('../versions');
-import { listEMMEPythonPaths } from './search_emme_pythonpath';
 import classNames from 'classnames';
+import { ArrowRight } from '../../icons';
+
+const path = window.electronAPI.path;
+const os = window.electronAPI.os;
+const homedir = os.homedir();
+const dialog = window.electronAPI.dialog;
 
 const EnvironmentOption = ({
   envPath, isSelected, setPath, removePath,
@@ -31,6 +33,7 @@ const Settings = ({
   resultsPath, setResultsPath,
   closeSettings,
   promptModelSystemDownload,
+  listEMMEPythonPaths
 }) => {
 
   return (
@@ -89,7 +92,7 @@ const Settings = ({
                       console.log(pythonPaths);
                       setEMMEPythonEnvs(pythonPaths);
                     } else {
-                      alert(`Python-asennukset ${versions.emme_major_versions.toString()} eivät löytyneet oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
+                      alert(`Python-asennusta ei löytynyt oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
                     }}}
           >
             Etsi Python-ympäristöjä
@@ -192,3 +195,5 @@ const Settings = ({
     </div>
   )
 };
+
+export default Settings;

@@ -2,9 +2,12 @@ import React from 'react';
 import { Chart as ChartJS, LinearScale, LineElement, PointElement, CategoryScale, Tooltip, Legend, Title } from "chart.js";
 import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
-const { shell } = require('electron');
-var duration = require('dayjs/plugin/duration');
-var relativeTime = require('dayjs/plugin/relativeTime');
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { SCENARIO_STATUS_STATE } from '../../../../../enums.js';
+
+const shell = window.electronAPI.shell;
+
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip, Legend, Title);
@@ -108,3 +111,5 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
     </div>
   );
 };
+
+export default RunStatus;
