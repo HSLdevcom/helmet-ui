@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { SCENARIO_STATUS_STATE } from '../../../../../enums.js';
+import { useHelmetModelContext } from '../../../../context/HelmetModelContext';
 
 const shell = window.electronAPI.shell;
 
@@ -13,7 +14,12 @@ dayjs.extend(relativeTime);
 ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip, Legend, Title);
 
 
-const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
+const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
+  const { majorVersion } = useHelmetModelContext();
+
+  if (majorVersion && majorVersion >= 5) {
+    console.log("Using Helmet 5 or later");
+  }
 
   const graphConfig = {
     options: {

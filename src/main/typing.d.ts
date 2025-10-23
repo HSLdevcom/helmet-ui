@@ -51,7 +51,6 @@ interface Window {
       removeListener: (channel: string, func: (...args: any[]) => void) => void;
     };
     downloadHelmetScripts: (args: any) => void;
-    onDownloadReady: (callback: (finalDir: string) => void) => void;
     ps: {
       PythonShell: any;
     };

@@ -1,5 +1,8 @@
 node_modules
 out
+dist
 *.code-workspace
 .idea/
 .vscode/
+src/renderer/dist
+src/dist

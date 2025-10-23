@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App.jsx';
 import { searchEMMEPython, listEMMEPythonPaths } from './search_emme_pythonpath.js';
 import { version } from '../../package.json'; // your package.json version
+import { HelmetModelProvider } from './context/HelmetModelContext';
 
 // Import CSS here instead of in HTML
 import './components/App.css';
@@ -20,9 +21,11 @@ import 'vex-js/dist/css/vex-theme-os.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <App
-    helmetUIVersion={version}
-    searchEMMEPython={searchEMMEPython}
-    listEMMEPythonPaths={listEMMEPythonPaths}
-  />
+  <HelmetModelProvider>
+    <App
+      helmetUIVersion={version}
+      searchEMMEPython={searchEMMEPython}
+      listEMMEPythonPaths={listEMMEPythonPaths}
+    />
+  </HelmetModelProvider>
 );

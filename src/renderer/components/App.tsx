@@ -2,9 +2,10 @@ import React, {useState, useEffect, useRef} from 'react';
 import Settings from './Settings/Settings';
 import HelmetProject from './HelmetProject/HelmetProject';
 import classNames from 'classnames';
+import { useHelmetModelContext } from '../context/HelmetModelContext';
 
 // Use APIs from window.electronAPI
-const { ipcRenderer, shell, fs, path, os, child_process} = window.electronAPI;
+const { ipcRenderer, shell, fs, path, os, child_process, downloadHelmetScripts} = window.electronAPI;
 const homedir = os.homedir();
 
 interface AppProps {
@@ -16,7 +17,7 @@ interface AppProps {
 
 // vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPythonPaths}) => {
-  console.log('window.electronAPI:', window.electronAPI);
+  const { helmetModelSystemVersion, setHelmetModelSystemVersion } = useHelmetModelContext();
 
   // Global settings
   const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false); // whether Settings -dialog is open
@@ -28,8 +29,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   const [projectPath, setProjectPath] = useState<string|undefined>(undefined); // folder path to scenario configs, default homedir
   const [basedataPath, setBasedataPath] = useState<string|undefined>(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
   const [resultsPath, setResultsPath] = useState<string|undefined>(undefined); // folder path to Results directory
-  const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState<string|undefined>(undefined); // which version is being downloaded
-  const [helmetModelSystemVersion, setHelmetModelSystemVersion] = useState<string|undefined>(undefined);
+  const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState<string|undefined>(undefined);
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
   const globalSettingsStore = useRef({
@@ -98,47 +98,46 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     return listEMMEPythonPaths();
   }
 
-const _promptModelSystemDownload = () => {
-  fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
-    .then((response) => response.json() as Promise<GithubTag[]>) // explicitly type the JSON
-    .then((tags: GithubTag[]) => {
-      // Build the select HTML safely
-      const optionsHtml = tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join('');
-      const inputHtml = [
-        '<div class="vex-custom-field-wrapper">',
-          '<select name="version">',
-            optionsHtml,
-          '</select>',
-        '</div>'
-      ].join('');
+  const _promptModelSystemDownload = () => {
+    fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
+      .then((response) => response.json() as Promise<GithubTag[]>) // explicitly type the JSON
+      .then((tags: GithubTag[]) => {
+        // Build the select HTML safely
+        const optionsHtml = tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join('');
+        const inputHtml = [
+          '<div class="vex-custom-field-wrapper">',
+            '<select name="version">',
+              optionsHtml,
+            '</select>',
+          '</div>'
+        ].join('');
 
-      vex.dialog.open({
-        message: "Valitse model-system versio:",
-        input: inputHtml,
-        callback: (data?: { version?: string }) => {    // typed callback param
-          if (!data || !data.version) {
-            // Cancelled or no version selected
-            return;
-          }
-          const now = new Date();
-          setDlHelmetScriptsVersion(data.version);
-          setDownloadingHelmetScripts(true);
-          ipcRenderer.send(
-            'message-from-ui-to-download-helmet-scripts',
-            {
-              version: data.version,
-              destinationDir: homedir,
-              postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
+        vex.dialog.open({
+          message: "Valitse model-system versio:",
+          input: inputHtml,
+          callback: (data?: { version?: string }) => {    // typed callback param
+            if (!data || !data.version) {
+              // Cancelled or no version selected
+              return;
             }
-          );
-        }
+            const now = new Date();
+            setDlHelmetScriptsVersion(data.version);
+            setDownloadingHelmetScripts(true);
+            downloadHelmetScripts(
+              {
+                version: data.version,
+                destinationDir: homedir,
+                postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
+              }
+            );
+          }
+        });
+      })
+      .catch((err) => {
+        console.error('Failed to fetch tags', err);
+        // Maybe show user-friendly alert here
       });
-    })
-    .catch((err) => {
-      console.error('Failed to fetch tags', err);
-      // Maybe show user-friendly alert here
-    });
-};
+  };
 
   // Electron IPC event listeners
   const onDownloadReady = (event: any, savePath: string) => {
@@ -170,7 +169,7 @@ const _promptModelSystemDownload = () => {
       setHelmetModelSystemVersion(trimmedVersionString);
       ipcRenderer.send('change-title', `Helmet UI | Helmet ${trimmedVersionString}`);
     }
-  }
+  };
 
   useEffect(() => {
     // Attach Electron IPC event listeners (to worker => UI events)

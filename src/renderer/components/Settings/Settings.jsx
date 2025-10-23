@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { ArrowRight } from '../../icons';
+import { useHelmetModelContext } from '../../context/HelmetModelContext';
 
 const path = window.electronAPI.path;
 const os = window.electronAPI.os;
@@ -35,6 +36,13 @@ const Settings = ({
   promptModelSystemDownload,
   listEMMEPythonPaths
 }) => {
+  const { setHelmetModelSystemVersion } = useHelmetModelContext();
+
+  const handleSetHelmetScriptsPath = async (newPath) => {
+    await setHelmetScriptsPath(newPath);
+    const helmetVersion = await getHelmetModelSystemVersion(newPath);
+    setHelmetModelSystemVersion(helmetVersion ? helmetVersion.substring(1) : undefined);
+  };
 
   return (
     <div className="Settings">
@@ -113,15 +121,15 @@ const Settings = ({
           <input className="Settings__hidden-input"
                  id="hidden-input-helmet-scripts-path"
                  type="text"
-                 onClick={()=>{
+                 onClick={() => {
                    dialog.showOpenDialog({
                      defaultPath: helmetScriptsPath ? helmetScriptsPath : projectPath,
                      properties: ['openDirectory']
-                   }).then((e)=>{
+                   }).then((e) => {
                      if (!e.canceled) {
-                       setHelmetScriptsPath(e.filePaths[0], emmePythonPath);
+                       handleSetHelmetScriptsPath(e.filePaths[0]);
                      }
-                   })
+                   });
                  }}
           />
           <button className="Settings__input-btn"

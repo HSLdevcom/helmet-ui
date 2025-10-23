@@ -15,8 +15,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   ps: { PythonShell: ps.PythonShell },
   downloadHelmetScripts: (args: any) => ipcRenderer.send('message-from-ui-to-download-helmet-scripts', args),
-  onDownloadReady: (callback: (finalDir: string) => void) =>
-    ipcRenderer.on('download-ready', (event, finalDir) => callback(finalDir)),
   ipcRenderer: {
     send: (channel: string, data?: any) => ipcRenderer.send(channel, data),
     on: (channel: string, func: (...args: any[]) => void) =>
