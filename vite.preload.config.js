@@ -29,7 +29,7 @@ export default defineConfig({
         format: 'cjs',
       },
     },
-    target: 'node16',
+    target: 'node20',
     minify: false,
   },
 });
