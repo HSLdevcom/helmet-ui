@@ -33,6 +33,7 @@ interface Window {
       join: (...paths: string[]) => string;
       dirname: (p: string) => string;
       basename: (p: string) => string;
+      sep: string;
     };
     os: {
       homedir: () => string;

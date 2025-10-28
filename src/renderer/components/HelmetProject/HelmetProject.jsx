@@ -5,11 +5,9 @@ import Runtime from './Runtime/Runtime.jsx';
 import HelmetScenario from './HelmetScenario/HelmetScenario.jsx';
 import RunLog from './RunLog/RunLog.jsx';
 import CostBenefitAnalysis from './CostBenefitAnalysis/CostBenefitAnalysis.jsx';
+import Modal from '../Modal/Modal'; // Import the custom modal component
 
-const {ipcRenderer, fs, path} = window.electronAPI;
-
-
-// vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
+const { ipcRenderer, fs, path } = window.electronAPI;
 
 const HelmetProject = ({
   emmePythonPath, helmetScriptsPath, projectPath, basedataPath, resultsPath,
@@ -46,7 +44,11 @@ const HelmetProject = ({
   const [cbaOptions, setCbaOptions] = useState({});
 
   // Scenario-specific settings under currently selected HELMET Project
-  const configStores = useRef({});
+  const configStores = useRef(new Map()); // Use a Map to manage scenario-specific stores
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalError, setModalError] = useState('');
+  const [newScenarioName, setNewScenarioName] = useState('');
 
   const _handleClickScenarioToActive = (scenario) => {
     if(scenarioIDsToRun.includes(scenario.id)) {
@@ -59,34 +61,22 @@ const HelmetProject = ({
   };
 
   const _handleClickNewScenario = () => {
-    ipcRenderer.send('focus-fix');
-    const promptCreation = (previousError) => {
-      vex.dialog.prompt({
-        message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
-        placeholder: '',
-        callback: (inputScenarioName) => {
-          let error = "";
-          // Check for cancel button press
-          if (inputScenarioName === false) {
-            return;
-          }
-          // Check input for initial errors
-          if (inputScenarioName === "") {
-            error = "Nimike on pakollinen, tallennettavaa tiedostonime\u00e4 varten. ";
-          }
-          if (scenarios.map((s) => s.name).includes(inputScenarioName)) {
-            error = "Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin. ";
-          }
-          // Handle recursively any input errors (mandated by the async library since prompt isn't natively supported in Electron)
-          if (error) {
-            promptCreation(error);
-          } else {
-            _createScenario(inputScenarioName);
-          }
-        }
-      });
-    };
-    promptCreation();
+    setModalOpen(true);
+    setModalError('');
+    setNewScenarioName('');
+  };
+
+  const handleModalSubmit = () => {
+    if (!newScenarioName.trim()) {
+      setModalError('Nimike on pakollinen, tallennettavaa tiedostonimeä varten.');
+      return;
+    }
+    if (scenarios.map((s) => s.name).includes(newScenarioName.trim())) {
+      setModalError('Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin.');
+      return;
+    }
+    _createScenario(newScenarioName.trim());
+    setModalOpen(false);
   };
 
   const _handleClickStartStop = () => {
@@ -98,57 +88,64 @@ const HelmetProject = ({
 
   const _loadProjectScenarios = async (projectFilepath) => {
     const configPath = projectFilepath;
-    const files = await fs.readdir(configPath);
 
-    // Filter only .json files
-    const jsonFiles = files.filter(f => f.endsWith(".json"));
+    try {
+      const files = await fs.readdir(configPath);
 
-    // Read & parse all JSON files in parallel
-    const foundScenarios = (
-      await Promise.all(
-        jsonFiles.map(async (fileName) => {
-          try {
-            const filePath = path.join(configPath, fileName);
-            const content = await fs.readFile(filePath);
-            const obj = JSON.parse(content);
+      // Filter only .json files
+      const jsonFiles = files.filter((f) => f.endsWith('.json'));
 
-            if (
-              "id" in obj &&
-              "name" in obj &&
-              "use_fixed_transit_cost" in obj &&
-              "iterations" in obj
-            ) {
-              // Initialize scenario-specific Store
-              configStores.current[obj.id] = window.electronAPI.StoreAPI.create({
-                cwd: configPath,
-                name: fileName.slice(0, -5),
-              });
+      // Read & parse all JSON files in parallel
+      const foundScenarios = (
+        await Promise.all(
+          jsonFiles.map(async (fileName) => {
+            try {
+              const filePath = path.join(configPath, fileName);
+              const content = await fs.readFile(filePath);
+              const obj = JSON.parse(content);
 
-              return obj; // include valid scenario
+              if (
+                "id" in obj &&
+                "name" in obj &&
+                "use_fixed_transit_cost" in obj &&
+                "iterations" in obj
+              ) {
+                // Initialize scenario-specific namespace in the shared store
+                const namespace = `${configPath}/${fileName.slice(0, -5)}`;
+                if (!configStores.current.has(namespace)) {
+                  configStores.current.set(namespace, window.electronAPI.StoreAPI.getScenarioStore(namespace));
+                }
+
+                return obj; // include valid scenario
+              } else {
+                console.warn(`Invalid scenario structure in file: ${fileName}`);
+              }
+            } catch (err) {
+              console.error(`Failed to load scenario from ${fileName}:`, err);
             }
-          } catch (err) {
-            console.error(`Failed to load scenario from ${fileName}:`, err);
-          }
-          return null; // skip invalid or failed ones
-        })
-      )
-    ).filter(Boolean); // remove nulls
+            return null; // skip invalid or failed ones
+          })
+        )
+      ).filter(Boolean); // remove nulls
 
-    // Add runStatus if missing (for backward compatibility with older scenarios)
-    const decoratedFoundScenarios = foundScenarios.map((scenario) =>
-      scenario.runStatus === undefined
-        ? addRunStatusProperties(scenario)
-        : scenario
-    );
+      // Add runStatus if missing (for backward compatibility with older scenarios)
+      const decoratedFoundScenarios = foundScenarios.map((scenario) =>
+        scenario.runStatus === undefined
+          ? addRunStatusProperties(scenario)
+          : scenario
+      );
 
-    // Update UI state
-    setScenarios(decoratedFoundScenarios);
-    setOpenScenarioID(null);
-    setScenarioIDsToRun([]);
-    setRunningScenarioID(null);
-    setRunningScenarioIDsQueued([]);
-    setLogContents([]);
-    setLogOpened(false);
+      // Update UI state
+      setScenarios(decoratedFoundScenarios);
+      setOpenScenarioID(null);
+      setScenarioIDsToRun([]);
+      setRunningScenarioID(null);
+      setRunningScenarioIDsQueued([]);
+      setLogContents([]);
+      setLogOpened(false);
+    } catch (error) {
+      console.error(`Error loading project scenarios:`, error);
+    }
   };
 
   const addRunStatusProperties = (scenario) => {
@@ -169,14 +166,36 @@ const HelmetProject = ({
     }
   }
 
-  const _createScenario = (newScenarioName) => {
-    // Generate new (unique) ID for new scenario
+  const _createScenario = async (newScenarioName) => {
+    // Generate new (unique) ID for the new scenario
     const newId = uuidv4();
+
+    // Extract the number at the beginning of the name, if it exists
+    const match = newScenarioName.match(/^(\d+)[ _]/);
+    const firstScenarioId = match ? parseInt(match[1], 10) : 1;
+
+    // Check for .emp files in the project directory
+    let defaultEmmeProjectFilePath = null;
+    try {
+      const files = await fs.readdir(projectPath);
+      const empFiles = files.filter((file) => file.endsWith('.emp'));
+      if (empFiles.length === 1) {
+        defaultEmmeProjectFilePath = path.join(projectPath, empFiles[0]);
+        console.log(`Default .emp file found: ${defaultEmmeProjectFilePath}`);
+      } else if (empFiles.length > 1) {
+        console.log(`Multiple .emp files found. No default will be set.`);
+      } else {
+        console.log(`No .emp files found in the project directory.`);
+      }
+    } catch (error) {
+      console.error(`Error reading project directory for .emp files:`, error);
+    }
+
     const newScenario = {
       id: newId,
       name: newScenarioName,
-      emme_project_file_path: null,
-      first_scenario_id: 1,
+      emme_project_file_path: defaultEmmeProjectFilePath, // Use the default .emp file if found
+      first_scenario_id: firstScenarioId,
       forecast_data_folder_path: null,
       delete_strategy_files: true,
       separate_emme_scenarios: false,
@@ -207,29 +226,31 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
-    window.electronAPI.StoreAPI.set({ cwd: projectPath, name: newScenarioName }, null, newScenario);
-    // Then set scenario as open by id (Why id? Having open_scenario as reference causes sub-elements to be bugged because of different object reference)
+    const namespace = `${ projectPath }/${ newScenario.id }`;
+    const store = window.electronAPI.StoreAPI.getScenarioStore(namespace);
+    configStores.current.set(namespace, store);
+    store.set('scenario', newScenario);
+    // Then set scenario as open by id
     setOpenScenarioID(newId);
   };
 
-  const _updateScenario = async (newValues) => {
-    // Update newValues to matching .id in this.state.scenarios
-    setScenarios(scenarios.map((s) => (s.id === newValues.id ? {...s, ...newValues} : s)));
+  const _updateScenario = async ( newValues ) => {
+    // Update newValues to matching . id in this.state.scenarios
+    setScenarios(scenarios.map((s) => (s.id === newValues.id ? { ... s, ... newValues } : s)));
     // If name changed, rename file and change reference
-    if (configStores.current[newValues.id].get('name') !== newValues.name) {
+    const namespace = `${ projectPath }/${ newValues.id }`;
+    const store = configStores.current.get(namespace);
+    if ( store.get('scenario').name !== newValues.name ) {
       // If name was set empty - use ID instead
       const newName = newValues.name ? newValues.name : newValues.id;
       await fs.rename(
-        configStores.current[newValues.id].path,
+        path.join(projectPath, `${store.get('scenario').name}.json`),
         path.join(projectPath, `${newName}.json`)
       );
-      configStores.current[newValues.id] = window.electronAPI.StoreAPI.create({
-        cwd: projectPath,
-        name: newName
-      });
+      store.set('scenario', { ... newValues, name: newName });
     }
-    // And persist all changes in file
-    configStores.current[newValues.id].set(newValues);
+    // And persist all changes in the shared store
+    store.set('scenario', newValues);
   };
 
   const _deleteScenario = async (scenario) => {
@@ -254,7 +275,9 @@ const HelmetProject = ({
   }
 
   const _runAllActiveScenarios = (activeScenarioIDs) => {
-    const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
+    const scenariosToRun = scenarios
+      .filter((s) => activeScenarioIDs.includes(s.id))
+      .sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
 
     // Check required global parameters are set
     if (!emmePythonPath) {
@@ -280,7 +303,12 @@ const HelmetProject = ({
 
     // For each active scenario, check required scenario-specific parameters are set
     for (let scenario of scenariosToRun) {
-      const store = configStores.current[scenario.id];
+      const store = configStores.current.get(scenario.id); // Use the `get` method of the Map
+      if (!store) {
+        alert(`Store not found for scenario "${scenario.name}".`);
+        return;
+      }
+
       const iterations = store.get('iterations');
       if (!store.get('emme_project_file_path')) {
         alert(`Emme-projektia ei ole valittu skenaariossa "${scenario.name}"`);
@@ -301,8 +329,8 @@ const HelmetProject = ({
     setLogContents([
       {
         level: "UI-event",
-        message: `Initializing run of scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`
-      }
+        message: `Initializing run of scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`,
+      },
     ]);
     setLogOpened(true); // Keep log open even after run finishes (or is cancelled)
     setRunningScenarioID(activeScenarioIDs[0]); // Disable controls
@@ -312,15 +340,30 @@ const HelmetProject = ({
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
         // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system
-
         return {
           ...s,
-          emme_python_path: s.overriddenProjectSettings.emmePythonPath !== null && s.overriddenProjectSettings.emmePythonPath !== emmePythonPath ? s.overriddenProjectSettings.emmePythonPath : emmePythonPath,
-          helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath !== null && s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath ? s.overriddenProjectSettings.helmetScriptsPath : helmetScriptsPath,
-          base_data_folder_path: s.overriddenProjectSettings.basedataPath !== null && s.overriddenProjectSettings.basedataPath !== basedataPath ? s.overriddenProjectSettings.basedataPath : basedataPath,
-          results_data_folder_path: s.overriddenProjectSettings.resultsPath !== null && s.overriddenProjectSettings.resultsPath !== resultsPath ? s.overriddenProjectSettings.resultsPath : resultsPath,
+          emme_python_path:
+            s.overriddenProjectSettings.emmePythonPath !== null &&
+            s.overriddenProjectSettings.emmePythonPath !== emmePythonPath
+              ? s.overriddenProjectSettings.emmePythonPath
+              : emmePythonPath,
+          helmet_scripts_path:
+            s.overriddenProjectSettings.helmetScriptsPath !== null &&
+            s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath
+              ? s.overriddenProjectSettings.helmetScriptsPath
+              : helmetScriptsPath,
+          base_data_folder_path:
+            s.overriddenProjectSettings.basedataPath !== null &&
+            s.overriddenProjectSettings.basedataPath !== basedataPath
+              ? s.overriddenProjectSettings.basedataPath
+              : basedataPath,
+          results_data_folder_path:
+            s.overriddenProjectSettings.resultsPath !== null &&
+            s.overriddenProjectSettings.resultsPath !== resultsPath
+              ? s.overriddenProjectSettings.resultsPath
+              : resultsPath,
           log_level: 'DEBUG',
-        }
+        };
       })
     );
   };
@@ -480,6 +523,23 @@ const HelmetProject = ({
               ""
         }
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        title="Uusi Helmet-skenaario" // Updated title
+      >
+        <label className="Modal__label">Anna uuden skenaarion nimike:</label> {/* Added label */}
+        <input
+          className="Modal__input"
+          type="text"
+          value={newScenarioName}
+          onChange={(e) => setNewScenarioName(e.target.value)}
+          placeholder="Uuden skenaarion nimi"
+        />
+        {modalError && <p className="Modal__error">{modalError}</p>}
+      </Modal>
     </div>
   )
 };

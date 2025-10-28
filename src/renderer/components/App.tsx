@@ -3,6 +3,7 @@ import Settings from './Settings/Settings';
 import HelmetProject from './HelmetProject/HelmetProject';
 import classNames from 'classnames';
 import { useHelmetModelContext } from '../context/HelmetModelContext';
+import Modal from './Modal/Modal'; // Import the custom modal component
 
 // Use APIs from window.electronAPI
 const { ipcRenderer, shell, fs, path, os, child_process, downloadHelmetScripts} = window.electronAPI;
@@ -30,6 +31,14 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   const [basedataPath, setBasedataPath] = useState<string|undefined>(undefined); // folder path to base input data (subdirectories: 2016_zonedata, 2016_basematrices)
   const [resultsPath, setResultsPath] = useState<string|undefined>(undefined); // folder path to Results directory
   const [dlHelmetScriptsVersion, setDlHelmetScriptsVersion] = useState<string|undefined>(undefined);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalOptions, setModalOptions] = useState<{ title: string; label: string; options: string[] }>({
+    title: '',
+    label: '',
+    options: [],
+  });
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState<number | null>(null);
 
   // Global settings store contains "emme_python_path", "helmet_scripts_path", "project_path", "basedata_path", and "resultdata_path".
   const globalSettingsStore = useRef({
@@ -37,7 +46,22 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     set: (key: string , value: any) => window.electronAPI.StoreAPI.set(key, value),
   });
 
-  const _setEMMEPythonPath = (newPath: string) => {
+  const _setEMMEPythonPath = async (newPath: string) => {
+    const helmetScriptsPath: string | undefined = globalSettingsStore.current.get('helmet_scripts_path');
+    if (helmetScriptsPath) {
+      try {
+        const requirementsPath = path.join(helmetScriptsPath, "requirements.txt");
+        if (fs.existsSync(requirementsPath)) {
+          await child_process.exec(`"${path.join(path.dirname(newPath), "Scripts", "pip.exe")}" install --user -r "${requirementsPath}"`);
+        } else {
+          console.warn(`No requirements file found at: ${requirementsPath}`);
+        }
+      } catch (e) {
+        console.error("Error installing requirements:", e);
+      }
+    }
+
+    console.log("Setting emmePythonPath to:", newPath);
     setEmmePythonPath(newPath);
     globalSettingsStore.current.set('emme_python_path', newPath);
   };
@@ -66,20 +90,40 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   }
 
   const _setHelmetScriptsPath = async (newPath: string) => {
-    // Cannot use state variable since it'd be undefined at times
-    const pythonPath: string | undefined = globalSettingsStore.current.get('emme_python_path');
     try {
-      await child_process.exec(`"${path.join(path.dirname(pythonPath!), "Scripts", "pip.exe")}" install --user -r "${path.join(newPath, "requirements.txt")}"`);
+      // Resolve accidental "one folder too high" selection
+      const helmetFilePath = path.join(newPath, "helmet.py");
+      const scriptsSubfolderPath = path.join(newPath, "Scripts", "helmet.py");
+
+      if (!fs.existsSync(helmetFilePath) && fs.existsSync(scriptsSubfolderPath)) {
+        if (confirm(`Valitusta kansiosta ei löydy "helmet.py" -tiedostoa, mutta sen\nsisällä olevasta "Scripts" kansiosta löytyy.\n\nValitaanko "Scripts" kansio valitsemasi kansion sijaan?`)) {
+          newPath = path.join(newPath, "Scripts");
+        }
+      }
+
+      const pythonPath: string | undefined = globalSettingsStore.current.get('emme_python_path');
+      if (pythonPath) {
+        const requirementsPath = path.join(newPath, "requirements.txt");
+        if (fs.existsSync(requirementsPath)) {
+          await child_process.exec(`"${path.join(path.dirname(pythonPath), "Scripts", "pip.exe")}" install --user -r "${requirementsPath}"`);
+        } else {
+          console.warn(`No requirements file found at: ${requirementsPath}`);
+        }
+      }
+
+      console.log("Setting helmetScriptsPath to:", newPath);
+      setHelmetScriptsPath(newPath);
+      globalSettingsStore.current.set('helmet_scripts_path', newPath);
+      updateHelmetModelVersion(newPath);
+
     } catch (e) {
-      console.log(e);
-      console.log("No requirements file found for HELMET Scripts. Some functionality may not work properly.");
+      console.error("Error installing requirements or setting helmetScriptsPath:", e);
     }
-    setHelmetScriptsPath(newPath);
-    globalSettingsStore.current.set('helmet_scripts_path', newPath);
-    updateHelmetModelVersion(newPath);
   };
 
+
   const _setProjectPath = (newPath: string) => {
+    console.log(`Updating projectPath to: ${newPath}`);
     setProjectPath(newPath);
     globalSettingsStore.current.set('project_path', newPath);
   };
@@ -102,41 +146,34 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     fetch('https://api.github.com/repos/HSLdevcom/helmet-model-system/tags')
       .then((response) => response.json() as Promise<GithubTag[]>) // explicitly type the JSON
       .then((tags: GithubTag[]) => {
-        // Build the select HTML safely
-        const optionsHtml = tags.map((tag) => `<option value="${tag.name}">${tag.name}</option>`).join('');
-        const inputHtml = [
-          '<div class="vex-custom-field-wrapper">',
-            '<select name="version">',
-              optionsHtml,
-            '</select>',
-          '</div>'
-        ].join('');
-
-        vex.dialog.open({
-          message: "Valitse model-system versio:",
-          input: inputHtml,
-          callback: (data?: { version?: string }) => {    // typed callback param
-            if (!data || !data.version) {
-              // Cancelled or no version selected
-              return;
-            }
-            const now = new Date();
-            setDlHelmetScriptsVersion(data.version);
-            setDownloadingHelmetScripts(true);
-            downloadHelmetScripts(
-              {
-                version: data.version,
-                destinationDir: homedir,
-                postfix: `${('00'+now.getDate()).slice(-2)}-${('00'+now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
-              }
-            );
-          }
+        const options = tags.map((tag) => tag.name);
+        setModalOptions({
+          title: 'Lataa eri versio internetistä',
+          label: 'Valitse model-system versio:',
+          options,
         });
+        setModalOpen(true);
       })
       .catch((err) => {
         console.error('Failed to fetch tags', err);
-        // Maybe show user-friendly alert here
+        alert('Failed to fetch model-system versions. Please try again later.');
       });
+  };
+
+  const handleModalSubmit = () => {
+    if (!selectedOption) {
+      alert('Please select a version.');
+      return;
+    }
+    const now = new Date();
+    setDlHelmetScriptsVersion(selectedOption);
+    setDownloadingHelmetScripts(true);
+    downloadHelmetScripts({
+      version: selectedOption,
+      destinationDir: homedir,
+      postfix: `${('00' + now.getDate()).slice(-2)}-${('00' + now.getMonth()).slice(-2)}-${Date.now()}`, // DD-MM-epoch
+    });
+    setModalOpen(false);
   };
 
   // Electron IPC event listeners
@@ -162,12 +199,24 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   };
 
   const updateHelmetModelVersion = async (helmetScriptsPath: string) => {
-    console.log("Updating Helmet model system version from path:", helmetScriptsPath);
-    const helmetVersion = await getHelmetModelSystemVersion(helmetScriptsPath);
-    if (helmetVersion !== '') {
-      const trimmedVersionString = helmetVersion.substring(1);
-      setHelmetModelSystemVersion(trimmedVersionString);
-      ipcRenderer.send('change-title', `Helmet UI | Helmet ${trimmedVersionString}`);
+    try {
+      console.log("Updating Helmet model system version from path:", helmetScriptsPath);
+      const rootFiles = await fs.readdir(helmetScriptsPath);
+      const configFile = rootFiles.find((file) => file === 'dev-config.json');
+      if (configFile) {
+        const jsonPath = path.join(helmetScriptsPath, configFile);
+        const configString = await fs.readFile(jsonPath);
+        const configuration = JSON.parse(configString);
+        if (configuration['HELMET_VERSION']) {
+          const trimmedVersionString = configuration['HELMET_VERSION'].substring(1);
+          setHelmetModelSystemVersion(trimmedVersionString);
+          ipcRenderer.send('change-title', `Helmet UI | Helmet ${trimmedVersionString}`);
+        }
+      } else {
+        console.warn("dev-config.json not found in the Scripts folder.");
+      }
+    } catch (error) {
+      console.error("Error updating Helmet model version:", error);
     }
   };
 
@@ -213,6 +262,9 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     if (!existingProjectPath || !fs.existsSync(existingProjectPath)) {
       alert(`Projektikansiota ei löydy polusta '${existingProjectPath}'.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
       _setProjectPath(homedir);
+    } else {
+      console.log(`Setting projectPath state to: ${existingProjectPath}`);
+      setProjectPath(existingProjectPath);
     }
 
     if (!existingBasedataPath || !existingResultsPath) {
@@ -229,6 +281,40 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
       ipcRenderer.removeListener('download-ready', onDownloadReady);
     }
   }, []);
+
+  useEffect(() => {
+    ipcRenderer.on('download-progress', (_, { progress, version }) => {
+      console.log(`Download progress for version ${version}: ${progress.percent * 100}%`);
+      setDownloadProgress(progress.percent * 100);
+    });
+
+    ipcRenderer.on('download-ready', (_, { finalDir, version }) => {
+      console.log(`Download complete for version ${version}. Final directory: ${finalDir}`);
+      setDownloadProgress(null);
+      _setHelmetScriptsPath(finalDir);
+    });
+
+    ipcRenderer.on('download-error', (_, { error, version }) => {
+      console.error(`Download error for version ${version}: ${error}`);
+      setDownloadProgress(null);
+    });
+
+    ipcRenderer.on('download-cancelled', (_, { version }) => {
+      console.log(`Download canceled for version ${version}`);
+      setDownloadProgress(null);
+    });
+
+    return () => {
+      ipcRenderer.removeListener('download-progress', () => {});
+      ipcRenderer.removeListener('download-ready', () => {});
+      ipcRenderer.removeListener('download-error', () => {});
+      ipcRenderer.removeListener('download-cancelled', () => {});
+    };
+  }, []);
+
+  const handleCancelDownload = () => {
+    ipcRenderer.send('cancel-download', dlHelmetScriptsVersion);
+  };
 
   return (
     <div className={"App" + (isProjectRunning ? " App--busy" : "")}>
@@ -255,6 +341,9 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
           setBasedataPath={_setBasedataPath}
           setResultsPath={_setResultsPath}
           promptModelSystemDownload={_promptModelSystemDownload}
+          getHelmetModelSystemVersion={getHelmetModelSystemVersion}
+          downloadProgress={downloadProgress}
+          cancelDownload={handleCancelDownload}
         />
       </div>
 
@@ -265,7 +354,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
         <span className="App__header-version">{`UI ${helmetUIVersion}`}</span>
       </div>
 
-      {/* HELMET Project -specific content, including runtime- & per-scenario-settings */}
+      {/* HELMET Project -specific content, including runtime-& per-scenario-settings */}
       <div className="App__body">
         <HelmetProject
           emmePythonPath={emmePythonPath}
@@ -289,8 +378,31 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
           onClick={() => isProjectRunning ? setSettingsOpen(false) : setSettingsOpen(true)}>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        title={modalOptions.title}
+      >
+        <label className="Modal__label">{modalOptions.label}</label>
+        <select
+          className="Modal__input"
+          value={selectedOption || ''}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <option value="" disabled>
+            Select a version
+          </option>
+          {modalOptions.options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </Modal>
     </div>
   )
-};
 
+};
 export default App;

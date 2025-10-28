@@ -5,10 +5,6 @@ html, body, #root {
     padding: 0;
 }
 
-html, body {
-    overflow: hidden;
-}
-
 @font-face {
     font-family: gotham_rounded_medium;
     src: url(GothamRnd-Medium.otf);

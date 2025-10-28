@@ -34,7 +34,10 @@ const Settings = ({
   resultsPath, setResultsPath,
   closeSettings,
   promptModelSystemDownload,
-  listEMMEPythonPaths
+  listEMMEPythonPaths,
+  getHelmetModelSystemVersion,
+  downloadProgress,
+  cancelDownload,
 }) => {
   const { setHelmetModelSystemVersion } = useHelmetModelContext();
 
@@ -77,7 +80,7 @@ const Settings = ({
         <button className="Settings__python-env-input-btn"
                   onClick={()=>{
                     dialog.showOpenDialog({
-                      defaultPath: emmePythonPath ? emmePythonPath : path.resolve('/'),
+                      defaultPath: emmePythonPath ? emmePythonPath : path.join('/'), // Replace path.resolve with path.join
                       filters: [
                         { name: 'Executable', extensions: ['exe'] },
                         { name: 'All Files', extensions: ['*'] }
@@ -93,15 +96,28 @@ const Settings = ({
             Lisää Python-ympäristö
           </button>
         <button className="Settings__python-env-input-btn"
-                  onClick={(e) => {
-                    const [found, pythonPaths] = listEMMEPythonPaths();
-                    if (found) {
-                      alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
-                      console.log(pythonPaths);
-                      setEMMEPythonEnvs(pythonPaths);
-                    } else {
-                      alert(`Python-asennusta ei löytynyt oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
-                    }}}
+                  onClick={async () => { // Make the handler asynchronous
+                    try {
+                      console.log("Searching for EMME Python paths...");
+                      const result = await listEMMEPythonPaths(); // Await the Promise
+                      if (!result || !Array.isArray(result) || result.length !== 2) {
+                        throw new Error("Invalid response from listEMMEPythonPaths");
+                      }
+
+                      const [found, pythonPaths] = result;
+                      if (found && Array.isArray(pythonPaths) && pythonPaths.length > 0) {
+                        alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
+                        console.log("Found Python paths:", pythonPaths);
+                        setEMMEPythonEnvs(pythonPaths);
+                      } else {
+                        alert(`Python-asennusta ei löytynyt oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
+                        console.warn("No Python paths found.");
+                      }
+                    } catch (error) {
+                      console.error("Error listing EMME Python paths:", error);
+                      alert(`Tapahtui virhe Python-ympäristöjen etsimisessä. Tarkista lokitiedot.`);
+                    }
+                  }}
           >
             Etsi Python-ympäristöjä
           </button>
@@ -109,34 +125,42 @@ const Settings = ({
         <br/>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet-model-system</span>
-          {isDownloadingHelmetScripts ?
-            <span className="Settings__pseudo-file-select">
-              Downloading model-system {dlHelmetScriptsVersion === 'master' ? 'latest' : dlHelmetScriptsVersion}. . .
-            </span>
-            :
-            <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={helmetScriptsPath}>
-              {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
-            </label>
-          }
-          <input className="Settings__hidden-input"
-                 id="hidden-input-helmet-scripts-path"
-                 type="text"
-                 onClick={() => {
-                   dialog.showOpenDialog({
-                     defaultPath: helmetScriptsPath ? helmetScriptsPath : projectPath,
-                     properties: ['openDirectory']
-                   }).then((e) => {
-                     if (!e.canceled) {
-                       handleSetHelmetScriptsPath(e.filePaths[0]);
-                     }
-                   });
-                 }}
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={helmetScriptsPath || "Path not set"}>
+            {helmetScriptsPath ? path.basename(helmetScriptsPath) : "Valitse.."}
+          </label>
+          <input
+            className="Settings__hidden-input"
+            id="hidden-input-helmet-scripts-path"
+            type="text"
+            onClick={() => {
+              dialog.showOpenDialog({
+                defaultPath: helmetScriptsPath || projectPath,
+                properties: ['openDirectory'],
+              }).then((e) => {
+                if (!e.canceled) {
+                  handleSetHelmetScriptsPath(e.filePaths[0]);
+                }
+              });
+            }}
           />
-          <button className="Settings__input-btn"
-                  onClick={(e) => {promptModelSystemDownload()}}
-          >
-            Lataa eri versio internetist&auml;
-          </button>
+          {downloadProgress !== null ? (
+            <div className="Settings__download-progress">
+              <progress value={downloadProgress} max="100"></progress>
+              <button onClick={() => {
+                console.log('Cancel button clicked');
+                cancelDownload();
+              }}>
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button className="Settings__input-btn" onClick={(e) => {
+              console.log('Prompting user to select model-system version for download');
+              promptModelSystemDownload();
+            }}>
+              Lataa eri versio internetist&auml;
+            </button>
+          )}
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Projektin kansiopolku (oletusarvoisesti kotihakemistosi)</span>
@@ -146,15 +170,20 @@ const Settings = ({
           <input className="Settings__hidden-input"
                  id="hidden-input-project-path"
                  type="text"
-                 onClick={()=>{
+                 onClick={() => {
                    dialog.showOpenDialog({
                      defaultPath: projectPath ? projectPath : homedir,
                      properties: ['openDirectory']
-                   }).then((e)=>{
+                   }).then((e) => {
                      if (!e.canceled) {
+                       console.log(`Setting projectPath to: ${e.filePaths[0]}`);
                        setProjectPath(e.filePaths[0]);
+                     } else {
+                       console.log("Project path selection was canceled.");
                      }
-                   })
+                   }).catch((error) => {
+                     console.error("Error selecting project path:", error);
+                   });
                  }}
           />
         </div>

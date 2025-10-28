@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import _ from 'lodash';
 import { ArrowUp, ArrowDown, ResetIcon } from '../../../icons';
 

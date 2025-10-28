@@ -16,7 +16,7 @@ if (require('electron-squirrel-startup')) app.quit();
 let mainWindow, entrypointWorkerWindow, cbaWorkerWindow;
 let workPreloadTimeout;
 let useMockAssignmentInsteadOfEmme = false;
-
+const activeDownloads = new Map(); // Track active downloads for cancellation
 
 async function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -82,20 +82,76 @@ ipcMain.on('change-title', (_, newTitle) => {
 
 // Download helmet scripts
 ipcMain.on('message-from-ui-to-download-helmet-scripts', async (event, args) => {
+  console.log(`Starting download for version: ${args.version}`);
   const workDir = args.destinationDir;
-  const tmpDir = path.join(workDir, "helmet-model-system-tmp-workdir");
-  const finalDir = path.join(workDir, `helmet-model-system-${args.version}-${args.postfix}`);
+  const extractedDir = path.join(workDir, `helmet-model-system-${args.version}-${args.postfix}`);
 
-  const downloadItem = await download(BrowserWindow.getFocusedWindow(), 
-    `https://github.com/HSLdevcom/helmet-model-system/archive/${args.version}.zip`, 
-    { directory: workDir }
-  );
+  try {
+    const downloadItem = await download(BrowserWindow.getFocusedWindow(),
+      `https://github.com/HSLdevcom/helmet-model-system/archive/${args.version}.zip`,
+      {
+        directory: workDir,
+        onProgress: (progress) => {
+          console.log(`Download progress for version ${args.version}: ${progress.percent * 100}%`);
+          mainWindow.webContents.send('download-progress', { progress, version: args.version });
+        },
+      }
+    );
 
-  const archivePath = downloadItem.getSavePath();
-  await decompress(archivePath, tmpDir, { strip: 1 });
-  fs.renameSync(path.join(tmpDir, "Scripts"), finalDir);
-  del.sync([archivePath, tmpDir]);
-  mainWindow.webContents.send('download-ready', finalDir);
+    const archivePath = downloadItem.getSavePath();
+    console.log(`Download complete for version ${args.version}. Extracting...`);
+
+    // Ensure extraction directory exists
+    fs.mkdirSync(extractedDir, { recursive: true });
+
+    await decompress(archivePath, extractedDir);
+
+    // Try deleting the zip file after extraction
+    try {
+      fs.unlinkSync(archivePath);
+    } catch (err) {
+      console.warn(`Could not delete archive: ${err.message}`);
+    }
+
+    // Inspect extracted structure
+    const contents = fs.readdirSync(extractedDir);
+    console.log('Extracted directory contents:', contents);
+
+    // Find the actual subfolder
+    const extractedSubfolder =
+      contents.find(f => f.startsWith(`helmet-model-system-${args.version}`)) ||
+      contents.find(f => f.startsWith('helmet-model-system-'));
+
+    if (!extractedSubfolder) {
+      throw new Error(`Could not locate extracted folder under ${extractedDir}`);
+    }
+
+    const scriptsFolder = path.join(extractedDir, extractedSubfolder, 'Scripts');
+    if (!fs.existsSync(scriptsFolder)) {
+      throw new Error(`Scripts folder not found at: ${scriptsFolder}`);
+    }
+
+    console.log(`Extraction complete. Scripts folder ready at: ${scriptsFolder}`);
+    mainWindow.webContents.send('download-ready', { finalDir: scriptsFolder, version: args.version });
+  } catch (error) {
+    console.error(`Error during download or extraction for version ${args.version}:`, error);
+    mainWindow.webContents.send('download-error', { error: error.message, version: args.version });
+  } finally {
+    activeDownloads.delete(args.version); // Remove from active downloads
+  }
+});
+
+ipcMain.on('cancel-download', (event, version) => {
+  console.log(`Canceling download for version: ${version}`);
+  const downloadItem = activeDownloads.get(version);
+  if (downloadItem) {
+    downloadItem.cancel(); // Cancel the download
+    activeDownloads.delete(version);
+    mainWindow.webContents.send('download-cancelled', { version });
+    console.log(`Download canceled for version: ${version}`);
+  } else {
+    console.warn(`No active download found for version: ${version}`);
+  }
 });
 
 // Enable / disable EMME

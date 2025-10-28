@@ -1,8 +1,9 @@
 import versions from '../versions';
+import _ from 'lodash';
 
 const path = window.electronAPI.path;
 const fs = window.electronAPI.fs;
-const _ = window.electronAPI._;
+
 
 /**
  * Check and try to set EMME's Python location on Windows, searching from common known paths.
@@ -57,20 +58,24 @@ const checkEmmePythonEnv = () => {
    }
 }
 
-export function listEMMEPythonPaths(){
+export async function listEMMEPythonPaths() {
   const pythonVersion = getVersion(versions.emme_python);
 
-  const commonEmmePaths = []
-  const pythonInstallations = []
+  const commonEmmePaths = [];
+  const pythonInstallations = [];
 
   // Check if Windows python exe exists in environment variables
   const [hasPythonEnvInstallation, pythonEnvInstallation] = checkEmmePythonEnv();
-  if(hasPythonEnvInstallation) { pythonInstallations.push(pythonEnvInstallation) };
+  if (hasPythonEnvInstallation) {
+    pythonInstallations.push(pythonEnvInstallation);
+  }
 
-  versions.emme_major_versions.forEach(majorVersion => { commonEmmePaths.push(`INRO\\Emme\\Emme ${majorVersion}`) })
+  versions.emme_major_versions.forEach(majorVersion => {
+    commonEmmePaths.push(`INRO\\Emme\\Emme ${majorVersion}`);
+  });
 
   const drives = ['C:', 'D:', 'E:', 'F:', 'G:', 'H:', 'I:', 'J:', '/'];
-  const paths = []
+  const paths = [];
   commonEmmePaths.forEach(commonEmmePath => {
     paths.push(
       `Program Files\\${commonEmmePath}`,
@@ -78,21 +83,25 @@ export function listEMMEPythonPaths(){
       `Program Files (x86)\\Bentley\\OpenPaths`,
       `Program Files\\Bentley\\OpenPaths`,
       `${commonEmmePath}`,
-    )
-  })
+    );
+  });
   paths.push(`usr/bin/python${pythonVersion.major}`); // mainly for developers on Mac & Linux
 
   const allPathCombinations = drives.reduce(
     (accumulator, d) => {
       // Combine each (d)rive to all (p)aths, and merge results via reduce
-      return accumulator.concat(paths.map((p) => path.join(d,p)));
-    }, []);
-  allPathCombinations.forEach((pathCombination) => {
-    const foundPythonEnv = hasPythonEnv(pathCombination);
-    if (foundPythonEnv !== null) {
-      pythonInstallations.push(...foundPythonEnv);
+      return accumulator.concat(paths.map((p) => path.join(d, p)));
+    },
+    []
+  );
+
+  for (const pathCombination of allPathCombinations) {
+    const foundPythonEnv = await hasPythonEnv(pathCombination); // Await the result of hasPythonEnv
+    if (foundPythonEnv && Array.isArray(foundPythonEnv)) {
+      pythonInstallations.push(...foundPythonEnv); // Spread only if it's an array
     }
-  });
+  }
+
   if (pythonInstallations.length > 0) {
     // Filter out duplicates
     const filteredPythons = _.uniq(pythonInstallations).filter(filteredPath => {
@@ -117,32 +126,31 @@ function getVersion(semver) {
   }
 }
 
-function hasPythonEnv(basePath) {
+async function hasPythonEnv(basePath) {
   const pathExists = fs.existsSync(basePath);
   let exePaths = [];
   if (pathExists) {
     try {
-      const subPaths = fs.readdirSync(basePath)
-      subPaths.forEach(subPath => {
-        if(subPath.startsWith("Emme") || subPath.startsWith("EMME")) {
+      const subPaths = await fs.readdir(basePath);
+      for (const subPath of subPaths) {
+        if (subPath.startsWith("Emme") || subPath.startsWith("EMME")) {
           const emmeVersionFolder = path.join(basePath, subPath);
-          const emmeVersionFolderContents = fs.readdirSync(emmeVersionFolder);
-          emmeVersionFolderContents.forEach(emmeFolderPath => {
-            if(emmeFolderPath.startsWith("Python")) {
+          const emmeVersionFolderContents = await fs.readdir(emmeVersionFolder);
+          for (const emmeFolderPath of emmeVersionFolderContents) {
+            if (emmeFolderPath.startsWith("Python")) {
               const pythonFolderPath = path.join(emmeVersionFolder, emmeFolderPath);
-              const pythonPathFiles = fs.readdirSync(pythonFolderPath);
-              pythonPathFiles.forEach(fileName => {
-                if(fileName === 'python.exe') {
+              const pythonPathFiles = await fs.readdir(pythonFolderPath);
+              for (const fileName of pythonPathFiles) {
+                if (fileName === 'python.exe') {
                   const pythonExecutablePath = path.join(pythonFolderPath, fileName);
                   exePaths.push(pythonExecutablePath);
                 }
-              })
+              }
             }
-          })
+          }
         }
-      })
-    }
-    catch(e) {
+      }
+    } catch (e) {
       console.log(`Error traversing path ${basePath}`);
       console.log(e);
     }
