@@ -11,12 +11,11 @@ const homedir = os.homedir();
 
 interface AppProps {
   helmetUIVersion: string;
-  searchEMMEPython: () => [boolean, string];
-  listEMMEPythonPaths: () => string[];
+  searchEMMEPython: () => [boolean, string | null];
+  listEMMEPythonPaths: () => Promise<[boolean, string[] | null]>;
 }
 
 
-// vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
 const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPythonPaths}) => {
   const { helmetModelSystemVersion, setHelmetModelSystemVersion } = useHelmetModelContext();
 

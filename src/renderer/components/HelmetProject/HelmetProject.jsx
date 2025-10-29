@@ -111,13 +111,14 @@ const HelmetProject = ({
                 "iterations" in obj
               ) {
                 // Initialize scenario-specific namespace in the shared store
-                const namespace = `${configPath}/${fileName.slice(0, -5)}`;
+                const namespace = `${configPath}/${fileName.replace('.json', '')}`;
                 if (!configStores.current.has(namespace)) {
                   configStores.current.set(namespace, window.electronAPI.StoreAPI.getScenarioStore(namespace));
                 }
 
                 return obj; // include valid scenario
               } else {
+                console.log(`Scenario structure:`, obj);
                 console.warn(`Invalid scenario structure in file: ${fileName}`);
               }
             } catch (err) {
@@ -226,10 +227,10 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
-    const namespace = `${ projectPath }/${ newScenario.id }`;
+    const namespace = `${ projectPath }/${ newScenario.name }`;
     const store = window.electronAPI.StoreAPI.getScenarioStore(namespace);
     configStores.current.set(namespace, store);
-    store.set('scenario', newScenario);
+    store.set(newScenario);
     // Then set scenario as open by id
     setOpenScenarioID(newId);
   };
@@ -257,10 +258,19 @@ const HelmetProject = ({
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
-      await fs.unlink(path.join(projectPath, `${scenario.name}.json`));
+      const filePath = path.join(projectPath, `${scenario.name}.json`);
+      try {
+        await fs.unlink(filePath);
+      } catch (err) {
+        if (err.code === 'ENOENT') {
+          console.warn(`File already deleted: ${filePath}`);
+        } else {
+          console.error(`Error deleting scenario file:`, err);
+        }
+      }
       ipcRenderer.send('focus-fix');
     } else {
-       ipcRenderer.send('focus-fix');
+      ipcRenderer.send('focus-fix');
     }
   };
 
@@ -537,6 +547,7 @@ const HelmetProject = ({
           value={newScenarioName}
           onChange={(e) => setNewScenarioName(e.target.value)}
           placeholder="Uuden skenaarion nimi"
+          autoFocus
         />
         {modalError && <p className="Modal__error">{modalError}</p>}
       </Modal>

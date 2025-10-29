@@ -7,6 +7,7 @@ const fs = window.electronAPI.fs;
 
 /**
  * Check and try to set EMME's Python location on Windows, searching from common known paths.
+ * @returns {[boolean, string | null]}
  */
 export function searchEMMEPython(){
 
@@ -58,6 +59,9 @@ const checkEmmePythonEnv = () => {
    }
 }
 
+/**
+* @returns {Promise<[boolean, string[] | null]>}
+*/
 export async function listEMMEPythonPaths() {
   const pythonVersion = getVersion(versions.emme_python);
 
@@ -158,7 +162,4 @@ async function hasPythonEnv(basePath) {
   return exePaths;
 }
 
-export default {
-  searchEMMEPython: searchEMMEPython(),
-  listEMMEPythonPaths: listEMMEPythonPaths(),
-};
+export default { searchEMMEPython, listEMMEPythonPaths };

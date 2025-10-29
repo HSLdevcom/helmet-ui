@@ -1,15 +1,3 @@
-interface VexDialogOptions {
-  message?: string;
-  input?: string;
-  callback?: (data?: any) => void;
-}
-
-declare const vex: {
-  dialog: {
-    open: (opts: VexDialogOptions) => void;
-    prompt?: (opts: any) => void;
-  };
-};
 
 type GithubTag = {
   name: string;
