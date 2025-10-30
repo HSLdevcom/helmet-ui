@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Hidden process-running window</title>
     <script type="text/javascript">
-      const {ipcRenderer} = window.electronAPI;
+      console.log('CBA script worker started');
+      const {ipcRenderer} = require('electron');
       const {runCBAScriptPythonShell} = require('./cba_script_python_shell');
 
       const sendLoggableEvent = (message) => {

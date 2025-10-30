@@ -1,5 +1,6 @@
-const {ipcRenderer, path, ps} = window.electronAPI;
-const PythonShell = ps.PythonShell;
+const { ipcRenderer } = require('electron');
+const { PythonShell } = require('python-shell');
+const path = require('path');
 
 module.exports = {
 

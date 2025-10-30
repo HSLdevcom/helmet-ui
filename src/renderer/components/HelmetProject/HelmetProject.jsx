@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, use} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Runtime from './Runtime/Runtime.jsx';
@@ -313,7 +313,8 @@ const HelmetProject = ({
 
     // For each active scenario, check required scenario-specific parameters are set
     for (let scenario of scenariosToRun) {
-      const store = configStores.current.get(scenario.id); // Use the `get` method of the Map
+      const namespace = `${projectPath}/${scenario.name}`
+      const store = configStores.current.get(namespace); // Use the `get` method of the Map
       if (!store) {
         alert(`Store not found for scenario "${scenario.name}".`);
         return;
@@ -346,6 +347,19 @@ const HelmetProject = ({
     setRunningScenarioID(activeScenarioIDs[0]); // Disable controls
     setRunningScenarioIDsQueued(activeScenarioIDs.slice(1));
     signalProjectRunning(true); // Let App-component know too
+
+    console.log('About to send IPC:', scenariosToRun.map((s) => ({
+      ...s,
+      emme_python_path: s.overriddenProjectSettings.emmePythonPath ?? emmePythonPath,
+      helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath ?? helmetScriptsPath,
+      base_data_folder_path: s.overriddenProjectSettings.basedataPath ?? basedataPath,
+      results_data_folder_path: s.overriddenProjectSettings.resultsPath ?? resultsPath,
+      log_level: 'DEBUG',
+    })));
+
+    console.log('ipcRenderer in preload:', ipcRenderer);
+
+
     ipcRenderer.send(
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
@@ -455,6 +469,12 @@ const HelmetProject = ({
       ipcRenderer.removeListener('loggable-event', onLoggableEvent);
       ipcRenderer.removeListener('scenario-complete', onScenarioComplete);
       ipcRenderer.removeListener('all-scenarios-complete', onAllScenariosComplete);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (projectPath) {
+      _loadProjectScenarios(projectPath);
     }
   }, [projectPath]);
 

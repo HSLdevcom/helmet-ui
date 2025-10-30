@@ -28,14 +28,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   ps: { PythonShell: ps.PythonShell },
   ipcRenderer: {
-    send: (channel: string, data?: any) => ipcRenderer.send(channel, data),
+    send: (channel: string, ...args: any[]) => 
+      ipcRenderer.send(channel, ...args),
     on: (channel: string, func: (...args: any[]) => void) =>
       ipcRenderer.on(channel, (event, ...args) => func(event, ...args)),
     removeListener: (channel: string, func: (...args: any[]) => void) =>
       ipcRenderer.removeListener(channel, func),
     invoke: (channel: string, ...args: any[]) => ipcRenderer.invoke(channel, ...args),
   },
-  downloadHelmetScripts: (args: any) => ipcRenderer.send('message-from-ui-to-download-helmet-scripts', args),
+  downloadHelmetScripts: (args: any[]) => ipcRenderer.send('message-from-ui-to-download-helmet-scripts', args),
   cancelDownload: (version: string) => ipcRenderer.send('cancel-download', version),
   shell: {
     openExternal: (url: string) => shell.openExternal(url),

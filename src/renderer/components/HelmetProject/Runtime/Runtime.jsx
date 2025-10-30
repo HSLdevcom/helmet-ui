@@ -281,7 +281,7 @@ const Runtime = ({
             );
           })
         ) : (
-          <p>No scenarios available.</p>
+          <p>Ei määritettyjä skenaarioita.</p>
         )}
       </div>
       <div className="Runtime__scenarios-footer">

@@ -101,8 +101,12 @@ hr {
     filter: grayscale(1);
     background-color:#d0d0d0;
     background-blend-mode: darken;
+}
+
+.App__open-settings.App__settings-disabled:hover {
     cursor: default;
 }
+
 
 .App__header {
     display: flex;

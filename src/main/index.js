@@ -66,11 +66,8 @@ async function createWorkerWindow(htmlFile) {
 // App ready
 app.on('ready', async () => {
   await createMainWindow();
-  
-  workPreloadTimeout = setTimeout(async () => {
-    entrypointWorkerWindow = await createWorkerWindow('src/background/helmet_entrypoint_worker.html');
-    cbaWorkerWindow = await createWorkerWindow('src/background/cba_script_worker.html');
-  }, 5000);
+  entrypointWorkerWindow = await createWorkerWindow(path.join(app.getAppPath(), 'src/background/helmet_entrypoint_worker.html'));
+  cbaWorkerWindow = await createWorkerWindow(path.join(app.getAppPath(), 'src/background/cba_script_worker.html'));
 });
 
 // ===== IPC handlers =====
@@ -155,41 +152,80 @@ ipcMain.on('cancel-download', (event, version) => {
 });
 
 // Enable / disable EMME
-ipcMain.on('message-from-ui-to-disable-emme', () => { useMockAssignmentInsteadOfEmme = true; });
-ipcMain.on('message-from-ui-to-enable-emme', () => { useMockAssignmentInsteadOfEmme = false; });
+ipcMain.on('message-from-ui-to-disable-emme', (event, args) => {
+  useMockAssignmentInsteadOfEmme = true;
+});
 
-// Relay scenario runs
-ipcMain.on('message-from-ui-to-run-scenarios', (event, args) => {
+ipcMain.on('message-from-ui-to-enable-emme', (event, args) => {
+  useMockAssignmentInsteadOfEmme = false;
+});
+
+// Relay message to run all scenarios; UI => main => worker
+ipcMain.on('message-from-ui-to-run-scenarios', async (event, args) => {
+  if (!entrypointWorkerWindow || entrypointWorkerWindow.isDestroyed()) {
+    entrypointWorkerWindow = await createWorkerWindow(
+      path.join(app.getAppPath(), 'src/background/helmet_entrypoint_worker.html')
+    );
+  }
+
   if (useMockAssignmentInsteadOfEmme) {
+    // If debug switch is activated, choose to run MockAssignment instead, without requiring an EMME-license on this PC
     for (let runParams of args) runParams.DO_NOT_USE_EMME = true;
   }
   entrypointWorkerWindow.webContents.send('run-scenarios', args);
 });
 
-// Relay CBA scripts
+// Relay message to run Cost-Benefit Analysis script; UI => main => worker
 ipcMain.on('message-from-ui-to-run-cba-script', (event, args) => {
   cbaWorkerWindow.webContents.send('run-cba-script', args);
 });
 
-// Cancel scenarios
+// Relay message (interruption) to terminate current scenario and cancel any queued scenarios; UI => main => worker
 ipcMain.on('message-from-ui-to-cancel-scenarios', () => {
   entrypointWorkerWindow.webContents.send('cancel-scenarios');
 });
 
-// Relay events from worker to UI
+// Relay message of scenarios complete when switching to next; worker => main => UI
 ipcMain.on('message-from-worker-scenario-complete', (event, args) => {
   mainWindow.webContents.send('scenario-complete', args);
 });
 
-ipcMain.on('message-from-worker-all-scenarios-complete', () => {
+// Relay message of all scenarios complete; worker => main => UI
+ipcMain.on('message-from-worker-all-scenarios-complete', (event, args) => {
   mainWindow.webContents.send('all-scenarios-complete');
 });
 
+// Relay a loggable UI-event in worker; worker => main => UI
 ipcMain.on('loggable-ui-event-from-worker', (event, args) => {
   mainWindow.webContents.send('loggable-event', args);
 });
 
-// Focus fix for prompts
+// Relay a loggable event in worker; worker => main => UI
+ipcMain.on('loggable-event-from-worker', (event, args) => {
+  event_time = args["time"];
+  delete(args["time"]);
+  // python-shell 3.0.0 breaking change: Every character from
+  // stderr is its own value (like {0: 'h', 1: 'e', 2: 'l', 3: 'l', 4: 'o'})
+  // so let us join all values into one string ('hello').
+  event_string = Object.values(args).join('');
+  // Try to read the string as JSON. If it fails, use the whole string
+  // as a message. Messages via utils.log are written to stderr as JSON.
+  // Warnings from numpy tend to be written as plain-text. 
+  try {
+    // utils.log
+    event_args = JSON.parse(event_string);
+  } catch (error) {
+    // numpy warnings and other non-log messages
+    event_args = {
+      "level": "EXCEPTION",
+      "message": event_string,
+    };
+  }
+  event_args["time"] = event_time;
+  mainWindow.webContents.send('loggable-event', event_args);
+});
+
+// This is to fix the inputs not having focus after showing a prompt or alert
 ipcMain.on('focus-fix', () => {
   mainWindow?.blur();
   mainWindow?.focus();
