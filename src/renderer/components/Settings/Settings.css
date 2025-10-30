@@ -199,3 +199,28 @@
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
 }
+
+.Settings__download-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.Settings__download-progress progress {
+  width: 70%;
+  height: 16px;
+}
+
+.Settings__download-progress button {
+  padding: 8px 16px;
+  background-color: #ff5f57;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.Settings__download-progress button:hover {
+  background-color: #e04e4b;
+}

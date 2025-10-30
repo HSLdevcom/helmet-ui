@@ -102,6 +102,8 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}) => {
   )
 };
 
+export default RunLog;
+
 // json.level = 'DEBUG', 'INFO', 'WARN', 'ERROR'
 // json.message = '...'
 // json.**extras

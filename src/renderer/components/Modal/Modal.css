@@ -1,0 +1,106 @@
+.Modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 400px; /* Fixed width for the modal */
+  max-width: 90%; /* Ensure it doesn't exceed the viewport width */
+  height: auto; /* Let the height adjust based on content */
+  max-height: 90%; /* Ensure it doesn't exceed the viewport height */
+  overflow-y: auto; /* Add scroll if content overflows */
+  box-sizing: border-box; /* Include padding in the modal's dimensions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.Modal__header {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007AC9;
+  color: #fff;
+}
+
+.Modal__header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.Modal__close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.Modal__body {
+  padding: 16px;
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
+}
+
+.Modal__footer {
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.Modal__button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+.Modal__button--primary {
+  background: #007AC9;
+  color: #fff;
+}
+
+.Modal__error {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.Modal__input {
+  width: calc(100% - 32px);
+  padding: 8px 16px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+}
+
+.Modal__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333; /* Dark text color */
+  width: calc(100% - 32px); /* Match the width of the input field */
+  max-width: 400px; /* Ensure it doesn't exceed the modal width */
+  text-align: left; /* Align text to the left */
+}
+

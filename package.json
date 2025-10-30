@@ -6,10 +6,14 @@
   "description": "Helmet Model System UI",
   "main": "src/main/index.js",
   "scripts": {
+    "typecheck": "tsc --noEmit --watch",
+    "dev": "vite",
+    "build:renderer": "vite build",
+    "build:preload": "vite build --config vite.preload.config.js",
+    "build": "npm run build:preload && npm run build:renderer",
     "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "package": "npm run build && electron-forge package",
+    "make": "npm run build && electron-forge make"
   },
   "keywords": [],
   "author": "HSLdevcom",
@@ -19,8 +23,6 @@
   },
   "type": "commonjs",
   "dependencies": {
-    "@electron/remote": "^2.0.8",
-    "babel-standalone": "^6.26.0",
     "chart.js": "^4.3.0",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
@@ -29,16 +31,13 @@
     "electron-dl": "^3.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.1",
-    "lodash": "^4.17.21",
-    "nugget": "^2.0.2",
     "python-shell": "^3.0.1",
     "react": "^18.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.1.0",
     "react-tabs": "^6.0.2",
     "react-tooltip": "^5.15.0",
-    "uuid": "^9.0.0",
-    "vex-js": "^4.1.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "6.0.4",
@@ -46,7 +45,16 @@
     "@electron-forge/maker-rpm": "6.0.4",
     "@electron-forge/maker-squirrel": "6.0.4",
     "@electron-forge/maker-zip": "6.0.4",
-    "@electron-forge/publisher-github": "6.0.4",
-    "electron": "22.3.25"
+    "@electron-forge/publisher-github": "^7.9.0",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "@vitejs/plugin-react": "^4.7.0",
+    "lodash": "^4.17.21",
+    "electron": "^38.2.2",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "vite": "^6.3.6"
   }
 }

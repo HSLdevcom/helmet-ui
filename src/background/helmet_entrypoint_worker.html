@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Hidden process-running window</title>
     <script type="text/javascript">
-      const {ipcRenderer} = require('electron');
-      const {runHelmetEntrypointPythonShell, runInputValidationPythonShell} = require('./helmet_entrypoint_python_shell');
+      const { ipcRenderer } = require('electron');
+      const { runHelmetEntrypointPythonShell, runInputValidationPythonShell } = require('./helmet_entrypoint_python_shell');
 
       const sendLoggableEvent = (message) => {
         ipcRenderer.send('loggable-ui-event-from-worker', {
@@ -13,7 +13,8 @@
           message: message
         });
       };
-
+      
+      sendLoggableEvent("Helmet entrypoint worker initialized");
       let queuedRunParams = [];
       let worker = null;
 
