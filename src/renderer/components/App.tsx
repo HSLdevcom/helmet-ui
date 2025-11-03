@@ -4,6 +4,7 @@ import HelmetProject from './HelmetProject/HelmetProject';
 import classNames from 'classnames';
 import { useHelmetModelContext } from '../context/HelmetModelContext';
 import Modal from './Modal/Modal'; // Import the custom modal component
+import { set } from 'lodash';
 
 // Use APIs from window.electronAPI
 const { ipcRenderer, shell, fs, path, os, child_process, downloadHelmetScripts} = window.electronAPI;
@@ -20,6 +21,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   const { helmetModelSystemVersion, setHelmetModelSystemVersion } = useHelmetModelContext();
 
   // Global settings
+  const [isSettingEnv, setIsSettingEnv] = useState<boolean>(false); // whether EMMEPATH env variable is being set
   const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false); // whether Settings -dialog is open
   const [isProjectRunning, setProjectRunning] = useState<boolean>(false); // whether currently selected Project is running
   const [isDownloadingHelmetScripts, setDownloadingHelmetScripts] = useState<boolean>(false); // whether downloading "/Scripts" is in progress
@@ -46,6 +48,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
   });
 
   const _setEMMEPythonPath = async (newPath: string) => {
+    setIsSettingEnv(true);
     const helmetScriptsPath: string | undefined = globalSettingsStore.current.get('helmet_scripts_path');
     if (helmetScriptsPath) {
       try {
@@ -63,6 +66,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     console.log("Setting emmePythonPath to:", newPath);
     setEmmePythonPath(newPath);
     globalSettingsStore.current.set('emme_python_path', newPath);
+    setIsSettingEnv(false);
   };
 
   const _setEMMEPythonEnvs = (newList: string[]) => {
@@ -319,7 +323,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
     <div className={"App" + (isProjectRunning ? " App--busy" : "")}>
 
       {/* Pop-up global settings dialog with overlay behind it */}
-      <div className="App__settings" style={{display: isSettingsOpen ? "block" : "none"}}>
+      <div className={"App__settings"} style={{display: isSettingsOpen ? "block" : "none"}}>
         <Settings
           emmePythonPath={emmePythonPath}
           emmePythonEnvs={emmePythonEnvs}
@@ -329,6 +333,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
           resultsPath={resultsPath}
           dlHelmetScriptsVersion={dlHelmetScriptsVersion}
           isDownloadingHelmetScripts={isDownloadingHelmetScripts}
+          isSettingEnv={isSettingEnv}
           closeSettings={() => setSettingsOpen(false)}
           setEMMEPythonPath={_setEMMEPythonPath}
           setEMMEPythonEnvs={_setEMMEPythonEnvs}

@@ -65,6 +65,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
         else resolve(stdout);
       });
     }),
+    execSync: (cmd: string) => {
+      try {
+        return child_process.execSync(cmd, { stdio: 'ignore', windowsHide: true });
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
+    },
   },
   dialog: { showOpenDialog: (options: any) => ipcRenderer.invoke('dialog:showOpenDialog', options) },
 });
