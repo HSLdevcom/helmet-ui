@@ -21,18 +21,18 @@ module.exports = {
         ]
     },
     makers: [
-        // {
-        //     name: "@electron-forge/maker-squirrel",
-        //     config: {
-        //         name: "helmet",
-        //         authors: "Helsingin Seudun Liikenne -kuntayhtyma",
-        //         // iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
-        //         // loadingGif: '',
-        //         // setupIcon: 'helmet.ico',
-        //         certificateFile: "helmet_cs4.pfx",
-        //         certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD,
-        //     }
-        // },
+        {
+            name: "@electron-forge/maker-squirrel",
+            config: {
+                name: "helmet",
+                authors: "Helsingin Seudun Liikenne -kuntayhtyma",
+                // iconUrl: "https://raw.githubusercontent.com/HSLdevcom/helmet-ui/e3714d944c62c6ba4b8ed1ce8ac57fcbecaf0f13/helmet.ico",
+                // loadingGif: '',
+                // setupIcon: 'helmet.ico',
+                certificateFile: "helmet_cs4.pfx",
+                certificatePassword: process.env.WINDOWS_CERTIFICATE_PASSWORD,
+            }
+        },
         {
             name: "@electron-forge/maker-zip",
         },
