@@ -19,55 +19,133 @@ const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsC
 
   if (majorVersion && majorVersion >= 5) {
     console.log("Using Helmet 5 or later");
-  }
-
-  const graphConfig = {
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Convergence',
-          align: 'Center'
+    const graphConfig = {
+      type: 'line',
+      data: graphData,
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
         },
-        legend: {
-          display: false
+        plugins: {
+          title: {
+            display: true,
+            text: 'Convergence',
+            align: 'Center'
+          },
+          legend: {
+            display: true,
+
+          }
+        },
+        scales: {
+          y: { 
+            position: 'left',
+            title: {
+              display: true,
+              position: 'left',
+              text: 'Rel gap [ % ]',
+              font: {
+                size: 16,
+              }
+            }
+          },
+          y1: {
+            position: 'right',
+            title: {
+              display: true,
+              position: 'right',
+              text: 'Max gap',
+              font: {
+                size:16,
+              }
+            },
+            grid: {
+              drawOnChartArea: false // only want the grid lines for one axis to show up
+          }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Iteration [ # ]',
+              font: {
+                size: 16,
+              }
+            }
+          }
+          },
+        animation: {
+          duration: 0
+        }
+      }
+    } 
+    const graphData = {
+      labels: demandConvergenceArray.map(listing => listing.iteration),
+      datasets: [{
+        label: 'Rel gap',
+        data: demandConvergenceArray.map(listing => (listing.rel_gap * 100).toFixed(4)),
+        backgroundColor: '#007AC9',
+        borderColor: '#007AC9',
+        yAxisID: 'y'
+      },
+      {
+        label: 'Max gap',
+        data: demandConvergenceArray.map(listing => (listing.max_gap).toFixed(4)),
+        backgroundColor: '#FB5F20',
+        borderColor: '#FB5F20',
+        yAxisID: 'y1'
+      }
+      ],
+    }
+  } else {
+    const graphConfig = {
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Convergence',
+            align: 'Center'
+          },
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: { 
+            title: {
+              display: true,
+              text: 'Rel_Gap [ % ]',
+              font: {
+                size: 16
+              }
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Iteration [ # ]',
+              font: {
+                size: 16
+              }
+            }
+          }
+          },
+        animation: {
+          duration: 0
         }
       },
-      scales: {
-        y: { 
-          title: {
-            display: true,
-            text: 'Rel_Gap [ % ]',
-            font: {
-              size: 16
-            }
-          }
-         },
-        x: {
-          title: {
-            display: true,
-            text: 'Iteration [ # ]',
-            font: {
-              size: 16
-            }
-          }
-        }
-        },
-      animation: {
-        duration: 0
-      }
-    },
-  }
-
-  const graphData = {
-    labels: demandConvergenceArray.map(listing => listing.iteration),
-    datasets: [{
-      label: 'Rel_Gap (%)',
-      data: demandConvergenceArray.map(listing => (listing.value * 100).toFixed(4)),
-      backgroundColor: '#007AC9',
-      borderColor: '#007AC9'
     }
-    ],
+    const graphData = {
+      labels: demandConvergenceArray.map(listing => listing.iteration),
+      datasets: [{
+        label: 'Rel_Gap (%)',
+        data: demandConvergenceArray.map(listing => (listing.value * 100).toFixed(4)),
+        backgroundColor: '#007AC9',
+        borderColor: '#007AC9'
+      }
+      ],
+    }
   }
 
   const formatRunStatusTime = (runFinishTime, runStartTime) => {
