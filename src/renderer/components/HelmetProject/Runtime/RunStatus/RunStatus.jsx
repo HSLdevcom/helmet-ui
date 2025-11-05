@@ -18,7 +18,7 @@ const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsC
   const { majorVersion } = useHelmetModelContext();
 
   if (majorVersion && majorVersion >= 5) {
-    console.log("Using Helmet 5 or later");
+    // console.log("Using Helmet 5 or later");
     const graphConfig = {
       type: 'line',
       data: graphData,

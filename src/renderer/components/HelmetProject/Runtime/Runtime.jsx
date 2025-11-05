@@ -86,6 +86,7 @@ const Runtime = ({
 
   //Parse log contents into the currently running scenario so we can show each one individually
   const parseLogArgs = (runStatus, logArgs) => {
+    // console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
     if (logArgs.status) {
       runStatus.statusIterationsTotal = logArgs.status['total'];
       runStatus.statusIterationsCurrent = logArgs.status['current'];
@@ -107,6 +108,7 @@ const Runtime = ({
       }
     }
     if(logArgs.level === 'INFO') {
+      // console.log(`Parsing logArgs message: ${logArgs.message}`);
       if(majorVersion>=5 && logArgs.message.includes('Demand model convergence')) {
         const currentIteration = runStatus.demandConvergenceArray ? runStatus.demandConvergenceArray.length : 0;
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
@@ -123,9 +125,9 @@ const Runtime = ({
     }
   }
 
-  if( runningScenario && runningScenario.length > 0) {
-  const runStatus = runningScenario[0].runStatus;
-  parseLogArgs(runStatus, logArgs);
+  if( runningScenario?.runStatus && logArgs ) {
+    // console.log(`[Runtime] Running scenario (${runningScenario})`);
+    parseLogArgs(runningScenario.runStatus, logArgs);
   }
 
   const renderableScenarios = activeScenarios.map((activeScenario) => {

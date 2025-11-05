@@ -441,6 +441,7 @@ const HelmetProject = ({
 
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
+    // console.log('[HelmetProject] received loggable-event:', args);
     setLogContents(previousLog => [...previousLog, args]);
     setLogArgs(args);
   };
