@@ -8,7 +8,12 @@ interface Window {
     StoreAPI: {
       get: (key: string) => string | undefined;
       set: (key: string, value: any) => void;
-    };
+      getScenarioStore: (namespace: string) => {
+        get: (key: string) => any;
+        set: (key: string, value: any) => void;
+        delete: (key: string) => void;
+        clear: () => void;
+    };};
     fs: {
       readFile: (file: string, encoding?: BufferEncoding) => Promise<string>;
       readdir: (dir: string) => Promise<string[]>;
@@ -28,6 +33,7 @@ interface Window {
     };
     child_process: {
       exec: (cmd: string) => Promise<Buffer>;
+      execSync: (cmd: string) => Buffer;
     };
     shell: {
       openExternal: (url: string) => void;

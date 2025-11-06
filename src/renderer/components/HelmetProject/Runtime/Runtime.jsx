@@ -84,9 +84,13 @@ const Runtime = ({
     (scenario) => scenario.id === runningScenarioID
   );
 
+  const getResultsPathFromLogfilePath = (logfilePath) => {
+    return logfilePath.replace(/\/[^\/]+$/, '');
+  }
+
   //Parse log contents into the currently running scenario so we can show each one individually
   const parseLogArgs = (runStatus, logArgs) => {
-    console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
+    // console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
     if (logArgs.status) {
       runStatus.statusIterationsTotal = logArgs.status['total'];
       runStatus.statusIterationsCurrent = logArgs.status['current'];
@@ -108,26 +112,26 @@ const Runtime = ({
       }
     }
     if(logArgs.level === 'INFO') {
-      console.log(`Parsing logArgs message: ${logArgs.message}`);
+      // console.log(`Parsing logArgs message: ${logArgs.message}`);
       if(majorVersion>=5 && logArgs.message.includes('Demand model convergence')) {
         const currentIteration = runStatus.demandConvergenceArray ? runStatus.demandConvergenceArray.length : 0;
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
-        console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
+        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
         runStatus.demandConvergenceArray = [
           ...(runStatus.demandConvergenceArray || []),
           currentDemandConvergenceValueAndIteration
         ];
-        console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
+        // console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
       } else if(logArgs.message.includes('Demand model convergence in')) {
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
-        console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
+        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
         runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
       }
     }
   }
 
   if( runningScenario?.runStatus && logArgs ) {
-    console.log(`[Runtime] Running scenario (${runningScenario})`);
+    // console.log(`[Runtime] Running scenario (${runningScenario})`);
     parseLogArgs(runningScenario.runStatus, logArgs);
   }
 

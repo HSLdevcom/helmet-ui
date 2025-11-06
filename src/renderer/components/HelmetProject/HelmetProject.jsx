@@ -5,7 +5,7 @@ import Runtime from './Runtime/Runtime.jsx';
 import HelmetScenario from './HelmetScenario/HelmetScenario.jsx';
 import RunLog from './RunLog/RunLog.jsx';
 import CostBenefitAnalysis from './CostBenefitAnalysis/CostBenefitAnalysis.jsx';
-import Modal from '../Modal/Modal'; // Import the custom modal component
+import Modal from '../Modal/Modal'; 
 
 const { ipcRenderer, fs, path } = window.electronAPI;
 
@@ -88,48 +88,66 @@ const HelmetProject = ({
 
   const _loadProjectScenarios = async (projectFilepath) => {
     const configPath = projectFilepath;
+    console.groupCollapsed('[HelmetProject] _loadProjectScenarios');
+    console.log('Loading project from:', configPath);
 
     try {
       const files = await fs.readdir(configPath);
-
-      // Filter only .json files
       const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      console.log('Found JSON files:', jsonFiles);
 
-      // Read & parse all JSON files in parallel
       const foundScenarios = (
         await Promise.all(
           jsonFiles.map(async (fileName) => {
-            try {
-              const filePath = path.join(configPath, fileName);
-              const content = await fs.readFile(filePath);
-              const obj = JSON.parse(content);
+            const filePath = path.join(configPath, fileName);
 
+            try {
+              const content = await fs.readFile(filePath);
+              let obj = JSON.parse(content);
+
+              // Detect and fix nested "scenario" structure
+              if (obj && obj.scenario && typeof obj.scenario === 'object') {
+                console.warn(`Detected nested scenario structure in ${fileName}. Fixing...`);
+                obj = obj.scenario;
+
+                // Attempt to rewrite the corrected structure
+                try {
+                  await fs.writeFile(filePath, JSON.stringify(obj, null, 2));
+                  console.log(`Rewrote nested scenario file to flat format: ${fileName}`);
+                } catch (writeErr) {
+                  console.error(`Failed to rewrite corrected scenario file ${fileName}:`, writeErr);
+                }
+              }
+
+              // Validate scenario structure
               if (
-                "id" in obj &&
-                "name" in obj &&
-                "use_fixed_transit_cost" in obj &&
-                "iterations" in obj
+                'id' in obj &&
+                'name' in obj &&
+                'use_fixed_transit_cost' in obj &&
+                'iterations' in obj
               ) {
-                // Initialize scenario-specific namespace in the shared store
                 const namespace = `${configPath}/${fileName.replace('.json', '')}`;
                 if (!configStores.current.has(namespace)) {
-                  configStores.current.set(namespace, window.electronAPI.StoreAPI.getScenarioStore(namespace));
+                  configStores.current.set(
+                    namespace,
+                    window.electronAPI.StoreAPI.getScenarioStore(namespace)
+                  );
                 }
-
-                return obj; // include valid scenario
+                return obj;
               } else {
-                console.log(`Scenario structure:`, obj);
                 console.warn(`Invalid scenario structure in file: ${fileName}`);
+                console.log('Scenario content:', obj);
               }
             } catch (err) {
               console.error(`Failed to load scenario from ${fileName}:`, err);
             }
-            return null; // skip invalid or failed ones
+
+            return null;
           })
         )
-      ).filter(Boolean); // remove nulls
+      ).filter(Boolean);
 
-      // Add runStatus if missing (for backward compatibility with older scenarios)
+      // Add runStatus if missing (for backward compatibility)
       const decoratedFoundScenarios = foundScenarios.map((scenario) =>
         scenario.runStatus === undefined
           ? addRunStatusProperties(scenario)
@@ -144,10 +162,20 @@ const HelmetProject = ({
       setRunningScenarioIDsQueued([]);
       setLogContents([]);
       setLogOpened(false);
+
+      // Summary log
+      const fixedCount = foundScenarios.length - decoratedFoundScenarios.length;
+      // console.log(`Loaded ${foundScenarios.length} scenarios from project.`);
+      if (fixedCount > 0) {
+        console.log(`Auto-fixed ${fixedCount} nested scenario file(s).`);
+      }
     } catch (error) {
-      console.error(`Error loading project scenarios:`, error);
+      console.error('Error loading project scenarios:', error);
     }
+
+    console.groupEnd();
   };
+
 
   const addRunStatusProperties = (scenario) => {
     return {
@@ -173,7 +201,7 @@ const HelmetProject = ({
 
     // Extract the number at the beginning of the name, if it exists
     const match = newScenarioName.match(/^(\d+)[ _]/);
-    const firstScenarioId = match ? parseInt(match[1], 10) : 1;
+    const firstScenarioId = match ? match[1] : "1";
 
     // Check for .emp files in the project directory
     let defaultEmmeProjectFilePath = null;
@@ -235,25 +263,66 @@ const HelmetProject = ({
     setOpenScenarioID(newId);
   };
 
-  const _updateScenario = async ( newValues ) => {
-    // Update newValues to matching . id in this.state.scenarios
-    setScenarios(scenarios.map((s) => (s.id === newValues.id ? { ... s, ... newValues } : s)));
-    // If name changed, rename file and change reference
-    const namespace = `${ projectPath }/${ newValues.id }`;
-    const store = configStores.current.get(namespace);
-    if ( store.get('scenario').name !== newValues.name ) {
-      // If name was set empty - use ID instead
-      const newName = newValues.name ? newValues.name : newValues.id;
-      await fs.rename(
-        path.join(projectPath, `${store.get('scenario').name}.json`),
-        path.join(projectPath, `${newName}.json`)
-      );
-      store.set('scenario', { ... newValues, name: newName });
+  const _updateScenario = async (newValues) => {
+    // Find the existing scenario using its ID
+    const oldScenario = scenarios.find((s) => s.id === newValues.id);
+    if (!oldScenario) {
+      console.error('Scenario not found for update:', newValues.id);
+      console.groupEnd();
+      return;
     }
-    // And persist all changes in the shared store
-    store.set('scenario', newValues);
+
+    // Update the state
+    setScenarios((prev) =>
+      prev.map((s) => (s.id === newValues.id ? { ...s, ...newValues } : s))
+    );
+
+    const oldNamespace = `${projectPath}/${oldScenario.name}`;
+    const nameChanged = oldScenario.name !== newValues.name;
+
+    if (nameChanged) {
+      const oldFile = path.join(projectPath, `${oldScenario.name}.json`);
+      const newFile = path.join(projectPath, `${newValues.name}.json`);
+
+      try {
+        await fs.rename(oldFile, newFile);
+      } catch (err) {
+        console.error('File rename failed:', err);
+      }
+
+      const newNamespace = `${projectPath}/${newValues.name}`;
+
+      try {
+        const newStore = window.electronAPI.StoreAPI.getScenarioStore(newNamespace);
+
+        // Clear any existing data and write the new scenario at top level
+        newStore.clear();
+        Object.entries(newValues).forEach(([key, value]) => newStore.set(key, value));
+
+        // Update the configStores map
+        configStores.current.delete(oldNamespace);
+        configStores.current.set(newNamespace, newStore);
+      } catch (storeErr) {
+        console.error('Failed to create or update new store:', storeErr);
+      }
+    } else {
+      const store = configStores.current.get(oldNamespace);
+      if (store) {
+        try {
+          store.clear();
+          Object.entries(newValues).forEach(([key, value]) => store.set(key, value));
+        } catch (err) {
+          console.error('Failed to update store:', err);
+        }
+      } else {
+        console.warn('Store not found for update.');
+      }
+    }
+
+    console.groupEnd();
   };
 
+  
   const _deleteScenario = async (scenario) => {
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
@@ -347,17 +416,6 @@ const HelmetProject = ({
     setRunningScenarioID(activeScenarioIDs[0]); // Disable controls
     setRunningScenarioIDsQueued(activeScenarioIDs.slice(1));
     signalProjectRunning(true); // Let App-component know too
-
-    console.log('About to send IPC:', scenariosToRun.map((s) => ({
-      ...s,
-      emme_python_path: s.overriddenProjectSettings.emmePythonPath ?? emmePythonPath,
-      helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath ?? helmetScriptsPath,
-      base_data_folder_path: s.overriddenProjectSettings.basedataPath ?? basedataPath,
-      results_data_folder_path: s.overriddenProjectSettings.resultsPath ?? resultsPath,
-      log_level: 'DEBUG',
-    })));
-
-    console.log('ipcRenderer in preload:', ipcRenderer);
 
 
     ipcRenderer.send(
