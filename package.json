@@ -13,7 +13,8 @@
     "build": "npm run build:preload && npm run build:renderer",
     "start": "electron-forge start",
     "package": "npm run build && electron-forge package",
-    "make": "npm run build && electron-forge make"
+    "make": "npm run build && electron-forge make",
+    "publish": "npm run build && electron-forge publish"
   },
   "keywords": [],
   "author": "HSLdevcom",
