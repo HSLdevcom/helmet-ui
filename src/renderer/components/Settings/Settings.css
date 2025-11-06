@@ -7,6 +7,18 @@
     justify-content: center;
 }
 
+.Settings__waiting-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: wait;
+    z-index:300; /* Above dialog and overlay */
+}
+
+.Settings__waiting-overlay * {
+    pointer-events: none;
+}
+
 .Settings__overlay {
     z-index: 100;
     position: absolute;
@@ -43,10 +55,7 @@
     letter-spacing: -0.6px;
     color: #333333;
     order: 0;
-    margin-bottom: 10px;
-}
-
-.Settings__dialog-input-group {
+    margin-bottom: 1rem;
 }
 
 .Settings__pseudo-label {
@@ -98,4 +107,139 @@
     margin: 10px auto 0 auto;
     height: 40px;
     font-size: 16px;
+}
+
+.Settings__python-env-input-btn {
+    margin: 10px auto 0 auto;
+    height: 40px;
+    width: 300px;
+    font-size: 16px;
+}
+
+.Settings__env_option_remove {
+    color: #c92c00;
+}
+
+.Settings__environment_option {
+    display: flex;
+    width: 100%;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 325;
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: inherit;
+    height: 40px;
+    align-items: center;
+    justify-items: center;
+    flex-wrap: wrap;
+}
+
+.Settings__environment_option_spacer {
+    width: 100%;
+    height: 40px;
+}
+
+.Settings__env_option_text {
+    width: 70%;
+    font-weight: 500;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    margin-left: 1rem;
+}
+
+.Settings__env_selected_logo {
+    width: 25px;
+    height: 25px;
+}
+
+.Settings__logo_hidden {
+    opacity: 0%;
+}
+
+.Settings__emme_version_group {
+    display: flex;
+    width: 100%;
+}
+
+.Settings__emme_edit_btn {
+    height: 2rem;
+    margin-left: .5rem;
+    font-size: 12px;
+    border: none;
+    margin-top: 6px;
+}
+
+.Settings__emme_edit_save_btn {
+    width: 4rem;
+    height: 2rem;
+    font-size: 12px;
+    border: none;
+    margin-top: 6px;
+}
+
+.Settings__emme_input {
+    width: 100%;
+    height: 5rem;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.Settings__env_option_btn {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 1.5rem;
+    font-size: 12px;
+    border: none;
+}
+
+.Settings__env_unselected {
+    color: #888888;
+    font-weight: 100;
+}
+
+.Settings__btn_disabled:hover {
+    color: #888888;
+}
+
+.Settings__env_option_divider {
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.Settings__download-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.Settings__download-progress progress {
+  width: 70%;
+  height: 16px;
+}
+
+.Settings__download-progress button {
+  padding: 8px 16px;
+  background-color: #ff5f57;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.Settings__download-progress button:hover {
+  background-color: #e04e4b;
+}
+
+.Settings__env_option_disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: wait;
+  transition: opacity 0.2s ease;
 }

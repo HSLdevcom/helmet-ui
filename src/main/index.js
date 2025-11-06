@@ -1,103 +1,157 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
-const {download} = require('electron-dl');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const del = require('del');
 const decompress = require('decompress');
 const Store = require('electron-store');
+const { download } = require('electron-dl');
 
-// Handle breaking changes in electron-store-v7.0.0:
-// https://github.com/sindresorhus/electron-store/releases/tag/v7.0.0
+// Initialize electron-store for renderer usage
 Store.initRenderer();
 
-// @electron/remote/main must be initialized in the main process before it can be used from the renderer:
-require('@electron/remote/main').initialize();
+// Handle Windows Squirrel installer events
+if (require('electron-squirrel-startup')) app.quit();
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {app.quit();}
+// Keep references to windows so they aren’t GC’ed
+let mainWindow, entrypointWorkerWindow, cbaWorkerWindow;
+let workPreloadTimeout;
+let useMockAssignmentInsteadOfEmme = false;
+const activeDownloads = new Map(); // Track active downloads for cancellation
 
-// Keep a global reference of certain objects, so they won't be garbage collected. (This is Electron-app best practise)
-let mainWindow, entrypointWorkerWindow, cbaWorkerWindow, useMockAssignmentInsteadOfEmme;
-
-async function createUI() {
-  // Render main window including UI (index.html linking to all UI components)
+async function createMainWindow() {
   mainWindow = new BrowserWindow({
-    width: 1320,
+    width: 1520,
     height: 1200,
     resizable: true,
-    maximizable: true,
-    fullscreen: true,
-    fullscreenable: false,
+    fullscreen: false,
     autoHideMenuBar: true,
+    title: 'Helmet UI',
     webPreferences: {
-      devTools: true, // There's no reason to disable these (CTRL+SHIFT+i) https://superuser.com/questions/367662/ctrlshifti-in-windows-7
+      preload: path.join(app.getAppPath(), 'dist', 'main', 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      enableRemoteModule: false,
+      sandbox: false,
+      backgroundThrottling: false,
+    },
+  });
+
+  
+  
+  // Load the Vite-bundled renderer
+  if (process.env.NODE_ENV === 'development') {
+    await mainWindow.loadURL('http://localhost:5173');
+  } else {
+    const indexPath = path.join(__dirname, '../renderer/dist/index.html');
+    await mainWindow.loadFile(indexPath);;
+  }
+
+  mainWindow.on('closed', () => app.quit());
+}
+
+async function createWorkerWindow(htmlFile) {
+  const win = new BrowserWindow({
+    show: false,
+    webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-    }
+    },
   });
-  await mainWindow.loadFile('src/renderer/index.html');
-  // Starting from electron v14
-  require("@electron/remote/main").enable(mainWindow.webContents);
 
-  // Quit when main window is closed
-  mainWindow.on('closed', () => {
-    app.quit();
-  });
+  await win.loadFile(htmlFile);
+  return win;
 }
 
-async function createHelmetEntrypointWorker() {
-  // Create hidden window for background process #1 (Electron best practise, alternative is web workers with limited API)
-  entrypointWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
-  await entrypointWorkerWindow.loadFile('src/background/helmet_entrypoint_worker.html');
-}
-
-async function createCbaScriptWorker() {
-  // Create hidden window for background process #2 (Electron best practise, alternative is web workers with limited API)
-  cbaWorkerWindow = new BrowserWindow({webPreferences: {nodeIntegration: true, contextIsolation: false, enableRemoteModule: true}, show: false});
-  await cbaWorkerWindow.loadFile('src/background/cba_script_worker.html');
-}
-
-// When Electron has initialized, and is ready to create windows. Some APIs can only be used from here on.
+// App ready
 app.on('ready', async () => {
-  await createUI();
-  await createHelmetEntrypointWorker();
-  await createCbaScriptWorker();
+  await createMainWindow();
+  entrypointWorkerWindow = await createWorkerWindow(path.join(app.getAppPath(), 'src/background/helmet_entrypoint_worker.html'));
+  cbaWorkerWindow = await createWorkerWindow(path.join(app.getAppPath(), 'src/background/cba_script_worker.html'));
 });
 
-ipcMain.on('message-from-ui-to-download-helmet-scripts', (event, args) => {
+// ===== IPC handlers =====
+
+// Title change
+ipcMain.on('change-title', (_, newTitle) => {
+  mainWindow?.setTitle(newTitle);
+});
+
+// Download helmet scripts
+ipcMain.on('message-from-ui-to-download-helmet-scripts', async (event, args) => {
+  console.log(`Starting download for version: ${args.version}`);
   const workDir = args.destinationDir;
-  const tmpDir = path.join(workDir, "helmet-model-system-tmp-workdir");
-  const finalDir = path.join(workDir, `helmet-model-system-${args.version}-${args.postfix}`);
+  const extractedDir = path.join(workDir, `helmet-model-system-${args.version}-${args.postfix}`);
 
-  // Download model system repo (passed in args.url - may vary in future depending on tag/version)
-  download(
-    BrowserWindow.getFocusedWindow(),
-    `https://github.com/HSLdevcom/helmet-model-system/archive/${args.version}.zip`,
-    {
-      directory: workDir
+  try {
+    const downloadItem = await download(BrowserWindow.getFocusedWindow(),
+      `https://github.com/HSLdevcom/helmet-model-system/archive/${args.version}.zip`,
+      {
+        directory: workDir,
+        onProgress: (progress) => {
+          console.log(`Download progress for version ${args.version}: ${progress.percent * 100}%`);
+          mainWindow.webContents.send('download-progress', { progress, version: args.version });
+        },
+      }
+    );
+
+    const archivePath = downloadItem.getSavePath();
+    console.log(`Download complete for version ${args.version}. Extracting...`);
+
+    // Ensure extraction directory exists
+    fs.mkdirSync(extractedDir, { recursive: true });
+
+    await decompress(archivePath, extractedDir);
+
+    // Try deleting the zip file after extraction
+    try {
+      fs.unlinkSync(archivePath);
+    } catch (err) {
+      console.warn(`Could not delete archive: ${err.message}`);
     }
-  )
-    .then((downloadItem) => {
-      const archivePath = downloadItem.getSavePath();
 
-      // Decompress downloaded archive to tmpDir
-      decompress(archivePath, tmpDir, {strip: 1})
-        .then(() => {
-          // Single-out "/Scripts" folder and move it to destination
-          fs.renameSync(path.join(tmpDir, "Scripts"), finalDir);
+    // Inspect extracted structure
+    const contents = fs.readdirSync(extractedDir);
+    console.log('Extracted directory contents:', contents);
 
-          // Delete archive & tmpDir (del module checks for current working dir, overridable but good sanity check)
-          process.chdir(workDir);
-          del.sync(archivePath);
-          del.sync(tmpDir);
+    // Find the actual subfolder
+    const extractedSubfolder =
+      contents.find(f => f.startsWith(`helmet-model-system-${args.version}`)) ||
+      contents.find(f => f.startsWith('helmet-model-system-'));
 
-          // Notify UI "download (and post-processing) is ready"
-          mainWindow.webContents.send('download-ready', finalDir);
-        });
-    });
+    if (!extractedSubfolder) {
+      throw new Error(`Could not locate extracted folder under ${extractedDir}`);
+    }
+
+    const scriptsFolder = path.join(extractedDir, extractedSubfolder, 'Scripts');
+    if (!fs.existsSync(scriptsFolder)) {
+      throw new Error(`Scripts folder not found at: ${scriptsFolder}`);
+    }
+
+    console.log(`Extraction complete. Scripts folder ready at: ${scriptsFolder}`);
+    mainWindow.webContents.send('download-ready', { finalDir: scriptsFolder, version: args.version });
+  } catch (error) {
+    console.error(`Error during download or extraction for version ${args.version}:`, error);
+    mainWindow.webContents.send('download-error', { error: error.message, version: args.version });
+  } finally {
+    activeDownloads.delete(args.version); // Remove from active downloads
+  }
 });
 
+ipcMain.on('cancel-download', (event, version) => {
+  console.log(`Canceling download for version: ${version}`);
+  const downloadItem = activeDownloads.get(version);
+  if (downloadItem) {
+    downloadItem.cancel(); // Cancel the download
+    activeDownloads.delete(version);
+    mainWindow.webContents.send('download-cancelled', { version });
+    console.log(`Download canceled for version: ${version}`);
+  } else {
+    console.warn(`No active download found for version: ${version}`);
+  }
+});
+
+// Enable / disable EMME
 ipcMain.on('message-from-ui-to-disable-emme', (event, args) => {
   useMockAssignmentInsteadOfEmme = true;
 });
@@ -107,12 +161,16 @@ ipcMain.on('message-from-ui-to-enable-emme', (event, args) => {
 });
 
 // Relay message to run all scenarios; UI => main => worker
-ipcMain.on('message-from-ui-to-run-scenarios', (event, args) => {
+ipcMain.on('message-from-ui-to-run-scenarios', async (event, args) => {
+  if (!entrypointWorkerWindow || entrypointWorkerWindow.isDestroyed()) {
+    entrypointWorkerWindow = await createWorkerWindow(
+      path.join(app.getAppPath(), 'src/background/helmet_entrypoint_worker.html')
+    );
+  }
+
   if (useMockAssignmentInsteadOfEmme) {
     // If debug switch is activated, choose to run MockAssignment instead, without requiring an EMME-license on this PC
-    for (let runParameters of args) {
-      runParameters.DO_NOT_USE_EMME = true;
-    }
+    for (let runParams of args) runParams.DO_NOT_USE_EMME = true;
   }
   entrypointWorkerWindow.webContents.send('run-scenarios', args);
 });
@@ -123,7 +181,7 @@ ipcMain.on('message-from-ui-to-run-cba-script', (event, args) => {
 });
 
 // Relay message (interruption) to terminate current scenario and cancel any queued scenarios; UI => main => worker
-ipcMain.on('message-from-ui-to-cancel-scenarios', (event, args) => {
+ipcMain.on('message-from-ui-to-cancel-scenarios', () => {
   entrypointWorkerWindow.webContents.send('cancel-scenarios');
 });
 
@@ -167,10 +225,13 @@ ipcMain.on('loggable-event-from-worker', (event, args) => {
   mainWindow.webContents.send('loggable-event', event_args);
 });
 
-// // Log worker-errors (by PythonShell, not stderr) in main console
-// ipcMain.on('process-error-from-worker', (event, args) => {
-//   mainWindow.webContents.send('loggable-event', {
-//     "level": "ERROR",
-//     "message": (typeof args === "string") ? args : JSON.stringify(args)
-//   });
-// });
+// This is to fix the inputs not having focus after showing a prompt or alert
+ipcMain.on('focus-fix', () => {
+  mainWindow?.blur();
+  mainWindow?.focus();
+});
+
+// Dialog handler
+ipcMain.handle('dialog:showOpenDialog', async (event, options) => {
+  return await dialog.showOpenDialog(BrowserWindow.getFocusedWindow(), options);
+});

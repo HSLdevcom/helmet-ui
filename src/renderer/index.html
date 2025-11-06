@@ -1,67 +1,11 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <title>Helmet 4.1</title>
-    <!-- HubSpot's vex-js for `prompt()` (not supported otherwise by Electron) -->
-    <script src="../../node_modules/vex-js/dist/js/vex.combined.min.js"></script>
-    <script>vex.defaultOptions.className = 'vex-theme-os'</script>
-    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex.css" />
-    <link rel="stylesheet" href="../../node_modules/vex-js/dist/css/vex-theme-os.css" />
-    <!-- Babel (standalone ver.) transpiler -->
-    <script src="../../node_modules/babel-standalone/babel.min.js"></script>
-    <!-- React components -->
-    <script type="text/babel" src="components/App.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/App.css">
-    <script type="text/babel" src="components/Settings/Settings.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/Settings/Settings.css">
-    <script type="text/babel" src="components/HelmetProject/HelmetProject.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetProject.css">
-    <script type="text/babel" src="components/HelmetProject/HelmetScenario/HelmetScenario.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/HelmetScenario/HelmetScenario.css">
-    <script type="text/babel" src="components/HelmetProject/Runtime/Runtime.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/Runtime/Runtime.css">
-    <script type="text/babel" src="components/HelmetProject/Runtime/RunStatus/RunStatus.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/Runtime/RunStatus/RunStatus.css">
-    <script type="text/babel" src="components/HelmetProject/RunLog/RunLog.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/RunLog/RunLog.css">
-    <script type="text/babel" src="components/HelmetProject/CostBenefitAnalysis/CostBenefitAnalysis.jsx"></script>
-    <link rel="stylesheet" type="text/css" href="components/HelmetProject/CostBenefitAnalysis/CostBenefitAnalysis.css">
-    <script type="text/javascript">
-        // ipcRenderer is aliased, so that other <script> tag(s) won't crash on startup in "constant-already-set"
-        const {webFrame, ipcRenderer: aliasIpcRenderer} = require('electron');
-        // Enable test-running UI with model-system without an active EMME-license on PC
-        window.useMockAssignment = function() {aliasIpcRenderer.send('message-from-ui-to-disable-emme')};
-        window.useEmmeAssignment = function () {aliasIpcRenderer.send('message-from-ui-to-enable-emme')};
-    </script>
-    <script type="text/babel" src="./icons/CopyIcon.jsx"></script>
-    <script type="text/babel" src="../enums.js"></script>
-    <script type="text/babel" src="./icons/ResetIcon.jsx"></script>
-    <script type="text/babel" src="./icons/DocumentationIcon.jsx"></script>
-    <script type="text/babel" src="./icons/ArrowDown.jsx"></script>
-    <script type="text/babel" src="./icons/ArrowUp.jsx"></script>
+  <meta charset="UTF-8">
+  <title>Helmet UI</title>
 </head>
 <body>
-
-<div id="root"></div>
-
-<!-- ReactDOM init point -->
-<script type="text/babel">
-  import React from 'react';
-  import ReactDOM from 'react-dom/client';
-  import {searchEMMEPython} from './search_emme_pythonpath';
-  import {version} from '../../package';
-  import versions from '../versions';
-
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-
-  root.render(
-    <App
-      helmetUIVersion={version}
-      versions={versions} // 3rd party dependencies' versions (EMME & EMME's custom python interpreter)
-      searchEMMEPython={searchEMMEPython}
-    />
-  );
-</script>
+  <div id="root"></div>
+  <script type="module" src="./main.jsx"></script>
 </body>
 </html>

@@ -2,63 +2,156 @@ import React from 'react';
 import { Chart as ChartJS, LinearScale, LineElement, PointElement, CategoryScale, Tooltip, Legend, Title } from "chart.js";
 import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
-const { shell } = require('electron');
-var duration = require('dayjs/plugin/duration');
-var relativeTime = require('dayjs/plugin/relativeTime');
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { SCENARIO_STATUS_STATE } from '../../../../../enums.js';
+import { useHelmetModelContext } from '../../../../context/HelmetModelContext';
+
+const shell = window.electronAPI.shell;
+
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip, Legend, Title);
 
 
-const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
+const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
+  const { majorVersion } = useHelmetModelContext();
+  const safeArray = Array.isArray(demandConvergenceArray) ? demandConvergenceArray : []; // Ensure demandConvergenceArray is defined as an array even if null
 
-  const graphConfig = {
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Convergence',
-          align: 'Center'
+  let graphData = {};
+  let graphConfig = {};
+
+  if (majorVersion && majorVersion >= 5) {
+    // console.log("Using Helmet 5 or later");
+    graphData = {
+      labels: safeArray.map(listing => listing.iteration),
+      datasets: [{
+        label: 'Rel gap',
+        data: safeArray.map( (listing) => listing.rel_gap !== undefined ? (listing.rel_gap * 100).toFixed(4) : null ),
+        backgroundColor: '#007AC9',
+        borderColor: '#007AC9',
+        yAxisID: 'y'
+      },
+      {
+        label: 'Max gap',
+        data: safeArray.map( (listing) => listing.max_gap !== undefined ? (listing.max_gap).toFixed(4) : null ),
+        backgroundColor: '#FB5F20',
+        borderColor: '#FB5F20',
+        yAxisID: 'y1'
+      }
+      ],
+    }
+
+    graphConfig = {
+      type: 'line',
+      data: graphData,
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
         },
-        legend: {
-          display: false
+        plugins: {
+          title: {
+            display: true,
+            text: 'Convergence',
+            align: 'Center'
+          },
+          legend: {
+            display: true,
+
+          }
+        },
+        scales: {
+          y: { 
+            position: 'left',
+            title: {
+              display: true,
+              position: 'left',
+              text: 'Rel gap [ % ]',
+              font: {
+                size: 16,
+              }
+            }
+          },
+          y1: {
+            position: 'right',
+            title: {
+              display: true,
+              position: 'right',
+              text: 'Max gap',
+              font: {
+                size:16,
+              }
+            },
+            grid: {
+              drawOnChartArea: false // only want the grid lines for one axis to show up
+          }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Iteration [ # ]',
+              font: {
+                size: 16,
+              }
+            }
+          }
+          },
+        animation: {
+          duration: 0
+        }
+      }
+    } 
+  } else {
+    graphData = {
+      labels: safeArray.map(listing => listing.iteration),
+      datasets: [{
+        label: 'Rel_Gap (%)',
+        data: safeArray.map(listing => (listing.value * 100).toFixed(4)),
+        backgroundColor: '#007AC9',
+        borderColor: '#007AC9'
+      }
+      ],
+    }
+    
+    graphConfig = {
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Convergence',
+            align: 'Center'
+          },
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: { 
+            title: {
+              display: true,
+              text: 'Rel_Gap [ % ]',
+              font: {
+                size: 16
+              }
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Iteration [ # ]',
+              font: {
+                size: 16
+              }
+            }
+          }
+          },
+        animation: {
+          duration: 0
         }
       },
-      scales: {
-        y: { 
-          title: {
-            display: true,
-            text: 'Rel_Gap [ % ]',
-            font: {
-              size: 16
-            }
-          }
-         },
-        x: {
-          title: {
-            display: true,
-            text: 'Iteration [ # ]',
-            font: {
-              size: 16
-            }
-          }
-        }
-        },
-      animation: {
-        duration: 0
-      }
-    },
-  }
-
-  const graphData = {
-    labels: demandConvergenceArray.map(listing => listing.iteration),
-    datasets: [{
-      label: 'Rel_Gap (%)',
-      data: demandConvergenceArray.map(listing => (listing.value * 100).toFixed(4)),
-      backgroundColor: '#007AC9',
-      borderColor: '#007AC9'
     }
-    ],
   }
 
   const formatRunStatusTime = (runFinishTime, runStartTime) => {
@@ -108,3 +201,5 @@ const RunStatus = ({isScenarioRunning, statusIterationsTotal, statusIterationsCo
     </div>
   );
 };
+
+export default RunStatus;

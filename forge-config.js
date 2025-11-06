@@ -12,7 +12,13 @@ module.exports = {
     buildIdentifier: 'prod',
     packagerConfig: {
         appBundleId: fromBuildIdentifier({ prod: 'fi.hsl.helmet.ui', beta: 'fi.hsl.beta.helmet.ui' }),
-        icon: "./appicons/icons/win/icon.ico"
+        icon: "./appicons/icons/win/icon.ico",
+        extraResources: [
+            {
+            from: 'dist/renderer',
+            to: 'renderer'
+            }
+        ]
     },
     makers: [
         {

@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
-import path from 'path';
+import classNames from 'classnames';
 import _ from 'lodash';
-const {dialog} = require('@electron/remote');
-const classNames = require('classnames');
+import { ArrowUp, ArrowDown, ResetIcon } from '../../../icons';
+
+
+const dialog = window.electronAPI.dialog;
+const path = window.electronAPI.path;
 
 const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}) => {
 
@@ -236,7 +239,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
         <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}
               className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
       </div>
-      <hr class="override-setting-divider"/>
+      <hr className="override-setting-divider"/>
           <div>
             <h4 className="inline-element">Skenaariokohtaiset yliajot</h4> <div onClick={() => setShowOverrides(!showOverrides)} className="override-dropdown-icon inline-block-element"> { showOverrides ? <ArrowUp/> : <ArrowDown/> } </div>
             { showOverrides && 
@@ -412,3 +415,5 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
     </div>
   )
 };
+
+export default HelmetScenario;

@@ -1,12 +1,13 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, use} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Store from "electron-store";
-import fs from "fs";
-import path from "path";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Runtime from './Runtime/Runtime.jsx';
+import HelmetScenario from './HelmetScenario/HelmetScenario.jsx';
+import RunLog from './RunLog/RunLog.jsx';
+import CostBenefitAnalysis from './CostBenefitAnalysis/CostBenefitAnalysis.jsx';
+import Modal from '../Modal/Modal'; 
 
-const {ipcRenderer} = require('electron');
-
-// vex-js imported globally in index.html, since we cannot access webpack config in electron-forge
+const { ipcRenderer, fs, path } = window.electronAPI;
 
 const HelmetProject = ({
   emmePythonPath, helmetScriptsPath, projectPath, basedataPath, resultsPath,
@@ -36,11 +37,18 @@ const HelmetProject = ({
   const [statusRunFinishTime, setStatusRunFinishTime] = useState(null); //Updated when receiving "finished" message
   const [demandConvergenceArray, setDemandConvergenceArray] = useState([]); // Add convergence values to array every iteration
 
+  // User-set scenario list height in the Scenarios tab
+  const [scenarioListHeight, setScenarioListHeight] = useState(null);
+
   // Cost-Benefit Analysis (CBA) controls
   const [cbaOptions, setCbaOptions] = useState({});
 
   // Scenario-specific settings under currently selected HELMET Project
-  const configStores = useRef({});
+  const configStores = useRef(new Map()); // Use a Map to manage scenario-specific stores
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalError, setModalError] = useState('');
+  const [newScenarioName, setNewScenarioName] = useState('');
 
   const _handleClickScenarioToActive = (scenario) => {
     if(scenarioIDsToRun.includes(scenario.id)) {
@@ -53,33 +61,22 @@ const HelmetProject = ({
   };
 
   const _handleClickNewScenario = () => {
-    const promptCreation = (previousError) => {
-      vex.dialog.prompt({
-        message: (previousError ? previousError : "") + "Anna uuden skenaarion nimike:",
-        placeholder: '',
-        callback: (inputScenarioName) => {
-          let error = "";
-          // Check for cancel button press
-          if (inputScenarioName === false) {
-            return;
-          }
-          // Check input for initial errors
-          if (inputScenarioName === "") {
-            error = "Nimike on pakollinen, tallennettavaa tiedostonime\u00e4 varten. ";
-          }
-          if (scenarios.map((s) => s.name).includes(inputScenarioName)) {
-            error = "Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin. ";
-          }
-          // Handle recursively any input errors (mandated by the async library since prompt isn't natively supported in Electron)
-          if (error) {
-            promptCreation(error);
-          } else {
-            _createScenario(inputScenarioName);
-          }
-        }
-      });
-    };
-    promptCreation();
+    setModalOpen(true);
+    setModalError('');
+    setNewScenarioName('');
+  };
+
+  const handleModalSubmit = () => {
+    if (!newScenarioName.trim()) {
+      setModalError('Nimike on pakollinen, tallennettavaa tiedostonimeä varten.');
+      return;
+    }
+    if (scenarios.map((s) => s.name).includes(newScenarioName.trim())) {
+      setModalError('Nimike on jo olemassa, valitse toinen nimi tai poista olemassa oleva ensin.');
+      return;
+    }
+    _createScenario(newScenarioName.trim());
+    setModalOpen(false);
   };
 
   const _handleClickStartStop = () => {
@@ -89,41 +86,96 @@ const HelmetProject = ({
       _cancelRunning();
   };
 
-  const _loadProjectScenarios = (projectFilepath) => {
-    // Load all .json files from project dir, and check if their keys match scenarios' keys. Match? -> add to scenarios.
+  const _loadProjectScenarios = async (projectFilepath) => {
     const configPath = projectFilepath;
-    const foundScenarios = [];
-    fs.readdirSync(configPath).forEach((fileName) => {
-      if (fileName.endsWith(".json")) {
-        const obj = JSON.parse(fs.readFileSync(path.join(configPath, fileName), 'utf8'));
-        if ("id" in obj
-          && "name" in obj
-          && "use_fixed_transit_cost" in obj
-          && "iterations" in obj
-        ) {
-          configStores.current[obj.id] = new Store({cwd: configPath, name: fileName.slice(0, -5)});
-          foundScenarios.push(obj);
-        }
-      }
-    });
+    console.groupCollapsed('[HelmetProject] _loadProjectScenarios');
+    console.log('Loading project from:', configPath);
 
-    //If scenarios don't have runstatus properties (ie. are older scenarios), adding them here to prevent wonky behaviour
-    const decoratedFoundScenarios = foundScenarios.map(scenario => {
-      if(scenario.runStatus === undefined) {
-        return addRunStatusProperties(scenario);
-      }
-      return scenario;
-    })
+    try {
+      const files = await fs.readdir(configPath);
+      const jsonFiles = files.filter((f) => f.endsWith('.json'));
+      console.log('Found JSON files:', jsonFiles);
 
-    setScenarios(decoratedFoundScenarios);
-    // Reset state of project related properties
-    setOpenScenarioID(null);
-    setScenarioIDsToRun([]);
-    setRunningScenarioID(null);
-    setRunningScenarioIDsQueued([]);
-    setLogContents([]);
-    setLogOpened(false);
+      const foundScenarios = (
+        await Promise.all(
+          jsonFiles.map(async (fileName) => {
+            const filePath = path.join(configPath, fileName);
+
+            try {
+              const content = await fs.readFile(filePath);
+              let obj = JSON.parse(content);
+
+              // Detect and fix nested "scenario" structure
+              if (obj && obj.scenario && typeof obj.scenario === 'object') {
+                console.warn(`Detected nested scenario structure in ${fileName}. Fixing...`);
+                obj = obj.scenario;
+
+                // Attempt to rewrite the corrected structure
+                try {
+                  await fs.writeFile(filePath, JSON.stringify(obj, null, 2));
+                  console.log(`Rewrote nested scenario file to flat format: ${fileName}`);
+                } catch (writeErr) {
+                  console.error(`Failed to rewrite corrected scenario file ${fileName}:`, writeErr);
+                }
+              }
+
+              // Validate scenario structure
+              if (
+                'id' in obj &&
+                'name' in obj &&
+                'use_fixed_transit_cost' in obj &&
+                'iterations' in obj
+              ) {
+                const namespace = `${configPath}/${fileName.replace('.json', '')}`;
+                if (!configStores.current.has(namespace)) {
+                  configStores.current.set(
+                    namespace,
+                    window.electronAPI.StoreAPI.getScenarioStore(namespace)
+                  );
+                }
+                return obj;
+              } else {
+                console.warn(`Invalid scenario structure in file: ${fileName}`);
+                console.log('Scenario content:', obj);
+              }
+            } catch (err) {
+              console.error(`Failed to load scenario from ${fileName}:`, err);
+            }
+
+            return null;
+          })
+        )
+      ).filter(Boolean);
+
+      // Add runStatus if missing (for backward compatibility)
+      const decoratedFoundScenarios = foundScenarios.map((scenario) =>
+        scenario.runStatus === undefined
+          ? addRunStatusProperties(scenario)
+          : scenario
+      );
+
+      // Update UI state
+      setScenarios(decoratedFoundScenarios);
+      setOpenScenarioID(null);
+      setScenarioIDsToRun([]);
+      setRunningScenarioID(null);
+      setRunningScenarioIDsQueued([]);
+      setLogContents([]);
+      setLogOpened(false);
+
+      // Summary log
+      const fixedCount = foundScenarios.length - decoratedFoundScenarios.length;
+      // console.log(`Loaded ${foundScenarios.length} scenarios from project.`);
+      if (fixedCount > 0) {
+        console.log(`Auto-fixed ${fixedCount} nested scenario file(s).`);
+      }
+    } catch (error) {
+      console.error('Error loading project scenarios:', error);
+    }
+
+    console.groupEnd();
   };
+
 
   const addRunStatusProperties = (scenario) => {
     return {
@@ -143,14 +195,36 @@ const HelmetProject = ({
     }
   }
 
-  const _createScenario = (newScenarioName) => {
-    // Generate new (unique) ID for new scenario
+  const _createScenario = async (newScenarioName) => {
+    // Generate new (unique) ID for the new scenario
     const newId = uuidv4();
+
+    // Extract the number at the beginning of the name, if it exists
+    const match = newScenarioName.match(/^(\d+)[ _]/);
+    const firstScenarioId = match ? match[1] : "1";
+
+    // Check for .emp files in the project directory
+    let defaultEmmeProjectFilePath = null;
+    try {
+      const files = await fs.readdir(projectPath);
+      const empFiles = files.filter((file) => file.endsWith('.emp'));
+      if (empFiles.length === 1) {
+        defaultEmmeProjectFilePath = path.join(projectPath, empFiles[0]);
+        console.log(`Default .emp file found: ${defaultEmmeProjectFilePath}`);
+      } else if (empFiles.length > 1) {
+        console.log(`Multiple .emp files found. No default will be set.`);
+      } else {
+        console.log(`No .emp files found in the project directory.`);
+      }
+    } catch (error) {
+      console.error(`Error reading project directory for .emp files:`, error);
+    }
+
     const newScenario = {
       id: newId,
       name: newScenarioName,
-      emme_project_file_path: null,
-      first_scenario_id: 1,
+      emme_project_file_path: defaultEmmeProjectFilePath, // Use the default .emp file if found
+      first_scenario_id: firstScenarioId,
       forecast_data_folder_path: null,
       delete_strategy_files: true,
       separate_emme_scenarios: false,
@@ -181,38 +255,91 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios(scenarios.concat(newScenario));
-    configStores.current[newId] = new Store({cwd: projectPath, name: newScenarioName});
-    configStores.current[newId].set(newScenario);
-    // Then set scenario as open by id (Why id? Having open_scenario as reference causes sub-elements to be bugged because of different object reference)
+    const namespace = `${ projectPath }/${ newScenario.name }`;
+    const store = window.electronAPI.StoreAPI.getScenarioStore(namespace);
+    configStores.current.set(namespace, store);
+    store.set(newScenario);
+    // Then set scenario as open by id
     setOpenScenarioID(newId);
   };
 
-  const _updateScenario = (newValues) => {
-    // Update newValues to matching .id in this.state.scenarios
-    setScenarios(scenarios.map((s) => (s.id === newValues.id ? {...s, ...newValues} : s)));
-    // If name changed, rename file and change reference
-    if (configStores.current[newValues.id].get('name') !== newValues.name) {
-      // If name was set empty - use ID instead
-      const newName = newValues.name ? newValues.name : newValues.id;
-      fs.renameSync(
-        configStores.current[newValues.id].path,
-        path.join(projectPath, `${newName}.json`)
-      );
-      configStores.current[newValues.id] = new Store({
-        cwd: projectPath,
-        name: newName
-      });
+  const _updateScenario = async (newValues) => {
+    // Find the existing scenario using its ID
+    const oldScenario = scenarios.find((s) => s.id === newValues.id);
+    if (!oldScenario) {
+      console.error('Scenario not found for update:', newValues.id);
+      console.groupEnd();
+      return;
     }
-    // And persist all changes in file
-    configStores.current[newValues.id].set(newValues);
+
+    // Update the state
+    setScenarios((prev) =>
+      prev.map((s) => (s.id === newValues.id ? { ...s, ...newValues } : s))
+    );
+
+    const oldNamespace = `${projectPath}/${oldScenario.name}`;
+    const nameChanged = oldScenario.name !== newValues.name;
+
+    if (nameChanged) {
+      const oldFile = path.join(projectPath, `${oldScenario.name}.json`);
+      const newFile = path.join(projectPath, `${newValues.name}.json`);
+
+      try {
+        await fs.rename(oldFile, newFile);
+      } catch (err) {
+        console.error('File rename failed:', err);
+      }
+
+      const newNamespace = `${projectPath}/${newValues.name}`;
+
+      try {
+        const newStore = window.electronAPI.StoreAPI.getScenarioStore(newNamespace);
+
+        // Clear any existing data and write the new scenario at top level
+        newStore.clear();
+        Object.entries(newValues).forEach(([key, value]) => newStore.set(key, value));
+
+        // Update the configStores map
+        configStores.current.delete(oldNamespace);
+        configStores.current.set(newNamespace, newStore);
+      } catch (storeErr) {
+        console.error('Failed to create or update new store:', storeErr);
+      }
+    } else {
+      const store = configStores.current.get(oldNamespace);
+      if (store) {
+        try {
+          store.clear();
+          Object.entries(newValues).forEach(([key, value]) => store.set(key, value));
+        } catch (err) {
+          console.error('Failed to update store:', err);
+        }
+      } else {
+        console.warn('Store not found for update.');
+      }
+    }
+
+    console.groupEnd();
   };
 
-  const _deleteScenario = (scenario) => {
+  
+  const _deleteScenario = async (scenario) => {
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
       setScenarios(scenarios.filter((s) => s.id !== scenario.id));
-      fs.unlinkSync(path.join(projectPath, `${scenario.name}.json`));
-      window.location.reload();  // Vex-js dialog input gets stuck otherwise
+      const filePath = path.join(projectPath, `${scenario.name}.json`);
+      try {
+        await fs.unlink(filePath);
+      } catch (err) {
+        if (err.code === 'ENOENT') {
+          console.warn(`File already deleted: ${filePath}`);
+        } else {
+          console.error(`Error deleting scenario file:`, err);
+        }
+      }
+      ipcRenderer.send('focus-fix');
+    } else {
+      ipcRenderer.send('focus-fix');
     }
   };
 
@@ -222,12 +349,14 @@ const HelmetProject = ({
     duplicatedScenario.id = uuidv4();
     duplicatedScenario.name += `(${duplicatedScenario.id.split('-')[0]})`;
     setScenarios(scenarios.concat(duplicatedScenario));
-    configStores.current[duplicatedScenario.id] = new Store({cwd: projectPath, name: duplicatedScenario.name});
+    configStores.current[duplicatedScenario.id] = window.electronAPI.StoreAPI.create({cwd: projectPath, name: duplicatedScenario.name});
     configStores.current[duplicatedScenario.id].set(duplicatedScenario);
   }
 
   const _runAllActiveScenarios = (activeScenarioIDs) => {
-    const scenariosToRun = scenarios.filter((s) => activeScenarioIDs.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
+    const scenariosToRun = scenarios
+      .filter((s) => activeScenarioIDs.includes(s.id))
+      .sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id));
 
     // Check required global parameters are set
     if (!emmePythonPath) {
@@ -253,7 +382,13 @@ const HelmetProject = ({
 
     // For each active scenario, check required scenario-specific parameters are set
     for (let scenario of scenariosToRun) {
-      const store = configStores.current[scenario.id];
+      const namespace = `${projectPath}/${scenario.name}`
+      const store = configStores.current.get(namespace); // Use the `get` method of the Map
+      if (!store) {
+        alert(`Store not found for scenario "${scenario.name}".`);
+        return;
+      }
+
       const iterations = store.get('iterations');
       if (!store.get('emme_project_file_path')) {
         alert(`Emme-projektia ei ole valittu skenaariossa "${scenario.name}"`);
@@ -274,26 +409,43 @@ const HelmetProject = ({
     setLogContents([
       {
         level: "UI-event",
-        message: `Initializing run of scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`
-      }
+        message: `Initializing run of scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`,
+      },
     ]);
     setLogOpened(true); // Keep log open even after run finishes (or is cancelled)
     setRunningScenarioID(activeScenarioIDs[0]); // Disable controls
     setRunningScenarioIDsQueued(activeScenarioIDs.slice(1));
     signalProjectRunning(true); // Let App-component know too
+
+
     ipcRenderer.send(
       'message-from-ui-to-run-scenarios',
       scenariosToRun.map((s) => {
         // Run parameters per each run (enrich with global settings' paths to EMME python & HELMET model system
-
         return {
           ...s,
-          emme_python_path: s.overriddenProjectSettings.emmePythonPath !== null && s.overriddenProjectSettings.emmePythonPath !== emmePythonPath ? s.overriddenProjectSettings.emmePythonPath : emmePythonPath,
-          helmet_scripts_path: s.overriddenProjectSettings.helmetScriptsPath !== null && s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath ? s.overriddenProjectSettings.helmetScriptsPath : helmetScriptsPath,
-          base_data_folder_path: s.overriddenProjectSettings.basedataPath !== null && s.overriddenProjectSettings.basedataPath !== basedataPath ? s.overriddenProjectSettings.basedataPath : basedataPath,
-          results_data_folder_path: s.overriddenProjectSettings.resultsPath !== null && s.overriddenProjectSettings.resultsPath !== resultsPath ? s.overriddenProjectSettings.resultsPath : resultsPath,
+          emme_python_path:
+            s.overriddenProjectSettings.emmePythonPath !== null &&
+            s.overriddenProjectSettings.emmePythonPath !== emmePythonPath
+              ? s.overriddenProjectSettings.emmePythonPath
+              : emmePythonPath,
+          helmet_scripts_path:
+            s.overriddenProjectSettings.helmetScriptsPath !== null &&
+            s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath
+              ? s.overriddenProjectSettings.helmetScriptsPath
+              : helmetScriptsPath,
+          base_data_folder_path:
+            s.overriddenProjectSettings.basedataPath !== null &&
+            s.overriddenProjectSettings.basedataPath !== basedataPath
+              ? s.overriddenProjectSettings.basedataPath
+              : basedataPath,
+          results_data_folder_path:
+            s.overriddenProjectSettings.resultsPath !== null &&
+            s.overriddenProjectSettings.resultsPath !== resultsPath
+              ? s.overriddenProjectSettings.resultsPath
+              : resultsPath,
           log_level: 'DEBUG',
-        }
+        };
       })
     );
   };
@@ -347,6 +499,7 @@ const HelmetProject = ({
 
   // Electron IPC event listeners
   const onLoggableEvent = (event, args) => {
+    // console.log('[HelmetProject] received loggable-event:', args);
     setLogContents(previousLog => [...previousLog, args]);
     setLogArgs(args);
   };
@@ -376,6 +529,12 @@ const HelmetProject = ({
       ipcRenderer.removeListener('scenario-complete', onScenarioComplete);
       ipcRenderer.removeListener('all-scenarios-complete', onAllScenariosComplete);
     }
+  }, []);
+
+  useEffect(() => {
+    if (projectPath) {
+      _loadProjectScenarios(projectPath);
+    }
   }, [projectPath]);
 
   return (
@@ -383,27 +542,44 @@ const HelmetProject = ({
 
       {/* Panel for primary view and controls */}
       <div className="Project__runtime">
-        <Runtime
-          projectPath={projectPath}
-          reloadScenarios={() => _loadProjectScenarios(projectPath)}
-          scenarios={scenarios}
-          scenarioIDsToRun={scenarioIDsToRun}
-          runningScenarioID={runningScenarioID}
-          openScenarioID={openScenarioID}
-          setOpenScenarioID={setOpenScenarioID}
-          deleteScenario={(scenario) => {_deleteScenario(scenario)}}
-          handleClickScenarioToActive={_handleClickScenarioToActive}
-          handleClickNewScenario={_handleClickNewScenario}
-          handleClickStartStop={_handleClickStartStop}
-          logArgs={logArgs}
-          duplicateScenario={duplicateScenario}
-        />
-        <CostBenefitAnalysis
-          resultsPath={resultsPath}
-          cbaOptions={cbaOptions}
-          setCbaOptions={setCbaOptions}
-          runCbaScript={_runCbaScript}
-        />
+        <Tabs className="tab-container">
+          <TabList className="tab-list">
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
+              Skenaariot
+            </Tab>
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
+              CBA
+            </Tab>
+          </TabList>
+
+          <TabPanel className="runtime-tab">
+            <Runtime
+              projectPath={projectPath}
+              reloadScenarios={() => _loadProjectScenarios(projectPath)}
+              scenarios={scenarios}
+              scenarioIDsToRun={scenarioIDsToRun}
+              runningScenarioID={runningScenarioID}
+              openScenarioID={openScenarioID}
+              setOpenScenarioID={setOpenScenarioID}
+              deleteScenario={(scenario) => {_deleteScenario(scenario)}}
+              handleClickScenarioToActive={_handleClickScenarioToActive}
+              handleClickNewScenario={_handleClickNewScenario}
+              handleClickStartStop={_handleClickStartStop}
+              logArgs={logArgs}
+              duplicateScenario={duplicateScenario}
+              scenarioListHeight={scenarioListHeight}
+              setScenarioListHeight={setScenarioListHeight}
+            />
+          </TabPanel>
+          <TabPanel>
+            <CostBenefitAnalysis
+              resultsPath={resultsPath}
+              cbaOptions={cbaOptions}
+              setCbaOptions={setCbaOptions}
+              runCbaScript={_runCbaScript}
+            />
+          </TabPanel>
+        </Tabs>
       </div>
 
       {/* Panel for secondary view(s) and controls */}
@@ -436,6 +612,26 @@ const HelmetProject = ({
               ""
         }
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        title="Uusi Helmet-skenaario" // Updated title
+      >
+        <label className="Modal__label">Anna uuden skenaarion nimike:</label> {/* Added label */}
+        <input
+          className="Modal__input"
+          type="text"
+          value={newScenarioName}
+          onChange={(e) => setNewScenarioName(e.target.value)}
+          placeholder="Uuden skenaarion nimi"
+          autoFocus
+        />
+        {modalError && <p className="Modal__error">{modalError}</p>}
+      </Modal>
     </div>
   )
 };
+
+export default HelmetProject;

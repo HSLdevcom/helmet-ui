@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Hidden process-running window</title>
     <script type="text/javascript">
+      console.log('CBA script worker started');
       const {ipcRenderer} = require('electron');
       const {runCBAScriptPythonShell} = require('./cba_script_python_shell');
 

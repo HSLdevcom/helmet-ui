@@ -1,6 +1,7 @@
 import React from 'react';
-import path from "path";
-const {dialog} = require('@electron/remote');
+
+const dialog = window.electronAPI.dialog;
+const path = window.electronAPI.path;
 
 const CostBenefitAnalysis = ({
   resultsPath, cbaOptions, setCbaOptions, runCbaScript
@@ -8,6 +9,12 @@ const CostBenefitAnalysis = ({
   return (
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
+      <div className="CBA_instructions-container">
+        <p>Hyöty-kustannusanalyysiä varten syötetään vertailuvaihtoehdon (ve0) ja hankevaihtoehdon (ve1) tuloskansio: </p>
+        <p className="CBA_instructions_highlight"> (Tulosten tallennuspolku\Skenaarion nimi). </p>
+        <p>Jos ennusteita on ajettu kahdelle vuodelle (esim. 2040 ja 2060), vertailuvaihtoehto ja hankevaihtoehto on mahdollista määrittää kahdelle ennustevuodelle.</p>
+        <p>Tulokset tulostuvat Excel-tiedostoon tuloskansiossa.</p>
+      </div>
       <table className="CBA__choices">
         <tbody>
           <tr>
@@ -118,3 +125,5 @@ const CostBenefitAnalysis = ({
     </div>
   );
 };
+
+export default CostBenefitAnalysis;
