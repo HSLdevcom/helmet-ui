@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { CopyIcon } from '../../../icons';
 import RunStatus from './RunStatus/RunStatus.jsx';
 import { SCENARIO_STATUS_STATE } from '../../../../enums.js';
+import { useHelmetModelContext } from '../../../context/HelmetModelContext';
 
 const _ = window.electronAPI._;
 
@@ -24,6 +25,7 @@ const Runtime = ({
   scenarioListHeight,
   setScenarioListHeight,
 }) => {
+  const { majorVersion } = useHelmetModelContext();
   const visibleTooltipProperties = [
     'emme_project_file_path',
     'first_scenario_id',
@@ -56,9 +58,22 @@ const Runtime = ({
     return `${key} : ${value}`;
   };
 
-  const parseDemandConvergenceLogMessage = (message) => {
-    const stringMsgArray = message.split(' ');
-    return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+  const parseDemandConvergenceLogMessage = (message, currentIteration) => {
+    // Example message: "Demand model convergence: Max gap: 10.0000, Relative gap: 0.00010 "
+    if (majorVersion && majorVersion >= 5) {
+      const maxGapMatch = message.match(/Max gap:\s*([0-9.eE+-]+)/);
+      const relGapMatch = message.match(/Relative gap:\s*([0-9.eE+-]+)/);
+
+      const parsed = {
+        iteration: currentIteration + 1,
+        rel_gap: relGapMatch ? parseFloat(relGapMatch[1]) : undefined,
+        max_gap: maxGapMatch ? parseFloat(maxGapMatch[1]) : undefined
+      };
+      return parsed;
+    } else {
+      const stringMsgArray = message.split(' ');
+      return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+    }
   };
 
   const activeScenarios = Array.isArray(scenarios)
@@ -69,8 +84,13 @@ const Runtime = ({
     (scenario) => scenario.id === runningScenarioID
   );
 
+  const getResultsPathFromLogfilePath = (logfilePath) => {
+    return logfilePath.replace(/\/[^\/]+$/, '');
+  }
+
   //Parse log contents into the currently running scenario so we can show each one individually
   const parseLogArgs = (runStatus, logArgs) => {
+    // console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
     if (logArgs.status) {
       runStatus.statusIterationsTotal = logArgs.status['total'];
       runStatus.statusIterationsCurrent = logArgs.status['current'];
@@ -79,29 +99,40 @@ const Runtime = ({
       runStatus.statusState = logArgs.status['state'];
       runStatus.statusLogfilePath = logArgs.status['log'];
 
-    if (logArgs.status.state === SCENARIO_STATUS_STATE.FINISHED) {
-      runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log, resultsPath: getResultsPathFromLogfilePath(logArgs.status.log) }
-      runStatus.statusRunFinishTime = logArgs.time;
-    }
+      if (logArgs.status.state === SCENARIO_STATUS_STATE.FINISHED) {
+        runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log, resultsPath: getResultsPathFromLogfilePath(logArgs.status.log) }
+        runStatus.statusRunFinishTime = logArgs.time;
+      }
 
-    if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
-      runStatus.statusRunStartTime = logArgs.time;
-      runStatus.statusRunFinishTime = logArgs.time; 
-      runStatus.demandConvergenceArray = [];
-      runStatus.statusIterationsTotal = 0;
+      if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
+        runStatus.statusRunStartTime = logArgs.time;
+        runStatus.statusRunFinishTime = logArgs.time; 
+        runStatus.demandConvergenceArray = [];
+        runStatus.statusIterationsTotal = 0;
+      }
     }
-  }
-  if(logArgs.level === 'INFO') {
-    if(logArgs.message.includes('Demand model convergence in')) {
-      const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
-      runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
+    if(logArgs.level === 'INFO') {
+      // console.log(`Parsing logArgs message: ${logArgs.message}`);
+      if(majorVersion>=5 && logArgs.message.includes('Demand model convergence')) {
+        const currentIteration = runStatus.demandConvergenceArray ? runStatus.demandConvergenceArray.length : 0;
+        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
+        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
+        runStatus.demandConvergenceArray = [
+          ...(runStatus.demandConvergenceArray || []),
+          currentDemandConvergenceValueAndIteration
+        ];
+        // console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
+      } else if(logArgs.message.includes('Demand model convergence in')) {
+        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
+        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
+        runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
       }
     }
   }
 
-  if( runningScenario && runningScenario.length > 0) {
-  const runStatus = runningScenario[0].runStatus;
-  parseLogArgs(runStatus, logArgs);
+  if( runningScenario?.runStatus && logArgs ) {
+    // console.log(`[Runtime] Running scenario (${runningScenario})`);
+    parseLogArgs(runningScenario.runStatus, logArgs);
   }
 
   const renderableScenarios = activeScenarios.map((activeScenario) => {
@@ -112,28 +143,29 @@ const Runtime = ({
   });
 
   const RunStatusList = () => {
-    if (renderableScenarios.length > 0) {
-      return (
-        <div>
-          {renderableScenarios.map((scenarioToRender) => {
-            return (
-              <RunStatus
-                key={scenarioToRender.id}
-                isScenarioRunning={scenarioToRender.id === runningScenarioID}
-                statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
-                statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
-                statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || []}
-                statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
-                statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
-                statusState={scenarioToRender.runStatus?.statusState || null}
-                demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || []}
-              />
-            );
-          })}
-        </div>
-      );
-    }
-    return <div />;
+    const scenariosWithStatus = renderableScenarios.filter(
+      s => s.runStatus && (s.runStatus.statusState || s.runStatus.demandConvergenceArray?.length > 0)
+    );
+
+    if (scenariosWithStatus.length === 0) return <div />;
+
+    return (
+      <div>
+        {renderableScenarios.map((scenarioToRender) => (
+          <RunStatus
+            key={scenarioToRender.id}
+            isScenarioRunning={scenarioToRender.id === runningScenarioID}
+            statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
+            statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
+            statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || []}
+            statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
+            statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
+            statusState={scenarioToRender.runStatus?.statusState || null}
+            demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || []}
+          />
+        ))}
+      </div>
+    );return <div />;
   };
 
   useEffect(() => {
