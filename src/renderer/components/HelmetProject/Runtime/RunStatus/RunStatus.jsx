@@ -16,10 +16,33 @@ ChartJS.register(LinearScale, LineElement, CategoryScale, PointElement, Tooltip,
 
 const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }) => {
   const { majorVersion } = useHelmetModelContext();
+  const safeArray = Array.isArray(demandConvergenceArray) ? demandConvergenceArray : []; // Ensure demandConvergenceArray is defined as an array even if null
+
+  let graphData = {};
+  let graphConfig = {};
 
   if (majorVersion && majorVersion >= 5) {
     // console.log("Using Helmet 5 or later");
-    const graphConfig = {
+    graphData = {
+      labels: safeArray.map(listing => listing.iteration),
+      datasets: [{
+        label: 'Rel gap',
+        data: safeArray.map( (listing) => listing.rel_gap !== undefined ? (listing.rel_gap * 100).toFixed(4) : null ),
+        backgroundColor: '#007AC9',
+        borderColor: '#007AC9',
+        yAxisID: 'y'
+      },
+      {
+        label: 'Max gap',
+        data: safeArray.map( (listing) => listing.max_gap !== undefined ? (listing.max_gap).toFixed(4) : null ),
+        backgroundColor: '#FB5F20',
+        borderColor: '#FB5F20',
+        yAxisID: 'y1'
+      }
+      ],
+    }
+
+    graphConfig = {
       type: 'line',
       data: graphData,
       options: {
@@ -80,26 +103,19 @@ const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsC
         }
       }
     } 
-    const graphData = {
-      labels: demandConvergenceArray.map(listing => listing.iteration),
+  } else {
+    graphData = {
+      labels: safeArray.map(listing => listing.iteration),
       datasets: [{
-        label: 'Rel gap',
-        data: demandConvergenceArray.map(listing => (listing.rel_gap * 100).toFixed(4)),
+        label: 'Rel_Gap (%)',
+        data: safeArray.map(listing => (listing.value * 100).toFixed(4)),
         backgroundColor: '#007AC9',
-        borderColor: '#007AC9',
-        yAxisID: 'y'
-      },
-      {
-        label: 'Max gap',
-        data: demandConvergenceArray.map(listing => (listing.max_gap).toFixed(4)),
-        backgroundColor: '#FB5F20',
-        borderColor: '#FB5F20',
-        yAxisID: 'y1'
+        borderColor: '#007AC9'
       }
       ],
     }
-  } else {
-    const graphConfig = {
+    
+    graphConfig = {
       options: {
         plugins: {
           title: {
@@ -135,16 +151,6 @@ const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsC
           duration: 0
         }
       },
-    }
-    const graphData = {
-      labels: demandConvergenceArray.map(listing => listing.iteration),
-      datasets: [{
-        label: 'Rel_Gap (%)',
-        data: demandConvergenceArray.map(listing => (listing.value * 100).toFixed(4)),
-        backgroundColor: '#007AC9',
-        borderColor: '#007AC9'
-      }
-      ],
     }
   }
 

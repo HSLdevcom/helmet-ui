@@ -86,7 +86,7 @@ const Runtime = ({
 
   //Parse log contents into the currently running scenario so we can show each one individually
   const parseLogArgs = (runStatus, logArgs) => {
-    // console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
+    console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
     if (logArgs.status) {
       runStatus.statusIterationsTotal = logArgs.status['total'];
       runStatus.statusIterationsCurrent = logArgs.status['current'];
@@ -108,7 +108,7 @@ const Runtime = ({
       }
     }
     if(logArgs.level === 'INFO') {
-      // console.log(`Parsing logArgs message: ${logArgs.message}`);
+      console.log(`Parsing logArgs message: ${logArgs.message}`);
       if(majorVersion>=5 && logArgs.message.includes('Demand model convergence')) {
         const currentIteration = runStatus.demandConvergenceArray ? runStatus.demandConvergenceArray.length : 0;
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
@@ -120,13 +120,14 @@ const Runtime = ({
         console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
       } else if(logArgs.message.includes('Demand model convergence in')) {
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
+        console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
         runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
       }
     }
   }
 
   if( runningScenario?.runStatus && logArgs ) {
-    // console.log(`[Runtime] Running scenario (${runningScenario})`);
+    console.log(`[Runtime] Running scenario (${runningScenario})`);
     parseLogArgs(runningScenario.runStatus, logArgs);
   }
 
@@ -138,28 +139,29 @@ const Runtime = ({
   });
 
   const RunStatusList = () => {
-    if (renderableScenarios.length > 0) {
-      return (
-        <div>
-          {renderableScenarios.map((scenarioToRender) => {
-            return (
-              <RunStatus
-                key={scenarioToRender.id}
-                isScenarioRunning={scenarioToRender.id === runningScenarioID}
-                statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
-                statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
-                statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || []}
-                statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
-                statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
-                statusState={scenarioToRender.runStatus?.statusState || null}
-                demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || []}
-              />
-            );
-          })}
-        </div>
-      );
-    }
-    return <div />;
+    const scenariosWithStatus = renderableScenarios.filter(
+      s => s.runStatus && (s.runStatus.statusState || s.runStatus.demandConvergenceArray?.length > 0)
+    );
+
+    if (scenariosWithStatus.length === 0) return <div />;
+
+    return (
+      <div>
+        {renderableScenarios.map((scenarioToRender) => (
+          <RunStatus
+            key={scenarioToRender.id}
+            isScenarioRunning={scenarioToRender.id === runningScenarioID}
+            statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
+            statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
+            statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || []}
+            statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
+            statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
+            statusState={scenarioToRender.runStatus?.statusState || null}
+            demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || []}
+          />
+        ))}
+      </div>
+    );return <div />;
   };
 
   useEffect(() => {
