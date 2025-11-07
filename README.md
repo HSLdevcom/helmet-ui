@@ -2,18 +2,18 @@
 
 ![master](https://github.com/HSLdevcom/helmet-ui/actions/workflows/node.js.yml/badge.svg?branch=master)
 
-Helmet UI is a desktop user interface for [Helmet 4 Model System](https://github.com/HSLdevcom/helmet-model-system). 
-**Read [the documentation in Finnish](https://hsldevcom.github.io/helmet-docs/) to learn how to use Helmet UI and Helmet 4 Model System.**
+Helmet UI is a desktop user interface for [Helmet Model System](https://github.com/HSLdevcom/helmet-model-system). 
+**Read [the documentation in Finnish](https://hsldevcom.github.io/helmet-docs/) to learn how to use Helmet UI and Helmet Model System.**
  If you wish to develop the UI, continue below.
 
 ## Development requirements
 
 This is an [Electron](https://electrojs.org) application written in JavaScript _([NodeJS API](https://nodejs.org/api/)
-and [Electron API](https://www.electronjs.org/docs/api) available within app)_, HTML and CSS.
+and [Electron API](https://www.electronjs.org/docs/api) available within app)_, TypeScript, HTML and CSS.
 
 - Git client
-- Node.js 16 LTS & NPM
-- EMME 4.x.x _(Windows-only)_
+- Node.js 20 LTS & NPM
+- OpenPaths EMME version >= 24.x.x _(Windows-only)_
 - _[optionally]_ [helmet-model-system](https://github.com/HSLdevcom/helmet-model-system) _(otherwise downloaded and auto-installed by the UI)_
 
 On Mac and Linux, [Wine](https://www.winehq.org/) and [Mono](https://www.mono-project.com/) are also required to make the app for Windows.
