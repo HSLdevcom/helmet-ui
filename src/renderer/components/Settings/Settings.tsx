@@ -10,14 +10,13 @@ const dialog = window.electronAPI.dialog;
 const { exec } = window.electronAPI.child_process;
 
 interface EnvironmentOptionProps {
-  key: string;
   envPath: string;
   isSelected: boolean;
   setPath: (path: string) => void;
   removePath: (path: string) => void;
 }
 
-const EnvironmentOption = ({ key, envPath, isSelected, setPath, removePath } : EnvironmentOptionProps) => {  
+const EnvironmentOption = ({ envPath, isSelected, setPath, removePath } : EnvironmentOptionProps) => {  
   const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.toLowerCase().startsWith('emme'))
 
   // Function to set the EMMEPATH environment variable
@@ -43,7 +42,7 @@ const EnvironmentOption = ({ key, envPath, isSelected, setPath, removePath } : E
   const emmeFolderPath = path.dirname(path.dirname(envPath))
 
   return (
-    <div className="Settings__environment_option" key={key}>
+    <div className="Settings__environment_option" key={envPath}>
       <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight /></span>
       <p
         className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected })}
@@ -128,9 +127,8 @@ const Settings = ({
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">{ (emmePythonEnvs ?? []).length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
           { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
-            <div key={index}>
-              <EnvironmentOption 
-                key={`${env}-${index}`}
+            <div key={`${env}-${index}`}>
+              <EnvironmentOption
                 envPath={env} 
                 isSelected={emmePythonPath === env}
                 setPath={setEMMEPythonPath}
