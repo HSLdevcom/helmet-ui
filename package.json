@@ -51,9 +51,10 @@
     "@types/node": "^24.7.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
+    "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^4.7.0",
-    "lodash": "^4.17.21",
     "electron": "^38.2.2",
+    "lodash": "^4.17.21",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "vite": "^6.3.6"

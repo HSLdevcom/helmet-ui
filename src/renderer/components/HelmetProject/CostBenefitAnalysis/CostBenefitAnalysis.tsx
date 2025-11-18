@@ -1,11 +1,19 @@
 import React from 'react';
+import { CbaOptions, SetCbaOptionsType } from '../../../../types';
 
 const dialog = window.electronAPI.dialog;
 const path = window.electronAPI.path;
 
+interface CostBenefitAnalysisProps {
+  resultsPath: string;
+  cbaOptions: CbaOptions;
+  setCbaOptions: SetCbaOptionsType;
+  runCbaScript: () => void;
+}
+
 const CostBenefitAnalysis = ({
   resultsPath, cbaOptions, setCbaOptions, runCbaScript
-}) => {
+}: CostBenefitAnalysisProps ) => {
   return (
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
