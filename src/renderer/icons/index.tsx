@@ -69,9 +69,11 @@ export const CopyIcon = () => {
     )
 }
 
-export const ResetIcon = () => {
+interface IconProps extends React.SVGProps<SVGSVGElement> {}
+
+export const ResetIcon: React.FC<IconProps> = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46" width="20" height="20">
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46" width="20" height="20">
       <path fill="#007ac9" d="M-.002 248.028c0 19.488 15.945 35.435 35.434 35.435h212.597c19.489 0 35.435-15.946 
         35.435-35.435V35.431c0-19.488-15.945-35.433-35.435-35.433H35.432C15.943-.002-.002 15.943-.002 35.431v212.597z"/>
       <path fill="#fff" d="M55.29 218.302l63.09-78.255-59.45-73.706c-3.033-3.943-5.763-8.796-5.763-13.953 0-10.313 

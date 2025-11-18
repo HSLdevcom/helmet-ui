@@ -35,12 +35,12 @@ export interface Scenario {
   name: string;
   emme_project_file_path?: string | null;
   first_scenario_id?: string;
-  first_matrix_id?: number;
+  first_matrix_id?: string;
   forecast_data_folder_path?: string | null;
   save_matrices_in_emme?: boolean;
   end_assignment_only?: boolean;
   delete_strategy_files?: boolean;
-  iterations: number;
+  iterations: string;
   separate_emme_scenarios?: boolean;
   use_fixed_transit_cost?: boolean;
   overriddenProjectSettings: {
@@ -86,4 +86,12 @@ export interface LogArgs {
   level?: LogLevel;
   message?: string;
   time?: string | number;
+}
+
+export interface ProjectSettings {
+  emmePythonPath: string | null;
+  helmetScriptsPath: string | null;
+  projectPath: string | null;
+  basedataPath: string | null;
+  resultsPath: string | null;
 }

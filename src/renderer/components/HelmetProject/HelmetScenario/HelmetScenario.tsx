@@ -2,21 +2,29 @@ import React, {useState} from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { ArrowUp, ArrowDown, ResetIcon } from '../../../icons';
+import { Scenario, ProjectSettings } from '../../../../types';
 
 
 const dialog = window.electronAPI.dialog;
 const path = window.electronAPI.path;
 
-const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}) => {
+interface HelmetScenarioProps {
+  projectPath: string;
+  scenario: Scenario;
+  updateScenario: (updatedScenario: Scenario) => void;
+  closeScenario: () => void;
+  existingOtherNames: string[];
+  inheritedGlobalProjectSettings: ProjectSettings;
+};
+
+const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, existingOtherNames, inheritedGlobalProjectSettings}: HelmetScenarioProps) => {
 
   const [nameError, setNameError] = useState("");
 
-  const hasOverriddenSettings = (scenario) => {
-    const overriddenSetting = _.find(scenario.overriddenProjectSettings, (setting) => {
-      return setting;
-    })
-    return overriddenSetting !== undefined ? true : false;
-  }
+  const hasOverriddenSettings = (scenario: Scenario) => {
+    return _.some(scenario.overriddenProjectSettings, (setting) => setting != null);
+  };
+
 
   //Open override settings by default if atleast one of the settings is overridden
   const [showOverrides, setShowOverrides] = useState(hasOverriddenSettings(scenario));
@@ -59,7 +67,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
       {/* File path to EMME project reference-file (generally same in all scenarios of a given HELMET project) */}
       <div className="Scenario__section">
         <span className="Scenario__pseudo-label">Emme-projekti (.emp)</span>
-        <label className="Scenario__pseudo-file-select" htmlFor="emme-project-file-select" title={scenario.emme_project_file_path}>
+        <label className="Scenario__pseudo-file-select" htmlFor="emme-project-file-select" title={scenario.emme_project_file_path ?? ''}>
           {scenario.emme_project_file_path ? path.basename(scenario.emme_project_file_path) : "Valitse.."}
         </label>
         <input className="Scenario__hidden-input"
@@ -102,7 +110,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
       {/* Folder path to variable input data (input data with variables sent to EMME) */}
       <div className="Scenario__section">
         <span className="Scenario__pseudo-label">Sy&ouml;tt&ouml;tiedot</span>
-        <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select" title={scenario.forecast_data_folder_path}>
+        <label className="Scenario__pseudo-file-select" htmlFor="data-folder-select" title={scenario.forecast_data_folder_path ?? ''}>
           {scenario.forecast_data_folder_path ? path.basename(scenario.forecast_data_folder_path) : "Valitse.."}
         </label>
         <input className="Scenario__hidden-input"
@@ -178,7 +186,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
           <input id="delete-strategy-files"
                  type="checkbox"
                  /* If flag is not written to JSON (= null), box is checked (= true). */
-                 checked={scenario.delete_strategy_files == true | scenario.delete_strategy_files == null}
+                 checked={scenario.delete_strategy_files == true || scenario.delete_strategy_files == null}
                  onChange={(e) => {
                    updateScenario({...scenario, delete_strategy_files: e.target.checked});
                  }}
@@ -199,7 +207,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                    updateScenario({...scenario, separate_emme_scenarios: e.target.checked});
                  }}
           />
-        <span>Tallenna ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id) + 1}&ndash;{parseInt(scenario.first_scenario_id) + 4}</span>
+        <span>Tallenna ajanjaksot erillisiin Emme-skenaarioihin {parseInt(scenario.first_scenario_id ?? "1") + 1}&ndash;{parseInt(scenario.first_scenario_id ?? "1") + 4}</span>
       </label>
       </div>
 
@@ -237,7 +245,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                }}
         />
         <span style={{color: !scenario.save_matrices_in_emme ? "#666666" : "inherit"}}
-              className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id) + 299}</span>
+              className=" Scenario__inline">&ndash;{parseInt(scenario.first_matrix_id == null ? '100' : scenario.first_matrix_id) + 299}</span>
       </div>
       <hr className="override-setting-divider"/>
           <div>
@@ -262,7 +270,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={inheritedGlobalProjectSettings.emmePythonPath}
+                        placeholder={inheritedGlobalProjectSettings.emmePythonPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
                             defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
@@ -298,7 +306,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={inheritedGlobalProjectSettings.helmetScriptsPath}
+                        placeholder={inheritedGlobalProjectSettings.helmetScriptsPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
                             defaultPath: scenario.overriddenProjectSettings.helmetScriptsPath ? scenario.overriddenProjectSettings.helmetScriptsPath : inheritedGlobalProjectSettings.helmetScriptsPath,
@@ -330,7 +338,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={inheritedGlobalProjectSettings.projectPath}
+                        placeholder={inheritedGlobalProjectSettings.projectPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
                             defaultPath: scenario.overriddenProjectSettings.projectPath ? scenario.overriddenProjectSettings.projectPath : inheritedGlobalProjectSettings.projectPath,
@@ -362,7 +370,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={inheritedGlobalProjectSettings.basedataPath}
+                        placeholder={inheritedGlobalProjectSettings.basedataPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
                             defaultPath: scenario.overriddenProjectSettings.basedataPath ? scenario.overriddenProjectSettings.basedataPath : inheritedGlobalProjectSettings.basedataPath,
@@ -394,7 +402,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath}
+                        placeholder={scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
                             defaultPath: scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath,
