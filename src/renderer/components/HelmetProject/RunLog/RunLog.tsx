@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {LogEntry} from '../../../../types';
+import { LogEntry } from '../../../../types';
 
 interface RunLogProps {
   isScenarioRunning: boolean;

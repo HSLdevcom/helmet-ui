@@ -5,10 +5,30 @@ import { CopyIcon } from '../../../icons';
 import RunStatus from './RunStatus/RunStatus.jsx';
 import { SCENARIO_STATUS_STATE } from '../../../../enums.js';
 import { useHelmetModelContext } from '../../../context/HelmetModelContext';
+import { Scenario, LogArgs, RunStatus as RunStatusType, DemandConvergenceEntry } from '../../../../types';
 
 const _ = window.electronAPI._;
 
-const Runtime = ({
+interface RuntimeProps {
+  projectPath: string;
+  scenarios: Scenario[];
+  scenarioIDsToRun: string[];
+  runningScenarioID: string | null;
+  openScenarioID: string | null;
+  deleteScenario: (scenario: Scenario) => void;
+  setOpenScenarioID: (id: string | null) => void;
+  reloadScenarios: () => void;
+  handleClickScenarioToActive: (scenario: Scenario) => void;
+  handleClickNewScenario: () => void;
+  handleClickStartStop: () => void;
+  logArgs?: LogArgs;
+  duplicateScenario: (scenario: Scenario) => void;
+  scenarioListHeight: string | null;
+  setScenarioListHeight: (height: string) => void;
+}
+
+
+const Runtime: React.FC<RuntimeProps> = ({
   projectPath,
   scenarios = [], // Default to an empty array
   scenarioIDsToRun = [], // Default to an empty array
@@ -25,7 +45,9 @@ const Runtime = ({
   scenarioListHeight,
   setScenarioListHeight,
 }) => {
+
   const { majorVersion } = useHelmetModelContext();
+
   const visibleTooltipProperties = [
     'emme_project_file_path',
     'first_scenario_id',
@@ -42,11 +64,11 @@ const Runtime = ({
     'overriddenProjectSettings',
   ];
 
-  const areGlobalSettingsOverridden = (settings) => {
+  const areGlobalSettingsOverridden = (settings: Record<string, unknown> | undefined) => {
     return settings && Object.values(settings).some((value) => value != null);
   };
 
-  const getPropertyForDisplayString = (settingProperty) => {
+  const getPropertyForDisplayString = (settingProperty: [string, any]) => {
     const [key, value] = settingProperty;
 
     if (typeof value === 'string') {
@@ -58,7 +80,7 @@ const Runtime = ({
     return `${key} : ${value}`;
   };
 
-  const parseDemandConvergenceLogMessage = (message, currentIteration) => {
+  const parseDemandConvergenceLogMessage = (message: string, currentIteration = 0): DemandConvergenceEntry => {
     // Example message: "Demand model convergence: Max gap: 10.0000, Relative gap: 0.00010 "
     if (majorVersion && majorVersion >= 5) {
       const maxGapMatch = message.match(/Max gap:\s*([0-9.eE+-]+)/);
@@ -72,24 +94,21 @@ const Runtime = ({
       return parsed;
     } else {
       const stringMsgArray = message.split(' ');
-      return { iteration: stringMsgArray[stringMsgArray.length - 3], value: stringMsgArray[stringMsgArray.length - 1]};
+      const stringValue = stringMsgArray[stringMsgArray.length - 1];
+      const valueNum = parseFloat(stringValue);
+      return { iteration: parseInt(stringMsgArray[stringMsgArray.length - 3]) || 0, value: isNaN(valueNum) ? undefined : valueNum };
     }
   };
 
-  const activeScenarios = Array.isArray(scenarios)
-    ? scenarios.filter((scenario) => scenarioIDsToRun.includes(scenario.id))
-    : [];
+  const activeScenarios = scenarios.filter((scenario) => scenarioIDsToRun.includes(scenario.id));
+  const runningScenario = activeScenarios.find((scenario) => scenario.id === runningScenarioID);
 
-  const runningScenario = activeScenarios.find(
-    (scenario) => scenario.id === runningScenarioID
-  );
-
-  const getResultsPathFromLogfilePath = (logfilePath) => {
+  const getResultsPathFromLogfilePath = (logfilePath: string) => {
     return logfilePath.replace(/\/[^\/]+$/, '');
   }
 
   //Parse log contents into the currently running scenario so we can show each one individually
-  const parseLogArgs = (runStatus, logArgs) => {
+  const parseLogArgs = (runStatus: RunStatusType, logArgs: LogArgs) => {
     // console.log(`Parsing logArgs: ${JSON.stringify(logArgs)}`);
     if (logArgs.status) {
       runStatus.statusIterationsTotal = logArgs.status['total'];
@@ -100,8 +119,15 @@ const Runtime = ({
       runStatus.statusLogfilePath = logArgs.status['log'];
 
       if (logArgs.status.state === SCENARIO_STATUS_STATE.FINISHED) {
-        runStatus.statusReadyScenariosLogfiles = { name: logArgs.status.name, logfile: logArgs.status.log, resultsPath: getResultsPathFromLogfilePath(logArgs.status.log) }
-        runStatus.statusRunFinishTime = logArgs.time;
+        const entry = {
+          name: logArgs.status.name ?? '',
+          logfile: logArgs.status.log ?? '',
+          resultsPath: [ getResultsPathFromLogfilePath(logArgs.status.log ?? '') ]
+        };
+
+        // Initialize as array if missing
+        runStatus.statusReadyScenariosLogfiles = [...(runStatus.statusReadyScenariosLogfiles ?? []), entry];
+        runStatus.statusRunFinishTime = logArgs.time ?? runStatus.statusRunFinishTime;
       }
 
       if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
@@ -111,21 +137,18 @@ const Runtime = ({
         runStatus.statusIterationsTotal = 0;
       }
     }
-    if(logArgs.level === 'INFO') {
+    if(logArgs.level === 'INFO' && logArgs.message) {
       // console.log(`Parsing logArgs message: ${logArgs.message}`);
-      if(majorVersion>=5 && logArgs.message.includes('Demand model convergence')) {
-        const currentIteration = runStatus.demandConvergenceArray ? runStatus.demandConvergenceArray.length : 0;
+      if(majorVersion && majorVersion >= 5 && logArgs.message.includes('Demand model convergence')) {
+        const currentIteration = runStatus.demandConvergenceArray?.length ?? 0;
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
         // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
-        runStatus.demandConvergenceArray = [
-          ...(runStatus.demandConvergenceArray || []),
-          currentDemandConvergenceValueAndIteration
-        ];
+        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray ?? []), parseDemandConvergenceLogMessage(logArgs.message, currentIteration)];
         // console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
-      } else if(logArgs.message.includes('Demand model convergence in')) {
+      } else if(logArgs.message.includes('Demand model convergence in')) { // Helmet versions < 5
         const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
         // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
-        runStatus.demandConvergenceArray = [...runStatus.demandConvergenceArray, currentDemandConvergenceValueAndIteration];
+        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray ?? []), parseDemandConvergenceLogMessage(logArgs.message)];
       }
     }
   }
@@ -135,16 +158,11 @@ const Runtime = ({
     parseLogArgs(runningScenario.runStatus, logArgs);
   }
 
-  const renderableScenarios = activeScenarios.map((activeScenario) => {
-    if (activeScenario.id === runningScenario?.id) {
-      return runningScenario;
-    }
-    return activeScenario;
-  });
+  const renderableScenarios = activeScenarios.map(s => (s.id === runningScenario?.id ? runningScenario : s));
 
   const RunStatusList = () => {
     const scenariosWithStatus = renderableScenarios.filter(
-      s => s.runStatus && (s.runStatus.statusState || s.runStatus.demandConvergenceArray?.length > 0)
+      s => s.runStatus && (s.runStatus.statusState || (s.runStatus.demandConvergenceArray?.length ?? 0) > 0)
     );
 
     if (scenariosWithStatus.length === 0) return <div />;
@@ -169,41 +187,48 @@ const Runtime = ({
   };
 
   useEffect(() => {
-    const resizableDiv = document.getElementById("resizableDiv");
-    if (scenarioListHeight) {
-      resizableDiv.style.height = scenarioListHeight;
-    } else {
-      resizableDiv.style.height = '300px';
+    const resizableDiv = document.getElementById('resizableDiv');
+    if (resizableDiv) {
+      resizableDiv.style.height = scenarioListHeight ?? '300px';
     }
   });
 
-  let mousePosition;
-  const resize = (e) => {
-    if (e.buttons === 0) {
-      // No mouse button is pressed, release event listener
-      document.body.style = "user-select: auto;"
-      document.removeEventListener("mousemove", resize, false);
-    }
-    const yDimension = mousePosition - e.y;
-    mousePosition = e.y;
-    const resizableDiv = document.getElementById("resizableDiv");
 
-    const newHeight = (parseInt(getComputedStyle(resizableDiv, '').height) - yDimension) + "px";
+  let mousePosition : number | null = null;
+
+  const resize = (e: MouseEvent) => {
+    if (!mousePosition) {
+      return;
+    }
+    const resizableDiv = document.getElementById("resizableDiv");
+    if (!resizableDiv) {
+      return;
+    }
+    const delta = mousePosition - e.y;
+    mousePosition = e.y;
+    const newHeight = `${parseInt(getComputedStyle(resizableDiv, '').height) - delta}px`;
     resizableDiv.style.height = newHeight;
     setScenarioListHeight(newHeight);
   }
 
-  const onMouseDown = (e) => {
-    if (e.pageY > (e.target.offsetTop + e.target.offsetHeight)) {
-      mousePosition = e.y;
-      document.body.style = "user-select: none;"
-      document.addEventListener("mousemove", resize, false);
+  const onMouseDown: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLElement;
+    if (!target) {
+      return;
+    }
+    if (e.pageY > (target.offsetTop + target.offsetHeight)) {
+      if (mousePosition === undefined) {
+        return;
+      }
+      mousePosition = e.pageY;
+      document.body.style.userSelect = "none"
+      document.addEventListener("mousemove", resize);
     }
   }
 
-  const onMouseUp = () => {
-    document.body.style = "user-select: auto;"
-    document.removeEventListener("mousemove", resize, false);
+  const onMouseUp: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    document.body.style.userSelect = "auto";
+    document.removeEventListener("mousemove", resize);
   }
 
   return (
@@ -217,7 +242,7 @@ const Runtime = ({
       <div>
         <button className="Runtime__reload-scenarios-btn"
                 onClick={(e) => reloadScenarios()}
-                disabled={runningScenarioID}
+                disabled={runningScenarioID? true : false}
         >
           Lataa uudelleen projektin skenaariot
         </button>
@@ -230,7 +255,7 @@ const Runtime = ({
         {scenarios && scenarios.length > 0 ? (
           scenarios.map((s, index) => {
             // Component for the tooltip showing scenario settings
-            const tooltipContent = (scenario) => {
+            const tooltipContent = (scenario: Scenario) => {
               const filteredScenarioSettings = Object.fromEntries(
                 Object.entries(scenario).filter(([key]) => visibleTooltipProperties.includes(key))
               );
@@ -285,7 +310,7 @@ const Runtime = ({
                   }
                   type="checkbox"
                   checked={scenarioIDsToRun.includes(s.id)}
-                  disabled={runningScenarioID}
+                  disabled={runningScenarioID? true : false}
                   onChange={(e) => handleClickScenarioToActive(s)}
                 />
                 &nbsp;
@@ -318,7 +343,7 @@ const Runtime = ({
       </div>
       <div className="Runtime__scenarios-footer">
         <button className="Runtime__add-new-scenario-btn"
-                disabled={runningScenarioID}
+                disabled={runningScenarioID? true : false}
                 onClick={(e) => handleClickNewScenario()}
         >
           <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
