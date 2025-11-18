@@ -1,10 +1,18 @@
 import React, { useEffect, useCallback } from 'react';
 import './Modal.css';
 
-const Modal = ({ isOpen, onClose, onSubmit, title, children }) => {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+  title: string;
+  children: React.ReactNode;
+}
+
+const Modal = ({ isOpen, onClose, onSubmit, title, children }: ModalProps) => {
   // Pressing Enter should trigger "OK"
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault(); // prevent accidental form submits or newlines
         onSubmit();

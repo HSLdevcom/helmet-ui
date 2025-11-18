@@ -9,17 +9,26 @@ const homedir = os.homedir();
 const dialog = window.electronAPI.dialog;
 const { exec } = window.electronAPI.child_process;
 
-const EnvironmentOption = ({ envPath, isSelected, setPath, removePath }) => {  
-  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.startsWith('Emme-') || subStr.startsWith('EMME'))
+interface EnvironmentOptionProps {
+  key: string;
+  envPath: string;
+  isSelected: boolean;
+  setPath: (path: string) => void;
+  removePath: (path: string) => void;
+}
+
+const EnvironmentOption = ({ key, envPath, isSelected, setPath, removePath } : EnvironmentOptionProps) => {  
+  const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.toLowerCase().startsWith('emme'))
 
   // Function to set the EMMEPATH environment variable
-  const setEmmePathEnvVariable = async (emmePath) => {
+  const setEmmePathEnvVariable = async (emmePath: string) => {
     if (!emmePath) {
       console.error("Invalid path provided for EMMEPATH.")
       return
     }
 
-    const command = `setx EMMEPATH "${emmePath}"`;
+    const sanitizedPath = emmePath.replace(/"/g, '\\"'); // Escape double quotes
+    const command = `setx EMMEPATH "${sanitizedPath}"`;
 
     try {
       const result = await exec(command)
@@ -34,7 +43,7 @@ const EnvironmentOption = ({ envPath, isSelected, setPath, removePath }) => {
   const emmeFolderPath = path.dirname(path.dirname(envPath))
 
   return (
-    <div className="Settings__environment_option" key={envPath}>
+    <div className="Settings__environment_option" key={key}>
       <span className={classNames("Settings__env_selected_logo", { 'Settings__logo_hidden': !isSelected })}><ArrowRight /></span>
       <p
         className={classNames('Settings__env_option_text', { 'Settings__env_unselected': !isSelected })}
@@ -57,6 +66,32 @@ const EnvironmentOption = ({ envPath, isSelected, setPath, removePath }) => {
 
 const PathOptionDivider = () => <div className='Settings__env_option_divider' />
 
+interface SettingsProps {
+  emmePythonPath: string | null | undefined;
+  emmePythonEnvs: string[] | undefined;
+  setEMMEPythonPath: (path: string) => void;
+  setEMMEPythonEnvs: (paths: string[]) => void;
+  addToEMMEPythonEnvs: (path: string) => void;
+  removeFromEMMEPythonEnvs: (path: string) => void;
+  helmetScriptsPath: string | null | undefined;
+  setHelmetScriptsPath: (path: string) => Promise<void>;
+  dlHelmetScriptsVersion: string | null | undefined;
+  isDownloadingHelmetScripts: boolean;
+  projectPath: string | null | undefined;
+  setProjectPath: (path: string) => void;
+  basedataPath: string | null | undefined;
+  setBasedataPath: (path: string) => void;
+  resultsPath: string | null | undefined;
+  setResultsPath: (path: string) => void;
+  isSettingEnv: boolean;
+  closeSettings: () => void;
+  promptModelSystemDownload: () => void;
+  listEMMEPythonPaths: () => Promise<[boolean, string[] | null]>;
+  getHelmetModelSystemVersion: (helmetScriptsPath: string) => Promise<string | null>;
+  downloadProgress: number | null | undefined;
+  cancelDownload: () => void;
+}
+
 const Settings = ({
   emmePythonPath, emmePythonEnvs, setEMMEPythonPath, setEMMEPythonEnvs, addToEMMEPythonEnvs, removeFromEMMEPythonEnvs,
   helmetScriptsPath, setHelmetScriptsPath, dlHelmetScriptsVersion, isDownloadingHelmetScripts,
@@ -70,10 +105,10 @@ const Settings = ({
   getHelmetModelSystemVersion,
   downloadProgress,
   cancelDownload,
-}) => {
+}: SettingsProps) => {
   const { setHelmetModelSystemVersion } = useHelmetModelContext();
 
-  const handleSetHelmetScriptsPath = async (newPath) => {
+  const handleSetHelmetScriptsPath = async (newPath: string) => {
     await setHelmetScriptsPath(newPath);
     const helmetVersion = await getHelmetModelSystemVersion(newPath);
     setHelmetModelSystemVersion(helmetVersion ? helmetVersion.substring(1) : undefined);
@@ -91,25 +126,29 @@ const Settings = ({
         <div className="Settings__dialog-heading">Projektin asetukset</div>
 
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">{ emmePythonEnvs.length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
+          <span className="Settings__pseudo-label">{ (emmePythonEnvs ?? []).length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
           { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
             <div key={index}>
-              <EnvironmentOption envPath={env} isSelected={emmePythonPath === env}
-             setPath={setEMMEPythonPath}
-             removePath={removeFromEMMEPythonEnvs}/>
-             { index < emmePythonEnvs.length && <PathOptionDivider/> }
+              <EnvironmentOption 
+                key={`${env}-${index}`}
+                envPath={env} 
+                isSelected={emmePythonPath === env}
+                setPath={setEMMEPythonPath}
+                removePath={removeFromEMMEPythonEnvs}/>
+             { index < emmePythonEnvs.length - 1 && <PathOptionDivider/> }
             </div>)}))}
-          { emmePythonEnvs.length === 1 &&
+          { (emmePythonEnvs ?? []).length === 1 &&
           (<div className="Settings__environment_option_spacer"/>)
           }
           {
-            emmePythonEnvs.length === 0 &&
+            (emmePythonEnvs ?? []).length === 0 &&
             (<div>
                 <div className="Settings__environment_option_spacer"/>
                 <div className="Settings__environment_option_spacer"/>
               </div>)
           }
         <button className="Settings__python-env-input-btn"
+                  aria-label="Lisää Python-ympäristö"
                   onClick={()=>{
                     dialog.showOpenDialog({
                       defaultPath: emmePythonPath ? emmePythonPath : path.join('/'), // Replace path.resolve with path.join
@@ -119,9 +158,11 @@ const Settings = ({
                       ],
                       properties: ['openFile']
                     }).then((e)=>{
-                      if (!e.canceled) {
+                      if (!e.canceled && e.filePaths.length > 0) {
                         addToEMMEPythonEnvs(e.filePaths[0]);
                       }
+                    }).catch((error)=>{
+                      console.error("Error opening dialog:", error);
                     })
                   }}
           >
@@ -196,7 +237,7 @@ const Settings = ({
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Projektin kansiopolku (oletusarvoisesti kotihakemistosi)</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-project-path" title={projectPath}>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-project-path" title={projectPath ?? ''}>
             {projectPath ? path.basename(projectPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
@@ -221,7 +262,7 @@ const Settings = ({
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">L&auml;ht&ouml;datan sis&auml;lt&auml;v&auml; kansio</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-basedata-path" title={basedataPath}>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-basedata-path" title={basedataPath ?? ''}>
             {basedataPath ? path.basename(basedataPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
@@ -241,7 +282,7 @@ const Settings = ({
         </div>
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Tulosten tallennuspolku</span>
-          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-results-path" title={resultsPath}>
+          <label className="Settings__pseudo-file-select" htmlFor="hidden-input-results-path" title={resultsPath ?? ''}>
             {resultsPath ? path.basename(resultsPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
