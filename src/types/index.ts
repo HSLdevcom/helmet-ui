@@ -2,7 +2,7 @@
 export type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR" | "UI-event" | "NEWLINE";
 
 export interface LogEntry {
-  id: number;
+  id?: number;
   level: LogLevel;
   message?: string;
   time?: number | string;
@@ -21,7 +21,7 @@ export interface CbaOptions {
 }
 
 export type SetCbaOptionsType = React.Dispatch<
-  React.SetStateAction<CbaOptions>
+  React.SetStateAction<CbaOptions | undefined>
 >;
 
 export interface ReadyScenarioLogfile {
@@ -35,12 +35,12 @@ export interface Scenario {
   name: string;
   emme_project_file_path?: string | null;
   first_scenario_id?: string;
-  first_matrix_id?: string;
+  first_matrix_id?: string | null;
   forecast_data_folder_path?: string | null;
   save_matrices_in_emme?: boolean;
   end_assignment_only?: boolean;
   delete_strategy_files?: boolean;
-  iterations: string;
+  iterations: number;
   separate_emme_scenarios?: boolean;
   use_fixed_transit_cost?: boolean;
   overriddenProjectSettings: {
@@ -94,4 +94,11 @@ export interface ProjectSettings {
   projectPath: string | null;
   basedataPath: string | null;
   resultsPath: string | null;
+}
+
+export interface ScenarioStore {
+  get: (key: string) => any;
+  set: (key: string, value: any) => void;
+  delete: (key: string) => void;
+  clear: () => void;
 }

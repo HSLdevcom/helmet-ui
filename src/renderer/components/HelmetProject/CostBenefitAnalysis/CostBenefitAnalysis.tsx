@@ -5,8 +5,8 @@ const dialog = window.electronAPI.dialog;
 const path = window.electronAPI.path;
 
 interface CostBenefitAnalysisProps {
-  resultsPath: string;
-  cbaOptions: CbaOptions;
+  resultsPath: string | undefined;
+  cbaOptions: CbaOptions | undefined;
   setCbaOptions: SetCbaOptionsType;
   runCbaScript: () => void;
 }
@@ -29,8 +29,8 @@ const CostBenefitAnalysis = ({
             {/* Baseline scenario results folder */}
             <td>
               <span className="CBA__pseudo-label">Vertailuvaihtoehto</span>
-              <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-results-folder-select" title={cbaOptions.baseline_scenario_path}>
-                {cbaOptions.baseline_scenario_path ? path.basename(cbaOptions.baseline_scenario_path) : "Valitse.."}
+              <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-results-folder-select" title={cbaOptions?.baseline_scenario_path || 'Ei määritetty'}>
+                {cbaOptions?.baseline_scenario_path ? path.basename(cbaOptions?.baseline_scenario_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
                      id="baseline-scenario-results-folder-select"
@@ -42,7 +42,13 @@ const CostBenefitAnalysis = ({
                        }).then((e)=>{
                          if (!e.canceled) {
                            const target_path = e.filePaths[0];
-                           setCbaOptions(prevOptions => {
+                           setCbaOptions((prevOptions) => {
+                            if (!prevOptions) {
+                              return {
+                                baseline_scenario_path: target_path,
+                                projected_scenario_path: '',
+                              };
+                            } 
                              return {...prevOptions, baseline_scenario_path: target_path};
                            });
                          }
@@ -53,8 +59,8 @@ const CostBenefitAnalysis = ({
             {/* Projected scenario results folder */}
             <td>
               <span className="CBA__pseudo-label">Hankevaihtoehto</span>
-              <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-results-folder-select" title={cbaOptions.projected_scenario_path}>
-                {cbaOptions.projected_scenario_path ? path.basename(cbaOptions.projected_scenario_path) : "Valitse.."}
+              <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-results-folder-select" title={cbaOptions?.projected_scenario_path || 'Ei määritetty'}>
+                {cbaOptions?.projected_scenario_path ? path.basename(cbaOptions?.projected_scenario_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
                      id="projected-scenario-results-folder-select"
@@ -67,6 +73,12 @@ const CostBenefitAnalysis = ({
                          if (!e.canceled) {
                            const target_path = e.filePaths[0];
                            setCbaOptions(prevOptions => {
+                            if (!prevOptions) {
+                              return {
+                                baseline_scenario_path: '', 
+                                projected_scenario_path: target_path,
+                              };
+                            }
                              return {...prevOptions, projected_scenario_path: target_path};
                            });
                          }
@@ -79,8 +91,8 @@ const CostBenefitAnalysis = ({
             {/* Baseline scenario 2 results folder */}
             <td>
               <span className="CBA__pseudo-label">Vertailuvaihtoehto vuosi 2 (valinnainen)</span>
-              <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-2-results-folder-select" title={cbaOptions.baseline_scenario_2_path}>
-                {cbaOptions.baseline_scenario_2_path ? path.basename(cbaOptions.baseline_scenario_2_path) : "Valitse.."}
+              <label className="CBA__pseudo-file-select" htmlFor="baseline-scenario-2-results-folder-select" title={cbaOptions?.baseline_scenario_2_path || 'Ei määritetty'}>
+                {cbaOptions?.baseline_scenario_2_path ? path.basename(cbaOptions?.baseline_scenario_2_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
                      id="baseline-scenario-2-results-folder-select"
@@ -93,6 +105,14 @@ const CostBenefitAnalysis = ({
                          if (!e.canceled) {
                            const target_path = e.filePaths[0];
                            setCbaOptions(prevOptions => {
+                            if (!prevOptions) {
+                              return {
+                                baseline_scenario_path: '',
+                                projected_scenario_path: '',
+                                baseline_scenario_2_path: target_path,
+                                projected_scenario_2_path: '',
+                              };
+                            }
                              return {...prevOptions, baseline_scenario_2_path: target_path};
                            });
                          }
@@ -103,8 +123,8 @@ const CostBenefitAnalysis = ({
             {/* Projected scenario 2 results folder */}
             <td>
               <span className="CBA__pseudo-label">Hankevaihtoehto vuosi 2 (valinnainen)</span>
-              <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-2-results-folder-select" title={cbaOptions.projected_scenario_2_path}>
-                {cbaOptions.projected_scenario_2_path ? path.basename(cbaOptions.projected_scenario_2_path) : "Valitse.."}
+              <label className="CBA__pseudo-file-select" htmlFor="projected-scenario-2-results-folder-select" title={cbaOptions?.projected_scenario_2_path}>
+                {cbaOptions?.projected_scenario_2_path ? path.basename(cbaOptions?.projected_scenario_2_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
                      id="projected-scenario-2-results-folder-select"
@@ -117,6 +137,14 @@ const CostBenefitAnalysis = ({
                          if (!e.canceled) {
                            const target_path = e.filePaths[0];
                            setCbaOptions(prevOptions => {
+                            if (!prevOptions) {
+                              return {
+                                baseline_scenario_path: '',
+                                projected_scenario_path: '',
+                                baseline_scenario_2_path: '',
+                                projected_scenario_2_path: target_path,
+                              };
+                            }
                              return {...prevOptions, projected_scenario_2_path: target_path};
                            });
                          }
@@ -128,7 +156,17 @@ const CostBenefitAnalysis = ({
         </tbody>
       </table>
       <div className="CBA__run">
-        <button onClick={(e) => {runCbaScript()}}>Aja hy&ouml;ty-kustannusanalyysi</button>
+        <button 
+          onClick={(e) => {
+            if (!cbaOptions?.baseline_scenario_path || !cbaOptions?.projected_scenario_path) {
+              alert("Valitse vertailuvaihtoehdon ja hankevaihtoehdon tuloskansiot ennen analyysin ajamista.");
+              return;
+            } 
+            runCbaScript();
+            }}
+            disabled={!(cbaOptions?.baseline_scenario_path || cbaOptions?.projected_scenario_path)}
+            >Aja hy&ouml;ty-kustannusanalyysi
+        </button>
       </div>
     </div>
   );

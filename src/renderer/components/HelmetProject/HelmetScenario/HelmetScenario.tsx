@@ -142,7 +142,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                disabled={scenario.end_assignment_only}
                value={scenario.iterations}
                onChange={(e) => {
-                 updateScenario({...scenario, iterations: e.target.value});
+                 updateScenario({...scenario, iterations: parseInt(e.target.value, 10)});
                }}
         />
 
@@ -239,7 +239,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                step="1"
                disabled={!scenario.save_matrices_in_emme}
                /* If value is not written to JSON (= null), write default value 100. */
-               value={scenario.first_matrix_id == null ? 100 : scenario.first_matrix_id}
+               value={scenario.first_matrix_id == null ? "100" : scenario.first_matrix_id}
                onChange={(e) => {
                  updateScenario({...scenario, first_matrix_id: e.target.value});
                }}

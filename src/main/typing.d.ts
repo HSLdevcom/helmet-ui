@@ -8,6 +8,7 @@ interface Window {
     StoreAPI: {
       get: (key: string) => string | undefined;
       set: (key: string, value: any) => void;
+      create: (namespace: string) => void;
       getScenarioStore: (namespace: string) => {
         get: (key: string) => any;
         set: (key: string, value: any) => void;
@@ -16,6 +17,7 @@ interface Window {
     };};
     fs: {
       readFile: (file: string, encoding?: BufferEncoding) => Promise<string>;
+      writeFile: (file: string, data: string) => Promise<void>;
       readdir: (dir: string) => Promise<string[]>;
       existsSync: (file: string) => boolean;
       unlink: (file: string) => Promise<void>;

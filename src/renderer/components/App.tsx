@@ -263,7 +263,7 @@ const App: React.FC<AppProps> = ({helmetUIVersion, searchEMMEPython, listEMMEPyt
 
     // If project path does not exist on set path, set it to homedir. Remember: state updates async so refer to existing.
     if (!existingProjectPath || !fs.existsSync(existingProjectPath)) {
-      alert(`Projektikansiota ei löydy polusta '${existingProjectPath}'.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
+      alert(`Projektikansiota ei löydy.\nProjektikansioksi asetetaan kotikansio '${homedir}'.`)
       _setProjectPath(homedir);
     } else {
       console.log(`Setting projectPath state to: ${existingProjectPath}`);

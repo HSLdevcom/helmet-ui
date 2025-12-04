@@ -5,7 +5,7 @@ import { CopyIcon } from '../../../icons';
 import RunStatus from './RunStatus/RunStatus.jsx';
 import { SCENARIO_STATUS_STATE } from '../../../../enums.js';
 import { useHelmetModelContext } from '../../../context/HelmetModelContext';
-import { Scenario, LogArgs, RunStatus as RunStatusType, DemandConvergenceEntry } from '../../../../types';
+import { Scenario, LogArgs, RunStatus as RunStatusType, DemandConvergenceEntry, ReadyScenarioLogfile } from '../../../../types';
 
 const _ = window.electronAPI._;
 
@@ -24,7 +24,7 @@ interface RuntimeProps {
   logArgs?: LogArgs;
   duplicateScenario: (scenario: Scenario) => void;
   scenarioListHeight: string | null;
-  setScenarioListHeight: (height: string) => void;
+  setScenarioListHeight: (height: string | null) => void;
 }
 
 
@@ -133,7 +133,7 @@ const Runtime: React.FC<RuntimeProps> = ({
       if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
         runStatus.statusRunStartTime = logArgs.time;
         runStatus.statusRunFinishTime = logArgs.time; 
-        runStatus.demandConvergenceArray = [];
+        runStatus.demandConvergenceArray = [] as DemandConvergenceEntry[];
         runStatus.statusIterationsTotal = 0;
       }
     }
@@ -175,11 +175,11 @@ const Runtime: React.FC<RuntimeProps> = ({
             isScenarioRunning={scenarioToRender.id === runningScenarioID}
             statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
             statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
-            statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || []}
+            statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || [] as ReadyScenarioLogfile[]}
             statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
             statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
             statusState={scenarioToRender.runStatus?.statusState || null}
-            demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || []}
+            demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || [] as DemandConvergenceEntry[]}
           />
         ))}
       </div>
