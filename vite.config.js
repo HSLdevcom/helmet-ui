@@ -8,7 +8,8 @@ export default defineConfig({
   build: {
     outDir: './dist/', // where the bundled files go
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    minify: false,
   },
   resolve: {
     alias: {

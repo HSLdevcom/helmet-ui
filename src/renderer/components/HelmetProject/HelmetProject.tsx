@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Runtime from './Runtime/Runtime.jsx';
 import HelmetScenario from './HelmetScenario/HelmetScenario.jsx';
 import RunLog from './RunLog/RunLog.jsx';
 import CostBenefitAnalysis from './CostBenefitAnalysis/CostBenefitAnalysis.jsx';
-import Modal from '../Modal/Modal'; 
+import Modal from '../Modal/Modal';
 import { Scenario, LogArgs, LogEntry, CbaOptions, ScenarioStore, DemandConvergenceEntry, ReadyScenarioLogfile } from '../../../types';
 import { set } from 'lodash';
 
@@ -26,22 +26,22 @@ const HelmetProject = ({
 }: HelmetProjectProps) => {
   // HELMET Project -specific settings
   const [scenarios, setScenarios] = useState<Scenario[]>([]); // HELMET Scenarios under currently selected HELMET Project
-  const [openScenarioID, setOpenScenarioID] = useState<string|null>(null); // currently open HELMET Scenario configuration
+  const [openScenarioID, setOpenScenarioID] = useState<string | null>(null); // currently open HELMET Scenario configuration
 
   // Runtime controls & -logging
   const [scenarioIDsToRun, setScenarioIDsToRun] = useState<string[]>([]); // selected active scenarios ready to run sequentially
-  const [runningScenarioID, setRunningScenarioID] = useState<string|null>(null); // currently running HELMET Scenario, indicates if running
+  const [runningScenarioID, setRunningScenarioID] = useState<string | null>(null); // currently running HELMET Scenario, indicates if running
   const [runningScenarioIDsQueued, setRunningScenarioIDsQueued] = useState<string[]>([]); // queued ("remaining") HELMET Scenarios
   const [logContents, setLogContents] = useState<LogEntry[]>([]); // project runtime log-contents
   const [isLogOpened, setLogOpened] = useState<boolean>(false); // whether runtime log is open
   const [logArgs, setLogArgs] = useState<LogArgs>({});
 
   // Runtime status
-  const [statusIterationsTotal, setStatusIterationsTotal] = useState<number|null>(null);
+  const [statusIterationsTotal, setStatusIterationsTotal] = useState<number | null>(null);
   const [statusIterationsCurrent, setStatusIterationsCurrent] = useState<number>(0);
   const [statusIterationsCompleted, setStatusIterationsCompleted] = useState<number>(0);
   const [statusIterationsFailed, setStatusIterationsFailed] = useState<number>(0);
-  const [statusState, setStatusState] = useState<string|null>(null);
+  const [statusState, setStatusState] = useState<string | null>(null);
   const [statusLogfilePath, setStatusLogfilePath] = useState(null);
   const [statusReadyScenariosLogfiles, setStatusReadyScenariosLogfiles] = useState<ReadyScenarioLogfile[]>([]); // [{name: .., logfile: ..}]
   const [statusRunStartTime, setStatusRunStartTime] = useState(null); //Updated when receiving "starting" message
@@ -49,10 +49,10 @@ const HelmetProject = ({
   const [demandConvergenceArray, setDemandConvergenceArray] = useState<DemandConvergenceEntry[]>([]); // Add convergence values to array every iteration
 
   // User-set scenario list height in the Scenarios tab
-  const [scenarioListHeight, setScenarioListHeight] = useState<string|null>(null);
+  const [scenarioListHeight, setScenarioListHeight] = useState<string | null>(null);
 
   // Cost-Benefit Analysis (CBA) controls
-  const [cbaOptions, setCbaOptions] = useState<CbaOptions|undefined>(undefined);
+  const [cbaOptions, setCbaOptions] = useState<CbaOptions | undefined>(undefined);
 
   // Scenario-specific settings under currently selected HELMET Project
   const configStores = useRef<Map<string, ScenarioStore>>(new Map()); // Use a Map to manage scenario-specific stores
@@ -64,7 +64,7 @@ const HelmetProject = ({
   const homedir = window.electronAPI.os.homedir();
 
   const _handleClickScenarioToActive = (scenario: Scenario) => {
-    if(scenarioIDsToRun.includes(scenario.id)) {
+    if (scenarioIDsToRun.includes(scenario.id)) {
       // If scenario exists in scenarios to run, remove it
       setScenarioIDsToRun(scenarioIDsToRun.filter((id) => id !== scenario.id))
     } else {
@@ -79,7 +79,7 @@ const HelmetProject = ({
     setNewScenarioName('');
   };
 
-  const handleModalSubmit = () : void => {
+  const handleModalSubmit = (): void => {
     if (!newScenarioName.trim()) {
       setModalError('Nimike on pakollinen, tallennettavaa tiedostonimeä varten.');
       return;
@@ -99,7 +99,7 @@ const HelmetProject = ({
       _cancelRunning();
   };
 
-  const _loadProjectScenarios = async (projectPath: string|undefined): Promise<void> => {
+  const _loadProjectScenarios = async (projectPath: string | undefined): Promise<void> => {
     if (!projectPath) {
       setModalError('Projektikansiota ei ole asetettu, tarkista Asetukset.');
       return;
@@ -275,7 +275,7 @@ const HelmetProject = ({
     };
     // Create the new scenario in "scenarios" array first
     setScenarios((prev) => [...prev, newScenario]);
-    const namespace = `${ projectPath }/${ newScenario.name }`;
+    const namespace = `${projectPath}/${newScenario.name}`;
     const store = window.electronAPI.StoreAPI.getScenarioStore(namespace);
     configStores.current.set(namespace, store);
     store.set(newId, newScenario);
@@ -283,7 +283,7 @@ const HelmetProject = ({
     setOpenScenarioID(newId);
   };
 
-  const _updateScenario = async (newValues: Scenario): Promise<void> => {      
+  const _updateScenario = async (newValues: Scenario): Promise<void> => {
     // Find the existing scenario using its ID
     const oldScenario = scenarios.find((s) => s.id === newValues.id);
     if (!oldScenario) {
@@ -342,7 +342,7 @@ const HelmetProject = ({
     console.groupEnd();
   };
 
-  
+
   const _deleteScenario = async (scenario: Scenario) => {
     if (confirm(`Oletko varma skenaarion ${scenario.name} poistosta?`)) {
       setOpenScenarioID(null);
@@ -448,22 +448,22 @@ const HelmetProject = ({
           ...s,
           emme_python_path:
             s.overriddenProjectSettings.emmePythonPath !== null &&
-            s.overriddenProjectSettings.emmePythonPath !== emmePythonPath
+              s.overriddenProjectSettings.emmePythonPath !== emmePythonPath
               ? s.overriddenProjectSettings.emmePythonPath
               : emmePythonPath,
           helmet_scripts_path:
             s.overriddenProjectSettings.helmetScriptsPath !== null &&
-            s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath
+              s.overriddenProjectSettings.helmetScriptsPath !== helmetScriptsPath
               ? s.overriddenProjectSettings.helmetScriptsPath
               : helmetScriptsPath,
           base_data_folder_path:
             s.overriddenProjectSettings.basedataPath !== null &&
-            s.overriddenProjectSettings.basedataPath !== basedataPath
+              s.overriddenProjectSettings.basedataPath !== basedataPath
               ? s.overriddenProjectSettings.basedataPath
               : basedataPath,
           results_data_folder_path:
             s.overriddenProjectSettings.resultsPath !== null &&
-            s.overriddenProjectSettings.resultsPath !== resultsPath
+              s.overriddenProjectSettings.resultsPath !== resultsPath
               ? s.overriddenProjectSettings.resultsPath
               : resultsPath,
           log_level: 'DEBUG',
@@ -473,7 +473,7 @@ const HelmetProject = ({
   };
 
   const _cancelRunning = () => {
-    setLogContents(previousLog => [...previousLog, {level: "UI-event", message: "Cancelling remaining scenarios."}]);
+    setLogContents(previousLog => [...previousLog, { level: "UI-event", message: "Cancelling remaining scenarios." }]);
     setRunningScenarioIDsQueued([]);
     ipcRenderer.send('message-from-ui-to-cancel-scenarios');
   };
@@ -516,26 +516,26 @@ const HelmetProject = ({
     ipcRenderer.send(
       'message-from-ui-to-run-cba-script',
       {
-          ...cbaOptions,
-          emme_python_path: emmePythonPath,
-          helmet_scripts_path: helmetScriptsPath,
-          results_path: resultsPath,
+        ...cbaOptions,
+        emme_python_path: emmePythonPath,
+        helmet_scripts_path: helmetScriptsPath,
+        results_path: resultsPath,
       });
   };
 
   // Electron IPC event listeners
-  const onLoggableEvent = (_event:unknown, args:LogEntry) => {
+  const onLoggableEvent = (_event: unknown, args: LogEntry) => {
     // console.log('[HelmetProject] received loggable-event:', args);
     setLogContents(previousLog => [...previousLog, args]);
     setLogArgs(args);
   };
 
-  const onScenarioComplete = (_event:unknown, args:any) => {
+  const onScenarioComplete = (_event: unknown, args: any) => {
     setRunningScenarioID(args.next.id);
     setRunningScenarioIDsQueued(runningScenarioIDsQueued.filter((id) => id !== args.completed.id));
-    setLogContents(previousLog => [...previousLog, {level: 'NEWLINE', message: ''}]);
+    setLogContents(previousLog => [...previousLog, { level: 'NEWLINE', message: '' }]);
   };
-  const onAllScenariosComplete = (_event:unknown, _args:unknown) => {
+  const onAllScenariosComplete = (_event: unknown, _args: unknown) => {
     setRunningScenarioID(null); // Re-enable controls
     setRunningScenarioIDsQueued([]);
     signalProjectRunning(false); // Let App-component know too
@@ -573,7 +573,7 @@ const HelmetProject = ({
       <div className="Project__runtime">
         <Tabs className="tab-container">
           <TabList className="tab-list">
-            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name"> 
+            <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
               Skenaariot
             </Tab>
             <Tab selectedClassName="selected-tab" className="tab-list-item tab-item-name">
@@ -590,7 +590,7 @@ const HelmetProject = ({
               runningScenarioID={runningScenarioID}
               openScenarioID={openScenarioID}
               setOpenScenarioID={setOpenScenarioID}
-              deleteScenario={(scenario) => {_deleteScenario(scenario)}}
+              deleteScenario={(scenario) => { _deleteScenario(scenario) }}
               handleClickScenarioToActive={_handleClickScenarioToActive}
               handleClickNewScenario={_handleClickNewScenario}
               handleClickStartStop={_handleClickStartStop}
@@ -616,15 +616,15 @@ const HelmetProject = ({
         {/* show log if, either scenario is running, or log is manually opened (outside running) */
           (runningScenarioID || isLogOpened) ?
             <RunLog
-              entries={logContents.map((entry, i) => {return {...entry, id: i};})}
-              isScenarioRunning={runningScenarioID  ? true : false}
+              entries={logContents.map((entry, i) => { return { ...entry, id: i }; })}
+              isScenarioRunning={runningScenarioID ? true : false}
               closeRunLog={() => setLogOpened(false)}
             />
             :
             /* while no scenarios running, and log hidden (log has precedence), allow showing open scenario config */
-            openScenarioID !== null ?              
+            openScenarioID !== null ?
               <HelmetScenario
-                projectPath={projectPath ?? homedir}  
+                projectPath={projectPath ?? homedir}
                 scenario={scenarios.find((s) => s.id === openScenarioID)!}
                 updateScenario={_updateScenario}
                 closeScenario={() => setOpenScenarioID(null)}

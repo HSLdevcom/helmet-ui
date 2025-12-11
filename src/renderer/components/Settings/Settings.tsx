@@ -16,7 +16,7 @@ interface EnvironmentOptionProps {
   removePath: (path: string) => void;
 }
 
-const EnvironmentOption = ({ envPath, isSelected, setPath, removePath } : EnvironmentOptionProps) => {  
+const EnvironmentOption = ({ envPath, isSelected, setPath, removePath }: EnvironmentOptionProps) => {
   const emmeVersionName = envPath.split(path.sep).filter((subStr) => subStr.toLowerCase().startsWith('emme'))
 
   // Function to set the EMMEPATH environment variable
@@ -125,75 +125,77 @@ const Settings = ({
         <div className="Settings__dialog-heading">Projektin asetukset</div>
 
         <div className="Settings__dialog-input-group">
-          <span className="Settings__pseudo-label">{ (emmePythonEnvs ?? []).length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
-          { Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => { return (
-            <div key={`${env}-${index}`}>
-              <EnvironmentOption
-                envPath={env} 
-                isSelected={emmePythonPath === env}
-                setPath={setEMMEPythonPath}
-                removePath={removeFromEMMEPythonEnvs}/>
-             { index < emmePythonEnvs.length - 1 && <PathOptionDivider/> }
-            </div>)}))}
-          { (emmePythonEnvs ?? []).length === 1 &&
-          (<div className="Settings__environment_option_spacer"/>)
+          <span className="Settings__pseudo-label">{(emmePythonEnvs ?? []).length > 0 ? "Käytettävät Python-ympäristöt:" : "Ei python-ympäristöjä käytettävissä."}</span>
+          {Array.isArray(emmePythonEnvs) && emmePythonEnvs.length > 0 && (emmePythonEnvs.map((env, index) => {
+            return (
+              <div key={`${env}-${index}`}>
+                <EnvironmentOption
+                  envPath={env}
+                  isSelected={emmePythonPath === env}
+                  setPath={setEMMEPythonPath}
+                  removePath={removeFromEMMEPythonEnvs} />
+                {index < emmePythonEnvs.length - 1 && <PathOptionDivider />}
+              </div>)
+          }))}
+          {(emmePythonEnvs ?? []).length === 1 &&
+            (<div className="Settings__environment_option_spacer" />)
           }
           {
             (emmePythonEnvs ?? []).length === 0 &&
             (<div>
-                <div className="Settings__environment_option_spacer"/>
-                <div className="Settings__environment_option_spacer"/>
-              </div>)
+              <div className="Settings__environment_option_spacer" />
+              <div className="Settings__environment_option_spacer" />
+            </div>)
           }
-        <button className="Settings__python-env-input-btn"
-                  aria-label="Lisää Python-ympäristö"
-                  onClick={()=>{
-                    dialog.showOpenDialog({
-                      defaultPath: emmePythonPath ? emmePythonPath : path.join('/'), // Replace path.resolve with path.join
-                      filters: [
-                        { name: 'Executable', extensions: ['exe'] },
-                        { name: 'All Files', extensions: ['*'] }
-                      ],
-                      properties: ['openFile']
-                    }).then((e)=>{
-                      if (!e.canceled && e.filePaths.length > 0) {
-                        addToEMMEPythonEnvs(e.filePaths[0]);
-                      }
-                    }).catch((error)=>{
-                      console.error("Error opening dialog:", error);
-                    })
-                  }}
+          <button className="Settings__python-env-input-btn"
+            aria-label="Lisää Python-ympäristö"
+            onClick={() => {
+              dialog.showOpenDialog({
+                defaultPath: emmePythonPath ? emmePythonPath : path.join('/'), // Replace path.resolve with path.join
+                filters: [
+                  { name: 'Executable', extensions: ['exe'] },
+                  { name: 'All Files', extensions: ['*'] }
+                ],
+                properties: ['openFile']
+              }).then((e) => {
+                if (!e.canceled && e.filePaths.length > 0) {
+                  addToEMMEPythonEnvs(e.filePaths[0]);
+                }
+              }).catch((error) => {
+                console.error("Error opening dialog:", error);
+              })
+            }}
           >
             Lisää Python-ympäristö
           </button>
-        <button className="Settings__python-env-input-btn"
-                  onClick={async () => { // Make the handler asynchronous
-                    try {
-                      console.log("Searching for EMME Python paths...");
-                      const result = await listEMMEPythonPaths(); // Await the Promise
-                      if (!result || !Array.isArray(result) || result.length !== 2) {
-                        throw new Error("Invalid response from listEMMEPythonPaths");
-                      }
+          <button className="Settings__python-env-input-btn"
+            onClick={async () => { // Make the handler asynchronous
+              try {
+                console.log("Searching for EMME Python paths...");
+                const result = await listEMMEPythonPaths(); // Await the Promise
+                if (!result || !Array.isArray(result) || result.length !== 2) {
+                  throw new Error("Invalid response from listEMMEPythonPaths");
+                }
 
-                      const [found, pythonPaths] = result;
-                      if (found && Array.isArray(pythonPaths) && pythonPaths.length > 0) {
-                        alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
-                        console.log("Found Python paths:", pythonPaths);
-                        setEMMEPythonEnvs(pythonPaths);
-                      } else {
-                        alert(`Python-asennusta ei löytynyt oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
-                        console.warn("No Python paths found.");
-                      }
-                    } catch (error) {
-                      console.error("Error listing EMME Python paths:", error);
-                      alert(`Tapahtui virhe Python-ympäristöjen etsimisessä. Tarkista lokitiedot.`);
-                    }
-                  }}
+                const [found, pythonPaths] = result;
+                if (found && Array.isArray(pythonPaths) && pythonPaths.length > 0) {
+                  alert(`Python-ympäristöjä löytyi. Valitse listasta haluamasi EMME Python-ympäristö ja ota se käyttöön`);
+                  console.log("Found Python paths:", pythonPaths);
+                  setEMMEPythonEnvs(pythonPaths);
+                } else {
+                  alert(`Python-asennusta ei löytynyt oletetusta sijainnista.\n\nLisää Python-asennus manuaalisesti.`);
+                  console.warn("No Python paths found.");
+                }
+              } catch (error) {
+                console.error("Error listing EMME Python paths:", error);
+                alert(`Tapahtui virhe Python-ympäristöjen etsimisessä. Tarkista lokitiedot.`);
+              }
+            }}
           >
             Etsi Python-ympäristöjä
           </button>
         </div>
-        <br/>
+        <br />
         <div className="Settings__dialog-input-group">
           <span className="Settings__pseudo-label">Helmet-model-system</span>
           <label className="Settings__pseudo-file-select" htmlFor="hidden-input-helmet-scripts-path" title={helmetScriptsPath || "Path not set"}>
@@ -239,23 +241,23 @@ const Settings = ({
             {projectPath ? path.basename(projectPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
-                 id="hidden-input-project-path"
-                 type="text"
-                 onClick={() => {
-                   dialog.showOpenDialog({
-                     defaultPath: projectPath ? projectPath : homedir,
-                     properties: ['openDirectory']
-                   }).then((e) => {
-                     if (!e.canceled) {
-                       console.log(`Setting projectPath to: ${e.filePaths[0]}`);
-                       setProjectPath(e.filePaths[0]);
-                     } else {
-                       console.log("Project path selection was canceled.");
-                     }
-                   }).catch((error) => {
-                     console.error("Error selecting project path:", error);
-                   });
-                 }}
+            id="hidden-input-project-path"
+            type="text"
+            onClick={() => {
+              dialog.showOpenDialog({
+                defaultPath: projectPath ? projectPath : homedir,
+                properties: ['openDirectory']
+              }).then((e) => {
+                if (!e.canceled) {
+                  console.log(`Setting projectPath to: ${e.filePaths[0]}`);
+                  setProjectPath(e.filePaths[0]);
+                } else {
+                  console.log("Project path selection was canceled.");
+                }
+              }).catch((error) => {
+                console.error("Error selecting project path:", error);
+              });
+            }}
           />
         </div>
         <div className="Settings__dialog-input-group">
@@ -264,18 +266,18 @@ const Settings = ({
             {basedataPath ? path.basename(basedataPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
-                 id="hidden-input-basedata-path"
-                 type="text"
-                 onClick={()=>{
-                   dialog.showOpenDialog({
-                     defaultPath: basedataPath ? basedataPath : projectPath,
-                     properties: ['openDirectory']
-                   }).then((e)=>{
-                     if (!e.canceled) {
-                       setBasedataPath(e.filePaths[0]);
-                     }
-                   })
-                 }}
+            id="hidden-input-basedata-path"
+            type="text"
+            onClick={() => {
+              dialog.showOpenDialog({
+                defaultPath: basedataPath ? basedataPath : projectPath,
+                properties: ['openDirectory']
+              }).then((e) => {
+                if (!e.canceled) {
+                  setBasedataPath(e.filePaths[0]);
+                }
+              })
+            }}
           />
         </div>
         <div className="Settings__dialog-input-group">
@@ -284,18 +286,18 @@ const Settings = ({
             {resultsPath ? path.basename(resultsPath) : "Valitse.."}
           </label>
           <input className="Settings__hidden-input"
-                 id="hidden-input-results-path"
-                 type="text"
-                 onClick={()=>{
-                   dialog.showOpenDialog({
-                     defaultPath: resultsPath ? resultsPath : projectPath,
-                     properties: ['openDirectory']
-                   }).then((e)=>{
-                     if (!e.canceled) {
-                       setResultsPath(e.filePaths[0]);
-                     }
-                   })
-                 }}
+            id="hidden-input-results-path"
+            type="text"
+            onClick={() => {
+              dialog.showOpenDialog({
+                defaultPath: resultsPath ? resultsPath : projectPath,
+                properties: ['openDirectory']
+              }).then((e) => {
+                if (!e.canceled) {
+                  setResultsPath(e.filePaths[0]);
+                }
+              })
+            }}
           />
         </div>
         {isSettingEnv && <div className="Settings__waiting-overlay"></div>}

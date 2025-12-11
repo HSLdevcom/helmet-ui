@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { LogEntry } from '../../../../types';
 
 interface RunLogProps {
@@ -7,7 +7,7 @@ interface RunLogProps {
   closeRunLog: () => void;
 }
 
-const RunLog = ({isScenarioRunning, entries, closeRunLog}: RunLogProps) => {
+const RunLog = ({ isScenarioRunning, entries, closeRunLog }: RunLogProps) => {
 
   const [showINFO, setShowINFO] = useState(true);
   const [showWARN, setShowWARN] = useState(true);
@@ -19,29 +19,29 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}: RunLogProps) => {
       <div className="Log__heading">Loki</div>
 
       <div className="Log__close"
-           onClick={(e) => isScenarioRunning ? undefined : closeRunLog()}
+        onClick={(e) => isScenarioRunning ? undefined : closeRunLog()}
       ></div>
 
       <div className="Log__header">
 
         <div className="Log__header-controls">
           <button className={"Log__header-control" + (showINFO ? " Log__header-control--on" : "")}
-                  onClick={(e) => setShowINFO(prevState => !prevState)}
+            onClick={(e) => setShowINFO(prevState => !prevState)}
           >
             INFO
           </button>
           <button className={"Log__header-control" + (showERROR ? " Log__header-control--on" : "")}
-                  onClick={(e) => setShowERROR(prevState => !prevState)}
+            onClick={(e) => setShowERROR(prevState => !prevState)}
           >
             ERROR
           </button>
           <button className={"Log__header-control" + (showWARN ? " Log__header-control--on" : "")}
-                  onClick={(e) => setShowWARN(prevState => !prevState)}
+            onClick={(e) => setShowWARN(prevState => !prevState)}
           >
             WARNING
           </button>
           <button className={"Log__header-control" + (showDEBUG ? " Log__header-control--on" : "")}
-                  onClick={(e) => setShowDEBUG(prevState => !prevState)}
+            onClick={(e) => setShowDEBUG(prevState => !prevState)}
           >
             DEBUG
           </button>
@@ -91,7 +91,7 @@ const RunLog = ({isScenarioRunning, entries, closeRunLog}: RunLogProps) => {
                   </div>
                   :
                   "";
-                  
+
               case "WARN":
                 return showWARN ?
                   <div className={"Log__entry"} key={entry.id}>

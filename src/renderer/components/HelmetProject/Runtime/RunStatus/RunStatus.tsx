@@ -35,92 +35,87 @@ interface RunStatusProps {
 const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsCompleted, statusReadyScenariosLogfiles, statusRunStartTime, statusRunFinishTime, statusState, demandConvergenceArray }: RunStatusProps) => {
   const { majorVersion } = useHelmetModelContext();
   const safeArray = Array.isArray(demandConvergenceArray) ? demandConvergenceArray : []; // Ensure demandConvergenceArray is defined as an array even if null
+  console.log('Received demandConvergenceArray:', demandConvergenceArray);
+  console.log('Safe array for graph:', safeArray);
+  const graphData = React.useMemo<ChartData<"line">>(() => {
+    if (majorVersion && majorVersion >= 5) {
+      return {
+        labels: safeArray.map(l => l.iteration),
+        datasets: [
+          {
+            label: "Rel gap",
+            data: safeArray.map(l =>
+              l.rel_gap !== undefined ? Number((l.rel_gap * 100).toFixed(4)) : null
+            ),
+            backgroundColor: "#007AC9",
+            borderColor: "#007AC9",
+            yAxisID: "y",
+          },
+          {
+            label: "Max gap",
+            data: safeArray.map(l =>
+              l.max_gap !== undefined ? Number(l.max_gap.toFixed(4)) : null
+            ),
+            backgroundColor: "#FB5F20",
+            borderColor: "#FB5F20",
+            yAxisID: "y1",
+          }
+        ]
+      };
+    } else {
+      return {
+        labels: safeArray.map(l => l.iteration),
+        datasets: [
+          {
+            label: "Rel_Gap (%)",
+            data: safeArray.map(l => Number((l.value! * 100).toFixed(4))),
+            backgroundColor: "#007AC9",
+            borderColor: "#007AC9"
+          }
+        ]
+      };
+    }
+  }, [majorVersion, safeArray]);
 
-  let graphData: ChartData<"line"> = {
-    labels: [],
-    datasets: []
-  };
-
-  let graphOptions: ChartOptions<"line"> = {};
-
-
-  if (majorVersion && majorVersion >= 5) {
-    // console.log("Using Helmet 5 or later");
-    graphData = {
-      labels: safeArray.map(l => l.iteration),
-      datasets: [
-        {
-          label: "Rel gap",
-          data: safeArray.map(l =>
-            l.rel_gap !== undefined ? Number((l.rel_gap * 100).toFixed(4)) : null
-          ),
-          backgroundColor: "#007AC9",
-          borderColor: "#007AC9",
-          yAxisID: "y",
+  const graphOptions = React.useMemo<ChartOptions<"line">>(() => {
+    if (majorVersion && majorVersion >= 5) {
+      return {
+        responsive: true,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          title: { display: true, text: "Convergence", align: "center" },
+          legend: { display: true }
         },
-        {
-          label: "Max gap",
-          data: safeArray.map(l =>
-            l.max_gap !== undefined ? Number(l.max_gap.toFixed(4)) : null
-          ),
-          backgroundColor: "#FB5F20",
-          borderColor: "#FB5F20",
-          yAxisID: "y1",
-        },
-      ],
-    };
+        scales: {
+          y: {
+            position: "left",
+            title: { display: true, text: "Rel gap [%]" }
+          },
+          y1: {
+            position: "right",
+            title: { display: true, text: "Max gap" },
+            grid: { drawOnChartArea: false }
+          },
+          x: {
+            title: { display: true, text: "Iteration [#]" }
+          }
+        }
+      };
+    }
 
-    graphOptions = {
-      responsive: true,
-      interaction: { mode: "index", intersect: false },
+    return {
       plugins: {
         title: { display: true, text: "Convergence", align: "center" },
-        legend: { display: true },
+        legend: { display: false }
       },
       scales: {
-        y: {
-          position: "left",
-          title: { display: true, text: "Rel gap [%]" },
-        },
-        y1: {
-          position: "right",
-          title: { display: true, text: "Max gap" },
-          grid: { drawOnChartArea: false },
-        },
-        x: {
-          title: { display: true, text: "Iteration [#]" },
-        },
-      },
+        y: { title: { display: true, text: "Rel_Gap [%]" } },
+        x: { title: { display: true, text: "Iteration [#]" } }
+      }
     };
-  } else {
-    graphData = {
-      labels: safeArray.map(l => l.iteration),
-      datasets: [
-        {
-          label: "Rel_Gap (%)",
-          data: safeArray.map(l => Number((l.value! * 100).toFixed(4))),
-          backgroundColor: "#007AC9",
-          borderColor: "#007AC9",
-        },
-      ],
-    };
+  }, [majorVersion]);
 
-    graphOptions = {
-      plugins: {
-        title: { display: true, text: "Convergence", align: "center" },
-        legend: { display: false },
-      },
-      scales: {
-        y: {
-          title: { display: true, text: "Rel_Gap [%]" },
-        },
-        x: {
-          title: { display: true, text: "Iteration [#]" },
-        },
-      },
-    };
 
-  }
 
   const formatRunStatusTime = (
     runFinishTime: string | number | null,
@@ -139,49 +134,57 @@ const RunStatus = ({ isScenarioRunning, statusIterationsTotal, statusIterationsC
     <div className="Status">
       {
         (statusState === SCENARIO_STATUS_STATE.RUNNING || statusState === SCENARIO_STATUS_STATE.FINISHED) &&
-          <div>
-            <div className="Status__readiness">
-              <Line className="runtime-chart" options={graphOptions} data={graphData} />
-              &nbsp;
-            </div>
-          </div>
-      }
-      { (statusState === SCENARIO_STATUS_STATE.PREPARING || statusState === SCENARIO_STATUS_STATE.STARTING) &&
-          (
-            <div className="Status__readiness">
-              <p> Starting python shell...</p>
-            </div>
-          )
-      }
-      { statusReadyScenariosLogfiles &&
-      !isScenarioRunning &&
-      statusReadyScenariosLogfiles.map(item => (
         <div>
-          <p className="Status__finished-scenario" key={item.name}>
-            {item.name} valmis
+          <div className="Status__readiness">
+            <Line className="runtime-chart" options={graphOptions} data={graphData} />
             &nbsp;
-            <button
-              className="Status__finished-scenario-logfile-link"
-              onClick={() => item.logfile ? shell.openPath(item.logfile): ''}
-            >
-              Lokit
-            </button>
-            &nbsp;
-            <button
-              className="Status__finished-scenario-logfile-link"
-              onClick={() => item.resultsPath[0] ? shell.showItemInFolder(item.resultsPath[0]) : ''}
-            >
-              Tulokset
-            </button>
-            &nbsp;
-            Ajoaika: { formatRunStatusTime(statusRunFinishTime, statusRunStartTime) }
-          </p>
+          </div>
         </div>
-      ))
-    }
+      }
+      {(statusState === SCENARIO_STATUS_STATE.STARTING) &&
+        (
+          <div className="Status__readiness">
+            <p> Starting python shell...</p>
+          </div>
+        )
+      }
+      {
+        (statusState === SCENARIO_STATUS_STATE.PREPARING) &&
+        (
+          <div className="Status__readiness">
+            <p> Waiting for first iteration to finish...</p>
+          </div>
+        )
+      }
+      {statusReadyScenariosLogfiles &&
+        !isScenarioRunning &&
+        statusReadyScenariosLogfiles.map(item => (
+          <div key={item.name}>
+            <p className="Status__finished-scenario" key={item.name}>
+              {item.name} valmis
+              &nbsp;
+              <button
+                className="Status__finished-scenario-logfile-link"
+                onClick={() => item.logfile ? shell.openPath(item.logfile) : ''}
+              >
+                Lokit
+              </button>
+              &nbsp;
+              <button
+                className="Status__finished-scenario-logfile-link"
+                onClick={() => item.resultsPath[0] ? shell.showItemInFolder(item.resultsPath[0]) : ''}
+              >
+                Tulokset
+              </button>
+              &nbsp;
+              Ajoaika: {formatRunStatusTime(statusRunFinishTime, statusRunStartTime)}
+            </p>
+          </div>
+        ))
+      }
 
     </div>
   );
 };
 
-export default RunStatus;
+export default React.memo(RunStatus);

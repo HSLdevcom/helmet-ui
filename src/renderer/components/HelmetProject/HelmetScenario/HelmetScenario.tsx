@@ -255,7 +255,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                 <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
                 <span className="inline-element override-setting">EMME Python polku</span>
-                { scenario.overriddenProjectSettings.emmePythonPath && 
+                { scenario.overriddenProjectSettings?.emmePythonPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
                       updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, emmePythonPath: null} });
@@ -263,8 +263,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                      <ResetIcon className="override-reset-icon"/>
                    </label>
                 }
-                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': scenario.overriddenProjectSettings.emmePythonPath ? false : true})} htmlFor="override-emme-python-path" title={'Emme python path'}>
-                  {scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath}
+                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': !scenario.overriddenProjectSettings?.emmePythonPath})} htmlFor="override-emme-python-path" title={'Emme python path'}>
+                  {scenario.overriddenProjectSettings?.emmePythonPath ?? inheritedGlobalProjectSettings.emmePythonPath}
                 </label>
                 <input id="override-emme-python-path"
                         className="override-input"
@@ -273,7 +273,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         placeholder={inheritedGlobalProjectSettings.emmePythonPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
-                            defaultPath: scenario.overriddenProjectSettings.emmePythonPath ? scenario.overriddenProjectSettings.emmePythonPath : inheritedGlobalProjectSettings.emmePythonPath,
+                            defaultPath: scenario.overriddenProjectSettings?.emmePythonPath ?? inheritedGlobalProjectSettings.emmePythonPath,
                             filters: [
                               { name: 'Executable', extensions: ['exe'] },
                               { name: 'All Files', extensions: ['*'] }
@@ -291,7 +291,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline">
                 <span className="inline-element override-setting">Helmet-model-system</span>
-                { scenario.overriddenProjectSettings.helmetScriptsPath && 
+                { scenario.overriddenProjectSettings?.helmetScriptsPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
                       updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, helmetScriptsPath: null} });
@@ -299,8 +299,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                      <ResetIcon className="override-reset-icon"/>
                    </label>
                 }
-                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': scenario.overriddenProjectSettings.helmetScriptsPath ? false : true})} htmlFor="override-helmet-scripts-path" title={'Helmet-model-system'}>
-                  {scenario.overriddenProjectSettings.helmetScriptsPath ? scenario.overriddenProjectSettings.helmetScriptsPath : inheritedGlobalProjectSettings.helmetScriptsPath}
+                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': !scenario.overriddenProjectSettings?.helmetScriptsPath})} htmlFor="override-helmet-scripts-path" title={'Helmet-model-system'}>
+                  {scenario.overriddenProjectSettings?.helmetScriptsPath ?? inheritedGlobalProjectSettings.helmetScriptsPath}
                 </label>
                 <input id="override-helmet-scripts-path"
                         className="override-input"
@@ -309,7 +309,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         placeholder={inheritedGlobalProjectSettings.helmetScriptsPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
-                            defaultPath: scenario.overriddenProjectSettings.helmetScriptsPath ? scenario.overriddenProjectSettings.helmetScriptsPath : inheritedGlobalProjectSettings.helmetScriptsPath,
+                            defaultPath: scenario.overriddenProjectSettings?.helmetScriptsPath ?? inheritedGlobalProjectSettings.helmetScriptsPath,
                             properties: ['openDirectory']
                           }).then((e)=>{
                             if (!e.canceled) {
@@ -323,7 +323,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
                 <span className="inline-element override-setting">Projektikansion polku</span>
-                { scenario.overriddenProjectSettings.projectPath && 
+                { scenario.overriddenProjectSettings?.projectPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
                       updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, projectPath: null} });
@@ -331,8 +331,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                      <ResetIcon className="override-reset-icon"/>
                    </label>
                 }
-                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': scenario.overriddenProjectSettings.projectPath ? false : true})} htmlFor="override-project-folder-path" title={'Project path'}>
-                  {scenario.overriddenProjectSettings.projectPath ? scenario.overriddenProjectSettings.projectPath : inheritedGlobalProjectSettings.projectPath}
+                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': !scenario.overriddenProjectSettings?.projectPath})} htmlFor="override-project-folder-path" title={'Project path'}>
+                  {scenario.overriddenProjectSettings?.projectPath ?? inheritedGlobalProjectSettings.projectPath}
                 </label>
                 <input id="override-project-folder-path"
                         className="override-input"
@@ -355,7 +355,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
             <div className="Scenario__section">
               <label className="Scenario__pseudo-label Scenario__pseudo-label--inline project-override-setting">
                 <span className="inline-element override-setting">Lähtödatakansion polku</span>
-                { scenario.overriddenProjectSettings.basedataPath && 
+                { scenario.overriddenProjectSettings?.basedataPath && 
                    <label className="inline-element override-reset-button" onClick={(event) => {
                       event.preventDefault();
                       updateScenario({...scenario, overriddenProjectSettings: {...scenario.overriddenProjectSettings, basedataPath: null} });
@@ -363,8 +363,8 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                      <ResetIcon className="override-reset-icon"/>
                    </label>
                 }
-                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': scenario.overriddenProjectSettings.basedataPath ? false : true})} htmlFor="override-base-data-path" title={'Base data path'}>
-                  {scenario.overriddenProjectSettings.basedataPath ? scenario.overriddenProjectSettings.basedataPath : inheritedGlobalProjectSettings.basedataPath}
+                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': !scenario.overriddenProjectSettings?.basedataPath})} htmlFor="override-base-data-path" title={'Base data path'}>
+                  {scenario.overriddenProjectSettings?.basedataPath ?? inheritedGlobalProjectSettings.basedataPath}
                 </label>
                 <input id="override-base-data-path"
                         className="override-input"
@@ -373,7 +373,7 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                         placeholder={inheritedGlobalProjectSettings.basedataPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
-                            defaultPath: scenario.overriddenProjectSettings.basedataPath ? scenario.overriddenProjectSettings.basedataPath : inheritedGlobalProjectSettings.basedataPath,
+                            defaultPath: scenario.overriddenProjectSettings?.basedataPath ?? inheritedGlobalProjectSettings.basedataPath,
                             properties: ['openDirectory']
                           }).then((e)=>{
                             if (!e.canceled) {
@@ -395,17 +395,17 @@ const HelmetScenario = ({projectPath, scenario, updateScenario, closeScenario, e
                      <ResetIcon className="override-reset-icon"/>
                    </label>
                 }
-                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': scenario.overriddenProjectSettings.resultsPath ? false : true})} htmlFor="override-results-folder-path" title={'Results path'}>
-                  {scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath}
+                <label className={classNames('Settings__pseudo-file-select', 'override-file-select-input', { 'override-is-default': !scenario.overriddenProjectSettings?.resultsPath})} htmlFor="override-results-folder-path" title={'Results path'}>
+                  {scenario.overriddenProjectSettings?.resultsPath ?? inheritedGlobalProjectSettings.resultsPath}
                 </label>
                 <input id="override-results-folder-path"
                         className="override-input"
                         type="text"
                         hidden={true}
-                        placeholder={scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath ?? ''}
+                        placeholder={scenario.overriddenProjectSettings?.resultsPath ?? inheritedGlobalProjectSettings.resultsPath ?? ''}
                         onClick={()=>{
                           dialog.showOpenDialog({
-                            defaultPath: scenario.overriddenProjectSettings.resultsPath ? scenario.overriddenProjectSettings.resultsPath : inheritedGlobalProjectSettings.resultsPath,
+                            defaultPath: scenario.overriddenProjectSettings?.resultsPath ?? inheritedGlobalProjectSettings.resultsPath,
                             properties: ['openDirectory']
                           }).then((e)=>{
                             if (!e.canceled) {

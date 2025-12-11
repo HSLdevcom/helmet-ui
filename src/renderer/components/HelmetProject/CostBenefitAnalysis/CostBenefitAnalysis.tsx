@@ -13,7 +13,7 @@ interface CostBenefitAnalysisProps {
 
 const CostBenefitAnalysis = ({
   resultsPath, cbaOptions, setCbaOptions, runCbaScript
-}: CostBenefitAnalysisProps ) => {
+}: CostBenefitAnalysisProps) => {
   return (
     <div className="CBA">
       <div className="CBA__heading">Hy&ouml;ty-kustannusanalyysi</div>
@@ -33,27 +33,27 @@ const CostBenefitAnalysis = ({
                 {cbaOptions?.baseline_scenario_path ? path.basename(cbaOptions?.baseline_scenario_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
-                     id="baseline-scenario-results-folder-select"
-                     type="text"
-                     onClick={()=>{
-                       dialog.showOpenDialog({
-                         defaultPath: resultsPath,
-                         properties: ['openDirectory']
-                       }).then((e)=>{
-                         if (!e.canceled) {
-                           const target_path = e.filePaths[0];
-                           setCbaOptions((prevOptions) => {
-                            if (!prevOptions) {
-                              return {
-                                baseline_scenario_path: target_path,
-                                projected_scenario_path: '',
-                              };
-                            } 
-                             return {...prevOptions, baseline_scenario_path: target_path};
-                           });
-                         }
-                       })
-                     }}
+                id="baseline-scenario-results-folder-select"
+                type="text"
+                onClick={() => {
+                  dialog.showOpenDialog({
+                    defaultPath: resultsPath,
+                    properties: ['openDirectory']
+                  }).then((e) => {
+                    if (!e.canceled) {
+                      const target_path = e.filePaths[0];
+                      setCbaOptions((prevOptions) => {
+                        if (!prevOptions) {
+                          return {
+                            baseline_scenario_path: target_path,
+                            projected_scenario_path: '',
+                          };
+                        }
+                        return { ...prevOptions, baseline_scenario_path: target_path };
+                      });
+                    }
+                  })
+                }}
               />
             </td>
             {/* Projected scenario results folder */}
@@ -63,27 +63,27 @@ const CostBenefitAnalysis = ({
                 {cbaOptions?.projected_scenario_path ? path.basename(cbaOptions?.projected_scenario_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
-                     id="projected-scenario-results-folder-select"
-                     type="text"
-                     onClick={()=>{
-                       dialog.showOpenDialog({
-                        defaultPath: resultsPath,
-                         properties: ['openDirectory']
-                       }).then((e)=>{
-                         if (!e.canceled) {
-                           const target_path = e.filePaths[0];
-                           setCbaOptions(prevOptions => {
-                            if (!prevOptions) {
-                              return {
-                                baseline_scenario_path: '', 
-                                projected_scenario_path: target_path,
-                              };
-                            }
-                             return {...prevOptions, projected_scenario_path: target_path};
-                           });
-                         }
-                       })
-                     }}
+                id="projected-scenario-results-folder-select"
+                type="text"
+                onClick={() => {
+                  dialog.showOpenDialog({
+                    defaultPath: resultsPath,
+                    properties: ['openDirectory']
+                  }).then((e) => {
+                    if (!e.canceled) {
+                      const target_path = e.filePaths[0];
+                      setCbaOptions(prevOptions => {
+                        if (!prevOptions) {
+                          return {
+                            baseline_scenario_path: '',
+                            projected_scenario_path: target_path,
+                          };
+                        }
+                        return { ...prevOptions, projected_scenario_path: target_path };
+                      });
+                    }
+                  })
+                }}
               />
             </td>
           </tr>
@@ -95,29 +95,29 @@ const CostBenefitAnalysis = ({
                 {cbaOptions?.baseline_scenario_2_path ? path.basename(cbaOptions?.baseline_scenario_2_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
-                     id="baseline-scenario-2-results-folder-select"
-                     type="text"
-                     onClick={()=>{
-                       dialog.showOpenDialog({
-                        defaultPath: resultsPath,
-                         properties: ['openDirectory']
-                       }).then((e)=>{
-                         if (!e.canceled) {
-                           const target_path = e.filePaths[0];
-                           setCbaOptions(prevOptions => {
-                            if (!prevOptions) {
-                              return {
-                                baseline_scenario_path: '',
-                                projected_scenario_path: '',
-                                baseline_scenario_2_path: target_path,
-                                projected_scenario_2_path: '',
-                              };
-                            }
-                             return {...prevOptions, baseline_scenario_2_path: target_path};
-                           });
-                         }
-                       })
-                     }}
+                id="baseline-scenario-2-results-folder-select"
+                type="text"
+                onClick={() => {
+                  dialog.showOpenDialog({
+                    defaultPath: resultsPath,
+                    properties: ['openDirectory']
+                  }).then((e) => {
+                    if (!e.canceled) {
+                      const target_path = e.filePaths[0];
+                      setCbaOptions(prevOptions => {
+                        if (!prevOptions) {
+                          return {
+                            baseline_scenario_path: '',
+                            projected_scenario_path: '',
+                            baseline_scenario_2_path: target_path,
+                            projected_scenario_2_path: '',
+                          };
+                        }
+                        return { ...prevOptions, baseline_scenario_2_path: target_path };
+                      });
+                    }
+                  })
+                }}
               />
             </td>
             {/* Projected scenario 2 results folder */}
@@ -127,45 +127,45 @@ const CostBenefitAnalysis = ({
                 {cbaOptions?.projected_scenario_2_path ? path.basename(cbaOptions?.projected_scenario_2_path) : "Valitse.."}
               </label>
               <input className="CBA__hidden-input"
-                     id="projected-scenario-2-results-folder-select"
-                     type="text"
-                     onClick={()=>{
-                       dialog.showOpenDialog({
-                        defaultPath: resultsPath,
-                         properties: ['openDirectory']
-                       }).then((e)=>{
-                         if (!e.canceled) {
-                           const target_path = e.filePaths[0];
-                           setCbaOptions(prevOptions => {
-                            if (!prevOptions) {
-                              return {
-                                baseline_scenario_path: '',
-                                projected_scenario_path: '',
-                                baseline_scenario_2_path: '',
-                                projected_scenario_2_path: target_path,
-                              };
-                            }
-                             return {...prevOptions, projected_scenario_2_path: target_path};
-                           });
-                         }
-                       })
-                     }}
+                id="projected-scenario-2-results-folder-select"
+                type="text"
+                onClick={() => {
+                  dialog.showOpenDialog({
+                    defaultPath: resultsPath,
+                    properties: ['openDirectory']
+                  }).then((e) => {
+                    if (!e.canceled) {
+                      const target_path = e.filePaths[0];
+                      setCbaOptions(prevOptions => {
+                        if (!prevOptions) {
+                          return {
+                            baseline_scenario_path: '',
+                            projected_scenario_path: '',
+                            baseline_scenario_2_path: '',
+                            projected_scenario_2_path: target_path,
+                          };
+                        }
+                        return { ...prevOptions, projected_scenario_2_path: target_path };
+                      });
+                    }
+                  })
+                }}
               />
             </td>
           </tr>
         </tbody>
       </table>
       <div className="CBA__run">
-        <button 
+        <button
           onClick={(e) => {
             if (!cbaOptions?.baseline_scenario_path || !cbaOptions?.projected_scenario_path) {
               alert("Valitse vertailuvaihtoehdon ja hankevaihtoehdon tuloskansiot ennen analyysin ajamista.");
               return;
-            } 
+            }
             runCbaScript();
-            }}
-            disabled={!(cbaOptions?.baseline_scenario_path || cbaOptions?.projected_scenario_path)}
-            >Aja hy&ouml;ty-kustannusanalyysi
+          }}
+          disabled={!(cbaOptions?.baseline_scenario_path || cbaOptions?.projected_scenario_path)}
+        >Aja hy&ouml;ty-kustannusanalyysi
         </button>
       </div>
     </div>

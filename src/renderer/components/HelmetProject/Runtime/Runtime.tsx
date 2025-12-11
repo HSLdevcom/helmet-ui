@@ -47,6 +47,7 @@ const Runtime: React.FC<RuntimeProps> = ({
 }) => {
 
   const { majorVersion } = useHelmetModelContext();
+  const [runStatuses, setRunStatuses] = useState<Record<string, RunStatusType>>({});
 
   const visibleTooltipProperties = [
     'emme_project_file_path',
@@ -122,254 +123,267 @@ const Runtime: React.FC<RuntimeProps> = ({
         const entry = {
           name: logArgs.status.name ?? '',
           logfile: logArgs.status.log ?? '',
-          resultsPath: [ getResultsPathFromLogfilePath(logArgs.status.log ?? '') ]
+          resultsPath: [getResultsPathFromLogfilePath(logArgs.status.log ?? '')]
         };
 
         // Initialize as array if missing
-        runStatus.statusReadyScenariosLogfiles = [...(runStatus.statusReadyScenariosLogfiles ?? []), entry];
+        const prev = Array.isArray(runStatus.statusReadyScenariosLogfiles) ? runStatus.statusReadyScenariosLogfiles : [];
+        runStatus.statusReadyScenariosLogfiles = [...prev, entry];
         runStatus.statusRunFinishTime = logArgs.time ?? runStatus.statusRunFinishTime;
       }
 
       if (logArgs.status.state === SCENARIO_STATUS_STATE.STARTING) {
         runStatus.statusRunStartTime = logArgs.time;
-        runStatus.statusRunFinishTime = logArgs.time; 
+        runStatus.statusRunFinishTime = logArgs.time;
         runStatus.demandConvergenceArray = [] as DemandConvergenceEntry[];
         runStatus.statusIterationsTotal = 0;
       }
     }
-    if(logArgs.level === 'INFO' && logArgs.message) {
+    if (logArgs.level === 'INFO' && logArgs.message) {
       // console.log(`Parsing logArgs message: ${logArgs.message}`);
-      if(majorVersion && majorVersion >= 5 && logArgs.message.includes('Demand model convergence')) {
+      if (majorVersion && majorVersion >= 5 && logArgs.message.includes('Demand model convergence')) {
         const currentIteration = runStatus.demandConvergenceArray?.length ?? 0;
-        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message, currentIteration);
-        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
-        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray ?? []), parseDemandConvergenceLogMessage(logArgs.message, currentIteration)];
-        // console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
-      } else if(logArgs.message.includes('Demand model convergence in')) { // Helmet versions < 5
-        const currentDemandConvergenceValueAndIteration = parseDemandConvergenceLogMessage(logArgs.message);
-        // console.log(`Parsed demand convergence value: ${JSON.stringify(currentDemandConvergenceValueAndIteration)}`);
-        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray ?? []), parseDemandConvergenceLogMessage(logArgs.message)];
+        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray || []), parseDemandConvergenceLogMessage(logArgs.message, currentIteration)];
+        console.log(`Updated demand convergence array: ${JSON.stringify(runStatus.demandConvergenceArray)}`);
+      } else if (logArgs.message.includes('Demand model convergence in')) { // Helmet versions < 5
+        runStatus.demandConvergenceArray = [...(runStatus.demandConvergenceArray || []), parseDemandConvergenceLogMessage(logArgs.message)];
       }
     }
   }
 
-  if( runningScenario?.runStatus && logArgs ) {
-    // console.log(`[Runtime] Running scenario (${runningScenario})`);
-    parseLogArgs(runningScenario.runStatus, logArgs);
-  }
+  useEffect(() => {
+    if (runningScenario && logArgs) {
+      setRunStatuses(prev => {
+        const existing = prev[runningScenario.id] ?? {};
+        const updated = { ...existing };
+        parseLogArgs(updated, logArgs);
+        return { ...prev, [runningScenario.id]: updated };
+      });
+    }
+  }, [runningScenario, logArgs]);
 
   const renderableScenarios = activeScenarios.map(s => (s.id === runningScenario?.id ? runningScenario : s));
 
   const RunStatusList = () => {
     const scenariosWithStatus = renderableScenarios.filter(
-      s => s.runStatus && (s.runStatus.statusState || (s.runStatus.demandConvergenceArray?.length ?? 0) > 0)
+      s => runStatuses[s.id] && (
+        runStatuses[s.id].statusState ||
+        (runStatuses[s.id].demandConvergenceArray?.length ?? 0) > 0
+      )
     );
 
     if (scenariosWithStatus.length === 0) return <div />;
 
     return (
       <div>
-        {renderableScenarios.map((scenarioToRender) => (
-          <RunStatus
-            key={scenarioToRender.id}
-            isScenarioRunning={scenarioToRender.id === runningScenarioID}
-            statusIterationsTotal={scenarioToRender.runStatus?.statusIterationsTotal || 0}
-            statusIterationsCompleted={scenarioToRender.runStatus?.statusIterationsCompleted || 0}
-            statusReadyScenariosLogfiles={scenarioToRender.runStatus?.statusReadyScenariosLogfiles || [] as ReadyScenarioLogfile[]}
-            statusRunStartTime={scenarioToRender.runStatus?.statusRunStartTime || null}
-            statusRunFinishTime={scenarioToRender.runStatus?.statusRunFinishTime || null}
-            statusState={scenarioToRender.runStatus?.statusState || null}
-            demandConvergenceArray={scenarioToRender.runStatus?.demandConvergenceArray || [] as DemandConvergenceEntry[]}
-          />
-        ))}
+        {scenariosWithStatus.map((scenarioToRender) => {
+          const status = runStatuses[scenarioToRender.id] ?? {};
+
+          return (
+            <RunStatus
+              key={scenarioToRender.id}
+              isScenarioRunning={scenarioToRender.id === runningScenarioID}
+              statusIterationsTotal={status.statusIterationsTotal ?? 0}
+              statusIterationsCompleted={status.statusIterationsCompleted ?? 0}
+              statusReadyScenariosLogfiles={status.statusReadyScenariosLogfiles ?? []}
+              statusRunStartTime={status.statusRunStartTime ?? null}
+              statusRunFinishTime={status.statusRunFinishTime ?? null}
+              statusState={status.statusState ?? null}
+              demandConvergenceArray={status.demandConvergenceArray ?? []}
+            />
+          );
+        })}
       </div>
-    );return <div />;
+    );
   };
+
 
   useEffect(() => {
     const resizableDiv = document.getElementById('resizableDiv');
     if (resizableDiv) {
       resizableDiv.style.height = scenarioListHeight ?? '300px';
     }
-  });
+  }, [scenarioListHeight]);
 
 
-  let mousePosition : number | null = null;
+  let mousePosition: number | null = null;
 
   const resize = (e: MouseEvent) => {
-    if (!mousePosition) {
-      return;
-    }
+    if (mousePosition === null) return;
+
     const resizableDiv = document.getElementById("resizableDiv");
-    if (!resizableDiv) {
-      return;
-    }
-    const delta = mousePosition - e.y;
-    mousePosition = e.y;
-    const newHeight = `${parseInt(getComputedStyle(resizableDiv, '').height) - delta}px`;
-    resizableDiv.style.height = newHeight;
-    setScenarioListHeight(newHeight);
-  }
+    if (!resizableDiv) return;
+
+    const delta = mousePosition - e.clientY;
+    mousePosition = e.clientY;
+
+    const newHeight =
+      parseInt(getComputedStyle(resizableDiv).height) - delta;
+
+    const clamped = Math.max(100, newHeight); // optional min-height
+    resizableDiv.style.height = clamped + "px";
+    setScenarioListHeight(clamped + "px");
+  };
 
   const onMouseDown: React.MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLElement;
-    if (!target) {
-      return;
-    }
-    if (e.pageY > (target.offsetTop + target.offsetHeight)) {
-      if (mousePosition === undefined) {
-        return;
-      }
-      mousePosition = e.pageY;
-      document.body.style.userSelect = "none"
-      document.addEventListener("mousemove", resize);
-    }
-  }
+    if (!target) return;
 
-  const onMouseUp: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    document.body.style.userSelect = "auto";
-    document.removeEventListener("mousemove", resize);
-  }
+    mousePosition = e.clientY;
+    document.body.style.userSelect = "none";
+
+    window.addEventListener("mousemove", resize);
+
+    const stopResize = () => {
+      document.body.style.userSelect = "auto";
+      window.removeEventListener("mousemove", resize);
+      window.removeEventListener("mouseup", stopResize);
+      mousePosition = null;
+    };
+
+    window.addEventListener("mouseup", stopResize);
+  };
+
 
   return (
     <div className="Runtime">
 
       <div className="Runtime__helmet-project-controls">
-      <div className="Runtime__heading">Projektin alustaminen</div>
-      <p className="Runtime__project-path">
-        Helmet-skenaarioiden tallennuspolku: {projectPath}
-      </p>
-      <div>
-        <button className="Runtime__reload-scenarios-btn"
-                onClick={(e) => reloadScenarios()}
-                disabled={runningScenarioID? true : false}
-        >
-          Lataa uudelleen projektin skenaariot
-        </button>
-      </div>
+        <div className="Runtime__heading">Projektin alustaminen</div>
+        <p className="Runtime__project-path">
+          Helmet-skenaarioiden tallennuspolku: {projectPath}
+        </p>
+        <div>
+          <button className="Runtime__reload-scenarios-btn"
+            onClick={(e) => reloadScenarios()}
+            disabled={runningScenarioID ? true : false}
+          >
+            Lataa uudelleen projektin skenaariot
+          </button>
+        </div>
       </div>
 
       <div className="Runtime__scenarios-controls" id="resizableDiv">
-      <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
-      <div className="Runtime__scenarios" id="scenarioList">
-        {scenarios && scenarios.length > 0 ? (
-          scenarios.map((s, index) => {
-            // Component for the tooltip showing scenario settings
-            const tooltipContent = (scenario: Scenario) => {
-              const filteredScenarioSettings = Object.fromEntries(
-                Object.entries(scenario).filter(([key]) => visibleTooltipProperties.includes(key))
-              );
+        <div className="Runtime__scenarios-heading">Ladatut skenaariot</div>
+        <div className="Runtime__scenarios" id="scenarioList">
+          {scenarios && scenarios.length > 0 ? (
+            scenarios.map((s, index) => {
+              // Component for the tooltip showing scenario settings
+              const tooltipContent = (scenario: Scenario) => {
+                const filteredScenarioSettings = Object.fromEntries(
+                  Object.entries(scenario).filter(([key]) => visibleTooltipProperties.includes(key))
+                );
+
+                return (
+                  <div key={index}>
+                    {Object.entries(filteredScenarioSettings).map((property, index) => {
+                      if (property[0] === 'overriddenProjectSettings') {
+                        return areGlobalSettingsOverridden(property[1]) ? (
+                          <div key={index}>
+                            <h3>Overridden settings:</h3>
+                            {Object.entries(property[1]).map((overrideSetting, index) => {
+                              return overrideSetting[1] != null ? (
+                                <p key={index} style={{ marginLeft: '1rem', overflow: 'hidden' }}>
+                                  {getPropertyForDisplayString(overrideSetting)}
+                                </p>
+                              ) : (
+                                ''
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          ''
+                        );
+                      }
+
+                      return <p key={index}>{getPropertyForDisplayString(property)}</p>;
+                    })}
+                  </div>
+                );
+              };
 
               return (
-                <div key={index}>
-                  {Object.entries(filteredScenarioSettings).map((property, index) => {
-                    if (property[0] === 'overriddenProjectSettings') {
-                      return areGlobalSettingsOverridden(property[1]) ? (
-                        <div key={index}>
-                          <h3>Overridden settings:</h3>
-                          {Object.entries(property[1]).map((overrideSetting, index) => {
-                            return overrideSetting[1] != null ? (
-                              <p key={index} style={{ marginLeft: '1rem', overflow: 'hidden' }}>
-                                {getPropertyForDisplayString(overrideSetting)}
-                              </p>
-                            ) : (
-                              ''
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        ''
-                      );
+                <div
+                  className="Runtime__scenario"
+                  key={s.id}
+                  data-tooltip-id="scenario-tooltip"
+                  data-tooltip-place="bottom"
+                  data-tooltip-html={renderToStaticMarkup(tooltipContent(s))}
+                  data-tooltip-delay-show={200}
+                >
+                  <span className="Runtime__scenario-name">
+                    {s.name ? s.name : `Unnamed project (${s.id})`}
+                  </span>
+                  &nbsp;
+                  <input
+                    className={
+                      'Runtime__scenario-activate-checkbox' +
+                      (scenarioIDsToRun.includes(s.id)
+                        ? ' Runtime__scenario-activate-checkbox--active'
+                        : '')
                     }
-
-                    return <p key={index}>{getPropertyForDisplayString(property)}</p>;
-                  })}
+                    type="checkbox"
+                    checked={scenarioIDsToRun.includes(s.id)}
+                    disabled={runningScenarioID ? true : false}
+                    onChange={(e) => handleClickScenarioToActive(s)}
+                  />
+                  &nbsp;
+                  <div
+                    className={
+                      'Runtime__scenario-open-config' +
+                      (openScenarioID === s.id ? ' Runtime__scenario-open-config-btn--active' : '')
+                    }
+                    onClick={(e) => (runningScenarioID ? undefined : setOpenScenarioID(s.id))}
+                  ></div>
+                  &nbsp;
+                  <div
+                    className={'Runtime__scenario-delete'}
+                    onClick={(e) => (runningScenarioID ? undefined : deleteScenario(s))}
+                  ></div>
+                  <Tooltip
+                    id="scenario-tooltip"
+                    style={{ borderRadius: '1rem', maxWidth: '40rem', marginLeft: '-50px', zIndex: 2 }}
+                  />
+                  &nbsp;
+                  <div className={'Runtime__scenario-clone'} onClick={(e) => duplicateScenario(s)}>
+                    <CopyIcon />
+                  </div>
                 </div>
               );
-            };
+            })
+          ) : (
+            <p>Ei määritettyjä skenaarioita.</p>
+          )}
+        </div>
+        <div className="Runtime__scenarios-footer">
+          <button className="Runtime__add-new-scenario-btn"
+            disabled={runningScenarioID ? true : false}
+            onClick={(e) => handleClickNewScenario()}
+          >
+            <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
+          </button>
+        </div>
+      </div>
+      <div className="Runtime__scenarios_controls_drag_handle" onMouseDown={onMouseDown} />
 
-            return (
-              <div
-                className="Runtime__scenario"
-                key={s.id}
-                data-tooltip-id="scenario-tooltip"
-                data-tooltip-place="bottom"
-                data-tooltip-html={renderToStaticMarkup(tooltipContent(s))}
-                data-tooltip-delay-show={200}
-              >
-                <span className="Runtime__scenario-name">
-                  {s.name ? s.name : `Unnamed project (${s.id})`}
-                </span>
-                &nbsp;
-                <input
-                  className={
-                    'Runtime__scenario-activate-checkbox' +
-                    (scenarioIDsToRun.includes(s.id)
-                      ? ' Runtime__scenario-activate-checkbox--active'
-                      : '')
-                  }
-                  type="checkbox"
-                  checked={scenarioIDsToRun.includes(s.id)}
-                  disabled={runningScenarioID? true : false}
-                  onChange={(e) => handleClickScenarioToActive(s)}
-                />
-                &nbsp;
-                <div
-                  className={
-                    'Runtime__scenario-open-config' +
-                    (openScenarioID === s.id ? ' Runtime__scenario-open-config-btn--active' : '')
-                  }
-                  onClick={(e) => (runningScenarioID ? undefined : setOpenScenarioID(s.id))}
-                ></div>
-                &nbsp;
-                <div
-                  className={'Runtime__scenario-delete'}
-                  onClick={(e) => (runningScenarioID ? undefined : deleteScenario(s))}
-                ></div>
-                <Tooltip
-                  id="scenario-tooltip"
-                  style={{ borderRadius: '1rem', maxWidth: '40rem', marginLeft: '-50px', zIndex: 2 }}
-                />
-                &nbsp;
-                <div className={'Runtime__scenario-clone'} onClick={(e) => duplicateScenario(s)}>
-                  <CopyIcon />
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <p>Ei määritettyjä skenaarioita.</p>
-        )}
-      </div>
-      <div className="Runtime__scenarios-footer">
-        <button className="Runtime__add-new-scenario-btn"
-                disabled={runningScenarioID? true : false}
-                onClick={(e) => handleClickNewScenario()}
-        >
-          <span className="Runtime__add-icon">Uusi Helmet-skenaario</span>
-        </button>
-      </div>
-      </div>
-      <div className="Runtime__scenarios_controls_drag_handle" onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
-      
       <div className="Runtime__start-stop-controls">
         <div className="Runtime__heading">Ajettavana</div>
         <p className="Runtime__start-stop-description">
           {scenarioIDsToRun.length ?
-                <span className="Runtime__start-stop-scenarios">
-                  {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id)).map((s) => s.name).join(', ')}
-                </span>
+            <span className="Runtime__start-stop-scenarios">
+              {scenarios.filter((s) => scenarioIDsToRun.includes(s.id)).sort((a, b) => scenarioIDsToRun.indexOf(a.id) - scenarioIDsToRun.indexOf(b.id)).map((s) => s.name).join(', ')}
+            </span>
             :
             <span>Ei ajettavaksi valittuja skenaarioita</span>
           }
         </p>
         <button className="Runtime__start-stop-btn"
-                disabled={scenarioIDsToRun.length === 0}
-                onClick={(e) => handleClickStartStop()}
+          disabled={scenarioIDsToRun.length === 0}
+          onClick={(e) => handleClickStartStop()}
         >
           {!runningScenarioID ? `K\u00e4ynnist\u00e4 (${scenarioIDsToRun.length}) skenaariota` : `Keskeyt\u00e4 loput skenaariot`}
         </button>
-          <RunStatusList />
+        <RunStatusList />
       </div>
     </div>
   );
