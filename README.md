@@ -28,7 +28,7 @@ $ git clone <this repository>
 $ npm install
 ```
 
-See [the documentation](https://hsldevcom.github.io/helmet-ui/) for preparing the Windows environment for testing.
+See [the documentation](https://hsldevcom.github.io/helmet-docs/) for preparing the Windows environment for testing (in Finnish).
 EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affecting the automatic resolving of Python binary.
 
 ## Running and building
@@ -36,6 +36,20 @@ EMME and EMME-Python versions can be set in [versions.js](src/versions.js), affe
 `npm start` command is used to start the application in development environment. Running `npm run make` will create an installer binary to be distributed to end-users.
 
 See also: [Electronforge.io](https://www.electronforge.io/)
+
+### Running mock assignments for testing
+
+Normally, the backend of the program, Helmet model system (https://github.com/HSLdevcom/helmet-model-system), requires an active installation and license of Bentley's OpenPaths EMME (https://www.bentley.com/software/openpaths/). For development and testing purposes, the model system allows the running of a mock scenario, which requires some extra steps:
+
+1. In Helmet UI's settings, download helmet-model-system using the **"Lataa eri versio internetistä"**, and download the newest version
+2. Find the downloaded model system folder, and go to *helmet-model-system-<version>/Scripts/dev_config.json*, add **"DO_NOT_USE_EMME"** to **"OPTIONAL_FLAGS"** (with the quotation marks)
+3. In some folder, create an empty text file, and set its file extension to **.emp** (For example, **test.emp**)
+4. In Helmet UI's settings, set **"Lähtödatan sisältävä kansio"** to *helmet-model-system-<version>/Scripts/tests/test_data/Base_input_data*
+5. In Helmet UI's settings, set **"Tulosten tallennuspolku"** to *helmet-model-system-<version>/Scripts/tests/test_data/Results*
+6. Create a new scenario with the **"Uusi Helmet-skenaario"** -button. Name it **test**
+7. Set **"Emme-projekti (.emp)"** to the .emp text file created earlier
+8. Set **"Syöttötiedot"** to *helmet-model-system-<version>/Scripts/tests/test_data/Results/Scenario_input_data/2030_test*
+9. Run the newly created mock scenario by selecting it in the scenario list, and clicking **"Käynnistä (1) skenaariota"**
 
 ## Version control
 
