@@ -24,12 +24,9 @@
   },
   "type": "commonjs",
   "dependencies": {
-    "@electron/node-gyp": "^10.2.0-electron.2",
-    "@electron/rebuild": "^4.0.3",
     "chart.js": "^4.3.0",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
-    "decompress": "^4.2.1",
     "del": "^6.1.0",
     "electron-dl": "^3.3.1",
     "electron-squirrel-startup": "^1.0.0",
@@ -40,7 +37,8 @@
     "react-dom": "^18.1.0",
     "react-tabs": "^6.0.2",
     "react-tooltip": "^5.15.0",
-    "uuid": "^9.0.0"
+    "uuid": "^14.0.2",
+    "yauzl": "^3.4.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.11.1",
@@ -49,6 +47,8 @@
     "@electron-forge/maker-squirrel": "^7.11.1",
     "@electron-forge/maker-zip": "^7.11.1",
     "@electron-forge/publisher-github": "^7.11.1",
+    "@electron/node-gyp": "^10.2.0-electron.2",
+    "@electron/rebuild": "^4.2.0",
     "@eslint/js": "^9.39.1",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.7.2",

@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const del = require('del');
-const decompress = require('decompress');
+const yauzl = require('yauzl');
 const Store = require('electron-store');
 const { download } = require('electron-dl');
 
@@ -17,6 +17,80 @@ let mainWindow, entrypointWorkerWindow, cbaWorkerWindow;
 let workPreloadTimeout;
 let useMockAssignmentInsteadOfEmme = false;
 const activeDownloads = new Map(); // Track active downloads for cancellation
+
+function extractZip(zipPath, destination) {
+  const destinationPath = path.resolve(destination);
+  const destinationPrefix = `${destinationPath}${path.sep}`;
+
+  return new Promise((resolve, reject) => {
+    yauzl.open(zipPath, { lazyEntries: true }, (openError, zipFile) => {
+      if (openError || !zipFile) {
+        reject(openError || new Error('Could not open ZIP archive'));
+        return;
+      }
+
+      let settled = false;
+      const fail = (error) => {
+        if (!settled) {
+          settled = true;
+          zipFile.close();
+          reject(error);
+        }
+      };
+
+      zipFile.on('error', fail);
+      zipFile.on('entry', (entry) => {
+        const entryPath = entry.fileName.replace(/\//g, path.sep);
+        const targetPath = path.resolve(destinationPath, entryPath);
+        const isDirectory = entry.fileName.endsWith('/');
+        const unixMode = (entry.externalFileAttributes >>> 16) & 0xf000;
+        const isSymbolicLink = unixMode === 0xa000;
+
+        if ((targetPath !== destinationPath && !targetPath.startsWith(destinationPrefix)) || isSymbolicLink) {
+          fail(new Error(`Unsafe ZIP entry: ${entry.fileName}`));
+          return;
+        }
+
+        if (isDirectory) {
+          try {
+            fs.mkdirSync(targetPath, { recursive: true });
+            zipFile.readEntry();
+          } catch (error) {
+            fail(error);
+          }
+          return;
+        }
+
+        zipFile.openReadStream(entry, (streamError, readStream) => {
+          if (streamError || !readStream) {
+            fail(streamError || new Error(`Could not read ZIP entry: ${entry.fileName}`));
+            return;
+          }
+
+          try {
+            fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+            const writeStream = fs.createWriteStream(targetPath);
+            readStream.on('error', fail);
+            writeStream.on('error', fail);
+            writeStream.on('close', () => {
+              if (!settled) zipFile.readEntry();
+            });
+            readStream.pipe(writeStream);
+          } catch (error) {
+            fail(error);
+          }
+        });
+      });
+      zipFile.on('end', () => {
+        if (!settled) {
+          settled = true;
+          resolve();
+        }
+      });
+      zipFile.readEntry();
+    });
+  });
+}
 
 async function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -36,8 +110,8 @@ async function createMainWindow() {
     },
   });
 
-  
-  
+
+
   // Load the Vite-bundled renderer
   if (process.env.NODE_ENV === 'development') {
     await mainWindow.loadURL('http://localhost:5173');
@@ -101,7 +175,7 @@ ipcMain.on('message-from-ui-to-download-helmet-scripts', async (event, args) => 
     // Ensure extraction directory exists
     fs.mkdirSync(extractedDir, { recursive: true });
 
-    await decompress(archivePath, extractedDir);
+    await extractZip(archivePath, extractedDir);
 
     // Try deleting the zip file after extraction
     try {
@@ -203,7 +277,7 @@ ipcMain.on('loggable-ui-event-from-worker', (event, args) => {
 // Relay a loggable event in worker; worker => main => UI
 ipcMain.on('loggable-event-from-worker', (event, args) => {
   event_time = args["time"];
-  delete(args["time"]);
+  delete (args["time"]);
   // python-shell 3.0.0 breaking change: Every character from
   // stderr is its own value (like {0: 'h', 1: 'e', 2: 'l', 3: 'l', 4: 'o'})
   // so let us join all values into one string ('hello').
